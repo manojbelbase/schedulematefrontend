@@ -1,0 +1,11 @@
+#!/bin/sh
+BRANCH=`git rev-parse --abbrev-ref HEAD`
+PROTECTED_BRANCHES="^(dev|production|main)$"
+
+if [[ "$BRANCH" =~ $PROTECTED_BRANCHES ]]; then
+  echo "[ERROR] Prevented push to protected branch \"$BRANCH\""
+  exit 1
+fi
+
+# Disable concurent to run `check-types` after ESLint in lint-staged
+pnpm build

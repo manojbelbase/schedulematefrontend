@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "module": "commonjs"
+  },
+  "includes": ["commitlint.config.ts"],
+  "exclude": ["node_modules"]
+}

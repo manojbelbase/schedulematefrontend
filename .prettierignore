@@ -1,0 +1,7 @@
+# Build directory
+.turbo
+.next
+dist
+node_modules/
+static/
+pnpm-lock.yaml
