@@ -1,3 +1,3 @@
-export * from "./web";
-export * from "./backoffice";
-export * from "./website";
+export * as web from "./web";
+export * as backoffice from "./backoffice";
+export * as website from "./website";
