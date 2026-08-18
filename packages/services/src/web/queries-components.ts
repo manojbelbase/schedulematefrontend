@@ -143,7 +143,7 @@ export const fetchAuthControllerRegister = (
   signal?: AbortSignal,
 ) =>
   queriesFetch<
-    Schemas.UserResponse,
+    Schemas.AuthResponse,
     AuthControllerRegisterError,
     Schemas.RegisterUserDto,
     {},
@@ -154,7 +154,7 @@ export const fetchAuthControllerRegister = (
 export const useAuthControllerRegister = (
   options?: Omit<
     reactQuery.UseMutationOptions<
-      Schemas.UserResponse,
+      Schemas.AuthResponse,
       AuthControllerRegisterError,
       AuthControllerRegisterVariables
     >,
@@ -163,7 +163,7 @@ export const useAuthControllerRegister = (
 ) => {
   const { fetcherOptions } = useQueriesContext();
   return reactQuery.useMutation<
-    Schemas.UserResponse,
+    Schemas.AuthResponse,
     AuthControllerRegisterError,
     AuthControllerRegisterVariables
   >({
@@ -193,7 +193,7 @@ export const fetchAuthControllerLogin = (
   signal?: AbortSignal,
 ) =>
   queriesFetch<
-    Schemas.UserResponse,
+    Schemas.AuthResponse,
     AuthControllerLoginError,
     Schemas.LoginUserDto,
     {},
@@ -204,7 +204,7 @@ export const fetchAuthControllerLogin = (
 export const useAuthControllerLogin = (
   options?: Omit<
     reactQuery.UseMutationOptions<
-      Schemas.UserResponse,
+      Schemas.AuthResponse,
       AuthControllerLoginError,
       AuthControllerLoginVariables
     >,
@@ -213,7 +213,7 @@ export const useAuthControllerLogin = (
 ) => {
   const { fetcherOptions } = useQueriesContext();
   return reactQuery.useMutation<
-    Schemas.UserResponse,
+    Schemas.AuthResponse,
     AuthControllerLoginError,
     AuthControllerLoginVariables
   >({

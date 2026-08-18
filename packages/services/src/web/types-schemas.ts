@@ -94,3 +94,16 @@ export type UserResponse = {
   message: string;
   data: PublicUser;
 };
+
+export type AuthResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: {
+    user: PublicUser;
+    accessToken: string;
+    refreshToken?: string;
+  };
+};

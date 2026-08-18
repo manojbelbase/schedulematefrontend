@@ -11,7 +11,8 @@ import { Input } from "@ui/components/ui/input";
 import { Label } from "@ui/components/ui/label";
 import { Separator } from "@ui/components/ui/separator";
 
-import { env } from "@/config/env";
+import { googleAuthUrl } from "@/config/api";
+import { useAuthStore } from "@/zustand/auth";
 
 function GoogleIcon({ className }: { className?: string }) {
   return (
@@ -43,8 +44,7 @@ function AuthUrl() {
 }
 
 function GoogleSignInButton({ redirect }: { redirect: string }) {
-  const baseUrl = env.NEXT_PUBLIC_WEB_API_BASE_URL?.replace(/\/$/, "") ?? "";
-  const authUrl = `${baseUrl}/api/auth/google?redirect=${encodeURIComponent(redirect)}`;
+  const authUrl = googleAuthUrl(redirect);
 
   return (
     <Button
@@ -70,8 +70,6 @@ function EmailForm({ redirect }: { redirect: string }) {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const baseUrl = env.NEXT_PUBLIC_WEB_API_BASE_URL?.replace(/\/$/, "") ?? "";
-
   function showToast(message: string, type: "success" | "error") {
     if (type === "success") {
       toast.success(message);
@@ -85,43 +83,25 @@ function EmailForm({ redirect }: { redirect: string }) {
     setError(null);
     setLoading(true);
     try {
-      const endpoint =
-        mode === "signin" ? "/api/auth/login" : "/api/auth/register";
-      const body =
-        mode === "signin" ? { email, password } : { email, name, password };
-      const response = await fetch(`${baseUrl}${endpoint}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-        credentials: "include",
-      });
-      const data = (await response.json().catch(() => null)) as {
-        message?: string;
-      } | null;
-      if (!response.ok) {
-        throw new Error(
-          data?.message ?? "Something went wrong. Please try again.",
-        );
-      }
-      const successMessage =
-        data?.message ??
-        (mode === "signin"
-          ? "Welcome back! You're signed in."
-          : "Account created successfully! Please sign in.");
-      showToast(successMessage, "success");
-      if (mode === "signup") {
-        setMode("signin");
-        setEmail("");
-        setName("");
-        setPassword("");
+      const login = useAuthStore.getState().login;
+      const register = useAuthStore.getState().register;
+
+      if (mode === "signin") {
+        await login({ email, password });
+        showToast("Welcome back! You're signed in.", "success");
+        router.push(redirect);
       } else {
+        await register({ email, name, password });
+        showToast("Account created successfully! You're signed in.", "success");
         router.push(redirect);
       }
     } catch (err) {
       const message =
-        err instanceof Error
-          ? err.message
-          : "Something went wrong. Please try again.";
+        typeof err === "object" && err !== null && "message" in err
+          ? String((err as { message?: unknown }).message)
+          : err instanceof Error
+            ? err.message
+            : "Something went wrong. Please try again.";
       setError(message);
       showToast(message, "error");
     } finally {

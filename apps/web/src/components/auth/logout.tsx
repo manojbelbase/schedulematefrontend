@@ -3,7 +3,9 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useState } from "react";
 
-import { env } from "@/config/env";
+import { fetchAuthControllerLogout } from "@repo/services/web";
+
+import { useAuthStore } from "@/zustand/auth";
 
 function LogoutInner() {
   const router = useRouter();
@@ -13,15 +15,12 @@ function LogoutInner() {
   const redirect = searchParams.get("redirect") ?? "/auth/login";
 
   const logout = useCallback(async () => {
-    const baseUrl = env.NEXT_PUBLIC_WEB_API_BASE_URL?.replace(/\/$/, "") ?? "";
     try {
-      await fetch(`${baseUrl}/api/auth/logout`, {
-        method: "POST",
-        credentials: "include",
-      });
+      await fetchAuthControllerLogout({});
     } catch {
       /* ignore network errors, redirect anyway */
     } finally {
+      useAuthStore.getState().logout();
       router.replace(redirect);
     }
   }, [redirect, router]);
@@ -58,15 +57,12 @@ export function useLogout(redirect = "/auth/login") {
   return useCallback(async () => {
     if (inProgress) return;
     setInProgress(true);
-    const baseUrl = env.NEXT_PUBLIC_WEB_API_BASE_URL?.replace(/\/$/, "") ?? "";
     try {
-      await fetch(`${baseUrl}/api/auth/logout`, {
-        method: "POST",
-        credentials: "include",
-      });
+      await fetchAuthControllerLogout({});
     } catch {
       /* ignore network errors, redirect anyway */
     } finally {
+      useAuthStore.getState().logout();
       router.replace(redirect);
     }
   }, [inProgress, redirect, router]);
