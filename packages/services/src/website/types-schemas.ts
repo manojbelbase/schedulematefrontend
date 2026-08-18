@@ -19,27 +19,6 @@ export type MessageResponse = {
   message: string;
 };
 
-export type PublicUser = {
-  /**
-   * @format uuid
-   */
-  id: string;
-  name?: string | null;
-  /**
-   * @format email
-   */
-  email: string;
-  username?: string | null;
-};
-
-export type AuthData = {
-  /**
-   * @example jwt.token.here
-   */
-  accessToken: string;
-  user: PublicUser;
-};
-
 export type RegisterUserDto = {
   /**
    * @format email
@@ -47,11 +26,10 @@ export type RegisterUserDto = {
    */
   email: string;
   /**
-   * @minLength 3
-   * @maxLength 50
-   * @example johndoe
+   * @maxLength 100
+   * @example Jane Doe
    */
-  username?: string;
+  name?: string;
   /**
    * @minLength 8
    * @example password123
@@ -69,6 +47,60 @@ export type LoginUserDto = {
    * @example password123
    */
   password: string;
+};
+
+export type ForgotPasswordDto = {
+  /**
+   * @format email
+   * @example user@example.com
+   */
+  email: string;
+};
+
+export type VerifyOtpDto = {
+  /**
+   * @format email
+   * @example user@example.com
+   */
+  email: string;
+  /**
+   * @minLength 6
+   * @maxLength 6
+   * @example 123456
+   */
+  otp: string;
+};
+
+export type ResetPasswordDto = {
+  /**
+   * @format email
+   * @example user@example.com
+   */
+  email: string;
+  /**
+   * @minLength 6
+   * @maxLength 6
+   * @example 123456
+   */
+  otp: string;
+  /**
+   * @minLength 8
+   * @example newPassword123
+   */
+  newPassword: string;
+};
+
+export type PublicUser = {
+  /**
+   * @format uuid
+   */
+  id: string;
+  name?: string | null;
+  /**
+   * @format email
+   */
+  email: string;
+  username?: string | null;
 };
 
 export type HealthData = {
@@ -95,15 +127,6 @@ export type HealthResponse = {
   data: HealthData;
 };
 
-export type AuthResponse = {
-  /**
-   * @example true
-   */
-  success: boolean;
-  message: string;
-  data: AuthData;
-};
-
 export type UserResponse = {
   /**
    * @example true
@@ -111,4 +134,17 @@ export type UserResponse = {
   success: boolean;
   message: string;
   data: PublicUser;
+};
+
+export type AuthResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: {
+    user: PublicUser;
+    accessToken: string;
+    refreshToken?: string;
+  };
 };

@@ -127,7 +127,7 @@ importers:
         version: 4.4.3
       zustand:
         specifier: ^5.0.8
-        version: 5.0.15(@types/react@19.1.0)(react@19.2.8)
+        version: 5.0.15(@types/react@19.1.0)(immer@11.1.17)(react@19.2.8)
     devDependencies:
       '@commitlint/cli':
         specifier: ^20.0.0
@@ -2506,6 +2506,9 @@ packages:
 
   immediate@3.0.6:
     resolution: {integrity: sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==}
+
+  immer@11.1.17:
+    resolution: {integrity: sha512-8Vu44Y0MuMBlTQz/jQ8HEMYNq/bBqk87MnBwYR5mC8AthfhEXidZ5aT/oA/CUqboa8THKltnD9L3xyqhU/Sy1Q==}
 
   import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
@@ -6059,6 +6062,9 @@ snapshots:
 
   immediate@3.0.6: {}
 
+  immer@11.1.17:
+    optional: true
+
   import-fresh@3.3.1:
     dependencies:
       parent-module: 1.0.1
@@ -7470,7 +7476,8 @@ snapshots:
 
   zod@4.4.3: {}
 
-  zustand@5.0.15(@types/react@19.1.0)(react@19.2.8):
+  zustand@5.0.15(@types/react@19.1.0)(immer@11.1.17)(react@19.2.8):
     optionalDependencies:
       '@types/react': 19.1.0
+      immer: 11.1.17
       react: 19.2.8

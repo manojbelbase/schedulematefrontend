@@ -15,9 +15,7 @@ const optionalUrl = (message: string) =>
   );
 
 const EnvSchema = z.object({
-  NEXT_PUBLIC_WEB_API_BASE_URL: optionalUrl(
-    "API URL is not in 'url' pattern.",
-  ),
+  NEXT_PUBLIC_WEB_API_BASE_URL: optionalUrl("API URL is not in 'url' pattern."),
   NEXT_PUBLIC_BASE_URL: optionalString(),
   NEXT_PUBLIC_API_DOMAIN: optionalString(),
   DOCS_AUTH_TOKEN: optionalString(),

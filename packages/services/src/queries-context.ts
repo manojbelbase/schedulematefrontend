@@ -1,7 +1,6 @@
 import {
   skipToken,
   type DefaultError,
-  type Enabled,
   type QueryKey,
   type UseQueryOptions,
 } from "@tanstack/react-query";
@@ -11,9 +10,7 @@ import type { QueryOperation as WebQueryOperation } from "./web/queries-componen
 import type { QueryOperation as WebsiteQueryOperation } from "./website/queries-components";
 
 type QueryOperation =
-  | WebQueryOperation
-  | BackofficeQueryOperation
-  | WebsiteQueryOperation;
+  WebQueryOperation | BackofficeQueryOperation | WebsiteQueryOperation;
 
 export type QueriesContext<
   TQueryFnData = unknown,
@@ -36,7 +33,7 @@ export type QueriesContext<
      * Set this to `false` to disable automatic refetching when the query mounts or changes query keys.
      * Defaults to `true`.
      */
-    enabled?: Enabled<TQueryFnData, TError, TQueryFnData, TQueryKey>;
+    enabled?: boolean;
   };
 };
 
