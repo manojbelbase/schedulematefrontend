@@ -9,6 +9,8 @@ import type {
 
 import type { TEnvSchema } from "@/config/env";
 
+declare module "*.css";
+
 declare global {
   type SocketNamespace = "" | "/user" | "/workspace";
   namespace NodeJS {

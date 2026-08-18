@@ -4,6 +4,8 @@ import { COOKIE_KEYS } from "@/config/constants";
 
 const PUBLIC_PATHS = [
   "/auth/login",
+  "/auth/callback",
+  "/auth/logout",
   "/auth",
   "/auth/forgot-password",
   "/auth/change-password",
