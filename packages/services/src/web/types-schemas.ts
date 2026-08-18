@@ -49,6 +49,47 @@ export type LoginUserDto = {
   password: string;
 };
 
+export type ForgotPasswordDto = {
+  /**
+   * @format email
+   * @example user@example.com
+   */
+  email: string;
+};
+
+export type VerifyOtpDto = {
+  /**
+   * @format email
+   * @example user@example.com
+   */
+  email: string;
+  /**
+   * @minLength 6
+   * @maxLength 6
+   * @example 123456
+   */
+  otp: string;
+};
+
+export type ResetPasswordDto = {
+  /**
+   * @format email
+   * @example user@example.com
+   */
+  email: string;
+  /**
+   * @minLength 6
+   * @maxLength 6
+   * @example 123456
+   */
+  otp: string;
+  /**
+   * @minLength 8
+   * @example newPassword123
+   */
+  newPassword: string;
+};
+
 export type PublicUser = {
   /**
    * @format uuid

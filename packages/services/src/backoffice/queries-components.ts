@@ -143,7 +143,7 @@ export const fetchAuthControllerRegister = (
   signal?: AbortSignal,
 ) =>
   queriesFetch<
-    Schemas.UserResponse,
+    Schemas.AuthResponse,
     AuthControllerRegisterError,
     Schemas.RegisterUserDto,
     {},
@@ -154,7 +154,7 @@ export const fetchAuthControllerRegister = (
 export const useAuthControllerRegister = (
   options?: Omit<
     reactQuery.UseMutationOptions<
-      Schemas.UserResponse,
+      Schemas.AuthResponse,
       AuthControllerRegisterError,
       AuthControllerRegisterVariables
     >,
@@ -163,7 +163,7 @@ export const useAuthControllerRegister = (
 ) => {
   const { fetcherOptions } = useQueriesContext();
   return reactQuery.useMutation<
-    Schemas.UserResponse,
+    Schemas.AuthResponse,
     AuthControllerRegisterError,
     AuthControllerRegisterVariables
   >({
@@ -193,7 +193,7 @@ export const fetchAuthControllerLogin = (
   signal?: AbortSignal,
 ) =>
   queriesFetch<
-    Schemas.UserResponse,
+    Schemas.AuthResponse,
     AuthControllerLoginError,
     Schemas.LoginUserDto,
     {},
@@ -204,7 +204,7 @@ export const fetchAuthControllerLogin = (
 export const useAuthControllerLogin = (
   options?: Omit<
     reactQuery.UseMutationOptions<
-      Schemas.UserResponse,
+      Schemas.AuthResponse,
       AuthControllerLoginError,
       AuthControllerLoginVariables
     >,
@@ -213,7 +213,7 @@ export const useAuthControllerLogin = (
 ) => {
   const { fetcherOptions } = useQueriesContext();
   return reactQuery.useMutation<
-    Schemas.UserResponse,
+    Schemas.AuthResponse,
     AuthControllerLoginError,
     AuthControllerLoginVariables
   >({
@@ -605,6 +605,138 @@ export const useAuthControllerLogout = (
   >({
     mutationFn: (variables: AuthControllerLogoutVariables) =>
       fetchAuthControllerLogout(deepMerge(fetcherOptions, variables)),
+    ...options,
+  });
+};
+
+export type AuthControllerForgotPasswordError = Fetcher.ErrorWrapper<{
+  status: 400;
+  payload: Schemas.ErrorResponse;
+}>;
+
+export type AuthControllerForgotPasswordVariables = {
+  body: Schemas.ForgotPasswordDto;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchAuthControllerForgotPassword = (
+  variables: AuthControllerForgotPasswordVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.MessageResponse,
+    AuthControllerForgotPasswordError,
+    Schemas.ForgotPasswordDto,
+    {},
+    {},
+    {}
+  >({ url: "/api/auth/forgot-password", method: "post", ...variables, signal });
+
+export const useAuthControllerForgotPassword = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.MessageResponse,
+      AuthControllerForgotPasswordError,
+      AuthControllerForgotPasswordVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.MessageResponse,
+    AuthControllerForgotPasswordError,
+    AuthControllerForgotPasswordVariables
+  >({
+    mutationFn: (variables: AuthControllerForgotPasswordVariables) =>
+      fetchAuthControllerForgotPassword(deepMerge(fetcherOptions, variables)),
+    ...options,
+  });
+};
+
+export type AuthControllerVerifyOtpError = Fetcher.ErrorWrapper<{
+  status: 400;
+  payload: Schemas.ErrorResponse;
+}>;
+
+export type AuthControllerVerifyOtpVariables = {
+  body: Schemas.VerifyOtpDto;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchAuthControllerVerifyOtp = (
+  variables: AuthControllerVerifyOtpVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.MessageResponse,
+    AuthControllerVerifyOtpError,
+    Schemas.VerifyOtpDto,
+    {},
+    {},
+    {}
+  >({ url: "/api/auth/verify-otp", method: "post", ...variables, signal });
+
+export const useAuthControllerVerifyOtp = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.MessageResponse,
+      AuthControllerVerifyOtpError,
+      AuthControllerVerifyOtpVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.MessageResponse,
+    AuthControllerVerifyOtpError,
+    AuthControllerVerifyOtpVariables
+  >({
+    mutationFn: (variables: AuthControllerVerifyOtpVariables) =>
+      fetchAuthControllerVerifyOtp(deepMerge(fetcherOptions, variables)),
+    ...options,
+  });
+};
+
+export type AuthControllerResetPasswordError = Fetcher.ErrorWrapper<{
+  status: 400;
+  payload: Schemas.ErrorResponse;
+}>;
+
+export type AuthControllerResetPasswordVariables = {
+  body: Schemas.ResetPasswordDto;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchAuthControllerResetPassword = (
+  variables: AuthControllerResetPasswordVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.UserResponse,
+    AuthControllerResetPasswordError,
+    Schemas.ResetPasswordDto,
+    {},
+    {},
+    {}
+  >({ url: "/api/auth/reset-password", method: "post", ...variables, signal });
+
+export const useAuthControllerResetPassword = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.UserResponse,
+      AuthControllerResetPasswordError,
+      AuthControllerResetPasswordVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.UserResponse,
+    AuthControllerResetPasswordError,
+    AuthControllerResetPasswordVariables
+  >({
+    mutationFn: (variables: AuthControllerResetPasswordVariables) =>
+      fetchAuthControllerResetPassword(deepMerge(fetcherOptions, variables)),
     ...options,
   });
 };
