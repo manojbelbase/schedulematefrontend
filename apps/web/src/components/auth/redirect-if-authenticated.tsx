@@ -8,6 +8,7 @@ function RedirectIfAuthenticatedInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { isAuthenticated, isSessionLoading } = useSession();
+  console.log("isAuthenticated", isAuthenticated);
 
   useEffect(() => {
     if (isSessionLoading) return;
