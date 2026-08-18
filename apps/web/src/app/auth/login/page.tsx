@@ -20,11 +20,16 @@ export default function LoginPage() {
       />
 
       <div className="relative flex w-full flex-col items-center space-y-4">
-        <div className="w-full max-w-lg rounded-2xl border bg-background/80 p-8 shadow-2xl shadow-purple-950/10 backdrop-blur sm:p-10">
-          <Logo className="mb-4" />
-          <p className="mt-2  text-center text-sm font-medium">
-            Sign in to your account to continue.
-          </p>
+        <div className="w-full max-w-md rounded-2xl border bg-background/80 p-8 shadow-2xl shadow-purple-950/10 backdrop-blur sm:p-10">
+          <Logo className="mb-6" />
+          <div className="mb-6 flex flex-col gap-1 text-center">
+            <h1 className="text-xl font-semibold tracking-tight">
+              Welcome back
+            </h1>
+            <p className="text-muted-foreground text-sm">
+              Sign in to your account to continue.
+            </p>
+          </div>
           <Suspense>
             <SignIn />
           </Suspense>

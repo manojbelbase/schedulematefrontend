@@ -5,11 +5,6 @@ export const COOKIE_KEYS = {
   SIDEBAR_OPEN_COOKIE_KEY: "sidebar_state",
 };
 
-export const DESCOPE_COOKIE_CONFIG = {
-  cookieName: COOKIE_KEYS.AUTH_COOKIE_KEY,
-  sameSite: "Lax" as const,
-  secure: true,
-};
 export const OTP_LENGTH = 5;
 export const OTP_RESEND_SECONDS = 30;
 

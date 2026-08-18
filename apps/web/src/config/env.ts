@@ -24,7 +24,6 @@ const EnvSchema = z.object({
   ),
   NODE_ENV: z.enum(["development", "production", "test"]),
   NEXT_PUBLIC_ONE_SIGNAL_APP_ID: optionalString(),
-  NEXT_PUBLIC_DESCOPE_PROJECT_ID: optionalString(),
 });
 
 export type TEnvSchema = z.infer<typeof EnvSchema>;
@@ -38,7 +37,6 @@ export function validateEnv(): TEnvSchema {
     DOCS_AUTH_TOKEN: process.env.DOCS_AUTH_TOKEN,
     NEXT_PUBLIC_SOCKET_BASE_URL: process.env.NEXT_PUBLIC_SOCKET_BASE_URL,
     NEXT_PUBLIC_ONE_SIGNAL_APP_ID: process.env.NEXT_PUBLIC_ONE_SIGNAL_APP_ID,
-    NEXT_PUBLIC_DESCOPE_PROJECT_ID: process.env.NEXT_PUBLIC_DESCOPE_PROJECT_ID,
   });
   if (!parsedEnv.success) {
     console.error("Invalid environment variables:");

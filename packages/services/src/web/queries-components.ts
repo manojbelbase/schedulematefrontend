@@ -3,15 +3,17 @@
  *
  * @version 1.0.0
  */
+
 import * as reactQuery from "@tanstack/react-query";
+
 import {
-  type QueriesContext,
-  useQueriesContext,
   queryKeyFn,
+  useQueriesContext,
+  type QueriesContext,
 } from "./queries-context";
-import { deepMerge } from "./queries-utils";
 import type * as Fetcher from "./queries-fetcher";
 import { queriesFetch } from "./queries-fetcher";
+import { deepMerge } from "./queries-utils";
 import type * as Schemas from "./types-schemas";
 
 type QueryFnOptions = {
@@ -94,7 +96,7 @@ export const useSuspenseHealthControllerCheckHealth = <
   });
 };
 
-export const useHealthControllerCheckHealth = <TData = Schemas.HealthResponse,>(
+export const useHealthControllerCheckHealth = <TData = Schemas.HealthResponse>(
   variables: HealthControllerCheckHealthVariables | reactQuery.SkipToken,
   options?: Omit<
     reactQuery.UseQueryOptions<
@@ -171,10 +173,16 @@ export const useAuthControllerRegister = (
   });
 };
 
-export type AuthControllerLoginError = Fetcher.ErrorWrapper<{
-  status: 401;
-  payload: Schemas.ErrorResponse;
-}>;
+export type AuthControllerLoginError = Fetcher.ErrorWrapper<
+  | {
+      status: 400;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+>;
 
 export type AuthControllerLoginVariables = {
   body: Schemas.LoginUserDto;
@@ -185,7 +193,7 @@ export const fetchAuthControllerLogin = (
   signal?: AbortSignal,
 ) =>
   queriesFetch<
-    Schemas.AuthResponse,
+    Schemas.UserResponse,
     AuthControllerLoginError,
     Schemas.LoginUserDto,
     {},
@@ -196,7 +204,7 @@ export const fetchAuthControllerLogin = (
 export const useAuthControllerLogin = (
   options?: Omit<
     reactQuery.UseMutationOptions<
-      Schemas.AuthResponse,
+      Schemas.UserResponse,
       AuthControllerLoginError,
       AuthControllerLoginVariables
     >,
@@ -205,7 +213,7 @@ export const useAuthControllerLogin = (
 ) => {
   const { fetcherOptions } = useQueriesContext();
   return reactQuery.useMutation<
-    Schemas.AuthResponse,
+    Schemas.UserResponse,
     AuthControllerLoginError,
     AuthControllerLoginVariables
   >({
@@ -215,84 +223,207 @@ export const useAuthControllerLogin = (
   });
 };
 
-export type AuthControllerRefreshError = Fetcher.ErrorWrapper<{
-  status: 401;
-  payload: Schemas.ErrorResponse;
-}>;
+export type AuthControllerGoogleQueryParams = {
+  /**
+   * Path to return to after successful login
+   *
+   * @default /
+   */
+  redirect?: string;
+};
 
-export type AuthControllerRefreshVariables = QueriesContext["fetcherOptions"];
+export type AuthControllerGoogleError = Fetcher.ErrorWrapper<undefined>;
 
-export const fetchAuthControllerRefresh = (
-  variables: AuthControllerRefreshVariables,
+export type AuthControllerGoogleVariables = {
+  queryParams?: AuthControllerGoogleQueryParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchAuthControllerGoogle = (
+  variables: AuthControllerGoogleVariables,
   signal?: AbortSignal,
 ) =>
   queriesFetch<
-    Schemas.AuthResponse,
-    AuthControllerRefreshError,
+    undefined,
+    AuthControllerGoogleError,
     undefined,
     {},
-    {},
+    AuthControllerGoogleQueryParams,
     {}
-  >({ url: "/api/auth/refresh", method: "post", ...variables, signal });
+  >({ url: "/api/auth/google", method: "get", ...variables, signal });
 
-export const useAuthControllerRefresh = (
+export function authControllerGoogleQuery(
+  variables: AuthControllerGoogleVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (options: QueryFnOptions) => Promise<undefined>;
+};
+
+export function authControllerGoogleQuery(
+  variables: AuthControllerGoogleVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    ((options: QueryFnOptions) => Promise<undefined>) | reactQuery.SkipToken;
+};
+
+export function authControllerGoogleQuery(
+  variables: AuthControllerGoogleVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/auth/google",
+      operationId: "authControllerGoogle",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchAuthControllerGoogle(variables, signal),
+  };
+}
+
+export const useSuspenseAuthControllerGoogle = <TData = undefined>(
+  variables: AuthControllerGoogleVariables,
   options?: Omit<
-    reactQuery.UseMutationOptions<
-      Schemas.AuthResponse,
-      AuthControllerRefreshError,
-      AuthControllerRefreshVariables
-    >,
-    "mutationFn"
+    reactQuery.UseQueryOptions<undefined, AuthControllerGoogleError, TData>,
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
-  const { fetcherOptions } = useQueriesContext();
-  return reactQuery.useMutation<
-    Schemas.AuthResponse,
-    AuthControllerRefreshError,
-    AuthControllerRefreshVariables
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    undefined,
+    AuthControllerGoogleError,
+    TData
   >({
-    mutationFn: (variables: AuthControllerRefreshVariables) =>
-      fetchAuthControllerRefresh(deepMerge(fetcherOptions, variables)),
+    ...authControllerGoogleQuery(deepMerge(fetcherOptions, variables)),
     ...options,
+    ...queryOptions,
   });
 };
 
-export type AuthControllerLogoutError = Fetcher.ErrorWrapper<undefined>;
+export const useAuthControllerGoogle = <TData = undefined>(
+  variables: AuthControllerGoogleVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<undefined, AuthControllerGoogleError, TData>,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<undefined, AuthControllerGoogleError, TData>({
+    ...authControllerGoogleQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
 
-export type AuthControllerLogoutVariables = QueriesContext["fetcherOptions"];
+export type AuthControllerGoogleCallbackQueryParams = {
+  code: string;
+  state: string;
+};
 
-export const fetchAuthControllerLogout = (
-  variables: AuthControllerLogoutVariables,
+export type AuthControllerGoogleCallbackError = Fetcher.ErrorWrapper<undefined>;
+
+export type AuthControllerGoogleCallbackVariables = {
+  queryParams: AuthControllerGoogleCallbackQueryParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchAuthControllerGoogleCallback = (
+  variables: AuthControllerGoogleCallbackVariables,
   signal?: AbortSignal,
 ) =>
   queriesFetch<
-    Schemas.MessageResponse,
-    AuthControllerLogoutError,
+    undefined,
+    AuthControllerGoogleCallbackError,
     undefined,
     {},
-    {},
+    AuthControllerGoogleCallbackQueryParams,
     {}
-  >({ url: "/api/auth/logout", method: "post", ...variables, signal });
+  >({ url: "/api/auth/google/callback", method: "get", ...variables, signal });
 
-export const useAuthControllerLogout = (
+export function authControllerGoogleCallbackQuery(
+  variables: AuthControllerGoogleCallbackVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (options: QueryFnOptions) => Promise<undefined>;
+};
+
+export function authControllerGoogleCallbackQuery(
+  variables: AuthControllerGoogleCallbackVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    ((options: QueryFnOptions) => Promise<undefined>) | reactQuery.SkipToken;
+};
+
+export function authControllerGoogleCallbackQuery(
+  variables: AuthControllerGoogleCallbackVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/auth/google/callback",
+      operationId: "authControllerGoogleCallback",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchAuthControllerGoogleCallback(variables, signal),
+  };
+}
+
+export const useSuspenseAuthControllerGoogleCallback = <TData = undefined>(
+  variables: AuthControllerGoogleCallbackVariables,
   options?: Omit<
-    reactQuery.UseMutationOptions<
-      Schemas.MessageResponse,
-      AuthControllerLogoutError,
-      AuthControllerLogoutVariables
+    reactQuery.UseQueryOptions<
+      undefined,
+      AuthControllerGoogleCallbackError,
+      TData
     >,
-    "mutationFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
-  const { fetcherOptions } = useQueriesContext();
-  return reactQuery.useMutation<
-    Schemas.MessageResponse,
-    AuthControllerLogoutError,
-    AuthControllerLogoutVariables
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    undefined,
+    AuthControllerGoogleCallbackError,
+    TData
   >({
-    mutationFn: (variables: AuthControllerLogoutVariables) =>
-      fetchAuthControllerLogout(deepMerge(fetcherOptions, variables)),
+    ...authControllerGoogleCallbackQuery(deepMerge(fetcherOptions, variables)),
     ...options,
+    ...queryOptions,
+  });
+};
+
+export const useAuthControllerGoogleCallback = <TData = undefined>(
+  variables: AuthControllerGoogleCallbackVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      undefined,
+      AuthControllerGoogleCallbackError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    undefined,
+    AuthControllerGoogleCallbackError,
+    TData
+  >({
+    ...authControllerGoogleCallbackQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
   });
 };
 
@@ -347,7 +478,7 @@ export function authControllerMeQuery(
   };
 }
 
-export const useSuspenseAuthControllerMe = <TData = Schemas.UserResponse,>(
+export const useSuspenseAuthControllerMe = <TData = Schemas.UserResponse>(
   variables: AuthControllerMeVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<
@@ -370,7 +501,7 @@ export const useSuspenseAuthControllerMe = <TData = Schemas.UserResponse,>(
   });
 };
 
-export const useAuthControllerMe = <TData = Schemas.UserResponse,>(
+export const useAuthControllerMe = <TData = Schemas.UserResponse>(
   variables: AuthControllerMeVariables | reactQuery.SkipToken,
   options?: Omit<
     reactQuery.UseQueryOptions<
@@ -397,11 +528,102 @@ export const useAuthControllerMe = <TData = Schemas.UserResponse,>(
   });
 };
 
+export type AuthControllerRefreshError = Fetcher.ErrorWrapper<{
+  status: 401;
+  payload: Schemas.ErrorResponse;
+}>;
+
+export type AuthControllerRefreshVariables = QueriesContext["fetcherOptions"];
+
+export const fetchAuthControllerRefresh = (
+  variables: AuthControllerRefreshVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.MessageResponse,
+    AuthControllerRefreshError,
+    undefined,
+    {},
+    {},
+    {}
+  >({ url: "/api/auth/refresh", method: "post", ...variables, signal });
+
+export const useAuthControllerRefresh = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.MessageResponse,
+      AuthControllerRefreshError,
+      AuthControllerRefreshVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.MessageResponse,
+    AuthControllerRefreshError,
+    AuthControllerRefreshVariables
+  >({
+    mutationFn: (variables: AuthControllerRefreshVariables) =>
+      fetchAuthControllerRefresh(deepMerge(fetcherOptions, variables)),
+    ...options,
+  });
+};
+
+export type AuthControllerLogoutError = Fetcher.ErrorWrapper<undefined>;
+
+export type AuthControllerLogoutVariables = QueriesContext["fetcherOptions"];
+
+export const fetchAuthControllerLogout = (
+  variables: AuthControllerLogoutVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.MessageResponse,
+    AuthControllerLogoutError,
+    undefined,
+    {},
+    {},
+    {}
+  >({ url: "/api/auth/logout", method: "post", ...variables, signal });
+
+export const useAuthControllerLogout = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.MessageResponse,
+      AuthControllerLogoutError,
+      AuthControllerLogoutVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.MessageResponse,
+    AuthControllerLogoutError,
+    AuthControllerLogoutVariables
+  >({
+    mutationFn: (variables: AuthControllerLogoutVariables) =>
+      fetchAuthControllerLogout(deepMerge(fetcherOptions, variables)),
+    ...options,
+  });
+};
+
 export type QueryOperation =
   | {
       path: "/api/health";
       operationId: "healthControllerCheckHealth";
       variables: HealthControllerCheckHealthVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/auth/google";
+      operationId: "authControllerGoogle";
+      variables: AuthControllerGoogleVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/auth/google/callback";
+      operationId: "authControllerGoogleCallback";
+      variables: AuthControllerGoogleCallbackVariables | reactQuery.SkipToken;
     }
   | {
       path: "/api/auth/me";

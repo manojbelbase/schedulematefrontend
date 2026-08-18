@@ -19,27 +19,6 @@ export type MessageResponse = {
   message: string;
 };
 
-export type PublicUser = {
-  /**
-   * @format uuid
-   */
-  id: string;
-  name?: string | null;
-  /**
-   * @format email
-   */
-  email: string;
-  username?: string | null;
-};
-
-export type AuthData = {
-  /**
-   * @example jwt.token.here
-   */
-  accessToken: string;
-  user: PublicUser;
-};
-
 export type RegisterUserDto = {
   /**
    * @format email
@@ -47,11 +26,10 @@ export type RegisterUserDto = {
    */
   email: string;
   /**
-   * @minLength 3
-   * @maxLength 50
-   * @example johndoe
+   * @maxLength 100
+   * @example Jane Doe
    */
-  username?: string;
+  name?: string;
   /**
    * @minLength 8
    * @example password123
@@ -69,6 +47,19 @@ export type LoginUserDto = {
    * @example password123
    */
   password: string;
+};
+
+export type PublicUser = {
+  /**
+   * @format uuid
+   */
+  id: string;
+  name?: string | null;
+  /**
+   * @format email
+   */
+  email: string;
+  username?: string | null;
 };
 
 export type HealthData = {
@@ -93,15 +84,6 @@ export type HealthResponse = {
   success: boolean;
   message: string;
   data: HealthData;
-};
-
-export type AuthResponse = {
-  /**
-   * @example true
-   */
-  success: boolean;
-  message: string;
-  data: AuthData;
 };
 
 export type UserResponse = {

@@ -1,24 +1,37 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useCallback, useEffect } from "react";
-import { useDescope, useSession } from "@descope/nextjs-sdk/client";
+import { Suspense, useCallback, useEffect, useState } from "react";
+
+import { env } from "@/config/env";
 
 function LogoutInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { isSessionLoading } = useSession();
-  const sdk = useDescope();
+  const [done, setDone] = useState(false);
 
   const redirect = searchParams.get("redirect") ?? "/auth/login";
 
+  const logout = useCallback(async () => {
+    const baseUrl = env.NEXT_PUBLIC_WEB_API_BASE_URL?.replace(/\/$/, "") ?? "";
+    try {
+      await fetch(`${baseUrl}/api/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch {
+      /* ignore network errors, redirect anyway */
+    } finally {
+      router.replace(redirect);
+    }
+  }, [redirect, router]);
+
   useEffect(() => {
-    if (isSessionLoading) return;
-    void sdk
-      .logout(redirect)
-      .then(() => router.replace(redirect))
-      .catch(() => router.replace(redirect));
-  }, [isSessionLoading, redirect, router, sdk]);
+    if (!done) {
+      setDone(true);
+      void logout();
+    }
+  }, [done, logout]);
 
   return (
     <div className="flex min-h-screen items-center justify-center">
@@ -40,12 +53,21 @@ export default function Logout() {
 
 export function useLogout(redirect = "/auth/login") {
   const router = useRouter();
-  const sdk = useDescope();
+  const [inProgress, setInProgress] = useState(false);
 
-  return useCallback(() => {
-    void sdk
-      .logout(redirect)
-      .then(() => router.replace(redirect))
-      .catch(() => router.replace(redirect));
-  }, [redirect, router, sdk]);
+  return useCallback(async () => {
+    if (inProgress) return;
+    setInProgress(true);
+    const baseUrl = env.NEXT_PUBLIC_WEB_API_BASE_URL?.replace(/\/$/, "") ?? "";
+    try {
+      await fetch(`${baseUrl}/api/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch {
+      /* ignore network errors, redirect anyway */
+    } finally {
+      router.replace(redirect);
+    }
+  }, [inProgress, redirect, router]);
 }
