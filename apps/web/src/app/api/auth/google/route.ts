@@ -1,7 +1,11 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-import { AUTH_COOKIE_DAYS, COOKIE_KEYS } from "@/config/constants";
+import {
+  AUTH_COOKIE_DAYS,
+  COOKIE_KEYS,
+  REFRESH_COOKIE_DAYS,
+} from "@/config/constants";
 
 function safeRedirectPath(value: unknown): string {
   if (
@@ -38,7 +42,7 @@ export async function GET(request: Request) {
     cookieStore.set(COOKIE_KEYS.REFRESH_COOKIE_KEY, refresh, {
       path: "/",
       sameSite: "lax",
-      maxAge: AUTH_COOKIE_DAYS * 24 * 60 * 60,
+      maxAge: REFRESH_COOKIE_DAYS * 24 * 60 * 60,
     });
   }
 

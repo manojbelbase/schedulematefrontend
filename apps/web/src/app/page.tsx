@@ -1,43 +1,28 @@
 "use client";
 
-import { Suspense } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-import { Button } from "@ui/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@ui/components/ui/card";
-import { Separator } from "@ui/components/ui/separator";
-
-import AuthStatus from "@/components/auth/auth-status";
-import { GoogleCalendarConnect } from "@/components/google/google-calendar-connect";
+import ChatClient from "@/components/chat/chat-client";
 import { useAuth } from "@/hooks/use-auth";
 
 export default function HomePage() {
-  const user = useAuth();
-  console.log("user", user);
-  return (
-    <main className="flex min-h-screen items-center justify-center p-8">
-      <div className="absolute top-4 right-4">
-        <AuthStatus />
-      </div>
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>ScheduledMate</CardTitle>
-          <CardDescription>Web application</CardDescription>
-          {user?.user?.email}hu
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          <Button>Get Started</Button>
-          <Separator />
-          <Suspense>
-            <GoogleCalendarConnect />
-          </Suspense>
-        </CardContent>
-      </Card>
-    </main>
-  );
+  const { isAuthenticated, isLoading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      router.replace("/auth/login");
+    }
+  }, [isAuthenticated, isLoading, router]);
+
+  if (isLoading) {
+    return <div className="flex h-screen items-center justify-center" />;
+  }
+
+  if (!isAuthenticated) {
+    return null;
+  }
+
+  return <ChatClient />;
 }

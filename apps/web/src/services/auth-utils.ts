@@ -1,16 +1,29 @@
 "use client";
 
-import { AUTH_COOKIE_DAYS, COOKIE_KEYS } from "@/config/constants";
+import {
+  AUTH_COOKIE_DAYS,
+  COOKIE_KEYS,
+  REFRESH_COOKIE_DAYS,
+} from "@/config/constants";
 
 export function getAuthToken(): string | null {
   if (typeof document === "undefined") return null;
   return readCookieValue(COOKIE_KEYS.AUTH_COOKIE_KEY);
 }
 
+export function getRefreshToken(): string | null {
+  if (typeof document === "undefined") return null;
+  return readCookieValue(COOKIE_KEYS.REFRESH_COOKIE_KEY);
+}
+
 export function setAuthCookies(token: string, refreshToken?: string): void {
   setCookie(COOKIE_KEYS.AUTH_COOKIE_KEY, token, AUTH_COOKIE_DAYS);
   if (refreshToken) {
-    setCookie(COOKIE_KEYS.REFRESH_COOKIE_KEY, refreshToken, AUTH_COOKIE_DAYS);
+    setCookie(
+      COOKIE_KEYS.REFRESH_COOKIE_KEY,
+      refreshToken,
+      REFRESH_COOKIE_DAYS,
+    );
   }
 }
 
