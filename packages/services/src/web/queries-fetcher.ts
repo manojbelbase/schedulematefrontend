@@ -3,8 +3,8 @@ import type { QueriesContext } from "./queries-context";
 const baseUrl = process.env.NEXT_PUBLIC_WEB_API_BASE_URL;
 
 let dynamicHeaderProvider:
-  | (() => Record<string, string> | Promise<Record<string, string>>)
-  | null = null;
+  (() => Record<string, string> | Promise<Record<string, string>>) | null =
+  null;
 
 export const setDynamicHeaderProvider = (
   provider: () => Record<string, string> | Promise<Record<string, string>>,
@@ -15,8 +15,7 @@ export const setDynamicHeaderProvider = (
 };
 
 export type ErrorWrapper<TError> =
-  | TError
-  | { status: "unknown"; payload: string };
+  TError | { status: "unknown"; payload: string };
 
 export type QueriesFetcherOptions<TBody, THeaders, TQueryParams, TPathParams> =
   {
@@ -50,104 +49,140 @@ export async function queriesFetch<
   TQueryParams,
   TPathParams
 >): Promise<TData> {
-  let error: ErrorWrapper<TError>;
+  const isServer = typeof window === "undefined";
+
+  let response = await executeRequest<
+    TData,
+    TError,
+    TBody,
+    THeaders,
+    TQueryParams,
+    TPathParams
+  >({ url, method, body, headers, pathParams, queryParams, signal });
+
+  if (response.status === 401 && !isServer) {
+    try {
+      await executeRequest({
+        url: "/api/auth/refresh",
+        method: "post",
+      });
+
+      response = await executeRequest<
+        TData,
+        TError,
+        TBody,
+        THeaders,
+        TQueryParams,
+        TPathParams
+      >({ url, method, body, headers, pathParams, queryParams, signal });
+    } catch {
+      // refresh failed, fall through to the 401 handling below
+    }
+  }
+
+  if (response.status === 401) {
+    if (isServer) {
+      const { redirect } = await import("next/navigation");
+      redirect("/auth/login");
+    } else if (typeof window !== "undefined") {
+      window.location.assign("/auth/login");
+      return new Promise<never>(() => {
+        /**
+         * keep promise pending until navigation completes
+         */
+      });
+    }
+  }
+  if (!response.ok) {
+    let error: ErrorWrapper<TError>;
+    try {
+      error = await response.json();
+    } catch (e) {
+      error = {
+        status: "unknown" as const,
+        payload:
+          e instanceof Error
+            ? `Unexpected error (${e.message})`
+            : "Unexpected error",
+      };
+    }
+    throw error;
+  }
+  if (response.headers.get("content-type")?.includes("json")) {
+    return (await response.json()) as TData;
+  }
+
+  // if it is not a json response, assume it is a blob and cast it to TData
+  return (await response.blob()) as unknown as TData;
+}
+
+async function executeRequest<
+  TData,
+  TError,
+  TBody extends {} | FormData | undefined | null,
+  THeaders extends {},
+  TQueryParams extends {},
+  TPathParams extends {},
+>({
+  url,
+  method,
+  body,
+  headers,
+  pathParams,
+  queryParams,
+  signal,
+}: QueriesFetcherOptions<
+  TBody,
+  THeaders,
+  TQueryParams,
+  TPathParams
+>): Promise<Response> {
   const isServer = typeof window === "undefined";
   let cookies = "";
   let dynamicHeaders = {};
 
-  try {
-    if (isServer) {
-      const { cookies: getter } = await import("next/headers");
-      cookies = (await getter()).toString();
-    } else {
-      if (dynamicHeaderProvider) {
-        dynamicHeaders = await dynamicHeaderProvider();
-      }
+  if (isServer) {
+    const { cookies: getter } = await import("next/headers");
+    cookies = (await getter()).toString();
+  } else {
+    if (dynamicHeaderProvider) {
+      dynamicHeaders = await dynamicHeaderProvider();
     }
-    const requestHeaders: HeadersInit = {
-      ...(body instanceof FormData
-        ? {}
-        : { "Content-Type": "application/json" }),
-      ...(isServer && {
-        Cookie: cookies,
-      }),
-      ...dynamicHeaders,
-      ...headers,
-    };
-
-    /**
-     * As the fetch API is being used, when multipart/form-data is specified
-     * the Content-Type header must be deleted so that the browser can set
-     * the correct boundary.
-     * https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects#sending_files_using_a_formdata_object
-     */
-    if (
-      requestHeaders["Content-Type"]
-        ?.toLowerCase()
-        .includes("multipart/form-data")
-    ) {
-      delete requestHeaders["Content-Type"];
-    }
-
-    const response = await fetch(
-      `${baseUrl}${resolveUrl(url, queryParams, pathParams)}`,
-      {
-        signal,
-        credentials: "include",
-        method: method.toUpperCase(),
-        body: body
-          ? body instanceof FormData
-            ? body
-            : JSON.stringify(body)
-          : undefined,
-        headers: requestHeaders,
-      },
-    );
-    if (response.status === 401) {
-      if (isServer) {
-        const { redirect } = await import("next/navigation");
-        redirect("/auth/login");
-      } else if (typeof window !== "undefined") {
-        window.location.assign("/auth/login");
-        return new Promise<never>(() => {
-          /**
-           * keep promise pending until navigation completes
-           */
-        });
-      }
-    }
-    if (!response.ok) {
-      try {
-        error = await response.json();
-      } catch (e) {
-        error = {
-          status: "unknown" as const,
-          payload:
-            e instanceof Error
-              ? `Unexpected error (${e.message})`
-              : "Unexpected error",
-        };
-      }
-    } else if (response.headers.get("content-type")?.includes("json")) {
-      const res = await response.json();
-
-      return res;
-    } else {
-      // if it is not a json response, assume it is a blob and cast it to TData
-      return (await response.blob()) as unknown as TData;
-    }
-  } catch (e) {
-    if (isServer && isNextRedirectError(e)) {
-      throw e;
-    }
-
-    if (e instanceof Error) {
-      throw e;
-    }
-
-    throw new Error("Network error");
   }
-  throw error;
+  const requestHeaders: HeadersInit = {
+    ...(body instanceof FormData ? {} : { "Content-Type": "application/json" }),
+    ...(isServer && {
+      Cookie: cookies,
+    }),
+    ...dynamicHeaders,
+    ...headers,
+  };
+
+  /**
+   * As the fetch API is being used, when multipart/form-data is specified
+   * the Content-Type header must be deleted so that the browser can set
+   * the correct boundary.
+   * https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects#sending_files_using_a_formdata_object
+   */
+  if (
+    requestHeaders["Content-Type"]
+      ?.toLowerCase()
+      .includes("multipart/form-data")
+  ) {
+    delete requestHeaders["Content-Type"];
+  }
+
+  return fetch(`${baseUrl}${resolveUrl(url, queryParams, pathParams)}`, {
+    signal,
+    credentials: "include",
+    method: method.toUpperCase(),
+    body: body
+      ? body instanceof FormData
+        ? body
+        : JSON.stringify(body)
+      : undefined,
+    headers: requestHeaders,
+  });
 }
 
 const isNextRedirectError = (
