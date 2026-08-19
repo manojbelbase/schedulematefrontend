@@ -5,3 +5,6 @@ export const webApiBaseUrl =
 
 export const googleAuthUrl = (redirect: string) =>
   `${webApiBaseUrl}/api/auth/google?redirect=${encodeURIComponent(redirect)}`;
+
+export const googleConnectUrl = (redirect: string) =>
+  `${webApiBaseUrl}/api/google/connect?redirect=${encodeURIComponent(redirect)}`;
