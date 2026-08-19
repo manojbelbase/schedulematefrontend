@@ -1,5 +1,7 @@
 "use client";
 
+import { Suspense } from "react";
+
 import {
   Card,
   CardContent,
@@ -7,7 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@ui/components/ui/card";
-import { Separator } from "@ui/components/ui/separator";
 
 import AuthStatus from "@/components/auth/auth-status";
 import { GoogleCalendarConnect } from "@/components/google/google-calendar-connect";
@@ -24,7 +25,9 @@ export default function SettingsPage() {
           <CardDescription>Manage your account preferences</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
-          <GoogleCalendarConnect />
+          <Suspense>
+            <GoogleCalendarConnect />
+          </Suspense>
         </CardContent>
       </Card>
     </main>
