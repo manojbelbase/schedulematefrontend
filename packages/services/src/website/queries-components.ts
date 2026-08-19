@@ -741,6 +741,369 @@ export const useAuthControllerResetPassword = (
   });
 };
 
+export type GoogleControllerStatusError = Fetcher.ErrorWrapper<{
+  status: 401;
+  payload: Schemas.ErrorResponse;
+}>;
+
+export type GoogleControllerStatusVariables = QueriesContext["fetcherOptions"];
+
+export const fetchGoogleControllerStatus = (
+  variables: GoogleControllerStatusVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.GoogleStatusResponse,
+    GoogleControllerStatusError,
+    undefined,
+    {},
+    {},
+    {}
+  >({ url: "/api/google/status", method: "get", ...variables, signal });
+
+export function googleControllerStatusQuery(
+  variables: GoogleControllerStatusVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (options: QueryFnOptions) => Promise<Schemas.GoogleStatusResponse>;
+};
+
+export function googleControllerStatusQuery(
+  variables: GoogleControllerStatusVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((options: QueryFnOptions) => Promise<Schemas.GoogleStatusResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function googleControllerStatusQuery(
+  variables: GoogleControllerStatusVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/google/status",
+      operationId: "googleControllerStatus",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchGoogleControllerStatus(variables, signal),
+  };
+}
+
+export const useSuspenseGoogleControllerStatus = <
+  TData = Schemas.GoogleStatusResponse,
+>(
+  variables: GoogleControllerStatusVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.GoogleStatusResponse,
+      GoogleControllerStatusError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    Schemas.GoogleStatusResponse,
+    GoogleControllerStatusError,
+    TData
+  >({
+    ...googleControllerStatusQuery(deepMerge(fetcherOptions, variables)),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useGoogleControllerStatus = <TData = Schemas.GoogleStatusResponse>(
+  variables: GoogleControllerStatusVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.GoogleStatusResponse,
+      GoogleControllerStatusError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    Schemas.GoogleStatusResponse,
+    GoogleControllerStatusError,
+    TData
+  >({
+    ...googleControllerStatusQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type GoogleControllerConnectQueryParams = {
+  /**
+   * Path to return to after connecting
+   *
+   * @default /settings
+   */
+  redirect?: string;
+};
+
+export type GoogleControllerConnectError = Fetcher.ErrorWrapper<{
+  status: 401;
+  payload: Schemas.ErrorResponse;
+}>;
+
+export type GoogleControllerConnectVariables = {
+  queryParams?: GoogleControllerConnectQueryParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchGoogleControllerConnect = (
+  variables: GoogleControllerConnectVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    undefined,
+    GoogleControllerConnectError,
+    undefined,
+    {},
+    GoogleControllerConnectQueryParams,
+    {}
+  >({ url: "/api/google/connect", method: "get", ...variables, signal });
+
+export function googleControllerConnectQuery(
+  variables: GoogleControllerConnectVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (options: QueryFnOptions) => Promise<undefined>;
+};
+
+export function googleControllerConnectQuery(
+  variables: GoogleControllerConnectVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    ((options: QueryFnOptions) => Promise<undefined>) | reactQuery.SkipToken;
+};
+
+export function googleControllerConnectQuery(
+  variables: GoogleControllerConnectVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/google/connect",
+      operationId: "googleControllerConnect",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchGoogleControllerConnect(variables, signal),
+  };
+}
+
+export const useSuspenseGoogleControllerConnect = <TData = undefined>(
+  variables: GoogleControllerConnectVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<undefined, GoogleControllerConnectError, TData>,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    undefined,
+    GoogleControllerConnectError,
+    TData
+  >({
+    ...googleControllerConnectQuery(deepMerge(fetcherOptions, variables)),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useGoogleControllerConnect = <TData = undefined>(
+  variables: GoogleControllerConnectVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<undefined, GoogleControllerConnectError, TData>,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<undefined, GoogleControllerConnectError, TData>({
+    ...googleControllerConnectQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type GoogleControllerConnectCallbackQueryParams = {
+  code: string;
+  state: string;
+};
+
+export type GoogleControllerConnectCallbackError =
+  Fetcher.ErrorWrapper<undefined>;
+
+export type GoogleControllerConnectCallbackVariables = {
+  queryParams: GoogleControllerConnectCallbackQueryParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchGoogleControllerConnectCallback = (
+  variables: GoogleControllerConnectCallbackVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    undefined,
+    GoogleControllerConnectCallbackError,
+    undefined,
+    {},
+    GoogleControllerConnectCallbackQueryParams,
+    {}
+  >({
+    url: "/api/google/connect/callback",
+    method: "get",
+    ...variables,
+    signal,
+  });
+
+export function googleControllerConnectCallbackQuery(
+  variables: GoogleControllerConnectCallbackVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (options: QueryFnOptions) => Promise<undefined>;
+};
+
+export function googleControllerConnectCallbackQuery(
+  variables: GoogleControllerConnectCallbackVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    ((options: QueryFnOptions) => Promise<undefined>) | reactQuery.SkipToken;
+};
+
+export function googleControllerConnectCallbackQuery(
+  variables: GoogleControllerConnectCallbackVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/google/connect/callback",
+      operationId: "googleControllerConnectCallback",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchGoogleControllerConnectCallback(variables, signal),
+  };
+}
+
+export const useSuspenseGoogleControllerConnectCallback = <TData = undefined>(
+  variables: GoogleControllerConnectCallbackVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      undefined,
+      GoogleControllerConnectCallbackError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    undefined,
+    GoogleControllerConnectCallbackError,
+    TData
+  >({
+    ...googleControllerConnectCallbackQuery(
+      deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useGoogleControllerConnectCallback = <TData = undefined>(
+  variables: GoogleControllerConnectCallbackVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      undefined,
+      GoogleControllerConnectCallbackError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    undefined,
+    GoogleControllerConnectCallbackError,
+    TData
+  >({
+    ...googleControllerConnectCallbackQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type GoogleControllerDisconnectError = Fetcher.ErrorWrapper<{
+  status: 401;
+  payload: Schemas.ErrorResponse;
+}>;
+
+export type GoogleControllerDisconnectVariables =
+  QueriesContext["fetcherOptions"];
+
+export const fetchGoogleControllerDisconnect = (
+  variables: GoogleControllerDisconnectVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.MessageResponse,
+    GoogleControllerDisconnectError,
+    undefined,
+    {},
+    {},
+    {}
+  >({ url: "/api/google/disconnect", method: "post", ...variables, signal });
+
+export const useGoogleControllerDisconnect = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.MessageResponse,
+      GoogleControllerDisconnectError,
+      GoogleControllerDisconnectVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.MessageResponse,
+    GoogleControllerDisconnectError,
+    GoogleControllerDisconnectVariables
+  >({
+    mutationFn: (variables: GoogleControllerDisconnectVariables) =>
+      fetchGoogleControllerDisconnect(deepMerge(fetcherOptions, variables)),
+    ...options,
+  });
+};
+
 export type QueryOperation =
   | {
       path: "/api/health";
@@ -761,4 +1124,20 @@ export type QueryOperation =
       path: "/api/auth/me";
       operationId: "authControllerMe";
       variables: AuthControllerMeVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/google/status";
+      operationId: "googleControllerStatus";
+      variables: GoogleControllerStatusVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/google/connect";
+      operationId: "googleControllerConnect";
+      variables: GoogleControllerConnectVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/google/connect/callback";
+      operationId: "googleControllerConnectCallback";
+      variables:
+        GoogleControllerConnectCallbackVariables | reactQuery.SkipToken;
     };

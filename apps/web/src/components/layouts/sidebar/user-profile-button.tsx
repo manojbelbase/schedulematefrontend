@@ -30,12 +30,12 @@ export default function UserProfileButton({ expanded }: { expanded: boolean }) {
           type="button"
           title={user ? `${displayName} · ${subLabel}` : "Account"}
           className={cn(
-            "group flex w-full items-center gap-3 rounded-md px-2 py-2 text-left transition-colors hover:bg-accent",
+            "group flex w-full items-center gap-3 rounded-md  py-2 text-left transition-colors hover:bg-accent",
             !expanded && "justify-center px-0",
           )}
         >
-          <Avatar className="size-8 shrink-0 bg-primary/10">
-            <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
+          <Avatar className="size-8 shrink-0 bg-primary/5 rounded-sm">
+            <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold rounded-sm">
               {initial}
             </AvatarFallback>
           </Avatar>
@@ -62,8 +62,8 @@ export default function UserProfileButton({ expanded }: { expanded: boolean }) {
         className="w-72 overflow-hidden p-0 mb-4 ml-2"
       >
         <div className="flex items-center gap-3 px-4 py-3.5">
-          <Avatar className="size-10 shrink-0 bg-primary/10">
-            <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold">
+          <Avatar className="size-10 shrink-0 bg-primary/10 rounded-sm">
+            <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold rounded-sm">
               {initial}
             </AvatarFallback>
           </Avatar>

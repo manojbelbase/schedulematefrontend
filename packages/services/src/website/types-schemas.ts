@@ -148,3 +148,23 @@ export type AuthResponse = {
     refreshToken?: string;
   };
 };
+
+export type GoogleStatusData = {
+  /**
+   * @example true
+   */
+  connected: boolean;
+  /**
+   * @format email
+   */
+  googleEmail?: string | null;
+};
+
+export type GoogleStatusResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: GoogleStatusData;
+};
