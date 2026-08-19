@@ -2,9 +2,12 @@
 
 import { useEffect, type ReactNode } from "react";
 
-import { useAuthControllerMe } from "@repo/services/web";
+import {
+  fetchAuthControllerRefresh,
+  useAuthControllerMe,
+} from "@repo/services/web";
 
-import { getAuthToken } from "@/services/auth-utils";
+import { getAuthToken, getRefreshToken } from "@/services/auth-utils";
 import { useAuthStore } from "@/zustand/auth";
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
@@ -19,6 +22,42 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     if (!token) {
       useAuthStore.setState({ token: getAuthToken() ?? null });
     }
+  }, [token]);
+
+  // If there is no access token but a refresh token exists, attempt to restore
+  // the session before the app settles on a logged-out state.
+  useEffect(() => {
+    const hasToken = token ?? getAuthToken();
+    const hasRefresh = Boolean(getRefreshToken());
+    if (hasToken || !hasRefresh) return;
+
+    let cancelled = false;
+    fetchAuthControllerRefresh({})
+      .then(() => {
+        if (cancelled) return;
+        const restoredToken = getAuthToken();
+        if (restoredToken) {
+          useAuthStore.setState({
+            token: restoredToken,
+            isAuthenticated: true,
+            isLoading: false,
+          });
+        } else {
+          useAuthStore.setState({ isLoading: false });
+        }
+      })
+      .catch(() => {
+        if (cancelled) return;
+        useAuthStore.setState({
+          user: null,
+          isAuthenticated: false,
+          isLoading: false,
+        });
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [token]);
 
   useEffect(() => {
