@@ -1,5 +1,7 @@
 "use client";
 
+import { Suspense } from "react";
+
 import { Button } from "@ui/components/ui/button";
 import {
   Card,
@@ -31,7 +33,9 @@ export default function HomePage() {
         <CardContent className="flex flex-col gap-4">
           <Button>Get Started</Button>
           <Separator />
-          <GoogleCalendarConnect />
+          <Suspense>
+            <GoogleCalendarConnect />
+          </Suspense>
         </CardContent>
       </Card>
     </main>
