@@ -149,7 +149,7 @@ export type AuthResponse = {
   };
 };
 
-export type GoogleStatusData = {
+export type CalendarConnectionStatusData = {
   /**
    * @example true
    */
@@ -160,11 +160,11 @@ export type GoogleStatusData = {
   googleEmail?: string | null;
 };
 
-export type GoogleStatusResponse = {
+export type CalendarConnectionStatusResponse = {
   /**
    * @example true
    */
   success: boolean;
   message: string;
-  data: GoogleStatusData;
+  data: CalendarConnectionStatusData;
 };

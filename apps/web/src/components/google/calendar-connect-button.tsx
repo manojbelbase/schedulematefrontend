@@ -15,21 +15,21 @@ import { Button } from "@ui/components/ui/button";
 import { cn } from "@ui/lib/utils";
 
 import {
-  googleControllerStatusQuery,
-  useGoogleControllerDisconnect,
-  useGoogleControllerStatus,
+  calendarConnectionControllerStatusQuery,
+  useCalendarConnectionControllerDisconnect,
+  useCalendarConnectionControllerStatus,
 } from "@repo/services/web";
 
-import { googleConnectUrl } from "@/config/api";
+import { calendarConnectUrl } from "@/config/api";
 
 export function CalendarConnectButton({ expanded }: { expanded: boolean }) {
   const queryClient = useQueryClient();
-  const { data, isPending } = useGoogleControllerStatus({});
-  const disconnect = useGoogleControllerDisconnect({
+  const { data, isPending } = useCalendarConnectionControllerStatus({});
+  const disconnect = useCalendarConnectionControllerDisconnect({
     onSuccess: async () => {
       toast.success("Google Calendar disconnected.");
       await queryClient.invalidateQueries({
-        queryKey: googleControllerStatusQuery({}).queryKey,
+        queryKey: calendarConnectionControllerStatusQuery({}).queryKey,
       });
     },
     onError: () => toast.error("Could not disconnect. Please try again."),
@@ -86,7 +86,7 @@ export function CalendarConnectButton({ expanded }: { expanded: boolean }) {
         className="h-auto w-full justify-start gap-2 overflow-hidden py-2"
         title="Connect Google Calendar"
       >
-        <Link href={googleConnectUrl("/")}>
+        <Link href={calendarConnectUrl("/")}>
           <CalendarIcon className="size-4 shrink-0 text-primary" />
           <span className="truncate">Connect Google Calendar</span>
         </Link>
@@ -109,7 +109,7 @@ export function CalendarConnectButton({ expanded }: { expanded: boolean }) {
           <Check className="size-4 text-primary" />
         </span>
       ) : (
-        <Link href={googleConnectUrl("/")}>
+        <Link href={calendarConnectUrl("/")}>
           <CalendarIcon className="size-4" />
         </Link>
       )}

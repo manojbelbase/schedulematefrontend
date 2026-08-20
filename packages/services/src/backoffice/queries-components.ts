@@ -741,67 +741,77 @@ export const useAuthControllerResetPassword = (
   });
 };
 
-export type GoogleControllerStatusError = Fetcher.ErrorWrapper<{
+export type CalendarConnectionControllerStatusError = Fetcher.ErrorWrapper<{
   status: 401;
   payload: Schemas.ErrorResponse;
 }>;
 
-export type GoogleControllerStatusVariables = QueriesContext["fetcherOptions"];
+export type CalendarConnectionControllerStatusVariables =
+  QueriesContext["fetcherOptions"];
 
-export const fetchGoogleControllerStatus = (
-  variables: GoogleControllerStatusVariables,
+export const fetchCalendarConnectionControllerStatus = (
+  variables: CalendarConnectionControllerStatusVariables,
   signal?: AbortSignal,
 ) =>
   queriesFetch<
-    Schemas.GoogleStatusResponse,
-    GoogleControllerStatusError,
+    Schemas.CalendarConnectionStatusResponse,
+    CalendarConnectionControllerStatusError,
     undefined,
     {},
     {},
     {}
-  >({ url: "/api/google/status", method: "get", ...variables, signal });
+  >({
+    url: "/api/calendar-connection/status",
+    method: "get",
+    ...variables,
+    signal,
+  });
 
-export function googleControllerStatusQuery(
-  variables: GoogleControllerStatusVariables,
+export function calendarConnectionControllerStatusQuery(
+  variables: CalendarConnectionControllerStatusVariables,
 ): {
   queryKey: reactQuery.QueryKey;
-  queryFn: (options: QueryFnOptions) => Promise<Schemas.GoogleStatusResponse>;
+  queryFn: (
+    options: QueryFnOptions,
+  ) => Promise<Schemas.CalendarConnectionStatusResponse>;
 };
 
-export function googleControllerStatusQuery(
-  variables: GoogleControllerStatusVariables | reactQuery.SkipToken,
+export function calendarConnectionControllerStatusQuery(
+  variables: CalendarConnectionControllerStatusVariables | reactQuery.SkipToken,
 ): {
   queryKey: reactQuery.QueryKey;
   queryFn:
-    | ((options: QueryFnOptions) => Promise<Schemas.GoogleStatusResponse>)
+    | ((
+        options: QueryFnOptions,
+      ) => Promise<Schemas.CalendarConnectionStatusResponse>)
     | reactQuery.SkipToken;
 };
 
-export function googleControllerStatusQuery(
-  variables: GoogleControllerStatusVariables | reactQuery.SkipToken,
+export function calendarConnectionControllerStatusQuery(
+  variables: CalendarConnectionControllerStatusVariables | reactQuery.SkipToken,
 ) {
   return {
     queryKey: queryKeyFn({
-      path: "/api/google/status",
-      operationId: "googleControllerStatus",
+      path: "/api/calendar-connection/status",
+      operationId: "calendarConnectionControllerStatus",
       variables,
     }),
     queryFn:
       variables === reactQuery.skipToken
         ? reactQuery.skipToken
         : ({ signal }: QueryFnOptions) =>
-            fetchGoogleControllerStatus(variables, signal),
+            fetchCalendarConnectionControllerStatus(variables, signal),
   };
 }
 
-export const useSuspenseGoogleControllerStatus = <
-  TData = Schemas.GoogleStatusResponse,
+export const useSuspenseCalendarConnectionControllerStatus = <
+  TData = Schemas.CalendarConnectionStatusResponse,
 >(
-  variables: GoogleControllerStatusVariables,
+  variables: CalendarConnectionControllerStatusVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<
-      Schemas.GoogleStatusResponse,
-      GoogleControllerStatusError,
+      Schemas.CalendarConnectionStatusResponse,
+      CalendarConnectionControllerStatusError,
       TData
     >,
     "queryKey" | "queryFn" | "initialData"
@@ -809,22 +819,26 @@ export const useSuspenseGoogleControllerStatus = <
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
   return reactQuery.useSuspenseQuery<
-    Schemas.GoogleStatusResponse,
-    GoogleControllerStatusError,
+    Schemas.CalendarConnectionStatusResponse,
+    CalendarConnectionControllerStatusError,
     TData
   >({
-    ...googleControllerStatusQuery(deepMerge(fetcherOptions, variables)),
+    ...calendarConnectionControllerStatusQuery(
+      deepMerge(fetcherOptions, variables),
+    ),
     ...options,
     ...queryOptions,
   });
 };
 
-export const useGoogleControllerStatus = <TData = Schemas.GoogleStatusResponse>(
-  variables: GoogleControllerStatusVariables | reactQuery.SkipToken,
+export const useCalendarConnectionControllerStatus = <
+  TData = Schemas.CalendarConnectionStatusResponse,
+>(
+  variables: CalendarConnectionControllerStatusVariables | reactQuery.SkipToken,
   options?: Omit<
     reactQuery.UseQueryOptions<
-      Schemas.GoogleStatusResponse,
-      GoogleControllerStatusError,
+      Schemas.CalendarConnectionStatusResponse,
+      CalendarConnectionControllerStatusError,
       TData
     >,
     "queryKey" | "queryFn" | "initialData"
@@ -832,11 +846,11 @@ export const useGoogleControllerStatus = <TData = Schemas.GoogleStatusResponse>(
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
   return reactQuery.useQuery<
-    Schemas.GoogleStatusResponse,
-    GoogleControllerStatusError,
+    Schemas.CalendarConnectionStatusResponse,
+    CalendarConnectionControllerStatusError,
     TData
   >({
-    ...googleControllerStatusQuery(
+    ...calendarConnectionControllerStatusQuery(
       variables === reactQuery.skipToken
         ? variables
         : deepMerge(fetcherOptions, variables),
@@ -846,7 +860,7 @@ export const useGoogleControllerStatus = <TData = Schemas.GoogleStatusResponse>(
   });
 };
 
-export type GoogleControllerConnectQueryParams = {
+export type CalendarConnectionControllerConnectQueryParams = {
   /**
    * Path to return to after connecting
    *
@@ -855,166 +869,75 @@ export type GoogleControllerConnectQueryParams = {
   redirect?: string;
 };
 
-export type GoogleControllerConnectError = Fetcher.ErrorWrapper<{
+export type CalendarConnectionControllerConnectError = Fetcher.ErrorWrapper<{
   status: 401;
   payload: Schemas.ErrorResponse;
 }>;
 
-export type GoogleControllerConnectVariables = {
-  queryParams?: GoogleControllerConnectQueryParams;
+export type CalendarConnectionControllerConnectVariables = {
+  queryParams?: CalendarConnectionControllerConnectQueryParams;
 } & QueriesContext["fetcherOptions"];
 
-export const fetchGoogleControllerConnect = (
-  variables: GoogleControllerConnectVariables,
+export const fetchCalendarConnectionControllerConnect = (
+  variables: CalendarConnectionControllerConnectVariables,
   signal?: AbortSignal,
 ) =>
   queriesFetch<
     undefined,
-    GoogleControllerConnectError,
+    CalendarConnectionControllerConnectError,
     undefined,
     {},
-    GoogleControllerConnectQueryParams,
-    {}
-  >({ url: "/api/google/connect", method: "get", ...variables, signal });
-
-export function googleControllerConnectQuery(
-  variables: GoogleControllerConnectVariables,
-): {
-  queryKey: reactQuery.QueryKey;
-  queryFn: (options: QueryFnOptions) => Promise<undefined>;
-};
-
-export function googleControllerConnectQuery(
-  variables: GoogleControllerConnectVariables | reactQuery.SkipToken,
-): {
-  queryKey: reactQuery.QueryKey;
-  queryFn:
-    ((options: QueryFnOptions) => Promise<undefined>) | reactQuery.SkipToken;
-};
-
-export function googleControllerConnectQuery(
-  variables: GoogleControllerConnectVariables | reactQuery.SkipToken,
-) {
-  return {
-    queryKey: queryKeyFn({
-      path: "/api/google/connect",
-      operationId: "googleControllerConnect",
-      variables,
-    }),
-    queryFn:
-      variables === reactQuery.skipToken
-        ? reactQuery.skipToken
-        : ({ signal }: QueryFnOptions) =>
-            fetchGoogleControllerConnect(variables, signal),
-  };
-}
-
-export const useSuspenseGoogleControllerConnect = <TData = undefined>(
-  variables: GoogleControllerConnectVariables,
-  options?: Omit<
-    reactQuery.UseQueryOptions<undefined, GoogleControllerConnectError, TData>,
-    "queryKey" | "queryFn" | "initialData"
-  >,
-) => {
-  const { queryOptions, fetcherOptions } = useQueriesContext(options);
-  return reactQuery.useSuspenseQuery<
-    undefined,
-    GoogleControllerConnectError,
-    TData
-  >({
-    ...googleControllerConnectQuery(deepMerge(fetcherOptions, variables)),
-    ...options,
-    ...queryOptions,
-  });
-};
-
-export const useGoogleControllerConnect = <TData = undefined>(
-  variables: GoogleControllerConnectVariables | reactQuery.SkipToken,
-  options?: Omit<
-    reactQuery.UseQueryOptions<undefined, GoogleControllerConnectError, TData>,
-    "queryKey" | "queryFn" | "initialData"
-  >,
-) => {
-  const { queryOptions, fetcherOptions } = useQueriesContext(options);
-  return reactQuery.useQuery<undefined, GoogleControllerConnectError, TData>({
-    ...googleControllerConnectQuery(
-      variables === reactQuery.skipToken
-        ? variables
-        : deepMerge(fetcherOptions, variables),
-    ),
-    ...options,
-    ...queryOptions,
-  });
-};
-
-export type GoogleControllerConnectCallbackQueryParams = {
-  code: string;
-  state: string;
-};
-
-export type GoogleControllerConnectCallbackError =
-  Fetcher.ErrorWrapper<undefined>;
-
-export type GoogleControllerConnectCallbackVariables = {
-  queryParams: GoogleControllerConnectCallbackQueryParams;
-} & QueriesContext["fetcherOptions"];
-
-export const fetchGoogleControllerConnectCallback = (
-  variables: GoogleControllerConnectCallbackVariables,
-  signal?: AbortSignal,
-) =>
-  queriesFetch<
-    undefined,
-    GoogleControllerConnectCallbackError,
-    undefined,
-    {},
-    GoogleControllerConnectCallbackQueryParams,
+    CalendarConnectionControllerConnectQueryParams,
     {}
   >({
-    url: "/api/google/connect/callback",
+    url: "/api/calendar-connection/connect",
     method: "get",
     ...variables,
     signal,
   });
 
-export function googleControllerConnectCallbackQuery(
-  variables: GoogleControllerConnectCallbackVariables,
+export function calendarConnectionControllerConnectQuery(
+  variables: CalendarConnectionControllerConnectVariables,
 ): {
   queryKey: reactQuery.QueryKey;
   queryFn: (options: QueryFnOptions) => Promise<undefined>;
 };
 
-export function googleControllerConnectCallbackQuery(
-  variables: GoogleControllerConnectCallbackVariables | reactQuery.SkipToken,
+export function calendarConnectionControllerConnectQuery(
+  variables:
+    CalendarConnectionControllerConnectVariables | reactQuery.SkipToken,
 ): {
   queryKey: reactQuery.QueryKey;
   queryFn:
     ((options: QueryFnOptions) => Promise<undefined>) | reactQuery.SkipToken;
 };
 
-export function googleControllerConnectCallbackQuery(
-  variables: GoogleControllerConnectCallbackVariables | reactQuery.SkipToken,
+export function calendarConnectionControllerConnectQuery(
+  variables:
+    CalendarConnectionControllerConnectVariables | reactQuery.SkipToken,
 ) {
   return {
     queryKey: queryKeyFn({
-      path: "/api/google/connect/callback",
-      operationId: "googleControllerConnectCallback",
+      path: "/api/calendar-connection/connect",
+      operationId: "calendarConnectionControllerConnect",
       variables,
     }),
     queryFn:
       variables === reactQuery.skipToken
         ? reactQuery.skipToken
         : ({ signal }: QueryFnOptions) =>
-            fetchGoogleControllerConnectCallback(variables, signal),
+            fetchCalendarConnectionControllerConnect(variables, signal),
   };
 }
 
-export const useSuspenseGoogleControllerConnectCallback = <TData = undefined>(
-  variables: GoogleControllerConnectCallbackVariables,
+export const useSuspenseCalendarConnectionControllerConnect = <
+  TData = undefined,
+>(
+  variables: CalendarConnectionControllerConnectVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<
       undefined,
-      GoogleControllerConnectCallbackError,
+      CalendarConnectionControllerConnectError,
       TData
     >,
     "queryKey" | "queryFn" | "initialData"
@@ -1023,10 +946,10 @@ export const useSuspenseGoogleControllerConnectCallback = <TData = undefined>(
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
   return reactQuery.useSuspenseQuery<
     undefined,
-    GoogleControllerConnectCallbackError,
+    CalendarConnectionControllerConnectError,
     TData
   >({
-    ...googleControllerConnectCallbackQuery(
+    ...calendarConnectionControllerConnectQuery(
       deepMerge(fetcherOptions, variables),
     ),
     ...options,
@@ -1034,12 +957,13 @@ export const useSuspenseGoogleControllerConnectCallback = <TData = undefined>(
   });
 };
 
-export const useGoogleControllerConnectCallback = <TData = undefined>(
-  variables: GoogleControllerConnectCallbackVariables | reactQuery.SkipToken,
+export const useCalendarConnectionControllerConnect = <TData = undefined>(
+  variables:
+    CalendarConnectionControllerConnectVariables | reactQuery.SkipToken,
   options?: Omit<
     reactQuery.UseQueryOptions<
       undefined,
-      GoogleControllerConnectCallbackError,
+      CalendarConnectionControllerConnectError,
       TData
     >,
     "queryKey" | "queryFn" | "initialData"
@@ -1048,10 +972,10 @@ export const useGoogleControllerConnectCallback = <TData = undefined>(
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
   return reactQuery.useQuery<
     undefined,
-    GoogleControllerConnectCallbackError,
+    CalendarConnectionControllerConnectError,
     TData
   >({
-    ...googleControllerConnectCallbackQuery(
+    ...calendarConnectionControllerConnectQuery(
       variables === reactQuery.skipToken
         ? variables
         : deepMerge(fetcherOptions, variables),
@@ -1061,33 +985,159 @@ export const useGoogleControllerConnectCallback = <TData = undefined>(
   });
 };
 
-export type GoogleControllerDisconnectError = Fetcher.ErrorWrapper<{
+export type CalendarConnectionControllerConnectCallbackQueryParams = {
+  code: string;
+  state: string;
+};
+
+export type CalendarConnectionControllerConnectCallbackError =
+  Fetcher.ErrorWrapper<undefined>;
+
+export type CalendarConnectionControllerConnectCallbackVariables = {
+  queryParams: CalendarConnectionControllerConnectCallbackQueryParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchCalendarConnectionControllerConnectCallback = (
+  variables: CalendarConnectionControllerConnectCallbackVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    undefined,
+    CalendarConnectionControllerConnectCallbackError,
+    undefined,
+    {},
+    CalendarConnectionControllerConnectCallbackQueryParams,
+    {}
+  >({
+    url: "/api/calendar-connection/connect/callback",
+    method: "get",
+    ...variables,
+    signal,
+  });
+
+export function calendarConnectionControllerConnectCallbackQuery(
+  variables: CalendarConnectionControllerConnectCallbackVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (options: QueryFnOptions) => Promise<undefined>;
+};
+
+export function calendarConnectionControllerConnectCallbackQuery(
+  variables:
+    CalendarConnectionControllerConnectCallbackVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    ((options: QueryFnOptions) => Promise<undefined>) | reactQuery.SkipToken;
+};
+
+export function calendarConnectionControllerConnectCallbackQuery(
+  variables:
+    CalendarConnectionControllerConnectCallbackVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/calendar-connection/connect/callback",
+      operationId: "calendarConnectionControllerConnectCallback",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchCalendarConnectionControllerConnectCallback(variables, signal),
+  };
+}
+
+export const useSuspenseCalendarConnectionControllerConnectCallback = <
+  TData = undefined,
+>(
+  variables: CalendarConnectionControllerConnectCallbackVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      undefined,
+      CalendarConnectionControllerConnectCallbackError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    undefined,
+    CalendarConnectionControllerConnectCallbackError,
+    TData
+  >({
+    ...calendarConnectionControllerConnectCallbackQuery(
+      deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useCalendarConnectionControllerConnectCallback = <
+  TData = undefined,
+>(
+  variables:
+    CalendarConnectionControllerConnectCallbackVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      undefined,
+      CalendarConnectionControllerConnectCallbackError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    undefined,
+    CalendarConnectionControllerConnectCallbackError,
+    TData
+  >({
+    ...calendarConnectionControllerConnectCallbackQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type CalendarConnectionControllerDisconnectError = Fetcher.ErrorWrapper<{
   status: 401;
   payload: Schemas.ErrorResponse;
 }>;
 
-export type GoogleControllerDisconnectVariables =
+export type CalendarConnectionControllerDisconnectVariables =
   QueriesContext["fetcherOptions"];
 
-export const fetchGoogleControllerDisconnect = (
-  variables: GoogleControllerDisconnectVariables,
+export const fetchCalendarConnectionControllerDisconnect = (
+  variables: CalendarConnectionControllerDisconnectVariables,
   signal?: AbortSignal,
 ) =>
   queriesFetch<
     Schemas.MessageResponse,
-    GoogleControllerDisconnectError,
+    CalendarConnectionControllerDisconnectError,
     undefined,
     {},
     {},
     {}
-  >({ url: "/api/google/disconnect", method: "post", ...variables, signal });
+  >({
+    url: "/api/calendar-connection/disconnect",
+    method: "post",
+    ...variables,
+    signal,
+  });
 
-export const useGoogleControllerDisconnect = (
+export const useCalendarConnectionControllerDisconnect = (
   options?: Omit<
     reactQuery.UseMutationOptions<
       Schemas.MessageResponse,
-      GoogleControllerDisconnectError,
-      GoogleControllerDisconnectVariables
+      CalendarConnectionControllerDisconnectError,
+      CalendarConnectionControllerDisconnectVariables
     >,
     "mutationFn"
   >,
@@ -1095,11 +1145,13 @@ export const useGoogleControllerDisconnect = (
   const { fetcherOptions } = useQueriesContext();
   return reactQuery.useMutation<
     Schemas.MessageResponse,
-    GoogleControllerDisconnectError,
-    GoogleControllerDisconnectVariables
+    CalendarConnectionControllerDisconnectError,
+    CalendarConnectionControllerDisconnectVariables
   >({
-    mutationFn: (variables: GoogleControllerDisconnectVariables) =>
-      fetchGoogleControllerDisconnect(deepMerge(fetcherOptions, variables)),
+    mutationFn: (variables: CalendarConnectionControllerDisconnectVariables) =>
+      fetchCalendarConnectionControllerDisconnect(
+        deepMerge(fetcherOptions, variables),
+      ),
     ...options,
   });
 };
@@ -1126,18 +1178,21 @@ export type QueryOperation =
       variables: AuthControllerMeVariables | reactQuery.SkipToken;
     }
   | {
-      path: "/api/google/status";
-      operationId: "googleControllerStatus";
-      variables: GoogleControllerStatusVariables | reactQuery.SkipToken;
-    }
-  | {
-      path: "/api/google/connect";
-      operationId: "googleControllerConnect";
-      variables: GoogleControllerConnectVariables | reactQuery.SkipToken;
-    }
-  | {
-      path: "/api/google/connect/callback";
-      operationId: "googleControllerConnectCallback";
+      path: "/api/calendar-connection/status";
+      operationId: "calendarConnectionControllerStatus";
       variables:
-        GoogleControllerConnectCallbackVariables | reactQuery.SkipToken;
+        CalendarConnectionControllerStatusVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/calendar-connection/connect";
+      operationId: "calendarConnectionControllerConnect";
+      variables:
+        CalendarConnectionControllerConnectVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/calendar-connection/connect/callback";
+      operationId: "calendarConnectionControllerConnectCallback";
+      variables:
+        | CalendarConnectionControllerConnectCallbackVariables
+        | reactQuery.SkipToken;
     };
