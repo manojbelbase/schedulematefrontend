@@ -7,6 +7,7 @@ import {
   useAuthControllerMe,
 } from "@repo/services/web";
 
+import { registerApiAuth } from "@/services/api-auth";
 import { getAuthToken, getRefreshToken } from "@/services/auth-utils";
 import { useAuthStore } from "@/zustand/auth";
 
@@ -17,6 +18,10 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     {},
     { retry: false, enabled: Boolean(token) },
   );
+
+  useEffect(() => {
+    registerApiAuth();
+  }, []);
 
   useEffect(() => {
     if (!token) {

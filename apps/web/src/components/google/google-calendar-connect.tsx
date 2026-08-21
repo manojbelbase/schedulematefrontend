@@ -11,9 +11,9 @@ import { Button } from "@ui/components/ui/button";
 import { Skeleton } from "@ui/components/ui/skeleton";
 
 import {
-  calendarConnectionControllerStatusQuery,
+  calendarConnectionControllerGetConnectionStatusQuery,
   useCalendarConnectionControllerDisconnect,
-  useCalendarConnectionControllerStatus,
+  useCalendarConnectionControllerGetConnectionStatus,
 } from "@repo/services/web";
 
 import { calendarConnectUrl } from "@/config/api";
@@ -23,12 +23,14 @@ export function GoogleCalendarConnect() {
   const queryClient = useQueryClient();
   const notifiedRef = useRef(false);
 
-  const { data, isPending } = useCalendarConnectionControllerStatus({});
+  const { data, isPending } =
+    useCalendarConnectionControllerGetConnectionStatus({});
   const disconnect = useCalendarConnectionControllerDisconnect({
     onSuccess: async () => {
       toast.success("Google Calendar disconnected.");
       await queryClient.invalidateQueries({
-        queryKey: calendarConnectionControllerStatusQuery({}).queryKey,
+        queryKey: calendarConnectionControllerGetConnectionStatusQuery({})
+          .queryKey,
       });
     },
     onError: (error) => {

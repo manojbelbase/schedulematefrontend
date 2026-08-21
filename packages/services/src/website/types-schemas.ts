@@ -168,3 +168,105 @@ export type CalendarConnectionStatusResponse = {
   message: string;
   data: CalendarConnectionStatusData;
 };
+
+export type CreateConversationDto = {
+  /**
+   * @maxLength 255
+   */
+  title?: string;
+};
+
+export type SendMessageDto = {
+  /**
+   * @format uuid
+   */
+  conversationId?: string | null;
+  /**
+   * @minLength 1
+   * @maxLength 10000
+   */
+  content: string;
+};
+
+export type ChatMessage = {
+  /**
+   * @format uuid
+   */
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  /**
+   * @format date-time
+   */
+  createdAt: string;
+};
+
+export type ChatConversation = {
+  /**
+   * @format uuid
+   */
+  id: string;
+  title: string;
+  /**
+   * @format date-time
+   */
+  createdAt: string;
+  /**
+   * @format date-time
+   */
+  updatedAt: string;
+};
+
+export type ChatConversationResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: {
+    /**
+     * @format uuid
+     */
+    id: string;
+    title: string;
+    /**
+     * @format date-time
+     */
+    createdAt: string;
+    /**
+     * @format date-time
+     */
+    updatedAt: string;
+    messages: ChatMessage[];
+  };
+};
+
+export type ChatConversationListResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: ChatConversation[];
+};
+
+export type ChatMessageListResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: ChatMessage[];
+};
+
+export type ChatSendMessageResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: {
+    userMessage: ChatMessage;
+    assistantMessage: ChatMessage;
+  };
+};

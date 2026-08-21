@@ -9,32 +9,19 @@ export type _LayoutProps = {
   children: React.ReactNode;
 };
 
+export type _PageProps<P = object, Q = object> = {
+  params: Promise<P>;
+  searchParams: Promise<Q>;
+};
+
+export type TModalVariant = "form" | "warning" | "default" | "no-exit";
+
 export type TLinkPath = {
   [key: string]: string;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Any = any;
-
-export enum ModalType {
-  SHEET = "SHEET",
-  MODAL = "MODAL",
-}
-
-export type TSheetProps = {
-  component: React.FC<Any>;
-  variant: "form" | "warning" | "default";
-  className?: string;
-  side?: "top" | "right" | "bottom" | "left";
-};
-
-export type TModalProps = {
-  component: React.FC<Any>;
-  variant: "form" | "warning" | "default";
-  className?: string;
-  title?: string;
-  description?: string;
-};
 
 // Utility Types
 export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;

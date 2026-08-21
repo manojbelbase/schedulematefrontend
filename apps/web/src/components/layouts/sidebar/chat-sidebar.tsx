@@ -12,11 +12,14 @@ import {
 
 import { Button } from "@ui/components/ui/button";
 import { Separator } from "@ui/components/ui/separator";
+import ModalTrigger from "@ui/components/ui/trigger";
 import { cn } from "@ui/lib/utils";
+import { ModalType } from "@ui/types/types";
 
 import { CalendarConnectButton } from "@/components/google/calendar-connect-button";
 import UserProfileButton from "@/components/layouts/sidebar/user-profile-button";
 import Logo from "@/components/logo";
+import type { TDeleteItemContent } from "@/components/modals/globals/delete-item";
 
 type TConversation = {
   id: string;
@@ -28,7 +31,7 @@ type ChatSidebarProps = {
   activeConversationId?: string | null;
   onNewChat: () => void;
   onSelectConversation: (id: string) => void;
-  onDeleteConversation: (id: string) => void;
+  onDeleteConversation: (id: string) => Promise<void>;
 };
 
 export default function ChatSidebar({
@@ -53,7 +56,7 @@ export default function ChatSidebar({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        "relative flex h-full shrink-0 flex-col justify-between bg-sidebar border-r transition-all ease-in-out duration-300",
+        "relative flex h-full shrink-0 flex-col justify-between border-r border-border bg-sidebar transition-all ease-in-out duration-300",
         expanded ? "w-72" : "w-20",
       )}
     >
@@ -108,26 +111,36 @@ export default function ChatSidebar({
                         type="button"
                         onClick={() => onSelectConversation(conversation.id)}
                         className={cn(
-                          "flex w-full items-center gap-2.5 rounded-md px-3 py-2.5 text-left text-sm transition-colors",
+                          "flex w-full items-center gap-2.5 rounded-md border border-transparent px-3 py-2.5 text-left text-sm transition-colors",
                           isActive
-                            ? "bg-primary/10 text-primary"
-                            : "text-foreground hover:bg-accent",
+                            ? "border-sidebar-border bg-sidebar-accent text-sidebar-accent-foreground shadow-sm"
+                            : "text-sidebar-foreground hover:bg-sidebar-accent",
                         )}
                       >
                         <MessageSquarePlus className="size-4 shrink-0 text-muted-foreground" />
                         <span className="truncate">{conversation.title}</span>
                       </button>
-                      <button
-                        type="button"
-                        aria-label={`Delete ${conversation.title}`}
-                        onClick={() => onDeleteConversation(conversation.id)}
-                        className={cn(
-                          "absolute top-1/2 right-1.5 -translate-y-1/2 rounded p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-accent hover:text-destructive group-hover:opacity-100",
-                          isActive && "opacity-100",
-                        )}
+                      <ModalTrigger<TDeleteItemContent>
+                        modalID="DELETE_MODAL"
+                        type={ModalType.MODAL}
+                        initiatorName={conversation.id}
+                        data={{
+                          id: "conversation",
+                          name: conversation.title,
+                          deleteByID: (id) => onDeleteConversation(id),
+                        }}
                       >
-                        <Plus className="size-3.5 rotate-45" />
-                      </button>
+                        <button
+                          type="button"
+                          aria-label={`Delete ${conversation.title}`}
+                          className={cn(
+                            "absolute top-1/2 right-1.5 -translate-y-1/2 rounded p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-accent hover:text-destructive group-hover:opacity-100",
+                            isActive && "opacity-100",
+                          )}
+                        >
+                          <Plus className="size-3.5 rotate-45" />
+                        </button>
+                      </ModalTrigger>
                     </div>
                   );
                 })}
@@ -150,7 +163,8 @@ export default function ChatSidebar({
                     onClick={() => onSelectConversation(conversation.id)}
                     className={cn(
                       "flex size-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground",
-                      isActive && "bg-primary/10 text-primary",
+                      isActive &&
+                        "bg-sidebar-accent text-sidebar-accent-foreground",
                     )}
                   >
                     <MessageSquarePlus className="size-4" />
