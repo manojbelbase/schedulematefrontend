@@ -1,9 +1,106 @@
+import type { FieldValues, Path, UseFormSetError } from "react-hook-form";
+import type { UseMutationOptions } from "@tanstack/react-query";
 import clsx, { type ClassValue } from "clsx";
+import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+type TOpts = {
+  successMessage?: string;
+  disableDefaultToast?: boolean;
+  disableErrorToast?: boolean;
+  errorCallback?: (error: unknown) => void | Promise<void>;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type MutationHandlerOptions = Omit<
+  UseMutationOptions<any, any, any, unknown>,
+  "mutationFn"
+>;
+
+export const getBackendErrorMessage = (error: unknown): string => {
+  const e = error as {
+    status?: number | string;
+    statusCode?: number;
+    message?: unknown;
+    payload?: {
+      statusCode?: number;
+      message?: unknown;
+    };
+  };
+  const raw = e?.payload?.message ?? e?.message;
+  return typeof raw === "string" && raw ? raw : "Something went wrong.";
+};
+
+export const options = <T, Output>(
+  setError?: UseFormSetError<T extends FieldValues ? T : FieldValues>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  successCallback?: (data: Output, variables: any) => void | Promise<void>,
+  opts?: TOpts,
+): MutationHandlerOptions => ({
+  onSuccess(data, variables) {
+    if (!opts?.disableDefaultToast) {
+      const message = opts?.successMessage || data?.message;
+      if (message) toast.success(message);
+    }
+    if (successCallback) {
+      void successCallback(data, variables);
+    }
+  },
+  onError(data) {
+    const error = data as {
+      status?: number | string;
+      statusCode?: number;
+      message?: unknown;
+      payload?: {
+        statusCode?: number;
+        message?: unknown;
+      };
+    };
+
+    const message = error?.payload?.message ?? error?.message;
+
+    if (setError && typeof message === "object" && message !== null) {
+      parseBackendValidation(message as Record<string, unknown>, setError);
+      if (!opts?.disableErrorToast) {
+        toast.error("Validation error occurred!");
+      }
+      return;
+    }
+
+    if (!opts?.disableErrorToast) {
+      toast.error(getBackendErrorMessage(data));
+    }
+
+    if (opts?.errorCallback) {
+      void opts.errorCallback(data);
+    }
+  },
+});
+
+export const parseBackendValidation = <T extends FieldValues>(
+  res: Record<string, unknown>,
+  setErrors: UseFormSetError<T>,
+): void => {
+  Object.entries(res).forEach(([key, value]) => {
+    setErrors(
+      key as Path<T>,
+      {
+        type: "manual",
+        message:
+          Array.isArray(value) && value.length === 1
+            ? value.toString()
+            : "Invalid value.",
+      },
+      {
+        shouldFocus: true,
+      },
+    );
+  });
+};
 
 export function formatNumber(
   e: React.KeyboardEvent<HTMLInputElement>,

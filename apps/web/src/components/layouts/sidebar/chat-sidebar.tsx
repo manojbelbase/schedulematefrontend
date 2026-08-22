@@ -14,12 +14,13 @@ import { Button } from "@ui/components/ui/button";
 import { Separator } from "@ui/components/ui/separator";
 import ModalTrigger from "@ui/components/ui/trigger";
 import { cn } from "@ui/lib/utils";
+import type { TDeleteItemModalData } from "@ui/types/extended";
 import { ModalType } from "@ui/types/types";
 
 import { CalendarConnectButton } from "@/components/google/calendar-connect-button";
 import UserProfileButton from "@/components/layouts/sidebar/user-profile-button";
 import Logo from "@/components/logo";
-import type { TDeleteItemContent } from "@/components/modals/globals/delete-item";
+import { QUERY_KEYS } from "@/config/query-keys";
 
 type TConversation = {
   id: string;
@@ -31,7 +32,6 @@ type ChatSidebarProps = {
   activeConversationId?: string | null;
   onNewChat: () => void;
   onSelectConversation: (id: string) => void;
-  onDeleteConversation: (id: string) => Promise<void>;
 };
 
 export default function ChatSidebar({
@@ -39,7 +39,6 @@ export default function ChatSidebar({
   activeConversationId,
   onNewChat,
   onSelectConversation,
-  onDeleteConversation,
 }: ChatSidebarProps) {
   const path = usePathname();
   const [isExpanded, setIsExpanded] = useState(true);
@@ -120,14 +119,14 @@ export default function ChatSidebar({
                         <MessageSquarePlus className="size-4 shrink-0 text-muted-foreground" />
                         <span className="truncate">{conversation.title}</span>
                       </button>
-                      <ModalTrigger<TDeleteItemContent>
+                      <ModalTrigger<TDeleteItemModalData>
                         modalID="DELETE_MODAL"
                         type={ModalType.MODAL}
                         initiatorName={conversation.id}
+                        queryKeys={[QUERY_KEYS.conversations]}
                         data={{
                           id: "conversation",
                           name: conversation.title,
-                          deleteByID: (id) => onDeleteConversation(id),
                         }}
                       >
                         <button

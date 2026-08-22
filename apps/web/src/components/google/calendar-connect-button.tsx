@@ -9,10 +9,9 @@ import {
   Loader2,
   LogOut as LogOutIcon,
 } from "lucide-react";
-import { toast } from "sonner";
 
 import { Button } from "@ui/components/ui/button";
-import { cn } from "@ui/lib/utils";
+import { cn, options } from "@ui/lib/utils";
 
 import {
   calendarConnectionControllerGetConnectionStatusQuery,
@@ -26,16 +25,18 @@ export function CalendarConnectButton({ expanded }: { expanded: boolean }) {
   const queryClient = useQueryClient();
   const { data, isPending } =
     useCalendarConnectionControllerGetConnectionStatus({});
-  const disconnect = useCalendarConnectionControllerDisconnect({
-    onSuccess: async () => {
-      toast.success("Google Calendar disconnected.");
-      await queryClient.invalidateQueries({
-        queryKey: calendarConnectionControllerGetConnectionStatusQuery({})
-          .queryKey,
-      });
-    },
-    onError: () => toast.error("Could not disconnect. Please try again."),
-  });
+  const disconnect = useCalendarConnectionControllerDisconnect(
+    options(
+      undefined,
+      async () => {
+        await queryClient.invalidateQueries({
+          queryKey: calendarConnectionControllerGetConnectionStatusQuery({})
+            .queryKey,
+        });
+      },
+      { successMessage: "Google Calendar disconnected." },
+    ),
+  );
 
   const connected = data?.data.connected ?? false;
 

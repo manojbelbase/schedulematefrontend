@@ -1,79 +1,95 @@
-import { useState } from "react";
+"use client";
+
+import { useQueryClient, type UseMutationOptions } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 import { Button } from "@ui/components/ui/button";
-import type { _FormModalProps } from "@ui/types/extended";
+import type { _FormModalProps, TDeleteItemModalData } from "@ui/types/extended";
 
-export type TDeleteItemContent = {
-  /** Resource being deleted, e.g. "conversation". */
-  id: string;
-  /** Human readable name shown in the confirm dialog. */
-  name?: string;
-  itemIds?: string[];
-  message?: string;
-  description?: React.ReactNode;
-  callback?: () => void;
-  deleteButtonText?: string;
-  /** Actual delete implementation; called by the delete modal. */
-  deleteByID?: (
-    initiatorName: string,
-    data: TDeleteItemContent,
-  ) => Promise<void> | void;
-};
+import { useChatControllerDeleteConversation } from "@repo/services/web";
+
+import { QUERY_KEYS } from "@/config/query-keys";
 
 export default function DeleteItemModal({
   close,
   data,
   initiatorName,
 }: _FormModalProps) {
-  const [isDeleting, setIsDeleting] = useState(false);
+  const queryClient = useQueryClient();
 
-  const typedData = data as TDeleteItemContent | undefined;
-  const { name, itemIds, deleteByID } = typedData ?? {};
-  const isBulk = Boolean(itemIds?.length);
+  const typedData = data as TDeleteItemModalData | undefined;
 
-  const handleDelete = async () => {
-    if (!deleteByID || !initiatorName || !typedData) return;
-    if (isDeleting) return;
-
-    setIsDeleting(true);
-    try {
-      await deleteByID(initiatorName, typedData);
-      typedData.callback?.();
-      close();
-    } catch {
-      close();
-    } finally {
-      setIsDeleting(false);
+  const resolveKey = (id?: TDeleteItemModalData["id"]) => {
+    switch (id) {
+      case "conversation":
+        return QUERY_KEYS.conversations;
+      case "chat":
+        return QUERY_KEYS.chat;
+      default:
+        return [];
     }
   };
 
+  const handler: Omit<
+    UseMutationOptions<unknown, unknown, unknown, unknown>,
+    "mutationFn"
+  > = {
+    onSuccess(r, _variables, _context) {
+      const res = r as { message: string };
+      toast.success(
+        typedData?.message || res.message || "Item deleted successfully.",
+      );
+      void queryClient.invalidateQueries({
+        queryKey: resolveKey(typedData?.id),
+      });
+
+      typedData?.callback?.();
+    },
+
+    onError(e, _variables, _context) {
+      const error = e as { message: string };
+      toast.error(error?.message || "Cannot delete item!");
+    },
+  };
+
+  const { mutate: mutateConversation } =
+    useChatControllerDeleteConversation(handler);
+
+  const fn = () => {
+    if (initiatorName) {
+      switch (typedData?.id) {
+        case "conversation":
+          mutateConversation({
+            pathParams: {
+              id: initiatorName,
+            },
+          });
+          break;
+        default:
+          break;
+      }
+    }
+    close();
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center space-y-6 3xl:space-y-10 px-4">
+    <div className="flex flex-col items-center justify-center space-y-6 px-4 3xl:space-y-10">
       <div className="space-y-4">
-        <h3 className="text-xl 3xl:text-2xl font-medium text-center">
+        <h3 className="text-center text-xl font-medium 3xl:text-2xl">
           Are you sure?
         </h3>
-
-        {typedData?.description ? (
-          typedData.description
-        ) : (
-          <p className="text-center text-sm 3xl:text-base">
-            You are about to delete {isBulk ? "these" : "this"}{" "}
-            <span className="font-semibold">
-              {isBulk ? `${itemIds?.length} ` : ""}
-              {name || "item"}
-              {isBulk ? " (s)" : ""}
-            </span>
-            . This action cannot be undone.
-          </p>
-        )}
+        <p className="text-center text-sm 3xl:text-base">
+          You are about to delete {typedData?.itemIds ? "these" : "this"}{" "}
+          <span className="font-semibold">
+            {typedData?.itemIds?.length || ""} {typedData?.name || "item"}{" "}
+            {typedData?.itemIds?.length ? "(s)" : ""}
+          </span>
+          . This action cannot be undone.
+        </p>
       </div>
-      <div className="gap-2 flex flex-col w-full">
-        <Button onClick={handleDelete} disabled={isDeleting}>
-          {typedData?.deleteButtonText ||
-            `Yes, Delete ${isBulk ? "All Selected" : "It"}.`}
-        </Button>
-        <Button variant="outline" onClick={close} disabled={isDeleting}>
+      <div className="flex w-full flex-col gap-2">
+        <Button onClick={() => void fn()}>Yes, Delete It.</Button>
+        <Button variant="outline" onClick={close}>
           No, Cancel.
         </Button>
       </div>

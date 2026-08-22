@@ -1326,6 +1326,135 @@ export const useChatControllerCreateConversation = (
   });
 };
 
+export type ChatControllerGetConversationPathParams = {
+  /**
+   * @format uuid
+   */
+  id: string;
+};
+
+export type ChatControllerGetConversationError = Fetcher.ErrorWrapper<
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 404;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type ChatControllerGetConversationVariables = {
+  pathParams: ChatControllerGetConversationPathParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchChatControllerGetConversation = (
+  variables: ChatControllerGetConversationVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.ChatConversationResponse,
+    ChatControllerGetConversationError,
+    undefined,
+    {},
+    {},
+    ChatControllerGetConversationPathParams
+  >({
+    url: "/api/chat/conversations/{id}",
+    method: "get",
+    ...variables,
+    signal,
+  });
+
+export function chatControllerGetConversationQuery(
+  variables: ChatControllerGetConversationVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (
+    options: QueryFnOptions,
+  ) => Promise<Schemas.ChatConversationResponse>;
+};
+
+export function chatControllerGetConversationQuery(
+  variables: ChatControllerGetConversationVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((options: QueryFnOptions) => Promise<Schemas.ChatConversationResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function chatControllerGetConversationQuery(
+  variables: ChatControllerGetConversationVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/chat/conversations/{id}",
+      operationId: "chatControllerGetConversation",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchChatControllerGetConversation(variables, signal),
+  };
+}
+
+export const useSuspenseChatControllerGetConversation = <
+  TData = Schemas.ChatConversationResponse,
+>(
+  variables: ChatControllerGetConversationVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.ChatConversationResponse,
+      ChatControllerGetConversationError,
+      TData
+    >,
+    "queryKey" | "queryFn"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    Schemas.ChatConversationResponse,
+    ChatControllerGetConversationError,
+    TData
+  >({
+    ...chatControllerGetConversationQuery(deepMerge(fetcherOptions, variables)),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useChatControllerGetConversation = <
+  TData = Schemas.ChatConversationResponse,
+>(
+  variables: ChatControllerGetConversationVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.ChatConversationResponse,
+      ChatControllerGetConversationError,
+      TData
+    >,
+    "queryKey" | "queryFn"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    Schemas.ChatConversationResponse,
+    ChatControllerGetConversationError,
+    TData
+  >({
+    ...chatControllerGetConversationQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
 export type ChatControllerDeleteConversationPathParams = {
   /**
    * @format uuid
@@ -1628,6 +1757,11 @@ export type QueryOperation =
       operationId: "chatControllerListConversations";
       variables:
         ChatControllerListConversationsVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/chat/conversations/{id}";
+      operationId: "chatControllerGetConversation";
+      variables: ChatControllerGetConversationVariables | reactQuery.SkipToken;
     }
   | {
       path: "/api/chat/conversations/{id}/messages";

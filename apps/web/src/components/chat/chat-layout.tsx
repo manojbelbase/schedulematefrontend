@@ -1,142 +1,180 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo } from "react";
 import { skipToken, useQueryClient } from "@tanstack/react-query";
 
+import { getBackendErrorMessage, options } from "@ui/lib/utils";
+
 import {
-  chatControllerListConversationsQuery,
-  chatControllerListMessagesQuery,
   useChatControllerCreateConversation,
-  useChatControllerDeleteConversation,
+  useChatControllerGetConversation,
   useChatControllerListConversations,
-  useChatControllerListMessages,
   useChatControllerSendMessage,
   type ChatConversationListResponse,
+  type ChatConversationResponse,
   type ChatMessage,
 } from "@repo/services/web";
 
 import ChatWindow from "@/components/chat/chat-window";
 import ChatSidebar from "@/components/layouts/sidebar/chat-sidebar";
+import { QUERY_KEYS } from "@/config/query-keys";
 import { useAuth } from "@/hooks/use-auth";
+import { useChatStore } from "@/zustand/chat";
 
 function createId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }
 
+const NO_MESSAGES: ChatMessage[] = [];
+
+function buildPendingMessages(content: string): ChatMessage[] {
+  const createdAt = new Date().toISOString();
+  return [
+    { id: createId(), role: "user", content, createdAt },
+    { id: createId(), role: "assistant", content: "", createdAt },
+  ];
+}
+
 type ChatLayoutProps = {
   data?: ChatConversationListResponse;
+  conversationId?: string;
+  initialConversation?: ChatConversationResponse;
 };
 
-export default function ChatLayout({ data }: ChatLayoutProps) {
-  const { user, isAuthenticated } = useAuth();
+export default function ChatLayout({
+  data,
+  conversationId,
+  initialConversation,
+}: ChatLayoutProps) {
+  const { user } = useAuth();
+  const router = useRouter();
   const queryClient = useQueryClient();
-  const [activeId, setActiveId] = useState<string | null>(null);
-  const [isSending, setIsSending] = useState(false);
-  const [pendingMessages, setPendingMessages] = useState<ChatMessage[]>([]);
 
   const conversationsQuery = useChatControllerListConversations(
     {},
-    {
-      enabled: isAuthenticated,
-      initialData: data,
-    },
+    { initialData: data },
   );
-  const conversations = conversationsQuery.data?.data ?? [];
-
-  const messagesQuery = useChatControllerListMessages(
-    activeId ? { pathParams: { id: activeId } } : skipToken,
-    { enabled: Boolean(activeId) },
-  );
-  const persistedMessages = messagesQuery.data?.data ?? [];
-
-  const createConversation = useChatControllerCreateConversation({
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: chatControllerListConversationsQuery({}).queryKey,
-      });
-    },
-  });
-
-  const deleteConversationMutation = useChatControllerDeleteConversation({
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: chatControllerListConversationsQuery({}).queryKey,
-      });
-    },
-  });
-
-  const deleteByID = useCallback(
-    async (id: string) => {
-      await deleteConversationMutation.mutateAsync({ pathParams: { id } });
-      setActiveId((prev) => (prev === id ? null : prev));
-      setPendingMessages([]);
-    },
-    [deleteConversationMutation],
+  const conversations = useMemo(
+    () => conversationsQuery.data?.data ?? [],
+    [conversationsQuery.data],
   );
 
-  const sendMessageMutation = useChatControllerSendMessage();
+  const activeConversation = useMemo(
+    () => conversations.find((c) => c.id === conversationId) ?? null,
+    [conversations, conversationId],
+  );
 
-  const newChat = useCallback(() => {
-    setActiveId(null);
-    setPendingMessages([]);
-  }, []);
+  const conversationQuery = useChatControllerGetConversation(
+    conversationId ? { pathParams: { id: conversationId } } : skipToken,
+    initialConversation ? { initialData: initialConversation } : undefined,
+  );
 
-  const selectConversation = useCallback((id: string) => {
-    setActiveId(id);
-    setPendingMessages([]);
-  }, []);
+  const pendingForActive = useChatStore((state) =>
+    conversationId
+      ? state.pendingMessagesByConversation[conversationId]
+      : undefined,
+  );
+  const isSending = useChatStore((state) => state.isSending);
+
+  const persistedMessages = conversationQuery.data?.data.messages ?? [];
+  const pendingMessages = pendingForActive ?? NO_MESSAGES;
+
+  // The conversation behind this URL disappeared (deleted in another tab);
+  // fall back to the new-chat view.
+  useEffect(() => {
+    if (conversationId && conversationQuery.isError) {
+      router.replace("/chat");
+    }
+  }, [conversationId, conversationQuery.isError, router]);
+
+  const { mutateAsync: createNewConversation } =
+    useChatControllerCreateConversation(
+      options(
+        undefined,
+        async () => {
+          void queryClient.invalidateQueries({
+            queryKey: QUERY_KEYS.chat,
+          });
+        },
+        { disableDefaultToast: true },
+      ),
+    );
+
+  const { mutateAsync: sendChatMessage } = useChatControllerSendMessage(
+    options(
+      undefined,
+      async () => {
+        void queryClient.invalidateQueries({
+          queryKey: QUERY_KEYS.chat,
+        });
+      },
+      {
+        disableDefaultToast: true,
+        disableErrorToast: true,
+      },
+    ),
+  );
 
   const sendMessage = useCallback(
-    async (content: string) => {
-      let targetId: string;
-      if (activeId) {
-        targetId = activeId;
-      } else {
-        const created = await createConversation.mutateAsync({ body: {} });
-        targetId = created.data.id;
-        setActiveId(targetId);
-      }
+    (content: string) => {
+      const run = async () => {
+        const targetId =
+          conversationId ?? (await createNewConversation({ body: {} })).data.id;
 
-      const userMessage: ChatMessage = {
-        id: createId(),
-        role: "user",
-        content,
-        createdAt: new Date().toISOString(),
-      };
-      const assistantMessage: ChatMessage = {
-        id: createId(),
-        role: "assistant",
-        content: "",
-        createdAt: new Date().toISOString(),
-      };
+        if (!conversationId) {
+          router.push(`/chat/${targetId}`);
+        }
 
-      setPendingMessages([userMessage, assistantMessage]);
-      setIsSending(true);
+        const chat = useChatStore.getState();
+        chat.setPendingMessages(targetId, buildPendingMessages(content));
+        chat.setIsSending(true);
 
-      try {
-        await sendMessageMutation.mutateAsync({
-          pathParams: { id: targetId },
-          body: { conversationId: targetId, content },
-        });
-        setPendingMessages([]);
-        void queryClient.invalidateQueries({
-          queryKey: chatControllerListMessagesQuery({
+        try {
+          await sendChatMessage({
             pathParams: { id: targetId },
-          }).queryKey,
-        });
-        void queryClient.invalidateQueries({
-          queryKey: chatControllerListConversationsQuery({}).queryKey,
-        });
-      } catch {
-        setPendingMessages([
-          userMessage,
-          { ...assistantMessage, content: "Sorry, something went wrong." },
-        ]);
-      } finally {
-        setIsSending(false);
-      }
+            body: { conversationId: targetId, content },
+          });
+          chat.clearPendingMessages(targetId);
+          chat.setIsSending(false);
+          void queryClient.invalidateQueries({
+            queryKey: QUERY_KEYS.chat,
+          });
+        } catch (error) {
+          const message = getBackendErrorMessage(error);
+          chat.updatePendingMessages(targetId, (prev) =>
+            prev.map((m) =>
+              m.role === "assistant" && !m.content
+                ? { ...m, content: message }
+                : m,
+            ),
+          );
+          chat.setIsSending(false);
+        }
+      };
+
+      void run().catch(() => {
+        // handled by the default error toast in options()
+      });
     },
-    [activeId, createConversation, queryClient, sendMessageMutation],
+    [
+      conversationId,
+      createNewConversation,
+      queryClient,
+      router,
+      sendChatMessage,
+    ],
+  );
+
+  const newChat = useCallback(() => {
+    router.push("/chat");
+  }, [router]);
+
+  const selectConversation = useCallback(
+    (id: string) => {
+      router.push(`/chat/${id}`);
+    },
+    [router],
   );
 
   const displayedMessages = [...persistedMessages, ...pendingMessages];
@@ -150,21 +188,16 @@ export default function ChatLayout({ data }: ChatLayoutProps) {
     <div className="flex h-screen overflow-hidden bg-background">
       <ChatSidebar
         conversations={sidebarItems}
-        activeConversationId={activeId}
+        activeConversationId={activeConversation?.id ?? null}
         onNewChat={newChat}
         onSelectConversation={selectConversation}
-        onDeleteConversation={deleteByID}
       />
       <main className="flex-1 overflow-hidden">
         <ChatWindow
           messages={displayedMessages}
           isSending={isSending}
-          onSend={(content) => {
-            void sendMessage(content);
-          }}
-          onPromptClick={(prompt) => {
-            void sendMessage(prompt);
-          }}
+          onSend={sendMessage}
+          onPromptClick={sendMessage}
           userName={user?.name ?? user?.username ?? undefined}
         />
       </main>

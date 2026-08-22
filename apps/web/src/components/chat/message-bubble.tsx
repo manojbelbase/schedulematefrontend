@@ -25,7 +25,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
           "rounded-2xl px-4 py-3 text-sm leading-relaxed",
           isUser
             ? "max-w-[75%] rounded-br-sm bg-primary text-primary-foreground"
-            : "w-full rounded-tl-sm border border-border bg-card text-foreground",
+            : "w-fit max-w-full rounded-tl-sm border border-border bg-card text-foreground",
         )}
       >
         {isUser ? (

@@ -9,14 +9,15 @@ import { toast } from "sonner";
 
 import { Button } from "@ui/components/ui/button";
 import { Skeleton } from "@ui/components/ui/skeleton";
+import { options } from "@ui/lib/utils";
 
 import {
-  calendarConnectionControllerGetConnectionStatusQuery,
   useCalendarConnectionControllerDisconnect,
   useCalendarConnectionControllerGetConnectionStatus,
 } from "@repo/services/web";
 
 import { calendarConnectUrl } from "@/config/api";
+import { QUERY_KEYS } from "@/config/query-keys";
 
 export function GoogleCalendarConnect() {
   const searchParams = useSearchParams();
@@ -25,25 +26,18 @@ export function GoogleCalendarConnect() {
 
   const { data, isPending } =
     useCalendarConnectionControllerGetConnectionStatus({});
-  const disconnect = useCalendarConnectionControllerDisconnect({
-    onSuccess: async () => {
-      toast.success("Google Calendar disconnected.");
-      await queryClient.invalidateQueries({
-        queryKey: calendarConnectionControllerGetConnectionStatusQuery({})
-          .queryKey,
-      });
-    },
-    onError: (error) => {
-      const message =
-        typeof error === "object" && error !== null && "payload" in error
-          ? String(
-              (error as { payload?: { message?: unknown } }).payload?.message ??
-                "Could not disconnect. Please try again.",
-            )
-          : "Could not disconnect. Please try again.";
-      toast.error(message);
-    },
-  });
+
+  const disconnect = useCalendarConnectionControllerDisconnect(
+    options(
+      undefined,
+      async () => {
+        await queryClient.invalidateQueries({
+          queryKey: QUERY_KEYS.calendar,
+        });
+      },
+      { successMessage: "Google Calendar disconnected." },
+    ),
+  );
 
   const connected = data?.data.connected ?? false;
 
