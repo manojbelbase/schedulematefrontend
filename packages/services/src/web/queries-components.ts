@@ -81,7 +81,7 @@ export const useSuspenseHealthControllerCheckHealth = <
       HealthControllerCheckHealthError,
       TData
     >,
-    "queryKey" | "queryFn" | "initialData"
+    "queryKey" | "queryFn"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -104,7 +104,7 @@ export const useHealthControllerCheckHealth = <TData = Schemas.HealthResponse>(
       HealthControllerCheckHealthError,
       TData
     >,
-    "queryKey" | "queryFn" | "initialData"
+    "queryKey" | "queryFn"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -287,7 +287,7 @@ export const useSuspenseAuthControllerGoogle = <TData = undefined>(
   variables: AuthControllerGoogleVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<undefined, AuthControllerGoogleError, TData>,
-    "queryKey" | "queryFn" | "initialData"
+    "queryKey" | "queryFn"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -306,7 +306,7 @@ export const useAuthControllerGoogle = <TData = undefined>(
   variables: AuthControllerGoogleVariables | reactQuery.SkipToken,
   options?: Omit<
     reactQuery.UseQueryOptions<undefined, AuthControllerGoogleError, TData>,
-    "queryKey" | "queryFn" | "initialData"
+    "queryKey" | "queryFn"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -385,7 +385,7 @@ export const useSuspenseAuthControllerGoogleCallback = <TData = undefined>(
       AuthControllerGoogleCallbackError,
       TData
     >,
-    "queryKey" | "queryFn" | "initialData"
+    "queryKey" | "queryFn"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -408,7 +408,7 @@ export const useAuthControllerGoogleCallback = <TData = undefined>(
       AuthControllerGoogleCallbackError,
       TData
     >,
-    "queryKey" | "queryFn" | "initialData"
+    "queryKey" | "queryFn"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -486,7 +486,7 @@ export const useSuspenseAuthControllerMe = <TData = Schemas.UserResponse>(
       AuthControllerMeError,
       TData
     >,
-    "queryKey" | "queryFn" | "initialData"
+    "queryKey" | "queryFn"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -509,7 +509,7 @@ export const useAuthControllerMe = <TData = Schemas.UserResponse>(
       AuthControllerMeError,
       TData
     >,
-    "queryKey" | "queryFn" | "initialData"
+    "queryKey" | "queryFn"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -741,21 +741,22 @@ export const useAuthControllerResetPassword = (
   });
 };
 
-export type CalendarConnectionControllerStatusError = Fetcher.ErrorWrapper<{
-  status: 401;
-  payload: Schemas.ErrorResponse;
-}>;
+export type CalendarConnectionControllerGetConnectionStatusError =
+  Fetcher.ErrorWrapper<{
+    status: 401;
+    payload: Schemas.ErrorResponse;
+  }>;
 
-export type CalendarConnectionControllerStatusVariables =
+export type CalendarConnectionControllerGetConnectionStatusVariables =
   QueriesContext["fetcherOptions"];
 
-export const fetchCalendarConnectionControllerStatus = (
-  variables: CalendarConnectionControllerStatusVariables,
+export const fetchCalendarConnectionControllerGetConnectionStatus = (
+  variables: CalendarConnectionControllerGetConnectionStatusVariables,
   signal?: AbortSignal,
 ) =>
   queriesFetch<
     Schemas.CalendarConnectionStatusResponse,
-    CalendarConnectionControllerStatusError,
+    CalendarConnectionControllerGetConnectionStatusError,
     undefined,
     {},
     {},
@@ -767,8 +768,8 @@ export const fetchCalendarConnectionControllerStatus = (
     signal,
   });
 
-export function calendarConnectionControllerStatusQuery(
-  variables: CalendarConnectionControllerStatusVariables,
+export function calendarConnectionControllerGetConnectionStatusQuery(
+  variables: CalendarConnectionControllerGetConnectionStatusVariables,
 ): {
   queryKey: reactQuery.QueryKey;
   queryFn: (
@@ -776,8 +777,10 @@ export function calendarConnectionControllerStatusQuery(
   ) => Promise<Schemas.CalendarConnectionStatusResponse>;
 };
 
-export function calendarConnectionControllerStatusQuery(
-  variables: CalendarConnectionControllerStatusVariables | reactQuery.SkipToken,
+export function calendarConnectionControllerGetConnectionStatusQuery(
+  variables:
+    | CalendarConnectionControllerGetConnectionStatusVariables
+    | reactQuery.SkipToken,
 ): {
   queryKey: reactQuery.QueryKey;
   queryFn:
@@ -787,43 +790,48 @@ export function calendarConnectionControllerStatusQuery(
     | reactQuery.SkipToken;
 };
 
-export function calendarConnectionControllerStatusQuery(
-  variables: CalendarConnectionControllerStatusVariables | reactQuery.SkipToken,
+export function calendarConnectionControllerGetConnectionStatusQuery(
+  variables:
+    | CalendarConnectionControllerGetConnectionStatusVariables
+    | reactQuery.SkipToken,
 ) {
   return {
     queryKey: queryKeyFn({
       path: "/api/calendar-connection/status",
-      operationId: "calendarConnectionControllerStatus",
+      operationId: "calendarConnectionControllerGetConnectionStatus",
       variables,
     }),
     queryFn:
       variables === reactQuery.skipToken
         ? reactQuery.skipToken
         : ({ signal }: QueryFnOptions) =>
-            fetchCalendarConnectionControllerStatus(variables, signal),
+            fetchCalendarConnectionControllerGetConnectionStatus(
+              variables,
+              signal,
+            ),
   };
 }
 
-export const useSuspenseCalendarConnectionControllerStatus = <
+export const useSuspenseCalendarConnectionControllerGetConnectionStatus = <
   TData = Schemas.CalendarConnectionStatusResponse,
 >(
-  variables: CalendarConnectionControllerStatusVariables,
+  variables: CalendarConnectionControllerGetConnectionStatusVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<
       Schemas.CalendarConnectionStatusResponse,
-      CalendarConnectionControllerStatusError,
+      CalendarConnectionControllerGetConnectionStatusError,
       TData
     >,
-    "queryKey" | "queryFn" | "initialData"
+    "queryKey" | "queryFn"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
   return reactQuery.useSuspenseQuery<
     Schemas.CalendarConnectionStatusResponse,
-    CalendarConnectionControllerStatusError,
+    CalendarConnectionControllerGetConnectionStatusError,
     TData
   >({
-    ...calendarConnectionControllerStatusQuery(
+    ...calendarConnectionControllerGetConnectionStatusQuery(
       deepMerge(fetcherOptions, variables),
     ),
     ...options,
@@ -831,26 +839,28 @@ export const useSuspenseCalendarConnectionControllerStatus = <
   });
 };
 
-export const useCalendarConnectionControllerStatus = <
+export const useCalendarConnectionControllerGetConnectionStatus = <
   TData = Schemas.CalendarConnectionStatusResponse,
 >(
-  variables: CalendarConnectionControllerStatusVariables | reactQuery.SkipToken,
+  variables:
+    | CalendarConnectionControllerGetConnectionStatusVariables
+    | reactQuery.SkipToken,
   options?: Omit<
     reactQuery.UseQueryOptions<
       Schemas.CalendarConnectionStatusResponse,
-      CalendarConnectionControllerStatusError,
+      CalendarConnectionControllerGetConnectionStatusError,
       TData
     >,
-    "queryKey" | "queryFn" | "initialData"
+    "queryKey" | "queryFn"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
   return reactQuery.useQuery<
     Schemas.CalendarConnectionStatusResponse,
-    CalendarConnectionControllerStatusError,
+    CalendarConnectionControllerGetConnectionStatusError,
     TData
   >({
-    ...calendarConnectionControllerStatusQuery(
+    ...calendarConnectionControllerGetConnectionStatusQuery(
       variables === reactQuery.skipToken
         ? variables
         : deepMerge(fetcherOptions, variables),
@@ -940,7 +950,7 @@ export const useSuspenseCalendarConnectionControllerConnect = <
       CalendarConnectionControllerConnectError,
       TData
     >,
-    "queryKey" | "queryFn" | "initialData"
+    "queryKey" | "queryFn"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -966,7 +976,7 @@ export const useCalendarConnectionControllerConnect = <TData = undefined>(
       CalendarConnectionControllerConnectError,
       TData
     >,
-    "queryKey" | "queryFn" | "initialData"
+    "queryKey" | "queryFn"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -1059,7 +1069,7 @@ export const useSuspenseCalendarConnectionControllerConnectCallback = <
       CalendarConnectionControllerConnectCallbackError,
       TData
     >,
-    "queryKey" | "queryFn" | "initialData"
+    "queryKey" | "queryFn"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -1087,7 +1097,7 @@ export const useCalendarConnectionControllerConnectCallback = <
       CalendarConnectionControllerConnectCallbackError,
       TData
     >,
-    "queryKey" | "queryFn" | "initialData"
+    "queryKey" | "queryFn"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -1156,6 +1166,551 @@ export const useCalendarConnectionControllerDisconnect = (
   });
 };
 
+export type ChatControllerListConversationsError = Fetcher.ErrorWrapper<{
+  status: 401;
+  payload: Schemas.ErrorResponse;
+}>;
+
+export type ChatControllerListConversationsVariables =
+  QueriesContext["fetcherOptions"];
+
+export const fetchChatControllerListConversations = (
+  variables: ChatControllerListConversationsVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.ChatConversationListResponse,
+    ChatControllerListConversationsError,
+    undefined,
+    {},
+    {},
+    {}
+  >({ url: "/api/chat/conversations", method: "get", ...variables, signal });
+
+export function chatControllerListConversationsQuery(
+  variables: ChatControllerListConversationsVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (
+    options: QueryFnOptions,
+  ) => Promise<Schemas.ChatConversationListResponse>;
+};
+
+export function chatControllerListConversationsQuery(
+  variables: ChatControllerListConversationsVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((
+        options: QueryFnOptions,
+      ) => Promise<Schemas.ChatConversationListResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function chatControllerListConversationsQuery(
+  variables: ChatControllerListConversationsVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/chat/conversations",
+      operationId: "chatControllerListConversations",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchChatControllerListConversations(variables, signal),
+  };
+}
+
+export const useSuspenseChatControllerListConversations = <
+  TData = Schemas.ChatConversationListResponse,
+>(
+  variables: ChatControllerListConversationsVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.ChatConversationListResponse,
+      ChatControllerListConversationsError,
+      TData
+    >,
+    "queryKey" | "queryFn"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    Schemas.ChatConversationListResponse,
+    ChatControllerListConversationsError,
+    TData
+  >({
+    ...chatControllerListConversationsQuery(
+      deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useChatControllerListConversations = <
+  TData = Schemas.ChatConversationListResponse,
+>(
+  variables: ChatControllerListConversationsVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.ChatConversationListResponse,
+      ChatControllerListConversationsError,
+      TData
+    >,
+    "queryKey" | "queryFn"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    Schemas.ChatConversationListResponse,
+    ChatControllerListConversationsError,
+    TData
+  >({
+    ...chatControllerListConversationsQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type ChatControllerCreateConversationError = Fetcher.ErrorWrapper<{
+  status: 401;
+  payload: Schemas.ErrorResponse;
+}>;
+
+export type ChatControllerCreateConversationVariables = {
+  body?: Schemas.CreateConversationDto;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchChatControllerCreateConversation = (
+  variables: ChatControllerCreateConversationVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.ChatConversationResponse,
+    ChatControllerCreateConversationError,
+    Schemas.CreateConversationDto,
+    {},
+    {},
+    {}
+  >({ url: "/api/chat/conversations", method: "post", ...variables, signal });
+
+export const useChatControllerCreateConversation = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.ChatConversationResponse,
+      ChatControllerCreateConversationError,
+      ChatControllerCreateConversationVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.ChatConversationResponse,
+    ChatControllerCreateConversationError,
+    ChatControllerCreateConversationVariables
+  >({
+    mutationFn: (variables: ChatControllerCreateConversationVariables) =>
+      fetchChatControllerCreateConversation(
+        deepMerge(fetcherOptions, variables),
+      ),
+    ...options,
+  });
+};
+
+export type ChatControllerGetConversationPathParams = {
+  /**
+   * @format uuid
+   */
+  id: string;
+};
+
+export type ChatControllerGetConversationError = Fetcher.ErrorWrapper<
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 404;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type ChatControllerGetConversationVariables = {
+  pathParams: ChatControllerGetConversationPathParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchChatControllerGetConversation = (
+  variables: ChatControllerGetConversationVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.ChatConversationResponse,
+    ChatControllerGetConversationError,
+    undefined,
+    {},
+    {},
+    ChatControllerGetConversationPathParams
+  >({
+    url: "/api/chat/conversations/{id}",
+    method: "get",
+    ...variables,
+    signal,
+  });
+
+export function chatControllerGetConversationQuery(
+  variables: ChatControllerGetConversationVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (
+    options: QueryFnOptions,
+  ) => Promise<Schemas.ChatConversationResponse>;
+};
+
+export function chatControllerGetConversationQuery(
+  variables: ChatControllerGetConversationVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((options: QueryFnOptions) => Promise<Schemas.ChatConversationResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function chatControllerGetConversationQuery(
+  variables: ChatControllerGetConversationVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/chat/conversations/{id}",
+      operationId: "chatControllerGetConversation",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchChatControllerGetConversation(variables, signal),
+  };
+}
+
+export const useSuspenseChatControllerGetConversation = <
+  TData = Schemas.ChatConversationResponse,
+>(
+  variables: ChatControllerGetConversationVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.ChatConversationResponse,
+      ChatControllerGetConversationError,
+      TData
+    >,
+    "queryKey" | "queryFn"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    Schemas.ChatConversationResponse,
+    ChatControllerGetConversationError,
+    TData
+  >({
+    ...chatControllerGetConversationQuery(deepMerge(fetcherOptions, variables)),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useChatControllerGetConversation = <
+  TData = Schemas.ChatConversationResponse,
+>(
+  variables: ChatControllerGetConversationVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.ChatConversationResponse,
+      ChatControllerGetConversationError,
+      TData
+    >,
+    "queryKey" | "queryFn"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    Schemas.ChatConversationResponse,
+    ChatControllerGetConversationError,
+    TData
+  >({
+    ...chatControllerGetConversationQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type ChatControllerDeleteConversationPathParams = {
+  /**
+   * @format uuid
+   */
+  id: string;
+};
+
+export type ChatControllerDeleteConversationError = Fetcher.ErrorWrapper<
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 404;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type ChatControllerDeleteConversationVariables = {
+  pathParams: ChatControllerDeleteConversationPathParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchChatControllerDeleteConversation = (
+  variables: ChatControllerDeleteConversationVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.MessageResponse,
+    ChatControllerDeleteConversationError,
+    undefined,
+    {},
+    {},
+    ChatControllerDeleteConversationPathParams
+  >({
+    url: "/api/chat/conversations/{id}",
+    method: "delete",
+    ...variables,
+    signal,
+  });
+
+export const useChatControllerDeleteConversation = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.MessageResponse,
+      ChatControllerDeleteConversationError,
+      ChatControllerDeleteConversationVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.MessageResponse,
+    ChatControllerDeleteConversationError,
+    ChatControllerDeleteConversationVariables
+  >({
+    mutationFn: (variables: ChatControllerDeleteConversationVariables) =>
+      fetchChatControllerDeleteConversation(
+        deepMerge(fetcherOptions, variables),
+      ),
+    ...options,
+  });
+};
+
+export type ChatControllerListMessagesPathParams = {
+  /**
+   * @format uuid
+   */
+  id: string;
+};
+
+export type ChatControllerListMessagesError = Fetcher.ErrorWrapper<
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 404;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type ChatControllerListMessagesVariables = {
+  pathParams: ChatControllerListMessagesPathParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchChatControllerListMessages = (
+  variables: ChatControllerListMessagesVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.ChatMessageListResponse,
+    ChatControllerListMessagesError,
+    undefined,
+    {},
+    {},
+    ChatControllerListMessagesPathParams
+  >({
+    url: "/api/chat/conversations/{id}/messages",
+    method: "get",
+    ...variables,
+    signal,
+  });
+
+export function chatControllerListMessagesQuery(
+  variables: ChatControllerListMessagesVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (
+    options: QueryFnOptions,
+  ) => Promise<Schemas.ChatMessageListResponse>;
+};
+
+export function chatControllerListMessagesQuery(
+  variables: ChatControllerListMessagesVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((options: QueryFnOptions) => Promise<Schemas.ChatMessageListResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function chatControllerListMessagesQuery(
+  variables: ChatControllerListMessagesVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/chat/conversations/{id}/messages",
+      operationId: "chatControllerListMessages",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchChatControllerListMessages(variables, signal),
+  };
+}
+
+export const useSuspenseChatControllerListMessages = <
+  TData = Schemas.ChatMessageListResponse,
+>(
+  variables: ChatControllerListMessagesVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.ChatMessageListResponse,
+      ChatControllerListMessagesError,
+      TData
+    >,
+    "queryKey" | "queryFn"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    Schemas.ChatMessageListResponse,
+    ChatControllerListMessagesError,
+    TData
+  >({
+    ...chatControllerListMessagesQuery(deepMerge(fetcherOptions, variables)),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useChatControllerListMessages = <
+  TData = Schemas.ChatMessageListResponse,
+>(
+  variables: ChatControllerListMessagesVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.ChatMessageListResponse,
+      ChatControllerListMessagesError,
+      TData
+    >,
+    "queryKey" | "queryFn"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    Schemas.ChatMessageListResponse,
+    ChatControllerListMessagesError,
+    TData
+  >({
+    ...chatControllerListMessagesQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type ChatControllerSendMessagePathParams = {
+  /**
+   * @format uuid
+   */
+  id: string;
+};
+
+export type ChatControllerSendMessageError = Fetcher.ErrorWrapper<
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 404;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type ChatControllerSendMessageVariables = {
+  body: Schemas.SendMessageDto;
+  pathParams: ChatControllerSendMessagePathParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchChatControllerSendMessage = (
+  variables: ChatControllerSendMessageVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.ChatSendMessageResponse,
+    ChatControllerSendMessageError,
+    Schemas.SendMessageDto,
+    {},
+    {},
+    ChatControllerSendMessagePathParams
+  >({
+    url: "/api/chat/conversations/{id}/messages",
+    method: "post",
+    ...variables,
+    signal,
+  });
+
+export const useChatControllerSendMessage = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.ChatSendMessageResponse,
+      ChatControllerSendMessageError,
+      ChatControllerSendMessageVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.ChatSendMessageResponse,
+    ChatControllerSendMessageError,
+    ChatControllerSendMessageVariables
+  >({
+    mutationFn: (variables: ChatControllerSendMessageVariables) =>
+      fetchChatControllerSendMessage(deepMerge(fetcherOptions, variables)),
+    ...options,
+  });
+};
+
 export type QueryOperation =
   | {
       path: "/api/health";
@@ -1179,9 +1734,10 @@ export type QueryOperation =
     }
   | {
       path: "/api/calendar-connection/status";
-      operationId: "calendarConnectionControllerStatus";
+      operationId: "calendarConnectionControllerGetConnectionStatus";
       variables:
-        CalendarConnectionControllerStatusVariables | reactQuery.SkipToken;
+        | CalendarConnectionControllerGetConnectionStatusVariables
+        | reactQuery.SkipToken;
     }
   | {
       path: "/api/calendar-connection/connect";
@@ -1195,4 +1751,20 @@ export type QueryOperation =
       variables:
         | CalendarConnectionControllerConnectCallbackVariables
         | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/chat/conversations";
+      operationId: "chatControllerListConversations";
+      variables:
+        ChatControllerListConversationsVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/chat/conversations/{id}";
+      operationId: "chatControllerGetConversation";
+      variables: ChatControllerGetConversationVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/chat/conversations/{id}/messages";
+      operationId: "chatControllerListMessages";
+      variables: ChatControllerListMessagesVariables | reactQuery.SkipToken;
     };

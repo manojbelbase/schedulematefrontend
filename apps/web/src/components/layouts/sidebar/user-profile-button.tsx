@@ -13,6 +13,7 @@ import {
 import { Separator } from "@ui/components/ui/separator";
 import { cn } from "@ui/lib/utils";
 
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { useAuth } from "@/hooks/use-auth";
 
 export default function UserProfileButton({ expanded }: { expanded: boolean }) {
@@ -85,6 +86,8 @@ export default function UserProfileButton({ expanded }: { expanded: boolean }) {
             <Settings className="size-4 text-muted-foreground" />
             Settings
           </Link>
+          <Separator className="my-1" />
+          <ThemeToggle />
           <Link
             href="/auth/logout"
             className="flex items-center gap-2.5 rounded-md px-2.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-destructive"
