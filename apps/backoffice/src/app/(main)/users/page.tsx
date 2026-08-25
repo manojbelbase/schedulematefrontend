@@ -42,7 +42,6 @@ import {
   TableRow,
 } from "@ui/components/ui/table";
 import { useDebounce } from "@ui/hooks/useDebounce";
-import { cn } from "@ui/lib/utils";
 
 import {
   useBackofficeControllerListUsers,
@@ -101,22 +100,26 @@ export default function UsersPage() {
         accessorKey: "name",
         header: "Name",
         cell: ({ row }) => (
-          <div className="font-medium">{row.original.name || "—"}</div>
+          <div className="font-medium text-sm">{row.original.name || "—"}</div>
         ),
       },
       {
         accessorKey: "email",
         header: "Email",
-        cell: ({ row }) => <span>{row.original.email}</span>,
+        cell: ({ row }) => (
+          <span className="text-sm">{row.original.email}</span>
+        ),
       },
       {
         accessorKey: "username",
         header: "Username",
         cell: ({ row }) =>
           row.original.username ? (
-            <Badge variant="secondary">@{row.original.username}</Badge>
+            <Badge variant="secondary" className="text-xs">
+              @{row.original.username}
+            </Badge>
           ) : (
-            <span className="text-muted-foreground">—</span>
+            <span className="text-xs text-muted-foreground">—</span>
           ),
       },
       {
@@ -132,27 +135,21 @@ export default function UsersPage() {
             <PopoverContent align="end" className="w-40">
               <button
                 type="button"
-                className={cn(
-                  "flex w-full items-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-foreground transition-colors hover:bg-accent",
-                )}
+                className="flex w-full items-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-foreground transition-colors hover:bg-accent"
               >
                 <Eye className="size-4" />
                 View
               </button>
               <button
                 type="button"
-                className={cn(
-                  "flex w-full items-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-foreground transition-colors hover:bg-accent",
-                )}
+                className="flex w-full items-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-foreground transition-colors hover:bg-accent"
               >
                 <Edit className="size-4" />
                 Edit
               </button>
               <button
                 type="button"
-                className={cn(
-                  "flex w-full items-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-destructive transition-colors hover:bg-accent",
-                )}
+                className="flex w-full items-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-destructive transition-colors hover:bg-accent"
               >
                 <Trash2 className="size-4" />
                 Delete
@@ -187,10 +184,10 @@ export default function UsersPage() {
   if (isError) {
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center">
-        <p className="text-destructive">
+        <p className="text-sm text-destructive">
           Failed to load users: {String(error)}
         </p>
-        <Button onClick={() => refetch()} className="mt-4">
+        <Button onClick={() => refetch()} className="mt-4" size="sm">
           Retry
         </Button>
       </div>
@@ -198,11 +195,11 @@ export default function UsersPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div className="space-y-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Users</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl font-semibold tracking-tight">Users</h1>
+          <p className="text-sm text-muted-foreground">
             Manage and view all registered users
           </p>
         </div>
@@ -212,7 +209,7 @@ export default function UsersPage() {
             placeholder="Search users..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9"
+            className="h-9 pl-9 text-sm"
           />
         </div>
       </div>
@@ -227,7 +224,7 @@ export default function UsersPage() {
                     {header.isPlaceholder ? null : header.column.getCanSort() ? (
                       <button
                         {...header.getContext()}
-                        className="flex items-center gap-1 hover:text-primary cursor-pointer select-none"
+                        className="flex items-center gap-1 text-xs font-medium hover:text-primary cursor-pointer select-none"
                       >
                         {header.column.columnDef.header
                           ? typeof header.column.columnDef.header === "function"
@@ -236,16 +233,18 @@ export default function UsersPage() {
                               )
                             : header.column.columnDef.header
                           : header.column.id}
-                        <ArrowUpDown className="size-4 text-muted-foreground" />
+                        <ArrowUpDown className="size-3 text-muted-foreground" />
                       </button>
-                    ) : header.column.columnDef.header ? (
-                      typeof header.column.columnDef.header === "function" ? (
-                        header.column.columnDef.header(header.getContext())
-                      ) : (
-                        header.column.columnDef.header
-                      )
                     ) : (
-                      header.column.id
+                      <span className="text-xs font-medium">
+                        {header.column.columnDef.header
+                          ? typeof header.column.columnDef.header === "function"
+                            ? header.column.columnDef.header(
+                                header.getContext(),
+                              )
+                            : header.column.columnDef.header
+                          : header.column.id}
+                      </span>
                     )}
                   </TableHead>
                 ))}
@@ -259,14 +258,14 @@ export default function UsersPage() {
                   colSpan={columns.length}
                   className="text-center py-8"
                 >
-                  <Loader2 className="mx-auto size-6 animate-spin text-muted-foreground" />
+                  <Loader2 className="mx-auto size-5 animate-spin text-muted-foreground" />
                 </TableCell>
               </TableRow>
             ) : users.length === 0 ? (
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="text-center py-8"
+                  className="text-center py-8 text-sm text-muted-foreground"
                 >
                   No users found
                 </TableCell>
@@ -291,11 +290,12 @@ export default function UsersPage() {
       </div>
 
       {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center justify-center gap-1">
           <Button
             variant="outline"
             size="icon"
-            onClick={() => table.previousPage()}
+            className="size-8"
+            onClick={() => table.setPageIndex(0)}
             disabled={pagination.pageIndex === 0}
           >
             <ChevronsLeft className="size-4" />
@@ -303,6 +303,7 @@ export default function UsersPage() {
           <Button
             variant="outline"
             size="icon"
+            className="size-8"
             onClick={() => table.previousPage()}
             disabled={pagination.pageIndex === 0}
           >
@@ -315,6 +316,7 @@ export default function UsersPage() {
                 pagination.pageIndex === pageIndex ? "default" : "outline"
               }
               size="icon"
+              className="size-8 text-xs"
               onClick={() => table.setPageIndex(pageIndex)}
             >
               {pageIndex + 1}
@@ -323,6 +325,7 @@ export default function UsersPage() {
           <Button
             variant="outline"
             size="icon"
+            className="size-8"
             onClick={() => table.nextPage()}
             disabled={pagination.pageIndex === totalPages - 1}
           >
@@ -331,7 +334,8 @@ export default function UsersPage() {
           <Button
             variant="outline"
             size="icon"
-            onClick={() => table.nextPage()}
+            className="size-8"
+            onClick={() => table.setPageIndex(totalPages - 1)}
             disabled={pagination.pageIndex === totalPages - 1}
           >
             <ChevronsRight className="size-4" />
@@ -339,9 +343,9 @@ export default function UsersPage() {
         </div>
       )}
 
-      <div className="text-sm text-muted-foreground">
+      <p className="text-center text-xs text-muted-foreground">
         Showing {users.length} of {totalItems} users
-      </div>
+      </p>
     </div>
   );
 }

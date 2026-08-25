@@ -13,53 +13,55 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-muted-foreground">
+        <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
+        <p className="text-sm text-muted-foreground">
           Welcome to the ScheduledMate Backoffice
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Card>
-          <CardHeader>
-            <CardTitle>Users</CardTitle>
-            <CardDescription>Manage users</CardDescription>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium">Users</CardTitle>
+            <CardDescription className="text-xs">Manage users</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button asChild variant="outline">
+            <Button asChild variant="outline" size="sm">
               <Link href="/users">View Users</Link>
             </Button>
           </CardContent>
         </Card>
         <Card>
-          <CardHeader>
-            <CardTitle>Settings</CardTitle>
-            <CardDescription>App settings</CardDescription>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium">Settings</CardTitle>
+            <CardDescription className="text-xs">App settings</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button asChild variant="outline" disabled>
+            <Button asChild variant="outline" size="sm" disabled>
               <Link href="/settings">Coming Soon</Link>
             </Button>
           </CardContent>
         </Card>
         <Card>
-          <CardHeader>
-            <CardTitle>Analytics</CardTitle>
-            <CardDescription>View analytics</CardDescription>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium">Analytics</CardTitle>
+            <CardDescription className="text-xs">
+              View analytics
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button asChild variant="outline" disabled>
+            <Button asChild variant="outline" size="sm" disabled>
               <Link href="/analytics">Coming Soon</Link>
             </Button>
           </CardContent>
         </Card>
         <Card>
-          <CardHeader>
-            <CardTitle>Logs</CardTitle>
-            <CardDescription>System logs</CardDescription>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium">Logs</CardTitle>
+            <CardDescription className="text-xs">System logs</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button asChild variant="outline" disabled>
+            <Button asChild variant="outline" size="sm" disabled>
               <Link href="/logs">Coming Soon</Link>
             </Button>
           </CardContent>
