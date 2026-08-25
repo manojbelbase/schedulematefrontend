@@ -1,12 +1,35 @@
 import type { FieldValues, Path, UseFormSetError } from "react-hook-form";
-import type { UseMutationOptions } from "@tanstack/react-query";
+import type { InfiniteData, UseMutationOptions } from "@tanstack/react-query";
 import clsx, { type ClassValue } from "clsx";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 
+import type { PaginationDTO } from "./pagination";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export const parseInfiniteQueryData = <T>(
+  data?: InfiniteData<
+    {
+      message: string;
+      data: T[];
+      pagination: PaginationDTO;
+    },
+    unknown
+  >,
+) => {
+  if (!data) return {};
+
+  const count = data.pages.at(0)?.data.length || 0;
+
+  return {
+    data: data.pages.map((page) => page.data).flat(),
+    count,
+    pagination: data.pages.at(-1)?.pagination,
+  };
+};
 
 type TOpts = {
   successMessage?: string;
@@ -15,7 +38,6 @@ type TOpts = {
   errorCallback?: (error: unknown) => void | Promise<void>;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type MutationHandlerOptions = Omit<
   UseMutationOptions<any, any, any, unknown>,
   "mutationFn"

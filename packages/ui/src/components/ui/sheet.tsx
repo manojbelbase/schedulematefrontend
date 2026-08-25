@@ -1,28 +1,28 @@
-"use client";
-
 import * as React from "react";
 import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { XIcon } from "lucide-react";
 
 import { cn } from "@ui/lib/utils";
 
-function Sheet(props: React.ComponentProps<typeof SheetPrimitive.Root>) {
+function Sheet({ ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />;
 }
 
-function SheetTrigger(
-  props: React.ComponentProps<typeof SheetPrimitive.Trigger>,
-) {
+function SheetTrigger({
+  ...props
+}: React.ComponentProps<typeof SheetPrimitive.Trigger>) {
   return <SheetPrimitive.Trigger data-slot="sheet-trigger" {...props} />;
 }
 
-function SheetClose(props: React.ComponentProps<typeof SheetPrimitive.Close>) {
+function SheetClose({
+  ...props
+}: React.ComponentProps<typeof SheetPrimitive.Close>) {
   return <SheetPrimitive.Close data-slot="sheet-close" {...props} />;
 }
 
-function SheetPortal(
-  props: React.ComponentProps<typeof SheetPrimitive.Portal>,
-) {
+function SheetPortal({
+  ...props
+}: React.ComponentProps<typeof SheetPrimitive.Portal>) {
   return <SheetPrimitive.Portal data-slot="sheet-portal" {...props} />;
 }
 
@@ -46,9 +46,13 @@ function SheetContent({
   className,
   children,
   side = "right",
+  btnOutside,
+  hideExit = false,
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Content> & {
   side?: "top" | "right" | "bottom" | "left";
+  btnOutside?: boolean;
+  hideExit?: boolean;
 }) {
   return (
     <SheetPortal>
@@ -64,16 +68,40 @@ function SheetContent({
           side === "top" &&
             "data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top inset-x-0 top-0 h-auto border-b",
           side === "bottom" &&
-            "data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom inset-x-0 bottom-0 h-auto border-t",
+            "data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom inset-x-0 bottom-0 h-auto border-t mx-auto rounded-b-none!",
           className,
         )}
         {...props}
       >
-        {children}
-        <SheetPrimitive.Close className="ring-offset-background focus:ring-ring data-[state=open]:bg-secondary absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none">
-          <XIcon className="size-4" />
-          <span className="sr-only">Close</span>
-        </SheetPrimitive.Close>
+        <div
+          className={cn(
+            "w-full max-h-[98vh] p-8 overflow-y-auto! no-scrollbar",
+            className,
+          )}
+        >
+          {children}
+        </div>
+        {!hideExit && (
+          <SheetPrimitive.Close
+            //   className={cn(
+            //     "absolute right-4 top-4 flex items-center justify-center rounded-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none",
+            //     btnOutside &&
+            //       "top-4  -left-16 bg-background size-[45px] p-2.5 rounded-md border",
+            //     side === "bottom" && "-top-12  left-1/2 -translate-x-1/2"
+            //   )}
+            // >
+            //   <pre>Close Button</pre>
+            //   <X
+            //     className={cn("size-10", btnOutside && "text-primary 3xl:size-7")}
+            //   />
+            //   <span className="sr-only">Close</span>
+            className="absolute top-8 right-8 hover:bg-red-500/5 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none group"
+          >
+            <XIcon className="size-6 text-destructive cursor-pointer group-hover:scale-110 transition-easeIn duration-200" />
+
+            <span className="sr-only">Close</span>
+          </SheetPrimitive.Close>
+        )}
       </SheetPrimitive.Content>
     </SheetPortal>
   );

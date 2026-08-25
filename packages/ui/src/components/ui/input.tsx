@@ -1,21 +1,77 @@
 import * as React from "react";
 
-import { cn } from "@ui/lib/utils";
+import { cn, formatNumber } from "@ui/lib/utils";
 
-function Input({ className, type, ...props }: React.ComponentProps<"input">) {
-  return (
-    <input
-      type={type}
-      data-slot="input"
-      className={cn(
-        "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-        "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
-        "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
-        className,
-      )}
-      {...props}
-    />
-  );
-}
+export const INPUT_CLASSNAME = cn(
+  "flex h-10 3xl:h-11 w-full rounded-md border border-border bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 focus:pl-3.5 transition-all ease-in-out duration-300 focus-visible:border-primary focus-visible:ring-primary/50 ",
+);
+
+export type InputProps = {
+  preventFocusStyles?: boolean;
+  preventNegativeValues?: boolean;
+  maxVal?: number;
+  ignoreDefaultOnChange?: boolean;
+  ignorePriceLimit?: boolean;
+  value?: string | number;
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, "value">;
+
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  (
+    {
+      className,
+      type,
+      maxVal,
+      preventFocusStyles = true,
+      preventNegativeValues,
+      ignoreDefaultOnChange = false,
+      ignorePriceLimit = false,
+      value,
+      ...props
+    },
+    ref,
+  ) => {
+    const step = props.step?.toString().split(".")[1]?.length || 0;
+
+    return (
+      <input
+        type={type}
+        className={cn(
+          "flex h-10 3xl:h-11 w-full rounded-md border border-border bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 focus:pl-3.5 transition-all ease-in-out duration-300",
+          !preventFocusStyles
+            ? "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1"
+            : "outline-none focus-visible:border-primary focus-visible:ring-primary/50 ",
+          className,
+        )}
+        ref={ref}
+        {...props}
+        {...(value !== undefined && { value })}
+        {...(type === "number" && {
+          onWheel: (e) => e.currentTarget.blur(),
+        })}
+        {...(type === "number" && {
+          onKeyDown: (e) =>
+            formatNumber(
+              e,
+              props.step === "any" ? undefined : step - 1,
+              maxVal,
+              ignorePriceLimit,
+              preventNegativeValues,
+            ),
+          min: preventNegativeValues ? 0 : undefined,
+        })}
+        {...(type === "number" &&
+          !ignoreDefaultOnChange && {
+            onChange: (e) =>
+              props.onChange?.(
+                Number.isNaN(e.target.valueAsNumber)
+                  ? ""
+                  : (e.target.valueAsNumber as any),
+              ),
+          })}
+      />
+    );
+  },
+);
+Input.displayName = "Input";
 
 export { Input };

@@ -7,6 +7,9 @@ import type {
   VisibilityState,
 } from "@tanstack/react-table";
 
+import type { TFunctionsProps } from "@ui/components/data-table/functions";
+import type { TTriggerProps } from "@ui/components/deployables/trigger";
+
 import type { TEnvSchema } from "^/config/env";
 
 declare global {
@@ -30,13 +33,14 @@ declare module "@tanstack/react-table" {
     stopRowClickPropagation?: boolean;
     pin?: "left" | "right";
     cellClassName?: string;
+    deployable?: Omit<TTriggerProps, "children">;
   }
 
   interface TableMeta<TData extends RowData> {
     showFilters?: boolean;
     setShowFilters?: OnChangeFn<boolean>;
-    onRowClick?: (row: TData) => void;
-    onRightClick?: (row: TData) => void;
+    onRowClick?: TFunctionsProps<TData>["onRowClick"];
+    onRightClick?: TFunctionsProps<TData>["onRightClick"];
     cardVisibility?: VisibilityState;
     onCardVisibilityChange?: OnChangeFn<VisibilityState>;
     page?: number;

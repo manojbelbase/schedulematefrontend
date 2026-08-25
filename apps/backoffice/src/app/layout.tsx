@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import "./globals.css";
 
@@ -26,7 +27,9 @@ export default function Layout({
   return (
     <html lang="en" suppressHydrationWarning className={poppins.variable}>
       <body className="antialiased">
-        <Provider>{children}</Provider>
+        <NuqsAdapter>
+          <Provider>{children}</Provider>
+        </NuqsAdapter>
       </body>
     </html>
   );

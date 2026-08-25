@@ -1,2 +1,11 @@
 @config "../../tailwind.config.ts";
 @import "@repo/ui/globals.css";
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.custom-scrollbar-thin {
+  scrollbar-width: thin;
+}

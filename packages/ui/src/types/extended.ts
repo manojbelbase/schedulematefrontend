@@ -30,6 +30,8 @@ export type TDeleteItemModalData<T extends object = object> = {
   description?: ReactNode;
   callback?: () => void;
   deleteButtonText?: string;
+  initiatorName?: string;
+  queryKeys?: string[][];
 };
 
 export type _SheetModalProps<T = object> = _FormModalProps<T>;

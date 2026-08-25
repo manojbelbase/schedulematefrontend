@@ -7,6 +7,9 @@ import type {
   VisibilityState,
 } from "@tanstack/react-table";
 
+import type { TFunctionsProps } from "@ui/components/data-table/functions";
+import type { TTriggerProps } from "@ui/components/deployables/trigger";
+
 declare module "@tanstack/react-table" {
   interface ColumnMeta<TData extends RowData, TValue> {
     exportOnly?: boolean;
@@ -19,11 +22,14 @@ declare module "@tanstack/react-table" {
     pin?: "left" | "right";
     cellClassName?: string;
     stopRowClickPropagation?: boolean;
+    deployable?: Omit<TTriggerProps, "children">;
   }
 
   interface TableMeta<TData extends RowData> {
     showFilters?: boolean;
     setShowFilters?: OnChangeFn<boolean>;
+    onRowClick?: TFunctionsProps<TData>["onRowClick"];
+    onRightClick?: TFunctionsProps<TData>["onRightClick"];
     cardVisibility?: VisibilityState;
     onCardVisibilityChange?: OnChangeFn<VisibilityState>;
     page?: number;
