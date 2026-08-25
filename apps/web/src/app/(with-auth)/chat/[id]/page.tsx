@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 
 import {
   fetchChatControllerGetConversation,
@@ -16,14 +15,13 @@ export default async function ChatPage(props: PageProps<"/chat/[id]">) {
   const { id } = await props.params;
 
   const conversations = await fetchChatControllerListConversations({});
-  let conversation: ChatConversationResponse;
-
+  let conversation: ChatConversationResponse | undefined;
   try {
     conversation = await fetchChatControllerGetConversation({
       pathParams: { id },
     });
   } catch {
-    notFound();
+    conversation = undefined;
   }
 
   return (

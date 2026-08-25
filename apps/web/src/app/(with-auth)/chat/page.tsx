@@ -1,14 +1,30 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 
-import { fetchChatControllerListConversations } from "@repo/services/web";
-
-import ChatLayout from "@/components/chat/chat-layout";
+import {
+  fetchChatControllerCreateConversation,
+  fetchChatControllerListConversations,
+} from "@repo/services/web";
 
 export const metadata: Metadata = { title: "Chat" };
 export const dynamic = "force-dynamic";
 
 export default async function ChatPage() {
-  const conversations = await fetchChatControllerListConversations({});
+  const conversationsResponse = await fetchChatControllerListConversations({});
+  const conversations = conversationsResponse.data ?? [];
 
-  return <ChatLayout data={conversations} />;
+  const emptyConv = conversations.find((c) => c.title === "New conversation");
+
+  if (emptyConv?.id) {
+    redirect(`/chat/${emptyConv.id}`);
+  }
+
+  const response = await fetchChatControllerCreateConversation({ body: {} });
+  const conversationId = response.data?.id;
+
+  if (!conversationId) {
+    redirect("/auth/login");
+  }
+
+  redirect(`/chat/${conversationId}`);
 }

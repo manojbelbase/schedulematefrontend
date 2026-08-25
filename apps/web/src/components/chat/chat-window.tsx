@@ -33,10 +33,6 @@ export default function ChatWindow({
 
   const hasMessages = messages.length > 0;
 
-  const hasNoAssistantContent = messages
-    .filter((m) => m.role === "assistant")
-    .every((m) => m.content.length === 0);
-
   useEffect(() => {
     const el = scrollRef.current;
     if (el) el.scrollTop = el.scrollHeight;
@@ -59,16 +55,15 @@ export default function ChatWindow({
   return (
     <div className="flex h-full flex-col">
       <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
-        {hasMessages ? (
+        {hasMessages || isSending ? (
           <div className="mx-auto flex h-full w-full max-w-3xl flex-col gap-6">
             {messages.map((message) => {
-              if (message.role === "assistant") {
-                if (isSending && message.content.length === 0) return null;
-                return <MessageBubble key={message.id} message={message} />;
+              if (message.role === "assistant" && !message.content) {
+                return null;
               }
               return <MessageBubble key={message.id} message={message} />;
             })}
-            {isSending && hasNoAssistantContent && <TypingIndicator />}
+            {isSending && <TypingIndicator />}
           </div>
         ) : (
           <EmptyState userName={userName} onPromptClick={onPromptClick} />
