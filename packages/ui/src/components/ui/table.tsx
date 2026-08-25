@@ -2,11 +2,18 @@ import * as React from "react";
 
 import { cn } from "@ui/lib/utils";
 
-function Table({ className, ...props }: React.ComponentProps<"table">) {
+function Table({
+  className,
+  containerClassName,
+  ...props
+}: React.ComponentProps<"table"> & { containerClassName?: string }) {
   return (
     <div
       data-slot="table-container"
-      className="relative w-full overflow-x-auto custom-scrollbar-thin"
+      className={cn(
+        "relative w-full custom-scrollbar-thin",
+        containerClassName ?? "overflow-x-auto",
+      )}
       onScroll={props.onScroll}
     >
       <table

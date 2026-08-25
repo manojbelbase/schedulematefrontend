@@ -266,7 +266,7 @@ function ReactTable<TData, TValue, TStatistics>({
     <div
       className={cn(
         "flex flex-col gap-1",
-        state.stickyHeader && "h-[calc(100vh-1.5rem)]",
+        state.stickyHeader && "h-[calc(100vh_-3rem)] overflow-hidden",
       )}
     >
       <div
@@ -323,13 +323,19 @@ function ReactTable<TData, TValue, TStatistics>({
           >
             <div
               className={cn(
-                "grid rounded-md overflow-hidden mt-3 border border-gray-200 dark:border-gray-300",
+                "grid rounded-md mt-3 border border-gray-200 dark:border-gray-300",
+                state.stickyHeader
+                  ? "flex-1 min-h-0 overflow-auto custom-scrollbar-thin"
+                  : "overflow-hidden",
                 className,
               )}
               ref={tableContainerRef}
             >
               <Table
                 ref={ref}
+                containerClassName={
+                  state.stickyHeader ? "overflow-visible" : undefined
+                }
                 style={{
                   // ...sizes,
                   direction: table.options.columnResizeDirection,
