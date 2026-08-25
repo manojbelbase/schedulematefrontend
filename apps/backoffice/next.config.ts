@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-import { validateEnv } from "^/config/env";
+import { validateEnv } from "@/config/env";
 
 validateEnv();
 

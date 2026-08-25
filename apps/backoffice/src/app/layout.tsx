@@ -4,7 +4,7 @@ import "./globals.css";
 
 import { Poppins } from "next/font/google";
 
-import Provider from "^/provider";
+import Provider from "@/provider";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
