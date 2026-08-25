@@ -90,19 +90,6 @@ export type ResetPasswordDto = {
   newPassword: string;
 };
 
-export type PublicUser = {
-  /**
-   * @format uuid
-   */
-  id: string;
-  name?: string | null;
-  /**
-   * @format email
-   */
-  email: string;
-  username?: string | null;
-};
-
 export type HealthData = {
   /**
    * @example ok
@@ -186,6 +173,18 @@ export type SendMessageDto = {
    * @maxLength 10000
    */
   content: string;
+  /**
+   * IANA timezone name (e.g. Asia/Kathmandu) for resolving relative dates in chat
+   *
+   * @maxLength 64
+   */
+  timezone?: string | null;
+  /**
+   * LLM provider to use for this message (e.g. deepseek, openrouter). Defaults to the backend-configured provider.
+   *
+   * @maxLength 32
+   */
+  provider?: string | null;
 };
 
 export type ChatMessage = {
@@ -269,4 +268,59 @@ export type ChatSendMessageResponse = {
     userMessage: ChatMessage;
     assistantMessage: ChatMessage;
   };
+};
+
+export type PublicUser = {
+  /**
+   * @format uuid
+   */
+  id: string;
+  /**
+   * @format email
+   */
+  email: string;
+  name?: string | null;
+  username?: string | null;
+  role?: "user" | "admin";
+  /**
+   * @format date-time
+   */
+  createdAt?: string;
+};
+
+export type BackofficeUserListResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: PublicUser[];
+  pagination: {
+    previousPage: number | null;
+    nextPage: number | null;
+    total: number;
+    count: number;
+  };
+};
+
+export type BackofficeAuthResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: {
+    user: PublicUser;
+    accessToken: string;
+    refreshToken?: string;
+  };
+};
+
+export type BackofficeUserResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: PublicUser;
 };
