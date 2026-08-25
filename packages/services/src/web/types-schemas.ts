@@ -186,6 +186,18 @@ export type SendMessageDto = {
    * @maxLength 10000
    */
   content: string;
+  /**
+   * IANA timezone name (e.g. Asia/Kathmandu) for resolving relative dates in chat
+   *
+   * @maxLength 64
+   */
+  timezone?: string | null;
+  /**
+   * LLM provider to use for this message (e.g. deepseek, openrouter). Defaults to the backend-configured provider.
+   *
+   * @maxLength 32
+   */
+  provider?: string | null;
 };
 
 export type ChatMessage = {

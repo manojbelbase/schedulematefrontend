@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { LogOut, Settings } from "lucide-react";
+import { CalendarIcon, CalendarX2Icon, LogOut, Settings } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@ui/components/ui/avatar";
+import { Button } from "@ui/components/ui/button";
 import {
   Popover,
   PopoverContent,
@@ -13,12 +14,18 @@ import {
 import { Separator } from "@ui/components/ui/separator";
 import { cn } from "@ui/lib/utils";
 
+import { useCalendarConnectionControllerGetConnectionStatus } from "@repo/services/web";
+
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { calendarConnectUrl } from "@/config/api";
 import { useAuth } from "@/hooks/use-auth";
 
 export default function UserProfileButton({ expanded }: { expanded: boolean }) {
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
+  const { data } = useCalendarConnectionControllerGetConnectionStatus({});
+
+  const calendarConnected = data?.data.connected ?? false;
 
   const displayName = user?.name || user?.username || "Account";
   const subLabel = user ? `@${user.username ?? user.email}` : undefined;
@@ -79,13 +86,35 @@ export default function UserProfileButton({ expanded }: { expanded: boolean }) {
         </div>
         <Separator />
         <div className="p-1.5">
-          <Link
-            href="/settings"
-            className="flex items-center gap-2.5 rounded-md px-2.5 py-2 text-sm text-foreground transition-colors hover:bg-accent"
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            className="flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-sm text-foreground transition-colors hover:bg-accent"
           >
             <Settings className="size-4 text-muted-foreground" />
             Settings
-          </Link>
+          </button>
+          <Separator className="my-1" />
+          <div className="px-2.5 py-2">
+            {calendarConnected ? (
+              <div className="flex items-center gap-2 rounded-md border bg-card px-3 py-2.5">
+                <CalendarX2Icon className="size-4 shrink-0 text-primary" />
+                <p className="text-sm font-medium">Calendar connected</p>
+              </div>
+            ) : (
+              <Button
+                asChild
+                variant="outline"
+                className="h-auto w-full justify-start gap-2 py-2"
+                title="Connect Calendar"
+              >
+                <Link href={calendarConnectUrl("/")}>
+                  <CalendarIcon className="size-4 shrink-0 text-primary" />
+                  <span className="truncate">Connect Calendar</span>
+                </Link>
+              </Button>
+            )}
+          </div>
           <Separator className="my-1" />
           <ThemeToggle />
           <Link
