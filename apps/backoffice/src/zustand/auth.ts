@@ -4,11 +4,7 @@ import { create } from "zustand";
 
 import type { PublicUser } from "@repo/services/backoffice";
 
-import {
-  clearAuthCookies,
-  getAuthToken,
-  setAuthCookies,
-} from "@/services/auth.client";
+import { clearAuthCookies, setAuthCookies } from "@/services/auth.client";
 
 type AuthState = {
   user: PublicUser | null;

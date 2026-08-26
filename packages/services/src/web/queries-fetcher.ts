@@ -117,8 +117,8 @@ export async function queriesFetch<
 }
 
 async function executeRequest<
-  TData,
-  TError,
+  _TData,
+  _TError,
   TBody extends {} | FormData | undefined | null,
   THeaders extends {},
   TQueryParams extends {},
@@ -184,17 +184,6 @@ async function executeRequest<
     headers: requestHeaders,
   });
 }
-
-const isNextRedirectError = (
-  error: unknown,
-): error is Error & {
-  digest?: string;
-} => {
-  if (typeof error !== "object" || error === null) return false;
-  const digest = (error as { digest?: unknown }).digest;
-  if (typeof digest !== "string") return false;
-  return digest === "NEXT_REDIRECT";
-};
 
 const resolveUrl = (
   url: string,

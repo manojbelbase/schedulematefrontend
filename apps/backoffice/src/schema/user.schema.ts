@@ -1,7 +1,14 @@
 import { z } from "zod";
 
+export const AddUserSchema = z.object({
+  name: z.string().optional(),
+  email: z.string().email("Invalid email address"),
+});
+
+export type TAddUserSchema = z.infer<typeof AddUserSchema>;
+
 export const UserSchema = z.object({
-  name: z.string().min(1, "Name is required"),
+  name: z.string().optional(),
   email: z.string().email("Invalid email address"),
   username: z.string().optional(),
 });

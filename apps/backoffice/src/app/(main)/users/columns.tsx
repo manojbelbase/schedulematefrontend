@@ -1,9 +1,6 @@
-import type { ComponentProps } from "react";
+import { type ComponentProps } from "react";
 import { format } from "date-fns";
-import { toast } from "sonner";
 
-import { ContextMenuItem } from "@ui/components/animate-ui/components/radix/context-menu";
-import { DropdownMenuItem } from "@ui/components/animate-ui/components/radix/dropdown-menu";
 import ActionButtons from "@ui/components/data-table/action-buttons";
 import { DataTableColumnHeader } from "@ui/components/data-table/header";
 import SNCell from "@ui/components/data-table/sn-cell";
@@ -104,26 +101,18 @@ export const USER_COLUMNS: _ColumnDef<PublicUser>[] = [
     id: TABLE_CONSTANTS.ACTIONS_HEADER,
     enableHiding: false,
     cell: ({ row }) => (
-      <UserRowActions
-        id={row.original.id}
-        row={row.original}
-        fromRightClick={false}
-      />
+      <UserRowActions row={row.original} fromRightClick={false} />
     ),
   },
 ];
 
 export function UserRowActions({
-  id,
   fromRightClick,
   children,
   row,
 }: ComponentProps<typeof ActionButtons> & {
-  id: string;
   row: PublicUser;
 }) {
-  const Item = fromRightClick ? ContextMenuItem : DropdownMenuItem;
-
   return (
     <ActionButtons
       view={{
@@ -143,9 +132,7 @@ export function UserRowActions({
         data: {
           id: "user",
           name: row.name || row.email,
-          callback: () => {
-            toast.info("Delete user endpoint is not wired yet.");
-          },
+          initiatorName: row.id,
         },
       }}
       fromRightClick={fromRightClick}

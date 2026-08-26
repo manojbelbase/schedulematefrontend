@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@ui/components/ui/avatar";
-import { Button } from "@ui/components/ui/button";
 import { Separator } from "@ui/components/ui/separator";
 import { cn } from "@ui/lib/utils";
 

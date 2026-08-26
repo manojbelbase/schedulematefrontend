@@ -25,6 +25,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
+import type { TCardsSectionProps } from "@ui/components/cards-section";
 import {
   Table,
   TableBody,
@@ -34,7 +35,7 @@ import {
 } from "@ui/components/ui/table";
 import { TABLE_CONSTANTS } from "@ui/config/constants";
 import {
-  // DataTableCards,
+  DataTableCards,
   DataTableFilters,
   DataTableFunctions,
   DataTablePageHeader,
@@ -72,7 +73,7 @@ export type TDataTableProps<TData, TValue, TStatistics> = {
   autoHeaderRowSpan?: boolean;
   onlyLocalState?: boolean;
   hide?: ("HEADER" | "TABS" | "FUNCTIONS" | "FILTERS" | "CARDS")[];
-  // cards?: TCardsSectionProps<TStatistics>;
+  cards?: TCardsSectionProps<TStatistics>;
   className?: string;
   pageSize?: number;
   pagination?: PaginationDTO;
@@ -93,7 +94,7 @@ function ReactTable<TData, TValue, TStatistics>({
   filters,
   autoHeaderRowSpan,
   hide,
-  // cards,
+  cards,
   className,
   pageSize,
   pagination,
@@ -287,6 +288,7 @@ function ReactTable<TData, TValue, TStatistics>({
               ...functions,
               table,
               hasEditPermission,
+              cardItems: cards?.items,
               headerTitle: header?.title,
             }}
             hide={hide?.includes("FUNCTIONS")}
@@ -307,6 +309,16 @@ function ReactTable<TData, TValue, TStatistics>({
             hide={hide?.includes("FILTERS")}
           />
         </div>
+      )}
+      {cards && (
+        <DataTableCards
+          props={{
+            ...cards,
+            visibility: state.cardVisibility,
+            onVisibilityChange: handlers.onCardVisibilityChange,
+          }}
+          hide={hide?.includes("CARDS")}
+        />
       )}
       {loading?.isLoading ? (
         <div className="mt-3 overflow-hidden  border border-gray-200 rounded-md">
