@@ -227,7 +227,7 @@ export default function DatePicker({
           <Button
             variant={"outline"}
             className={cn(
-              "font-normal text-muted-foreground flex gap-2 items-center z-20!",
+              "font-normal text-muted-foreground flex gap-2 rounded-sm items-center z-20!",
               isFilterActive && "bg-accent hover:bg-accent/90! text-primary",
               open && "border-primary",
             )}

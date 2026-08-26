@@ -32,6 +32,7 @@ export function UsersTable({
     query: params.query,
     dateFrom: params.dateFrom,
     dateTo: params.dateTo,
+    role: params.role,
   };
 
   const { data, isLoading } = useBackofficeControllerListUsers(
@@ -64,7 +65,7 @@ export function UsersTable({
         filterToggle: true,
         columnToggle: true,
         exportable: true,
-        textWrapToggle: true,
+        textWrapToggle: false,
         stickyHeaderToggle: true,
         onRightClick: (item) => ({
           component: UserRowActions,
@@ -84,9 +85,22 @@ export function UsersTable({
               preset: "lifetime",
             },
           },
+          role: {
+            key: "role",
+            type: "select",
+            props: {
+              type: "single",
+              placeholder: "Select role",
+              prependLabel: "Role: ",
+              triggerClassname: "w-48!",
+              options: [
+                { label: "User", value: "user" },
+                { label: "Admin", value: "admin" },
+              ],
+            },
+          },
         },
       }}
-      hasEditPermission
       loading={{
         isLoading,
         Loader: <TableRowsLoading />,

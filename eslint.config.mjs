@@ -164,9 +164,8 @@ export default [
         {
           patterns: [
             {
-              group: ["@/*", "~/*", "#/*"],
-              message:
-                "Only ^/* imports are allowed in the backoffice app.",
+              group: ["~/*", "#/*"],
+              message: "Only @/* imports are allowed in the backoffice app.",
             },
           ],
         },
