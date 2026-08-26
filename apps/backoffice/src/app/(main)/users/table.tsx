@@ -1,6 +1,5 @@
 "use client";
 
-import { ShieldCheck, UserRound, Users } from "lucide-react";
 import type { SearchParams } from "nuqs";
 
 import DataTable from "@ui/components/data-table";
