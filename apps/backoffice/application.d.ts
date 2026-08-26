@@ -12,6 +12,8 @@ import type { TTriggerProps } from "@ui/components/deployables/trigger";
 
 import type { TEnvSchema } from "^/config/env";
 
+declare module "*.css";
+
 declare global {
   type SocketNamespace = "" | "/user" | "/workspace";
   namespace NodeJS {

@@ -81,7 +81,7 @@ export const useSuspenseHealthControllerCheckHealth = <
       HealthControllerCheckHealthError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -104,7 +104,7 @@ export const useHealthControllerCheckHealth = <TData = Schemas.HealthResponse>(
       HealthControllerCheckHealthError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -287,7 +287,7 @@ export const useSuspenseAuthControllerGoogle = <TData = undefined>(
   variables: AuthControllerGoogleVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<undefined, AuthControllerGoogleError, TData>,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -306,7 +306,7 @@ export const useAuthControllerGoogle = <TData = undefined>(
   variables: AuthControllerGoogleVariables | reactQuery.SkipToken,
   options?: Omit<
     reactQuery.UseQueryOptions<undefined, AuthControllerGoogleError, TData>,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -385,7 +385,7 @@ export const useSuspenseAuthControllerGoogleCallback = <TData = undefined>(
       AuthControllerGoogleCallbackError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -408,7 +408,7 @@ export const useAuthControllerGoogleCallback = <TData = undefined>(
       AuthControllerGoogleCallbackError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -486,7 +486,7 @@ export const useSuspenseAuthControllerMe = <TData = Schemas.UserResponse>(
       AuthControllerMeError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -509,7 +509,7 @@ export const useAuthControllerMe = <TData = Schemas.UserResponse>(
       AuthControllerMeError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -822,7 +822,7 @@ export const useSuspenseCalendarConnectionControllerGetConnectionStatus = <
       CalendarConnectionControllerGetConnectionStatusError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -851,7 +851,7 @@ export const useCalendarConnectionControllerGetConnectionStatus = <
       CalendarConnectionControllerGetConnectionStatusError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -950,7 +950,7 @@ export const useSuspenseCalendarConnectionControllerConnect = <
       CalendarConnectionControllerConnectError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -976,7 +976,7 @@ export const useCalendarConnectionControllerConnect = <TData = undefined>(
       CalendarConnectionControllerConnectError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -1069,7 +1069,7 @@ export const useSuspenseCalendarConnectionControllerConnectCallback = <
       CalendarConnectionControllerConnectCallbackError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -1097,7 +1097,7 @@ export const useCalendarConnectionControllerConnectCallback = <
       CalendarConnectionControllerConnectCallbackError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -1234,7 +1234,7 @@ export const useSuspenseChatControllerListConversations = <
       ChatControllerListConversationsError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -1261,7 +1261,7 @@ export const useChatControllerListConversations = <
       ChatControllerListConversationsError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -1411,7 +1411,7 @@ export const useSuspenseChatControllerGetConversation = <
       ChatControllerGetConversationError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -1436,7 +1436,7 @@ export const useChatControllerGetConversation = <
       ChatControllerGetConversationError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -1604,7 +1604,7 @@ export const useSuspenseChatControllerListMessages = <
       ChatControllerListMessagesError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -1629,7 +1629,7 @@ export const useChatControllerListMessages = <
       ChatControllerListMessagesError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -1755,6 +1755,10 @@ export type BackofficeControllerListUsersQueryParams = {
    * @default DESC
    */
   sortOrder?: "ASC" | "DESC";
+  /**
+   * Filter by user role
+   */
+  role?: "user" | "admin";
 };
 
 export type BackofficeControllerListUsersError = Fetcher.ErrorWrapper<
@@ -1830,7 +1834,7 @@ export const useSuspenseBackofficeControllerListUsers = <
       BackofficeControllerListUsersError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -1855,7 +1859,7 @@ export const useBackofficeControllerListUsers = <
       BackofficeControllerListUsersError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -2003,7 +2007,7 @@ export const useSuspenseBackofficeAuthControllerMe = <
       BackofficeAuthControllerMeError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
@@ -2028,7 +2032,7 @@ export const useBackofficeAuthControllerMe = <
       BackofficeAuthControllerMeError,
       TData
     >,
-    "queryKey" | "queryFn"
+    "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { queryOptions, fetcherOptions } = useQueriesContext(options);
