@@ -33,7 +33,6 @@ const TableStickyHeaderToggler = <TData,>({
                 table.options.meta?.setStickyHeader?.((p) => !p);
             }}
             variant={"outline"}
-            className=" border rounded-lg px-3 py-2 transition-colors flex items-center justify-center"
             aria-label="Toggle sticky header"
           >
             <div className="relative w-5 h-5 flex items-center justify-center">

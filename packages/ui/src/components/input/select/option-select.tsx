@@ -278,7 +278,10 @@ export default function OptionSelect({
 
   return (
     <Popover open={open} onOpenChange={setOpen} modal={true}>
-      <Command shouldFilter={type === "single" ? false : true}>
+      <Command
+        shouldFilter={type === "single" ? false : true}
+        className="rounded-sm!"
+      >
         <PopoverAnchor
           ref={ref}
           className={cn(
@@ -286,9 +289,7 @@ export default function OptionSelect({
             "h-10 3xl:h-11 grid gap-1 focus-visible:border-primary! focus-within:border-primary!",
             (isInputFocused || open) && "border-primary ring-primary/50 ",
             isForfilter && type === "multiple" && "h-9 p-0! border-none",
-            isForfilter &&
-              type === "single" &&
-              "h-9 flex items-center justify-center",
+            isForfilter && type === "single" && "h-10 3xl:h-11 rounded-sm!",
             isForfilter &&
               type === "single" &&
               Boolean(state) &&
@@ -424,7 +425,7 @@ export default function OptionSelect({
                   onClick={() => {
                     setOpen((prev) => !prev);
                   }}
-                  className="absolute w-8 h-6 top-1/2 -translate-y-1/2 left-3 -translate-x-1/2 overflow-hidden flex items-center justify-center"
+                  className="absolute w-8 h-6 top-1/2 -translate-y-1/2 left-3 -translate-x-1/2 overflow-hidden flex items-center justify-center rounded-sm cursor-pointer"
                 >
                   {SelectedIcon}
                 </span>
