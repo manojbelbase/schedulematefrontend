@@ -146,7 +146,6 @@ export function EmailForm({
             <div className="flex flex-col gap-2">
               <Label htmlFor="auth-email">Email</Label>
               <div className="relative">
-                <MailIcon className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
                 <Input
                   id="auth-email"
                   type="email"
@@ -155,7 +154,7 @@ export function EmailForm({
                   placeholder="you@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="h-11 pl-9"
+                  className="h-11"
                 />
               </div>
             </div>
@@ -283,7 +282,6 @@ export function EmailForm({
       <div className="flex flex-col gap-2">
         <Label htmlFor="auth-email">Email</Label>
         <div className="relative">
-          <MailIcon className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
           <Input
             id="auth-email"
             type="email"
@@ -292,7 +290,7 @@ export function EmailForm({
             placeholder="you@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="h-11 pl-9"
+            className="h-11"
           />
         </div>
       </div>
@@ -334,7 +332,6 @@ export function EmailForm({
           )}
         </div>
         <div className="relative">
-          <LockIcon className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
           <Input
             id="auth-password"
             type="password"
@@ -348,7 +345,7 @@ export function EmailForm({
             }
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="h-11 pl-9"
+            className="h-11"
           />
         </div>
       </div>
