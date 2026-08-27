@@ -164,7 +164,10 @@ export default function Functions<TData>({
               <TooltipTrigger asChild>
                 <PopoverTrigger asChild>
                   <Button variant="outline" size="icon-sm">
-                    <Icon name="more-actions" className="size-4!" />
+                    <Icon
+                      name="more-actions"
+                      className="size-4! dark:text-foreground"
+                    />
                   </Button>
                 </PopoverTrigger>
               </TooltipTrigger>

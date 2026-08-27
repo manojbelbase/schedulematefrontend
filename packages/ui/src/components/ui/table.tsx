@@ -29,12 +29,13 @@ function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
   return (
     <thead
       style={{
-        borderBottom: "1px solid rgba(226, 232, 240, 0.60) !important",
+        borderBottom:
+          "1px solid color-mix(in oklab, var(--border) 60%, transparent)",
       }}
       data-slot="table-header"
       className={cn(
         // [&_tr]:border-b
-        "bg-[#f9fbfd]! dark:bg-background ",
+        "bg-secondary! dark:bg-secondary! ",
         className,
       )}
       {...props}
@@ -70,7 +71,7 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
     <tr
       data-slot="table-row"
       className={cn(
-        "group/trow hover:bg-primary/5! data-[state=selected]:bg-primary/10! even:bg-[#fafafd] dark:even:bg-background",
+        "group/trow hover:bg-primary/5! data-[state=selected]:bg-primary/10! even:bg-muted/40 dark:even:bg-muted/40",
         className,
       )}
       {...props}

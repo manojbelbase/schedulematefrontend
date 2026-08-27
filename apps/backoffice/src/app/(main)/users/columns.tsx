@@ -39,8 +39,8 @@ export const USER_COLUMNS: _ColumnDef<PublicUser>[] = [
       <div className="flex items-center gap-3">
         <Avatar
           name={row.original.name || "User"}
-          size={36}
-          shape="radius-md"
+          size={32}
+          shape="radius-sm"
         />
         <div className="font-medium text-sm">{row.original.name || "—"}</div>
       </div>

@@ -35,7 +35,7 @@ const CommingSoon = ({ title }: TProps): React.JSX.Element => {
                   <h2 className="font-medium text-xl 3xl:text-[22px] capitalize">
                     {title}
                   </h2>
-                  <Badge className="text-[#FFA61C] bg-[#FFF9D9] hover:bg-[#FFF9D9]">
+                  <Badge className="text-[#FFA61C] bg-[#FFF9D9] hover:bg-[#FFF9D9] dark:bg-yellow-500/10 dark:hover:bg-yellow-500/10">
                     Coming Soon
                   </Badge>
                 </div>
@@ -110,7 +110,7 @@ const CommingSoon = ({ title }: TProps): React.JSX.Element => {
                   <h3 className="text-xl 3xl:text-2xl font-bold">
                     We&apos;re working on it.
                   </h3>
-                  <p className="text-sm 3xl:text-lg font-medium text-gray-500">
+                  <p className="text-sm 3xl:text-lg font-medium text-gray-500 dark:text-gray-400">
                     The feature will be deployed soon
                   </p>
                   <div className="space-y-4 w-full items-center flex-col  flex">
@@ -120,7 +120,7 @@ const CommingSoon = ({ title }: TProps): React.JSX.Element => {
                       </p>
                       <Button
                         variant="outline"
-                        className="bg-white text-primary border-primary"
+                        className="bg-background text-primary border-primary"
                         onClick={() => {
                           navigator.clipboard
                             .writeText(

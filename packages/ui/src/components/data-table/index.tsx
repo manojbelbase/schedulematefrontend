@@ -321,7 +321,7 @@ function ReactTable<TData, TValue, TStatistics>({
         />
       )}
       {loading?.isLoading ? (
-        <div className="mt-3 overflow-hidden  border border-gray-200 rounded-md">
+        <div className="mt-3 overflow-hidden  border border-gray-200 dark:border-gray rounded-md">
           {loading.Loader}
         </div>
       ) : (
@@ -335,7 +335,7 @@ function ReactTable<TData, TValue, TStatistics>({
           >
             <div
               className={cn(
-                "grid rounded-md mt-3 border border-gray-200 dark:border-gray-300",
+                "grid rounded-md mt-3 border border-gray-200 dark:border-border",
                 state.stickyHeader
                   ? "flex-1 min-h-0 overflow-auto custom-scrollbar-thin"
                   : "overflow-hidden",
@@ -355,7 +355,7 @@ function ReactTable<TData, TValue, TStatistics>({
               >
                 <TableHeader
                   className={cn(
-                    "bg-[#f9fbfd]! dark:bg-background",
+                    "bg-secondary! dark:bg-secondary!",
                     state.stickyHeader && "sticky top-0 z-50",
                   )}
                 >

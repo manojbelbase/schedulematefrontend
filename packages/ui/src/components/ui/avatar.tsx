@@ -55,7 +55,7 @@ type TUserAvatarProps = {
   src?: string;
   bg?: string;
   size?: number | string;
-  shape?: "rounded" | "radius-md";
+  shape?: "rounded" | "radius-md" | "radius-sm";
   containerClassName?: string;
   className?: string;
   quality?: number;
@@ -101,6 +101,13 @@ function UserAvatar({
       ? `${size / 2.5}px`
       : `calc(${size || "40px"} / 2.5)`;
 
+  const shapeClass =
+    shape === "radius-sm"
+      ? "rounded-sm"
+      : shape === "radius-md"
+        ? "rounded-md"
+        : "rounded-full";
+
   return (
     <Avatar
       style={{
@@ -109,7 +116,7 @@ function UserAvatar({
         aspectRatio: "1 / 1",
       }}
       title={withoutTitle ? undefined : name}
-      className={cn(shape === "radius-md" && "rounded-md", containerClassName)}
+      className={cn(shapeClass, containerClassName)}
     >
       {src ? (
         <AvatarImage
@@ -121,7 +128,7 @@ function UserAvatar({
           }}
           className={cn(
             "aspect-square h-full w-full object-cover",
-            shape === "radius-md" && "rounded-md",
+            shapeClass,
             className,
           )}
         />
@@ -129,7 +136,7 @@ function UserAvatar({
         <AvatarFallback
           className={cn(
             "uppercase flex items-center justify-center text-black",
-            shape === "radius-md" && "rounded-md",
+            shapeClass,
             className,
           )}
           style={{
