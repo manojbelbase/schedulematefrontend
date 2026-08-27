@@ -33,6 +33,6 @@ export const useAuthStore = create<AuthState>((set) => ({
   logout: async () => {
     clearAuthCookies();
     set({ user: null, token: null, isAuthenticated: false, isLoading: false });
-    window.location.href = "/login";
+    window.location.href = "/auth/login";
   },
 }));

@@ -1878,6 +1878,130 @@ export const useBackofficeControllerListUsers = <
   });
 };
 
+export type BackofficeControllerAddUserError = Fetcher.ErrorWrapper<
+  | {
+      status: 400;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 403;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 409;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type BackofficeControllerAddUserVariables = {
+  body: Schemas.AddUserDto;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchBackofficeControllerAddUser = (
+  variables: BackofficeControllerAddUserVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.BackofficeAddUserResponse,
+    BackofficeControllerAddUserError,
+    Schemas.AddUserDto,
+    {},
+    {},
+    {}
+  >({ url: "/api/backoffice/users", method: "post", ...variables, signal });
+
+export const useBackofficeControllerAddUser = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.BackofficeAddUserResponse,
+      BackofficeControllerAddUserError,
+      BackofficeControllerAddUserVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.BackofficeAddUserResponse,
+    BackofficeControllerAddUserError,
+    BackofficeControllerAddUserVariables
+  >({
+    mutationFn: (variables: BackofficeControllerAddUserVariables) =>
+      fetchBackofficeControllerAddUser(deepMerge(fetcherOptions, variables)),
+    ...options,
+  });
+};
+
+export type BackofficeControllerDeleteUserPathParams = {
+  /**
+   * @format uuid
+   */
+  id: string;
+};
+
+export type BackofficeControllerDeleteUserError = Fetcher.ErrorWrapper<
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 403;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 404;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type BackofficeControllerDeleteUserVariables = {
+  pathParams: BackofficeControllerDeleteUserPathParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchBackofficeControllerDeleteUser = (
+  variables: BackofficeControllerDeleteUserVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.MessageResponse,
+    BackofficeControllerDeleteUserError,
+    undefined,
+    {},
+    {},
+    BackofficeControllerDeleteUserPathParams
+  >({
+    url: "/api/backoffice/users/{id}",
+    method: "delete",
+    ...variables,
+    signal,
+  });
+
+export const useBackofficeControllerDeleteUser = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.MessageResponse,
+      BackofficeControllerDeleteUserError,
+      BackofficeControllerDeleteUserVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.MessageResponse,
+    BackofficeControllerDeleteUserError,
+    BackofficeControllerDeleteUserVariables
+  >({
+    mutationFn: (variables: BackofficeControllerDeleteUserVariables) =>
+      fetchBackofficeControllerDeleteUser(deepMerge(fetcherOptions, variables)),
+    ...options,
+  });
+};
+
 export type BackofficeAuthControllerLoginError = Fetcher.ErrorWrapper<
   | {
       status: 400;
@@ -2099,130 +2223,6 @@ export const useBackofficeAuthControllerLogout = (
   });
 };
 
-export type BackofficeControllerAddUserError = Fetcher.ErrorWrapper<
-  | {
-      status: 400;
-      payload: Schemas.ErrorResponse;
-    }
-  | {
-      status: 401;
-      payload: Schemas.ErrorResponse;
-    }
-  | {
-      status: 403;
-      payload: Schemas.ErrorResponse;
-    }
-  | {
-      status: 409;
-      payload: Schemas.ErrorResponse;
-    }
->;
-
-export type BackofficeControllerAddUserVariables = {
-  body: Schemas.AddUserDto;
-} & QueriesContext["fetcherOptions"];
-
-export const fetchBackofficeControllerAddUser = (
-  variables: BackofficeControllerAddUserVariables,
-  signal?: AbortSignal,
-) =>
-  queriesFetch<
-    Schemas.BackofficeAddUserResponse,
-    BackofficeControllerAddUserError,
-    Schemas.AddUserDto,
-    {},
-    {},
-    {}
-  >({ url: "/api/backoffice/users", method: "post", ...variables, signal });
-
-export const useBackofficeControllerAddUser = (
-  options?: Omit<
-    reactQuery.UseMutationOptions<
-      Schemas.BackofficeAddUserResponse,
-      BackofficeControllerAddUserError,
-      BackofficeControllerAddUserVariables
-    >,
-    "mutationFn"
-  >,
-) => {
-  const { fetcherOptions } = useQueriesContext();
-  return reactQuery.useMutation<
-    Schemas.BackofficeAddUserResponse,
-    BackofficeControllerAddUserError,
-    BackofficeControllerAddUserVariables
-  >({
-    mutationFn: (variables: BackofficeControllerAddUserVariables) =>
-      fetchBackofficeControllerAddUser(deepMerge(fetcherOptions, variables)),
-    ...options,
-  });
-};
-
-export type BackofficeControllerDeleteUserPathParams = {
-  /**
-   * @format uuid
-   */
-  id: string;
-};
-
-export type BackofficeControllerDeleteUserError = Fetcher.ErrorWrapper<
-  | {
-      status: 401;
-      payload: Schemas.ErrorResponse;
-    }
-  | {
-      status: 403;
-      payload: Schemas.ErrorResponse;
-    }
-  | {
-      status: 404;
-      payload: Schemas.ErrorResponse;
-    }
->;
-
-export type BackofficeControllerDeleteUserVariables = {
-  pathParams: BackofficeControllerDeleteUserPathParams;
-} & QueriesContext["fetcherOptions"];
-
-export const fetchBackofficeControllerDeleteUser = (
-  variables: BackofficeControllerDeleteUserVariables,
-  signal?: AbortSignal,
-) =>
-  queriesFetch<
-    Schemas.MessageResponse,
-    BackofficeControllerDeleteUserError,
-    undefined,
-    {},
-    {},
-    BackofficeControllerDeleteUserPathParams
-  >({
-    url: "/api/backoffice/users/{id}",
-    method: "delete",
-    ...variables,
-    signal,
-  });
-
-export const useBackofficeControllerDeleteUser = (
-  options?: Omit<
-    reactQuery.UseMutationOptions<
-      Schemas.MessageResponse,
-      BackofficeControllerDeleteUserError,
-      BackofficeControllerDeleteUserVariables
-    >,
-    "mutationFn"
-  >,
-) => {
-  const { fetcherOptions } = useQueriesContext();
-  return reactQuery.useMutation<
-    Schemas.MessageResponse,
-    BackofficeControllerDeleteUserError,
-    BackofficeControllerDeleteUserVariables
-  >({
-    mutationFn: (variables: BackofficeControllerDeleteUserVariables) =>
-      fetchBackofficeControllerDeleteUser(deepMerge(fetcherOptions, variables)),
-    ...options,
-  });
-};
-
 export type QueryOperation =
   | {
       path: "/api/health";
@@ -2289,14 +2289,4 @@ export type QueryOperation =
       path: "/api/backoffice/auth/me";
       operationId: "backofficeAuthControllerMe";
       variables: BackofficeAuthControllerMeVariables | reactQuery.SkipToken;
-    }
-  | {
-      path: "/api/backoffice/users";
-      operationId: "backofficeControllerAddUser";
-      variables: BackofficeControllerAddUserVariables | reactQuery.SkipToken;
-    }
-  | {
-      path: "/api/backoffice/users/{id}";
-      operationId: "backofficeControllerDeleteUser";
-      variables: BackofficeControllerDeleteUserVariables | reactQuery.SkipToken;
     };
