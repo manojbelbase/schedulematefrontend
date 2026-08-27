@@ -4,11 +4,7 @@ import { create } from "zustand";
 
 import type { PublicUser } from "@repo/services/backoffice";
 
-import {
-  clearAuthCookies,
-  getAuthToken,
-  setAuthCookies,
-} from "@/services/auth.client";
+import { clearAuthCookies, setAuthCookies } from "@/services/auth.client";
 
 type AuthState = {
   user: PublicUser | null;
@@ -37,6 +33,6 @@ export const useAuthStore = create<AuthState>((set) => ({
   logout: async () => {
     clearAuthCookies();
     set({ user: null, token: null, isAuthenticated: false, isLoading: false });
-    window.location.href = "/login";
+    window.location.href = "/auth/login";
   },
 }));

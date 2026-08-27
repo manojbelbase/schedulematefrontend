@@ -97,11 +97,7 @@ const LoginForm = () => {
           )}
         />
 
-        <Button
-          type="submit"
-          disabled={isPending}
-          className="w-full h-11 text-white"
-        >
+        <Button type="submit" disabled={isPending} className="w-full h-11">
           {isPending && <Loader2 className="size-4 animate-spin" />}
           Sign In
         </Button>

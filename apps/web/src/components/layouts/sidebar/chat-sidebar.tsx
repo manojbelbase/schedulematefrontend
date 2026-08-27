@@ -18,6 +18,7 @@ import type { TDeleteItemModalData } from "@ui/types/extended";
 import { ModalType } from "@ui/types/types";
 
 import { CalendarConnectButton } from "@/components/google/calendar-connect-button";
+import RequestLimitIndicator from "@/components/layouts/sidebar/request-limit-indicator";
 import UserProfileButton from "@/components/layouts/sidebar/user-profile-button";
 import Logo from "@/components/logo";
 import { QUERY_KEYS } from "@/config/query-keys";
@@ -174,17 +175,16 @@ export default function ChatSidebar({
           )}
         </div>
 
-        <div className="shrink-0 border-t border-sidebar-border p-3">
+        <div className="shrink-0 px-3 py-2">
           {expanded ? (
             <div className="space-y-1 rounded-md border border-sidebar-border bg-sidebar/50 p-1.5">
+              <RequestLimitIndicator expanded={expanded} />
               <CalendarConnectButton expanded={expanded} />
-              <Separator className="my-1" />
               <UserProfileButton expanded={expanded} />
             </div>
           ) : (
             <div className="flex flex-col items-center gap-2">
               <CalendarConnectButton expanded={expanded} />
-              <Separator className="h-4 w-px" />
               <UserProfileButton expanded={expanded} />
             </div>
           )}

@@ -25,6 +25,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
+import type { TCardsSectionProps } from "@ui/components/cards-section";
 import {
   Table,
   TableBody,
@@ -34,7 +35,7 @@ import {
 } from "@ui/components/ui/table";
 import { TABLE_CONSTANTS } from "@ui/config/constants";
 import {
-  // DataTableCards,
+  DataTableCards,
   DataTableFilters,
   DataTableFunctions,
   DataTablePageHeader,
@@ -72,7 +73,7 @@ export type TDataTableProps<TData, TValue, TStatistics> = {
   autoHeaderRowSpan?: boolean;
   onlyLocalState?: boolean;
   hide?: ("HEADER" | "TABS" | "FUNCTIONS" | "FILTERS" | "CARDS")[];
-  // cards?: TCardsSectionProps<TStatistics>;
+  cards?: TCardsSectionProps<TStatistics>;
   className?: string;
   pageSize?: number;
   pagination?: PaginationDTO;
@@ -93,7 +94,7 @@ function ReactTable<TData, TValue, TStatistics>({
   filters,
   autoHeaderRowSpan,
   hide,
-  // cards,
+  cards,
   className,
   pageSize,
   pagination,
@@ -287,6 +288,7 @@ function ReactTable<TData, TValue, TStatistics>({
               ...functions,
               table,
               hasEditPermission,
+              cardItems: cards?.items,
               headerTitle: header?.title,
             }}
             hide={hide?.includes("FUNCTIONS")}
@@ -308,8 +310,18 @@ function ReactTable<TData, TValue, TStatistics>({
           />
         </div>
       )}
+      {cards && (
+        <DataTableCards
+          props={{
+            ...cards,
+            visibility: state.cardVisibility,
+            onVisibilityChange: handlers.onCardVisibilityChange,
+          }}
+          hide={hide?.includes("CARDS")}
+        />
+      )}
       {loading?.isLoading ? (
-        <div className="mt-3 overflow-hidden  border border-gray-200 rounded-md">
+        <div className="mt-3 overflow-hidden  border border-gray-200 dark:border-gray rounded-md">
           {loading.Loader}
         </div>
       ) : (
@@ -323,7 +335,7 @@ function ReactTable<TData, TValue, TStatistics>({
           >
             <div
               className={cn(
-                "grid rounded-md mt-3 border border-gray-200 dark:border-gray-300",
+                "grid rounded-md mt-3 border border-gray-200 dark:border-border",
                 state.stickyHeader
                   ? "flex-1 min-h-0 overflow-auto custom-scrollbar-thin"
                   : "overflow-hidden",
@@ -343,7 +355,7 @@ function ReactTable<TData, TValue, TStatistics>({
               >
                 <TableHeader
                   className={cn(
-                    "bg-[#f9fbfd]! dark:bg-background",
+                    "bg-secondary! dark:bg-secondary!",
                     state.stickyHeader && "sticky top-0 z-50",
                   )}
                 >

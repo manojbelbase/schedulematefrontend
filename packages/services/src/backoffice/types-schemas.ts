@@ -324,3 +324,25 @@ export type BackofficeUserResponse = {
   message: string;
   data: PublicUser;
 };
+
+export type AddUserDto = {
+  /**
+   * @format email
+   * @example newuser@example.com
+   */
+  email: string;
+  /**
+   * @maxLength 100
+   * @example Jane Doe
+   */
+  name?: string;
+};
+
+export type BackofficeAddUserResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: PublicUser;
+};

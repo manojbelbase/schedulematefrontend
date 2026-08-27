@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import {
   TooltipArrow as TooltipArrowPrimitive,
   TooltipContent as TooltipContentPrimitive,

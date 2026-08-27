@@ -9,6 +9,7 @@ export type TAllowedIcons =
   | "file-text"
   | "finance"
   | "more-horizontal"
+  | "more-actions"
   | "college"
   | "activity-dot";
 
@@ -316,7 +317,7 @@ const Icon = forwardRef<SVGSVGElement, TProps>(({ name, ...props }, ref) => {
           </defs>
         </svg>
       );
-    case "more-horizontal":
+    case "more-actions":
       return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -334,30 +335,50 @@ const Icon = forwardRef<SVGSVGElement, TProps>(({ name, ...props }, ref) => {
         >
           <path
             d="M13.375 0.125C16.0904 0.125001 18.292 2.32659 18.292 5.04199V13.375C18.292 16.0904 16.0904 18.292 13.375 18.292H5.04199C2.32659 18.292 0.125 16.0904 0.125 13.375V10.875C0.125001 10.4608 0.460789 10.125 0.875 10.125C1.28921 10.125 1.625 10.4608 1.625 10.875V13.375C1.625 15.262 3.15502 16.792 5.04199 16.792H13.375C15.262 16.792 16.792 15.262 16.792 13.375V5.04199C16.792 3.15502 15.262 1.625 13.375 1.625H5.04199C3.155 1.625 1.625 3.15504 1.625 5.04199V7.54199C1.62482 7.95604 1.2891 8.29199 0.875 8.29199C0.460897 8.29199 0.125176 7.95604 0.125 7.54199V5.04199C0.125 2.32657 2.32662 0.125 5.04199 0.125H13.375Z"
-            fill="#121212"
-            stroke="#121212"
+            fill="currentColor"
+            stroke="currentColor"
             strokeWidth="0.25"
           />
           <path
             d="M5.0835 8.08301C5.72768 8.08318 6.24951 8.60574 6.24951 9.25C6.24934 9.89411 5.72757 10.4158 5.0835 10.416C4.43928 10.416 3.91668 9.89422 3.9165 9.25C3.9165 8.60563 4.43917 8.08301 5.0835 8.08301Z"
-            fill="#121212"
-            stroke="#121212"
+            fill="currentColor"
+            stroke="currentColor"
             strokeWidth="0.25"
           />
           <path
             d="M9.25012 8.08301C9.89434 8.08318 10.4161 8.60574 10.4161 9.25C10.416 9.89411 9.89423 10.4158 9.25012 10.416C8.60586 10.416 8.08331 9.89422 8.08313 9.25C8.08313 8.60563 8.60575 8.08301 9.25012 8.08301Z"
-            fill="#121212"
-            stroke="#121212"
+            fill="currentColor"
+            stroke="currentColor"
             strokeWidth="0.25"
           />
           <path
             d="M13.4169 8.08301C14.0611 8.08318 14.5829 8.60574 14.5829 9.25C14.5827 9.89411 14.061 10.4158 13.4169 10.416C12.7726 10.416 12.2501 9.89422 12.2499 9.25C12.2499 8.60563 12.7725 8.08301 13.4169 8.08301Z"
-            fill="#121212"
-            stroke="#121212"
+            fill="currentColor"
+            stroke="currentColor"
             strokeWidth="0.25"
           />
         </svg>
       );
+    case "more-horizontal":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="lucide lucide-ellipsis-icon lucide-ellipsis"
+        >
+          <circle cx="12" cy="12" r="1" />
+          <circle cx="19" cy="12" r="1" />
+          <circle cx="5" cy="12" r="1" />
+        </svg>
+      );
+
     case "college":
       return (
         <svg

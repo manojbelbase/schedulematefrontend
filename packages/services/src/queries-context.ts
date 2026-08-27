@@ -14,9 +14,9 @@ type QueryOperation =
 
 export type QueriesContext<
   TQueryFnData = unknown,
-  TError = DefaultError,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
+  _TError = DefaultError,
+  _TData = TQueryFnData,
+  _TQueryKey extends QueryKey = QueryKey,
 > = {
   fetcherOptions: {
     /**

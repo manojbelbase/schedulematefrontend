@@ -40,10 +40,12 @@ export function UsersTable({
     { placeholderData: initialData },
   );
 
+  const users = data?.data ?? [];
+
   return (
     <DataTable
       columns={USER_COLUMNS}
-      data={data?.data ?? []}
+      data={users}
       instanceId="backoffice-users-table"
       pagination={data?.pagination}
       header={{
@@ -64,6 +66,7 @@ export function UsersTable({
         },
         filterToggle: true,
         columnToggle: true,
+        cardToggle: true,
         exportable: true,
         textWrapToggle: false,
         stickyHeaderToggle: true,

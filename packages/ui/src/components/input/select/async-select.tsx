@@ -121,7 +121,7 @@ type TComponents<Item, Option> = {
 
 type TProps<
   Fetcher extends (...args: any[]) => any,
-  ModalProps extends object,
+  _ModalProps extends object,
   FetcherResponse extends TPaginatedResponse<Awaited<ReturnType<Fetcher>>> =
     Awaited<ReturnType<Fetcher>>,
   Item = FetcherResponse["data"][number],
@@ -227,7 +227,7 @@ const TAKE = 10;
 
 export default function AsyncSelect<
   T extends (...args: any[]) => any,
-  ModalProps extends object = object,
+  _ModalProps extends object = object,
   FetcherResponse extends TPaginatedResponse<Awaited<ReturnType<T>>> = Awaited<
     ReturnType<T>
   >,
@@ -262,7 +262,7 @@ export default function AsyncSelect<
   onQueryChange,
   onFilterRemove,
   isModal = true,
-}: TProps<T, ModalProps>) {
+}: TProps<T, _ModalProps>) {
   const [state, _setState] = useState<TSelected<typeof type>>(
     type === "single" ? { value: "", label: "" } : [],
   );

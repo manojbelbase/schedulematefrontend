@@ -286,7 +286,7 @@ export default function OptionSelect({
           ref={ref}
           className={cn(
             INPUT_CLASSNAME,
-            "h-10 3xl:h-11 grid gap-1 focus-visible:border-primary! focus-within:border-primary!",
+            "h-9 3xl:h-10 grid gap-1 focus-visible:border-primary! focus-within:border-primary!",
             (isInputFocused || open) && "border-primary ring-primary/50 ",
             isForfilter && type === "multiple" && "h-9 p-0! border-none",
             isForfilter && type === "single" && "h-10 3xl:h-11 rounded-sm!",

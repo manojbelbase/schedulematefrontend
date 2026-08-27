@@ -1,15 +1,71 @@
 "use client";
 
+import { useQueryClient, type UseMutationOptions } from "@tanstack/react-query";
+import { toast } from "sonner";
+
 import { Button } from "@ui/components/ui/button";
 import type { TDeleteItemModalData } from "@ui/types/extended";
 import type { _TModalProps } from "@ui/types/globals";
+
+import { useBackofficeControllerDeleteUser } from "@repo/services/backoffice";
+
+import { QUERY_KEYS } from "@/config/query-keys";
 
 export default function DeleteItemModal<T extends object = object>({
   close,
   data,
 }: _TModalProps<TDeleteItemModalData<T>>) {
-  const handleDelete = () => {
-    data?.callback?.();
+  const queryClient = useQueryClient();
+
+  const typedData = data as TDeleteItemModalData | undefined;
+
+  const resolveKey = (id?: TDeleteItemModalData["id"]) => {
+    switch (id) {
+      case "user":
+        return QUERY_KEYS.users;
+      default:
+        return [];
+    }
+  };
+
+  const handler: Omit<
+    UseMutationOptions<unknown, unknown, unknown, unknown>,
+    "mutationFn"
+  > = {
+    onSuccess(r, _variables, _context) {
+      const res = r as { message: string };
+      toast.success(
+        typedData?.message || res.message || "Item deleted successfully.",
+      );
+      void queryClient.invalidateQueries({
+        queryKey: resolveKey(typedData?.id),
+      });
+
+      typedData?.callback?.();
+    },
+
+    onError(e, _variables, _context) {
+      const error = e as { message: string };
+      toast.error(error?.message || "Cannot delete item!");
+    },
+  };
+
+  const { mutate: mutateUser } = useBackofficeControllerDeleteUser(handler);
+
+  const fn = () => {
+    if (typedData?.initiatorName) {
+      switch (typedData?.id) {
+        case "user":
+          mutateUser({
+            pathParams: {
+              id: typedData.initiatorName,
+            },
+          });
+          break;
+        default:
+          break;
+      }
+    }
     close();
   };
 
@@ -32,7 +88,7 @@ export default function DeleteItemModal<T extends object = object>({
         <Button variant="outline" onClick={close}>
           No, Cancel
         </Button>
-        <Button variant="destructive" onClick={handleDelete}>
+        <Button variant="destructive" onClick={fn}>
           {data?.deleteButtonText ||
             `Yes, Delete ${data?.itemIds?.length ? "All Selected" : "It"}.`}
         </Button>

@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
 
 import {
   Form,
@@ -14,24 +14,37 @@ import {
   FormMessage,
 } from "@ui/components/ui/form";
 import { Input } from "@ui/components/ui/input";
+import { options } from "@ui/lib/utils";
 import type { _TModalProps } from "@ui/types/globals";
 
-import { UserSchema, type TUserSchema } from "@/schema/user.schema";
+import { useBackofficeControllerAddUser } from "@repo/services/backoffice";
+
+import { QUERY_KEYS } from "@/config/query-keys";
+import { AddUserSchema, type TAddUserSchema } from "@/schema/user.schema";
 
 import { FormButtons } from "./form-footer-buttons";
 
 export default function AddUserForm({ close, setForm }: _TModalProps) {
-  const form = useForm<TUserSchema>({
-    resolver: zodResolver(UserSchema),
+  const queryClient = useQueryClient();
+
+  const form = useForm<TAddUserSchema>({
+    resolver: zodResolver(AddUserSchema),
     mode: "onChange",
     defaultValues: {
       name: "",
       email: "",
-      username: "",
     },
   });
 
   const { handleSubmit, reset } = form;
+
+  const addUser = useBackofficeControllerAddUser(
+    options(undefined, async () => {
+      await queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.users,
+      });
+    }),
+  );
 
   const handleExit = (): void => {
     reset();
@@ -44,9 +57,11 @@ export default function AddUserForm({ close, setForm }: _TModalProps) {
     }
   }, [JSON.stringify(form.formState.dirtyFields)]);
 
-  const onSubmit = () => {
-    toast.info("Create user endpoint is not wired yet.");
-    handleExit();
+  const onSubmit = (data: TAddUserSchema) => {
+    addUser.mutate(
+      { body: { email: data.email, name: data.name || undefined } },
+      { onSuccess: () => handleExit() },
+    );
   };
 
   return (
@@ -60,7 +75,7 @@ export default function AddUserForm({ close, setForm }: _TModalProps) {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter Name" {...field} />
+                  <Input placeholder="Enter Name (optional)" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -84,24 +99,11 @@ export default function AddUserForm({ close, setForm }: _TModalProps) {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter Username" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
 
           <FormButtons
             name="User"
             form={form}
-            disabled={!form.formState.isValid}
+            disabled={!form.formState.isValid || addUser.isPending}
           />
         </div>
       </form>

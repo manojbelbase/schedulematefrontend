@@ -2,10 +2,9 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { CalendarIcon, CalendarX2Icon, LogOut, Settings } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@ui/components/ui/avatar";
-import { Button } from "@ui/components/ui/button";
 import {
   Popover,
   PopoverContent,
@@ -17,7 +16,6 @@ import { cn } from "@ui/lib/utils";
 import { useCalendarConnectionControllerGetConnectionStatus } from "@repo/services/web";
 
 import { ThemeToggle } from "@/components/theme/theme-toggle";
-import { calendarConnectUrl } from "@/config/api";
 import { useAuth } from "@/hooks/use-auth";
 
 export default function UserProfileButton({ expanded }: { expanded: boolean }) {
@@ -38,7 +36,7 @@ export default function UserProfileButton({ expanded }: { expanded: boolean }) {
           type="button"
           title={user ? `${displayName} · ${subLabel}` : "Account"}
           className={cn(
-            "group flex w-full items-center gap-3 rounded-md  py-2 text-left transition-colors hover:bg-accent",
+            "group flex w-full items-center gap-3 rounded-md border px-2  py-2 text-left transition-colors hover:bg-accent",
             !expanded && "justify-center px-0",
           )}
         >
@@ -94,27 +92,6 @@ export default function UserProfileButton({ expanded }: { expanded: boolean }) {
             <Settings className="size-4 text-muted-foreground" />
             Settings
           </button>
-          <Separator className="my-1" />
-          <div className="px-2.5 py-2">
-            {calendarConnected ? (
-              <div className="flex items-center gap-2 rounded-md border bg-card px-3 py-2.5">
-                <CalendarX2Icon className="size-4 shrink-0 text-primary" />
-                <p className="text-sm font-medium">Calendar connected</p>
-              </div>
-            ) : (
-              <Button
-                asChild
-                variant="outline"
-                className="h-auto w-full justify-start gap-2 py-2"
-                title="Connect Calendar"
-              >
-                <Link href={calendarConnectUrl("/")}>
-                  <CalendarIcon className="size-4 shrink-0 text-primary" />
-                  <span className="truncate">Connect Calendar</span>
-                </Link>
-              </Button>
-            )}
-          </div>
           <Separator className="my-1" />
           <ThemeToggle />
           <Link

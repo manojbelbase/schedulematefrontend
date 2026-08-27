@@ -77,9 +77,9 @@ export default function DataTableSearch({
         className={cn(
           buttonVariants({ variant: "outline" }),
           "justify-start w-fit relative",
-          "focus-within:ring-[3px] focus-within:border-gray-400 focus-within:ring-gray-300",
+          "focus-within:ring-[3px] focus-within:border-gray-400 focus-within:ring-gray-300 dark:focus-within:border-gray-600 dark:focus-within:ring-gray-700",
           open &&
-            "focus-within:ring-2 focus-within:ring-gray-400 focus-within:ring-offset-2 focus-within:border-border",
+            "focus-within:ring-2 focus-within:ring-gray-400 dark:focus-within:ring-gray-600 focus-within:ring-offset-2 ring-offset-background focus-within:border-border",
         )}
         onClick={() => {
           setOpen(true);

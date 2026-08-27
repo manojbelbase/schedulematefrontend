@@ -1,5 +1,6 @@
 "use client";
 
+import { ThemeProvider } from "next-themes";
 import { useState, type ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -9,18 +10,29 @@ import ModalContextProvider from "@ui/context/modal-context";
 
 import { ModalsRenderer } from "@/components/modals";
 
+import AuthProvider from "./auth-provider";
+
 export default function Provider({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <DataTableProvider>
-        <ModalContextProvider>
-          {children}
-          <ModalsRenderer />
-          <Toaster />
-        </ModalContextProvider>
-      </DataTableProvider>
-    </QueryClientProvider>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <DataTableProvider>
+            <ModalContextProvider>
+              {children}
+              <ModalsRenderer />
+              <Toaster />
+            </ModalContextProvider>
+          </DataTableProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }

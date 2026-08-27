@@ -5,17 +5,25 @@ import { type Table } from "@tanstack/react-table";
 import { FunnelIcon, FunnelXIcon } from "lucide-react";
 import { motion } from "motion/react";
 
+import Icon from "@ui/assets/icons";
 import { type TTriggerProps } from "@ui/components/deployables/trigger";
 import { cn } from "@ui/lib/utils";
 
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../animate-ui/components/radix/popover";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "../animate-ui/components/radix/tooltip";
+import type { TCardItem } from "../cards-section";
 import { Button } from "../ui/button";
 import AddButton, { type TAddButtonProps } from "./add-button";
+import CardVisibility from "./card-visibility";
 import ColumnVisibility from "./column-visibility";
 import ExportManager, { type TExportManager } from "./export-manager";
 import DataTableSearch, { type TDataTableSearchProps } from "./search";
@@ -32,7 +40,8 @@ export type TFunctionsProps<TData> = {
   table?: Table<TData>;
   columnToggle?: boolean;
   headerTitle?: string;
-  // cardToggle?: boolean;
+  cardToggle?: boolean;
+  cardItems?: TCardItem<TData>[];
   filterToggle?: boolean;
   add?: TAddButtonProps;
   exportable?: boolean | TExportManager<TData>;
@@ -54,13 +63,14 @@ export type TFunctionsProps<TData> = {
 };
 
 export default function Functions<TData>({
-  ref,
+  ref: _ref,
   search,
   table,
   add,
   columnToggle,
   headerTitle,
-  // cardToggle,
+  cardToggle,
+  cardItems,
   filterToggle,
   exportable,
   nodes,
@@ -90,6 +100,11 @@ export default function Functions<TData>({
 
     return { start, end };
   }, [nodes]);
+
+  const hasActionsMenu =
+    (exportable && data.length > 0) ||
+    columnToggle ||
+    (cardToggle && cardItems);
 
   return (
     <motion.div
@@ -138,20 +153,52 @@ export default function Functions<TData>({
           </Tooltip>
         </TooltipProvider>
       )}
-
-      {columnToggle && table && <ColumnVisibility table={table} />}
-      {/* {cardToggle && table && <CardVisibility table={table} />} */}
-      {exportable && table && data.length > 0 && (
-        <ExportManager
-          columns={table.getAllColumns()}
-          data={data || []}
-          title={headerTitle}
-          table={table}
-        />
-      )}
       {stickyHeaderToggle && table && (
         <TableStickyHeaderToggler table={table} />
       )}
+
+      {hasActionsMenu && table && (
+        <Popover>
+          <TooltipProvider>
+            <Tooltip delayDuration={50}>
+              <TooltipTrigger asChild>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" size="icon-sm">
+                    <Icon
+                      name="more-actions"
+                      className="size-4! dark:text-foreground"
+                    />
+                  </Button>
+                </PopoverTrigger>
+              </TooltipTrigger>
+              <TooltipContent
+                className="text-xs bg-secondary text-foreground"
+                side="bottom"
+                arrowClassName="bg-secondary fill-secondary"
+              >
+                <span>Table Actions</span>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <PopoverContent className="w-52 p-1" align="end">
+            <div className="flex flex-col space-y-0.5">
+              {exportable && data.length > 0 && (
+                <ExportManager
+                  columns={table.getAllColumns()}
+                  data={data || []}
+                  title={headerTitle}
+                  table={table}
+                />
+              )}
+              {columnToggle && <ColumnVisibility table={table} />}
+              {cardToggle && cardItems && (
+                <CardVisibility table={table} items={cardItems} />
+              )}
+            </div>
+          </PopoverContent>
+        </Popover>
+      )}
+
       {end.map((item, i) => (
         <Fragment key={i}>{item.el}</Fragment>
       ))}

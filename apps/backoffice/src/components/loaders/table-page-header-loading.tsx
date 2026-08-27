@@ -7,7 +7,10 @@ export default function TablePageHeaderLoading({
 }) {
   return (
     <div
-      className={cn("h-10 w-56 loading bg-gray-100/50 rounded-sm", className)}
+      className={cn(
+        "h-10 w-56 loading bg-gray-100/50 rounded-sm dark:bg-gray-800/50",
+        className,
+      )}
     />
   );
 }

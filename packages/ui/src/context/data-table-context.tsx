@@ -9,6 +9,9 @@ import {
   type ReactNode,
 } from "react";
 
+import CardsSection, {
+  type TCardsSectionProps,
+} from "@ui/components/cards-section";
 import Filters, { type TFiltersProps } from "@ui/components/data-table/filters";
 import Functions, {
   type TFunctionsProps,
@@ -17,8 +20,6 @@ import PageHeader, {
   type TPageHeaderProps,
 } from "@ui/components/layout/page-header";
 import TabLinks, { type TTabLinksProps } from "@ui/components/layout/tab-links";
-// import type { TCardsSectionProps } from "@ui/components/cards-section";
-// import CardsSection from "@ui/components/cards-section";
 import type { Any, TLayoutProps } from "@ui/types/globals";
 
 type TContext = {
@@ -151,25 +152,25 @@ export function DataTableFilters({ hide, props }: TSlot<TFiltersProps>) {
   return props ? Component : filters;
 }
 
-// export function DataTableCards({
-//   hide,
-//   props = { items: [], data: [], visibility: {} },
-// }: TSlot<TCardsSectionProps<Any>>) {
-//   const { setCards, cards } = useDataTableContext();
+export function DataTableCards({
+  hide,
+  props,
+}: TSlot<TCardsSectionProps<Any>>) {
+  const { setCards, cards } = useDataTableContext();
 
-//   const Component = useMemo(
-//     () => <CardsSection {...props} visibility={props.visibility} />,
-//     [props]
-//   );
+  const Component = useMemo(
+    () => (props ? <CardsSection {...props} /> : null),
+    [props],
+  );
 
-//   useEffect(() => {
-//     if (props && hide) setCards(Component);
-//   }, [Component, props, hide, setCards]);
+  useEffect(() => {
+    if (props && hide) setCards(Component);
+  }, [Component, props, hide, setCards]);
 
-//   if (hide) return null;
+  if (hide) return null;
 
-//   return props ? Component : cards;
-// }
+  return props ? Component : cards;
+}
 
 export function useDataTableContext() {
   const context = use(DataTableContext);

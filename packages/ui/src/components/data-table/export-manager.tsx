@@ -7,12 +7,6 @@ import { UploadIcon } from "lucide-react";
 import { TABLE_CONSTANTS } from "@ui/config/constants";
 import type { _ColumnDef, Any } from "@ui/types/globals";
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../animate-ui/components/radix/tooltip";
 import { Button } from "../ui/button";
 
 export type TExportManager<TData> = {
@@ -122,25 +116,13 @@ export default function ExportManager<TData>({
   }
 
   return (
-    <TooltipProvider>
-      <Tooltip delayDuration={0}>
-        <TooltipTrigger asChild>
-          <Button
-            size="icon-sm"
-            onClick={() => handleExport(data, columns)}
-            variant="outline"
-          >
-            <UploadIcon />
-          </Button>
-        </TooltipTrigger>{" "}
-        <TooltipContent
-          className="text-xs bg-secondary text-foreground"
-          side="bottom"
-          arrowClassName="bg-secondary fill-secondary"
-        >
-          <span>Export</span>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <Button
+      variant="ghost"
+      className="w-full justify-start font-normal"
+      onClick={() => void handleExport(data, columns)}
+    >
+      <UploadIcon className="size-4" />
+      Export
+    </Button>
   );
 }

@@ -38,8 +38,8 @@ export default function TBodyComponent({ table }: { table: Table<Any> }) {
           >
             <TableRow
               className={cn(
-                "even:bg-[#fafafd] dark:even:bg-background",
-                row.getIsPinned() && "bg-[#f4f5f7]! dark:bg-background!",
+                "even:bg-muted/40 dark:even:bg-muted/40",
+                row.getIsPinned() && "bg-[#f4f5f7]! dark:bg-secondary!",
                 onRowClick && "cursor-pointer",
               )}
               data-state={row.getIsSelected() && "selected"}
@@ -65,8 +65,8 @@ export default function TBodyComponent({ table }: { table: Table<Any> }) {
                   const pinnedStripe =
                     pinned &&
                     (rowIndex % 2 === 1
-                      ? "bg-[#fafafd]! dark:bg-background!"
-                      : "bg-background! dark:bg-background!");
+                      ? "bg-[#fafafd]! dark:bg-transparent!"
+                      : "bg-background! dark:bg-transparent!");
                   return (
                     <SortableContext
                       key={cell.id}
