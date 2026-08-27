@@ -1,9 +1,13 @@
 import { type ComponentProps } from "react";
 import { format } from "date-fns";
+import { SlidersHorizontal } from "lucide-react";
 
+import { ContextMenuItem } from "@ui/components/animate-ui/components/radix/context-menu";
+import { DropdownMenuItem } from "@ui/components/animate-ui/components/radix/dropdown-menu";
 import ActionButtons from "@ui/components/data-table/action-buttons";
 import { DataTableColumnHeader } from "@ui/components/data-table/header";
 import SNCell from "@ui/components/data-table/sn-cell";
+import ModalTrigger from "@ui/components/deployables/trigger";
 import Avatar from "@ui/components/ui/avatar";
 import { Badge } from "@ui/components/ui/badge";
 import { TABLE_CONSTANTS } from "@ui/config/constants";
@@ -84,6 +88,26 @@ export const USER_COLUMNS: _ColumnDef<PublicUser>[] = [
     size: 120,
   },
   {
+    id: "apiRequestLimit",
+    exportHeader: "Request Limit",
+    header: (props) => <DataTableColumnHeader {...props} title="Limit" />,
+    accessorKey: "apiRequestLimit",
+    cell: ({ row }) => {
+      const limit = row.original.apiRequestLimit;
+      const used = row.original.apiRequestsUsed;
+      if (limit === undefined || limit === null) {
+        return <span className="text-muted-foreground">—</span>;
+      }
+      return (
+        <Badge variant="secondary" className="font-mono text-xs">
+          {used !== undefined ? `${used} / ` : ""}
+          {limit}
+        </Badge>
+      );
+    },
+    size: 140,
+  },
+  {
     id: "createdAt",
     exportHeader: "Created At",
     header: (props) => <DataTableColumnHeader {...props} title="Created At" />,
@@ -113,18 +137,26 @@ export function UserRowActions({
 }: ComponentProps<typeof ActionButtons> & {
   row: PublicUser;
 }) {
+  const MenuItem = fromRightClick ? ContextMenuItem : DropdownMenuItem;
+  const isAdmin = row.role === "admin";
+
   return (
     <ActionButtons
-      view={{
-        modalID: "VIEW_USER",
-        type: "MODAL",
-        data: { user: row },
-      }}
-      edit={{
-        modalID: "EDIT_USER",
-        type: "MODAL",
-        data: { user: row },
-      }}
+      items={
+        !isAdmin ? (
+          <ModalTrigger
+            stopPropagation
+            modalID="SET_USER_LIMIT"
+            type="MODAL"
+            data={{ user: row }}
+          >
+            <MenuItem className="w-full px-3">
+              <SlidersHorizontal size={16} className="mr-2.5" />
+              Set Limit
+            </MenuItem>
+          </ModalTrigger>
+        ) : undefined
+      }
       remove={{
         modalID: "DELETE_MODAL",
         type: "MODAL",
@@ -137,6 +169,7 @@ export function UserRowActions({
       }}
       fromRightClick={fromRightClick}
       name="User"
+      itemsPosition="first"
     >
       {children}
     </ActionButtons>

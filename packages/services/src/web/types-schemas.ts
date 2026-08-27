@@ -90,21 +90,6 @@ export type ResetPasswordDto = {
   newPassword: string;
 };
 
-export type PublicUser = {
-  /**
-   * @format uuid
-   */
-  id: string;
-  name?: string | null;
-  /**
-   * @format email
-   */
-  email: string;
-  username?: string | null;
-  apiRequestLimit: number;
-  apiRequestsUsed: number;
-};
-
 export type HealthData = {
   /**
    * @example ok
@@ -283,4 +268,81 @@ export type ChatSendMessageResponse = {
     userMessage: ChatMessage;
     assistantMessage: ChatMessage;
   };
+};
+
+export type PublicUser = {
+  /**
+   * @format uuid
+   */
+  id: string;
+  /**
+   * @format email
+   */
+  email: string;
+  name?: string | null;
+  username?: string | null;
+  role?: "user" | "admin";
+  /**
+   * @format date-time
+   */
+  createdAt?: string;
+};
+
+export type BackofficeUserListResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: PublicUser[];
+  pagination: {
+    previousPage: number | null;
+    nextPage: number | null;
+    total: number;
+    count: number;
+  };
+};
+
+export type BackofficeAuthResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: {
+    user: PublicUser;
+    accessToken: string;
+    refreshToken?: string;
+  };
+};
+
+export type BackofficeUserResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: PublicUser;
+};
+
+export type AddUserDto = {
+  /**
+   * @format email
+   * @example newuser@example.com
+   */
+  email: string;
+  /**
+   * @maxLength 100
+   * @example Jane Doe
+   */
+  name?: string;
+};
+
+export type BackofficeAddUserResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: PublicUser;
 };

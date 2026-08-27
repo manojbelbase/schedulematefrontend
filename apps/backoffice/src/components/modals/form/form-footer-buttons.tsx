@@ -22,19 +22,19 @@ export const FormButtons = ({
   return (
     <div
       className={cn(
-        "mt-5 flex w-full items-center justify-between gap-4",
+        "mt-5 flex w-full items-center justify-end gap-4",
         className,
       )}
     >
       <Button
         type="button"
         onClick={() => (onReset ? onReset() : form.reset())}
-        variant={"ghost"}
+        variant={"outline"}
+        size={"default"}
         disabled={!form.formState.isDirty || form.formState.isSubmitting}
       >
         {actionType === "Add" ? "Reset" : "Discard"}
       </Button>
-
       <Button
         type="submit"
         variant={"default"}

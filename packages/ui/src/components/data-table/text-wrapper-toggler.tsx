@@ -23,7 +23,7 @@ const TextWrapperToggler = () => {
           <Button
             size={"icon-sm"}
             onClick={() => setTextWrapped(!textWrapped)}
-            className=" border rounded-lg px-3 py-2 transition-colors flex items-center justify-center"
+            className=" border rounded-sm px-3 py-2 transition-colors flex items-center justify-center"
             aria-label="Toggle text wrap"
           >
             <div className="relative w-5 h-5 flex items-center justify-center">

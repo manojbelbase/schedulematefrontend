@@ -267,6 +267,10 @@ export type ChatSendMessageResponse = {
   data: {
     userMessage: ChatMessage;
     assistantMessage: ChatMessage;
+    /**
+     * @example 7
+     */
+    requestsRemaining: number;
   };
 };
 
@@ -282,6 +286,14 @@ export type PublicUser = {
   name?: string | null;
   username?: string | null;
   role?: "user" | "admin";
+  /**
+   * @example 10
+   */
+  apiRequestLimit?: number;
+  /**
+   * @example 3
+   */
+  apiRequestsUsed?: number;
   /**
    * @format date-time
    */
@@ -345,4 +357,113 @@ export type BackofficeAddUserResponse = {
   success: boolean;
   message: string;
   data: PublicUser;
+};
+
+export type LlmConfigData = {
+  /**
+   * @example deepseek
+   */
+  activeProvider: "deepseek" | "openrouter";
+  /**
+   * @example sk-...
+   */
+  deepseekApiKey: string;
+  /**
+   * @example deepseek-chat
+   */
+  deepseekModel: string;
+  /**
+   * @example https://api.deepseek.com
+   */
+  deepseekBaseUrl: string;
+  /**
+   * @example
+   */
+  openrouterApiKey: string;
+  /**
+   * @example google/gemma-4-26b-a4b-it:free
+   */
+  openrouterModel: string;
+  /**
+   * @example https://openrouter.ai/api/v1
+   */
+  openrouterBaseUrl: string;
+};
+
+export type LlmConfigResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: LlmConfigData;
+};
+
+export type UpdateLlmConfigDto = {
+  activeProvider?: "deepseek" | "openrouter";
+  /**
+   * @maxLength 500
+   */
+  deepseekApiKey?: string;
+  /**
+   * @maxLength 100
+   */
+  deepseekModel?: string;
+  /**
+   * @format uri
+   * @maxLength 500
+   */
+  deepseekBaseUrl?: string;
+  /**
+   * @maxLength 500
+   */
+  openrouterApiKey?: string;
+  /**
+   * @maxLength 200
+   */
+  openrouterModel?: string;
+  /**
+   * @format uri
+   * @maxLength 500
+   */
+  openrouterBaseUrl?: string;
+};
+
+export type UpdateUserLimitDto = {
+  /**
+   * @minimum 0
+   * @maximum 100000
+   * @example 10
+   */
+  apiRequestLimit?: number;
+  /**
+   * @example false
+   */
+  resetUsed?: boolean;
+};
+
+export type UserLimitResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: {
+    /**
+     * @format uuid
+     */
+    id: string;
+    /**
+     * @format email
+     */
+    email: string;
+    /**
+     * @example 10
+     */
+    apiRequestLimit: number;
+    /**
+     * @example 3
+     */
+    apiRequestsUsed: number;
+  };
 };
