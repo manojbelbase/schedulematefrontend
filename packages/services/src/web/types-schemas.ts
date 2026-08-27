@@ -101,6 +101,8 @@ export type PublicUser = {
    */
   email: string;
   username?: string | null;
+  apiRequestLimit: number;
+  apiRequestsUsed: number;
 };
 
 export type HealthData = {

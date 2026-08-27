@@ -11,4 +11,6 @@ export const QUERY_KEYS = {
   chat: [API, "chat"],
   conversations: [API, "chat", "conversations"],
   calendar: [API, "calendar"],
+  auth: [API, "auth"],
+  me: [API, "auth", "me"],
 };

@@ -57,6 +57,9 @@ export function useChatActions({ conversationId }: { conversationId: string }) {
           // Await the refetch so optimistic bubbles swap to real data
           // atomically - no flash, no lost history - then end the cycle.
           await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.chat });
+          // Refetch the current user so the sidebar shows the updated
+          // request limit in realtime without a reload.
+          await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.me });
           useChatStore.getState().clearPendingMessages(conversationId);
           useChatStore.getState().setIsSending(false);
         } catch (error) {
