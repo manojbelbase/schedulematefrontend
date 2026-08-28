@@ -267,6 +267,10 @@ export type ChatSendMessageResponse = {
   data: {
     userMessage: ChatMessage;
     assistantMessage: ChatMessage;
+    /**
+     * @example 7
+     */
+    requestsRemaining: number;
   };
 };
 
@@ -282,6 +286,14 @@ export type PublicUser = {
   name?: string | null;
   username?: string | null;
   role?: "user" | "admin";
+  /**
+   * @example 10
+   */
+  apiRequestLimit?: number;
+  /**
+   * @example 3
+   */
+  apiRequestsUsed?: number;
   /**
    * @format date-time
    */
@@ -345,4 +357,179 @@ export type BackofficeAddUserResponse = {
   success: boolean;
   message: string;
   data: PublicUser;
+};
+
+export type LlmConfigData = {
+  /**
+   * @format uuid
+   */
+  id: string;
+  /**
+   * @example Production
+   */
+  name: string;
+  /**
+   * @example true
+   */
+  isActive: boolean;
+  /**
+   * @example deepseek
+   */
+  activeProvider: string;
+  /**
+   * @example sk-...
+   */
+  apiKey: string;
+  /**
+   * @example deepseek-chat
+   */
+  model: string;
+  /**
+   * @example https://api.deepseek.com
+   */
+  baseUrl: string;
+};
+
+export type LlmConfigResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: LlmConfigData;
+};
+
+export type LlmConfigListResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: LlmConfigData[];
+};
+
+export type LlmProvider = {
+  /**
+   * @example deepseek
+   */
+  key: string;
+  /**
+   * @example DeepSeek
+   */
+  label: string;
+  /**
+   * @example https://api.deepseek.com
+   */
+  baseUrl: string;
+  /**
+   * @example deepseek-chat
+   */
+  defaultModel: string;
+  /**
+   * @example deepseek-chat
+   * @example deepseek-reasoner
+   */
+  models: string[];
+  /**
+   * @example false
+   */
+  requiresReferer?: boolean;
+};
+
+export type LlmProviderListResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: LlmProvider[];
+};
+
+export type CreateLlmConfigDto = {
+  /**
+   * @minLength 1
+   * @maxLength 100
+   */
+  name: string;
+  isActive?: boolean;
+  /**
+   * @minLength 1
+   * @maxLength 100
+   */
+  activeProvider?: string;
+  /**
+   * @minLength 1
+   * @maxLength 500
+   */
+  apiKey: string;
+  /**
+   * @maxLength 200
+   */
+  model?: string;
+};
+
+export type UpdateLlmConfigDto = {
+  /**
+   * @minLength 1
+   * @maxLength 100
+   */
+  name?: string;
+  isActive?: boolean;
+  /**
+   * @minLength 1
+   * @maxLength 100
+   */
+  activeProvider?: string;
+  /**
+   * @maxLength 500
+   */
+  apiKey?: string;
+  /**
+   * @maxLength 200
+   */
+  model?: string;
+  /**
+   * @format uri
+   * @maxLength 500
+   */
+  baseUrl?: string;
+};
+
+export type UpdateUserLimitDto = {
+  /**
+   * @minimum 0
+   * @maximum 100000
+   * @example 10
+   */
+  apiRequestLimit?: number;
+  /**
+   * @example false
+   */
+  resetUsed?: boolean;
+};
+
+export type UserLimitResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: {
+    /**
+     * @format uuid
+     */
+    id: string;
+    /**
+     * @format email
+     */
+    email: string;
+    /**
+     * @example 10
+     */
+    apiRequestLimit: number;
+    /**
+     * @example 3
+     */
+    apiRequestsUsed: number;
+  };
 };

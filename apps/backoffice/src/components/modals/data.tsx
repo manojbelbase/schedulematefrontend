@@ -1,5 +1,8 @@
+import AddLlmConfigForm from "./form/add-llm-config-form";
 import AddUserForm from "./form/add-user-form";
+import EditLlmConfigForm from "./form/edit-llm-config-form";
 import EditUserForm from "./form/edit-user-form";
+import SetUserLimitForm from "./form/user-limit-form";
 import ConfirmFormExit from "./globals/confirm-form-exit";
 import DeleteItemModal from "./globals/delete-item";
 import ViewUserModal from "./user/user-view";
@@ -19,14 +22,35 @@ export const MODALS = {
     variant: "form",
     className: "max-w-lg!",
     title: "Add User",
-    description: "Create a new user account.",
+    description: "",
   },
   EDIT_USER: {
     component: EditUserForm,
     variant: "form",
     className: "max-w-lg!",
     title: "Edit User",
-    description: "Update user details.",
+    description: "",
+  },
+  SET_USER_LIMIT: {
+    component: SetUserLimitForm,
+    variant: "form",
+    className: "max-w-base!",
+    title: "Set User Limit",
+    description: "",
+  },
+  ADD_LLM_CONFIG: {
+    component: AddLlmConfigForm,
+    variant: "form",
+    className: "max-w-lg!",
+    title: "Add LLM Configuration",
+    description: "",
+  },
+  EDIT_LLM_CONFIG: {
+    component: EditLlmConfigForm,
+    variant: "form",
+    className: "max-w-lg!",
+    title: "Edit LLM Configuration",
+    description: "",
   },
   VIEW_USER: {
     component: ViewUserModal,

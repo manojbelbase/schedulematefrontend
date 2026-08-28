@@ -14,3 +14,14 @@ export const UserSchema = z.object({
 });
 
 export type TUserSchema = z.infer<typeof UserSchema>;
+
+export const UpdateUserLimitSchema = z.object({
+  apiRequestLimit: z.coerce
+    .number({ message: "Limit must be a number" })
+    .int("Limit must be a whole number")
+    .min(0, "Limit cannot be negative")
+    .max(100000, "Limit is too large"),
+  resetUsed: z.boolean().optional(),
+});
+
+export type TUpdateUserLimitSchema = z.infer<typeof UpdateUserLimitSchema>;

@@ -335,7 +335,7 @@ function ReactTable<TData, TValue, TStatistics>({
           >
             <div
               className={cn(
-                "grid rounded-md mt-3 border border-gray-200 dark:border-border",
+                "grid rounded-sm mt-3 border border-gray-200 dark:border-border",
                 state.stickyHeader
                   ? "flex-1 min-h-0 overflow-auto custom-scrollbar-thin"
                   : "overflow-hidden",

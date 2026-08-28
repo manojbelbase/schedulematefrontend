@@ -1711,6 +1711,518 @@ export const useChatControllerSendMessage = (
   });
 };
 
+export type BackofficeControllerListUsersQueryParams = {
+  /**
+   * Page number (0-indexed)
+   *
+   * @default 0
+   * @minimum 0
+   */
+  page?: number;
+  /**
+   * Items per page
+   *
+   * @default 10
+   * @minimum 1
+   * @maximum 100
+   */
+  take?: number;
+  /**
+   * Search by email, name, or username
+   */
+  query?: string;
+  /**
+   * Filter by createdAt >= dateFrom
+   *
+   * @format date-time
+   */
+  dateFrom?: string;
+  /**
+   * Filter by createdAt <= dateTo
+   *
+   * @format date-time
+   */
+  dateTo?: string;
+  /**
+   * Sort field
+   *
+   * @default createdAt
+   */
+  sortBy?: string;
+  /**
+   * Sort order
+   *
+   * @default DESC
+   */
+  sortOrder?: "ASC" | "DESC";
+  /**
+   * Filter by user role
+   */
+  role?: "user" | "admin";
+};
+
+export type BackofficeControllerListUsersError = Fetcher.ErrorWrapper<
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 403;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type BackofficeControllerListUsersVariables = {
+  queryParams?: BackofficeControllerListUsersQueryParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchBackofficeControllerListUsers = (
+  variables: BackofficeControllerListUsersVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.BackofficeUserListResponse,
+    BackofficeControllerListUsersError,
+    undefined,
+    {},
+    BackofficeControllerListUsersQueryParams,
+    {}
+  >({ url: "/api/backoffice/users", method: "get", ...variables, signal });
+
+export function backofficeControllerListUsersQuery(
+  variables: BackofficeControllerListUsersVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (
+    options: QueryFnOptions,
+  ) => Promise<Schemas.BackofficeUserListResponse>;
+};
+
+export function backofficeControllerListUsersQuery(
+  variables: BackofficeControllerListUsersVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((options: QueryFnOptions) => Promise<Schemas.BackofficeUserListResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function backofficeControllerListUsersQuery(
+  variables: BackofficeControllerListUsersVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/backoffice/users",
+      operationId: "backofficeControllerListUsers",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchBackofficeControllerListUsers(variables, signal),
+  };
+}
+
+export const useSuspenseBackofficeControllerListUsers = <
+  TData = Schemas.BackofficeUserListResponse,
+>(
+  variables: BackofficeControllerListUsersVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.BackofficeUserListResponse,
+      BackofficeControllerListUsersError,
+      TData
+    >,
+    "queryKey" | "queryFn"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    Schemas.BackofficeUserListResponse,
+    BackofficeControllerListUsersError,
+    TData
+  >({
+    ...backofficeControllerListUsersQuery(deepMerge(fetcherOptions, variables)),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useBackofficeControllerListUsers = <
+  TData = Schemas.BackofficeUserListResponse,
+>(
+  variables: BackofficeControllerListUsersVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.BackofficeUserListResponse,
+      BackofficeControllerListUsersError,
+      TData
+    >,
+    "queryKey" | "queryFn"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    Schemas.BackofficeUserListResponse,
+    BackofficeControllerListUsersError,
+    TData
+  >({
+    ...backofficeControllerListUsersQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type BackofficeControllerAddUserError = Fetcher.ErrorWrapper<
+  | {
+      status: 400;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 403;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 409;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type BackofficeControllerAddUserVariables = {
+  body: Schemas.AddUserDto;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchBackofficeControllerAddUser = (
+  variables: BackofficeControllerAddUserVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.BackofficeAddUserResponse,
+    BackofficeControllerAddUserError,
+    Schemas.AddUserDto,
+    {},
+    {},
+    {}
+  >({ url: "/api/backoffice/users", method: "post", ...variables, signal });
+
+export const useBackofficeControllerAddUser = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.BackofficeAddUserResponse,
+      BackofficeControllerAddUserError,
+      BackofficeControllerAddUserVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.BackofficeAddUserResponse,
+    BackofficeControllerAddUserError,
+    BackofficeControllerAddUserVariables
+  >({
+    mutationFn: (variables: BackofficeControllerAddUserVariables) =>
+      fetchBackofficeControllerAddUser(deepMerge(fetcherOptions, variables)),
+    ...options,
+  });
+};
+
+export type BackofficeControllerDeleteUserPathParams = {
+  /**
+   * @format uuid
+   */
+  id: string;
+};
+
+export type BackofficeControllerDeleteUserError = Fetcher.ErrorWrapper<
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 403;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 404;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type BackofficeControllerDeleteUserVariables = {
+  pathParams: BackofficeControllerDeleteUserPathParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchBackofficeControllerDeleteUser = (
+  variables: BackofficeControllerDeleteUserVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.MessageResponse,
+    BackofficeControllerDeleteUserError,
+    undefined,
+    {},
+    {},
+    BackofficeControllerDeleteUserPathParams
+  >({
+    url: "/api/backoffice/users/{id}",
+    method: "delete",
+    ...variables,
+    signal,
+  });
+
+export const useBackofficeControllerDeleteUser = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.MessageResponse,
+      BackofficeControllerDeleteUserError,
+      BackofficeControllerDeleteUserVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.MessageResponse,
+    BackofficeControllerDeleteUserError,
+    BackofficeControllerDeleteUserVariables
+  >({
+    mutationFn: (variables: BackofficeControllerDeleteUserVariables) =>
+      fetchBackofficeControllerDeleteUser(deepMerge(fetcherOptions, variables)),
+    ...options,
+  });
+};
+
+export type BackofficeAuthControllerLoginError = Fetcher.ErrorWrapper<
+  | {
+      status: 400;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 403;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type BackofficeAuthControllerLoginVariables = {
+  body: Schemas.LoginUserDto;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchBackofficeAuthControllerLogin = (
+  variables: BackofficeAuthControllerLoginVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.BackofficeAuthResponse,
+    BackofficeAuthControllerLoginError,
+    Schemas.LoginUserDto,
+    {},
+    {},
+    {}
+  >({
+    url: "/api/backoffice/auth/login",
+    method: "post",
+    ...variables,
+    signal,
+  });
+
+export const useBackofficeAuthControllerLogin = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.BackofficeAuthResponse,
+      BackofficeAuthControllerLoginError,
+      BackofficeAuthControllerLoginVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.BackofficeAuthResponse,
+    BackofficeAuthControllerLoginError,
+    BackofficeAuthControllerLoginVariables
+  >({
+    mutationFn: (variables: BackofficeAuthControllerLoginVariables) =>
+      fetchBackofficeAuthControllerLogin(deepMerge(fetcherOptions, variables)),
+    ...options,
+  });
+};
+
+export type BackofficeAuthControllerMeError = Fetcher.ErrorWrapper<
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 403;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type BackofficeAuthControllerMeVariables =
+  QueriesContext["fetcherOptions"];
+
+export const fetchBackofficeAuthControllerMe = (
+  variables: BackofficeAuthControllerMeVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.BackofficeUserResponse,
+    BackofficeAuthControllerMeError,
+    undefined,
+    {},
+    {},
+    {}
+  >({ url: "/api/backoffice/auth/me", method: "get", ...variables, signal });
+
+export function backofficeAuthControllerMeQuery(
+  variables: BackofficeAuthControllerMeVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (options: QueryFnOptions) => Promise<Schemas.BackofficeUserResponse>;
+};
+
+export function backofficeAuthControllerMeQuery(
+  variables: BackofficeAuthControllerMeVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((options: QueryFnOptions) => Promise<Schemas.BackofficeUserResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function backofficeAuthControllerMeQuery(
+  variables: BackofficeAuthControllerMeVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/backoffice/auth/me",
+      operationId: "backofficeAuthControllerMe",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchBackofficeAuthControllerMe(variables, signal),
+  };
+}
+
+export const useSuspenseBackofficeAuthControllerMe = <
+  TData = Schemas.BackofficeUserResponse,
+>(
+  variables: BackofficeAuthControllerMeVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.BackofficeUserResponse,
+      BackofficeAuthControllerMeError,
+      TData
+    >,
+    "queryKey" | "queryFn"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    Schemas.BackofficeUserResponse,
+    BackofficeAuthControllerMeError,
+    TData
+  >({
+    ...backofficeAuthControllerMeQuery(deepMerge(fetcherOptions, variables)),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useBackofficeAuthControllerMe = <
+  TData = Schemas.BackofficeUserResponse,
+>(
+  variables: BackofficeAuthControllerMeVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.BackofficeUserResponse,
+      BackofficeAuthControllerMeError,
+      TData
+    >,
+    "queryKey" | "queryFn"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    Schemas.BackofficeUserResponse,
+    BackofficeAuthControllerMeError,
+    TData
+  >({
+    ...backofficeAuthControllerMeQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type BackofficeAuthControllerLogoutError = Fetcher.ErrorWrapper<{
+  status: 401;
+  payload: Schemas.ErrorResponse;
+}>;
+
+export type BackofficeAuthControllerLogoutVariables =
+  QueriesContext["fetcherOptions"];
+
+export const fetchBackofficeAuthControllerLogout = (
+  variables: BackofficeAuthControllerLogoutVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.MessageResponse,
+    BackofficeAuthControllerLogoutError,
+    undefined,
+    {},
+    {},
+    {}
+  >({
+    url: "/api/backoffice/auth/logout",
+    method: "post",
+    ...variables,
+    signal,
+  });
+
+export const useBackofficeAuthControllerLogout = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.MessageResponse,
+      BackofficeAuthControllerLogoutError,
+      BackofficeAuthControllerLogoutVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.MessageResponse,
+    BackofficeAuthControllerLogoutError,
+    BackofficeAuthControllerLogoutVariables
+  >({
+    mutationFn: (variables: BackofficeAuthControllerLogoutVariables) =>
+      fetchBackofficeAuthControllerLogout(deepMerge(fetcherOptions, variables)),
+    ...options,
+  });
+};
+
 export type QueryOperation =
   | {
       path: "/api/health";
@@ -1767,4 +2279,14 @@ export type QueryOperation =
       path: "/api/chat/conversations/{id}/messages";
       operationId: "chatControllerListMessages";
       variables: ChatControllerListMessagesVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/backoffice/users";
+      operationId: "backofficeControllerListUsers";
+      variables: BackofficeControllerListUsersVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/backoffice/auth/me";
+      operationId: "backofficeAuthControllerMe";
+      variables: BackofficeAuthControllerMeVariables | reactQuery.SkipToken;
     };

@@ -1,8 +1,15 @@
-import type { FieldValues, Path, UseFormSetError } from "react-hook-form";
+import type {
+  FieldNamesMarkedBoolean,
+  FieldValues,
+  Path,
+  UseFormSetError,
+} from "react-hook-form";
 import type { InfiniteData, UseMutationOptions } from "@tanstack/react-query";
 import clsx, { type ClassValue } from "clsx";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
+
+import type { Any } from "@ui/types/globals";
 
 import type { PaginationDTO } from "./pagination";
 
@@ -248,4 +255,34 @@ export const copyToclipboard = async (text: string) => {
   } catch (err) {
     console.error("Failed to copy: ", err);
   }
+};
+
+export const filterDirtyData = <T extends Record<string, Any>>(
+  data: T,
+  dirtyFields?: Partial<FieldNamesMarkedBoolean<T>>,
+): Partial<T> => {
+  const filteredData: Partial<T> = {};
+  if (!dirtyFields) return data;
+
+  Object.entries(data).forEach(([key, value]) => {
+    const isDirty = dirtyFields[key as keyof typeof dirtyFields];
+
+    if (!isDirty) return;
+
+    if (
+      !Array.isArray(isDirty) &&
+      typeof isDirty === "object" &&
+      typeof value === "object" &&
+      value !== null
+    ) {
+      const nestedFilteredData = filterDirtyData<T>(value, isDirty);
+      if (Object.keys(nestedFilteredData).length > 0) {
+        filteredData[key as keyof T] = nestedFilteredData as T[keyof T];
+      }
+    } else {
+      filteredData[key as keyof typeof filteredData] = value;
+    }
+  });
+
+  return filteredData;
 };

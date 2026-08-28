@@ -33,6 +33,19 @@ export default function DashboardPage() {
         </Card>
         <Card>
           <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium">LLM Config</CardTitle>
+            <CardDescription className="text-xs">
+              Configure LLM providers
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild variant="outline" size="sm">
+              <Link href="/llm-config">Manage LLM</Link>
+            </Button>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium">Settings</CardTitle>
             <CardDescription className="text-xs">App settings</CardDescription>
           </CardHeader>

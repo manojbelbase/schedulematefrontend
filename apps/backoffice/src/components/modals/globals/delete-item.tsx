@@ -7,7 +7,10 @@ import { Button } from "@ui/components/ui/button";
 import type { TDeleteItemModalData } from "@ui/types/extended";
 import type { _TModalProps } from "@ui/types/globals";
 
-import { useBackofficeControllerDeleteUser } from "@repo/services/backoffice";
+import {
+  useBackofficeControllerDeleteUser,
+  useLlmConfigControllerDeleteConfig,
+} from "@repo/services/backoffice";
 
 import { QUERY_KEYS } from "@/config/query-keys";
 
@@ -23,6 +26,8 @@ export default function DeleteItemModal<T extends object = object>({
     switch (id) {
       case "user":
         return QUERY_KEYS.users;
+      case "llm-config":
+        return QUERY_KEYS.llmConfig;
       default:
         return [];
     }
@@ -51,12 +56,21 @@ export default function DeleteItemModal<T extends object = object>({
   };
 
   const { mutate: mutateUser } = useBackofficeControllerDeleteUser(handler);
+  const { mutate: mutateLlmConfig } =
+    useLlmConfigControllerDeleteConfig(handler);
 
   const fn = () => {
     if (typedData?.initiatorName) {
       switch (typedData?.id) {
         case "user":
           mutateUser({
+            pathParams: {
+              id: typedData.initiatorName,
+            },
+          });
+          break;
+        case "llm-config":
+          mutateLlmConfig({
             pathParams: {
               id: typedData.initiatorName,
             },
