@@ -361,33 +361,33 @@ export type BackofficeAddUserResponse = {
 
 export type LlmConfigData = {
   /**
+   * @format uuid
+   */
+  id: string;
+  /**
+   * @example Production
+   */
+  name: string;
+  /**
+   * @example true
+   */
+  isActive: boolean;
+  /**
    * @example deepseek
    */
-  activeProvider: "deepseek" | "openrouter";
+  activeProvider: string;
   /**
    * @example sk-...
    */
-  deepseekApiKey: string;
+  apiKey: string;
   /**
    * @example deepseek-chat
    */
-  deepseekModel: string;
+  model: string;
   /**
    * @example https://api.deepseek.com
    */
-  deepseekBaseUrl: string;
-  /**
-   * @example
-   */
-  openrouterApiKey: string;
-  /**
-   * @example google/gemma-4-26b-a4b-it:free
-   */
-  openrouterModel: string;
-  /**
-   * @example https://openrouter.ai/api/v1
-   */
-  openrouterBaseUrl: string;
+  baseUrl: string;
 };
 
 export type LlmConfigResponse = {
@@ -399,34 +399,100 @@ export type LlmConfigResponse = {
   data: LlmConfigData;
 };
 
-export type UpdateLlmConfigDto = {
-  activeProvider?: "deepseek" | "openrouter";
+export type LlmConfigListResponse = {
   /**
-   * @maxLength 500
+   * @example true
    */
-  deepseekApiKey?: string;
+  success: boolean;
+  message: string;
+  data: LlmConfigData[];
+};
+
+export type LlmProvider = {
   /**
+   * @example deepseek
+   */
+  key: string;
+  /**
+   * @example DeepSeek
+   */
+  label: string;
+  /**
+   * @example https://api.deepseek.com
+   */
+  baseUrl: string;
+  /**
+   * @example deepseek-chat
+   */
+  defaultModel: string;
+  /**
+   * @example deepseek-chat
+   * @example deepseek-reasoner
+   */
+  models: string[];
+  /**
+   * @example false
+   */
+  requiresReferer?: boolean;
+};
+
+export type LlmProviderListResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: LlmProvider[];
+};
+
+export type CreateLlmConfigDto = {
+  /**
+   * @minLength 1
    * @maxLength 100
    */
-  deepseekModel?: string;
+  name: string;
+  isActive?: boolean;
   /**
-   * @format uri
+   * @minLength 1
+   * @maxLength 100
+   */
+  activeProvider?: string;
+  /**
+   * @minLength 1
    * @maxLength 500
    */
-  deepseekBaseUrl?: string;
-  /**
-   * @maxLength 500
-   */
-  openrouterApiKey?: string;
+  apiKey: string;
   /**
    * @maxLength 200
    */
-  openrouterModel?: string;
+  model?: string;
+};
+
+export type UpdateLlmConfigDto = {
+  /**
+   * @minLength 1
+   * @maxLength 100
+   */
+  name?: string;
+  isActive?: boolean;
+  /**
+   * @minLength 1
+   * @maxLength 100
+   */
+  activeProvider?: string;
+  /**
+   * @maxLength 500
+   */
+  apiKey?: string;
+  /**
+   * @maxLength 200
+   */
+  model?: string;
   /**
    * @format uri
    * @maxLength 500
    */
-  openrouterBaseUrl?: string;
+  baseUrl?: string;
 };
 
 export type UpdateUserLimitDto = {

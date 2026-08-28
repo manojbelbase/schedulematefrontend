@@ -283,6 +283,14 @@ export type PublicUser = {
   username?: string | null;
   role?: "user" | "admin";
   /**
+   * @example 10
+   */
+  apiRequestLimit?: number;
+  /**
+   * @example 3
+   */
+  apiRequestsUsed?: number;
+  /**
    * @format date-time
    */
   createdAt?: string;
