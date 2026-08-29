@@ -2832,6 +2832,130 @@ export const useBackofficeControllerUpdateUserLimit = (
   });
 };
 
+export type BackofficeControllerGetUsersDashboardError = Fetcher.ErrorWrapper<
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 403;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type BackofficeControllerGetUsersDashboardVariables =
+  QueriesContext["fetcherOptions"];
+
+export const fetchBackofficeControllerGetUsersDashboard = (
+  variables: BackofficeControllerGetUsersDashboardVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.UsersDashboardResponse,
+    BackofficeControllerGetUsersDashboardError,
+    undefined,
+    {},
+    {},
+    {}
+  >({
+    url: "/api/backoffice/dashboard/users",
+    method: "get",
+    ...variables,
+    signal,
+  });
+
+export function backofficeControllerGetUsersDashboardQuery(
+  variables: BackofficeControllerGetUsersDashboardVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (options: QueryFnOptions) => Promise<Schemas.UsersDashboardResponse>;
+};
+
+export function backofficeControllerGetUsersDashboardQuery(
+  variables:
+    BackofficeControllerGetUsersDashboardVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((options: QueryFnOptions) => Promise<Schemas.UsersDashboardResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function backofficeControllerGetUsersDashboardQuery(
+  variables:
+    BackofficeControllerGetUsersDashboardVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/backoffice/dashboard/users",
+      operationId: "backofficeControllerGetUsersDashboard",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchBackofficeControllerGetUsersDashboard(variables, signal),
+  };
+}
+
+export const useSuspenseBackofficeControllerGetUsersDashboard = <
+  TData = Schemas.UsersDashboardResponse,
+>(
+  variables: BackofficeControllerGetUsersDashboardVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.UsersDashboardResponse,
+      BackofficeControllerGetUsersDashboardError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    Schemas.UsersDashboardResponse,
+    BackofficeControllerGetUsersDashboardError,
+    TData
+  >({
+    ...backofficeControllerGetUsersDashboardQuery(
+      deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useBackofficeControllerGetUsersDashboard = <
+  TData = Schemas.UsersDashboardResponse,
+>(
+  variables:
+    BackofficeControllerGetUsersDashboardVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.UsersDashboardResponse,
+      BackofficeControllerGetUsersDashboardError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    Schemas.UsersDashboardResponse,
+    BackofficeControllerGetUsersDashboardError,
+    TData
+  >({
+    ...backofficeControllerGetUsersDashboardQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
 export type QueryOperation =
   | {
       path: "/api/health";
@@ -2915,4 +3039,10 @@ export type QueryOperation =
       operationId: "llmConfigControllerGetActiveConfig";
       variables:
         LlmConfigControllerGetActiveConfigVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/backoffice/dashboard/users";
+      operationId: "backofficeControllerGetUsersDashboard";
+      variables:
+        BackofficeControllerGetUsersDashboardVariables | reactQuery.SkipToken;
     };

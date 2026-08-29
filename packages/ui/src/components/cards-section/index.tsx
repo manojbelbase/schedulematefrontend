@@ -42,7 +42,7 @@ export default function CardsSection<TData = object>({
         return (
           <div
             key={item.id}
-            className="flex items-center justify-between gap-4 rounded-xl border border-border bg-card p-4 shadow-sm"
+            className="flex items-center justify-between gap-4 rounded-sm border border-border bg-card p-3 shadow-xs"
           >
             <div className="min-w-0 space-y-1">
               <p className="text-sm text-muted-foreground">{item.label}</p>

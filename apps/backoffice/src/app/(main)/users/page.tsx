@@ -1,7 +1,10 @@
 import { withDefaultPagination } from "@ui/lib/pagination";
 import type { TQueryParams } from "@ui/types/globals";
 
-import { fetchBackofficeControllerListUsers } from "@repo/services/backoffice";
+import {
+  fetchBackofficeControllerGetUsersDashboard,
+  fetchBackofficeControllerListUsers,
+} from "@repo/services/backoffice";
 
 import { UsersTable } from "./table";
 
@@ -10,6 +13,15 @@ export default async function UsersPage(props: TQueryParams) {
   const initialData = await fetchBackofficeControllerListUsers({
     queryParams: withDefaultPagination(searchParams),
   });
+  const dashboardInitialData = await fetchBackofficeControllerGetUsersDashboard(
+    {},
+  );
 
-  return <UsersTable searchParams={searchParams} initialData={initialData} />;
+  return (
+    <UsersTable
+      searchParams={searchParams}
+      initialData={initialData}
+      dashboardInitialData={dashboardInitialData}
+    />
+  );
 }

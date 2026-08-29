@@ -1,6 +1,9 @@
 "use client";
 
+import type { ReactNode } from "react";
+
 import { Button } from "@ui/components/ui/button";
+import { DateCell } from "@ui/components/ui/date-cell";
 import type { _TModalProps } from "@ui/types/globals";
 
 import type { PublicUser } from "@repo/services/backoffice";
@@ -22,7 +25,9 @@ export default function ViewUserModal({
       <Row label="Email" value={user.email} />
       <Row label="Username" value={user.username ? `@${user.username}` : "—"} />
       <Row label="Role" value={user.role || "—"} />
-      <Row label="Created At" value={user.createdAt || "—"} />
+      <Row label="Created At">
+        <DateCell value={user.createdAt} />
+      </Row>
       <div className="flex justify-end pt-2">
         <Button variant="outline" onClick={close}>
           Close
@@ -32,11 +37,19 @@ export default function ViewUserModal({
   );
 }
 
-function Row({ label, value }: { label: string; value: string }) {
+function Row({
+  label,
+  value,
+  children,
+}: {
+  label: string;
+  value?: string;
+  children?: ReactNode;
+}) {
   return (
     <div className="flex items-center justify-between gap-4">
       <span className="text-muted-foreground">{label}</span>
-      <span className="font-medium">{value}</span>
+      <span className="font-medium">{value ?? children}</span>
     </div>
   );
 }
