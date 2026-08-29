@@ -1,14 +1,17 @@
 "use client";
 
+import { Activity, ShieldCheck, User, Users } from "lucide-react";
 import type { SearchParams } from "nuqs";
 
 import DataTable from "@ui/components/data-table";
 import { withDefaultPagination } from "@ui/lib/pagination";
 
 import {
+  useBackofficeControllerGetUsersDashboard,
   useBackofficeControllerListUsers,
   type BackofficeControllerListUsersQueryParams,
   type BackofficeUserListResponse,
+  type UsersDashboardResponse,
 } from "@repo/services/backoffice";
 
 import TableRowsLoading from "@/components/loaders/table-rows-loading";
@@ -18,9 +21,11 @@ import { USER_COLUMNS, UserRowActions } from "./columns";
 export function UsersTable({
   searchParams,
   initialData,
+  dashboardInitialData,
 }: {
   searchParams: SearchParams;
   initialData: BackofficeUserListResponse;
+  dashboardInitialData: UsersDashboardResponse;
 }) {
   const params =
     withDefaultPagination<BackofficeControllerListUsersQueryParams>(
@@ -40,7 +45,47 @@ export function UsersTable({
     { placeholderData: initialData },
   );
 
+  const { data: dashboardData } = useBackofficeControllerGetUsersDashboard(
+    {},
+    { placeholderData: dashboardInitialData },
+  );
+
   const users = data?.data ?? [];
+  const stats = dashboardData?.data;
+
+  const totalUsers = stats
+    ? Object.values(stats.countByRole).reduce((sum, count) => sum + count, 0)
+    : 0;
+
+  const cards = [
+    {
+      id: "total-users",
+      label: "Total Users",
+      value: totalUsers,
+      icon: <Users className="size-5" />,
+    },
+    {
+      id: "admins",
+      label: "Admins",
+      value: stats?.countByRole.admin ?? 0,
+      icon: <ShieldCheck className="size-5" />,
+    },
+    {
+      id: "api-requests-used",
+      label: "API Requests Used",
+      value: stats?.totalApiRequestsUsed ?? 0,
+      icon: <Activity className="size-5" />,
+    },
+    {
+      id: "usage-ratio",
+      label: "API Usage Ratio",
+      value:
+        stats !== undefined
+          ? `${Math.round((stats.usageRatio ?? 0) * 100)}%`
+          : "—",
+      icon: <User className="size-5" />,
+    },
+  ];
 
   return (
     <DataTable
@@ -52,6 +97,7 @@ export function UsersTable({
         sidebarToggle: false,
         title: "Users",
       }}
+      cards={{ items: cards }}
       functions={{
         add: {
           label: "Add User",

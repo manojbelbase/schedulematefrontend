@@ -533,3 +533,42 @@ export type UserLimitResponse = {
     apiRequestsUsed: number;
   };
 };
+
+export type UsersDashboardData = {
+  /**
+   * @example {"user":120,"admin":8}
+   */
+  countByRole: {
+    [key: string]: number;
+  };
+  /**
+   * @example 90
+   */
+  emailUsers: number;
+  /**
+   * @example 38
+   */
+  googleUsers: number;
+  /**
+   * @example 5123
+   */
+  totalApiRequestsUsed: number;
+  /**
+   * @example 5128
+   */
+  totalApiRequestLimit: number;
+  /**
+   * @format float
+   * @example 0.999
+   */
+  usageRatio: number;
+};
+
+export type UsersDashboardResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: UsersDashboardData;
+};

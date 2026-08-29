@@ -1,5 +1,4 @@
 import { type ComponentProps } from "react";
-import { format } from "date-fns";
 import { SlidersHorizontal } from "lucide-react";
 
 import { ContextMenuItem } from "@ui/components/animate-ui/components/radix/context-menu";
@@ -10,6 +9,7 @@ import SNCell from "@ui/components/data-table/sn-cell";
 import ModalTrigger from "@ui/components/deployables/trigger";
 import Avatar from "@ui/components/ui/avatar";
 import { Badge } from "@ui/components/ui/badge";
+import { DateCell } from "@ui/components/ui/date-cell";
 import { TABLE_CONSTANTS } from "@ui/config/constants";
 import { cn } from "@ui/lib/utils";
 import type { _ColumnDef } from "@ui/types/globals";
@@ -114,9 +114,7 @@ export const USER_COLUMNS: _ColumnDef<PublicUser>[] = [
     accessorKey: "createdAt",
     cell: ({ row }) => (
       <span className="text-muted-foreground">
-        {row.original.createdAt
-          ? format(new Date(row.original.createdAt), "dd MMM, yyyy")
-          : "—"}
+        <DateCell value={row.original.createdAt} />
       </span>
     ),
     size: 160,
