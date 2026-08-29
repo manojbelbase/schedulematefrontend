@@ -23,7 +23,14 @@ export default function SheetX({ slot, items, EXIT_WARNING_MODAL }: TProps) {
   );
 
   const safeExtract = (key: Keys.TSheetKeys) => {
-    return key in items ? items[key] : null;
+    return key in items
+      ? items[key]
+      : {
+          component: (() => null) as React.FC<Any>,
+          variant: "default" as const,
+          className: "",
+          side: "right" as const,
+        };
   };
 
   return sheets.map((sheet, i) => {
