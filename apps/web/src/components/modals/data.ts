@@ -10,7 +10,7 @@ export const MODALS: {
   DELETE_MODAL: {
     component: DeleteItemModal,
     variant: "form",
-    className: "max-w-sm",
+    className: "max-w-xs",
   },
   WARN_FORM_EXIT: {
     component: DeleteItemModal,

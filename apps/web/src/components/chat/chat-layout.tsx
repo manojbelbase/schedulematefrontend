@@ -53,9 +53,7 @@ export default function ChatLayout({
     initialConversation ? { initialData: initialConversation } : undefined,
   );
 
-  const { sendMessage, newChat } = useChatActions({
-    conversationId: conversationId!,
-  });
+  const { sendMessage, newChat } = useChatActions({ conversationId });
 
   const pendingForActive = useChatStore(
     (state) => state.pendingMessagesByConversation[conversationId ?? ""],
