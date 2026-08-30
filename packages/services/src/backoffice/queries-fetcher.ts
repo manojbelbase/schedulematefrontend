@@ -107,6 +107,10 @@ export async function queriesFetch<
         const { redirect } = await import("next/navigation");
         redirect("/login");
       } else if (typeof window !== "undefined") {
+        document.cookie =
+          "scheduledmate_backoffice_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; SameSite=Lax";
+        document.cookie =
+          "scheduledmate_backoffice_refresh=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; SameSite=Lax";
         window.location.assign("/login");
         return new Promise<never>(() => {
           /**

@@ -2,9 +2,12 @@
 
 import { useEffect, type ReactNode } from "react";
 
-import { useBackofficeAuthControllerMe } from "@repo/services/backoffice";
+import {
+  fetchAuthControllerRefresh,
+  useBackofficeAuthControllerMe,
+} from "@repo/services/backoffice";
 
-import { getAuthToken } from "@/services/auth.client";
+import { getAuthToken, getRefreshToken } from "@/services/auth.client";
 import { useAuthStore } from "@/zustand/auth";
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
@@ -19,6 +22,40 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     if (!token) {
       useAuthStore.setState({ token: getAuthToken() ?? null });
     }
+  }, [token]);
+
+  useEffect(() => {
+    const hasToken = token ?? getAuthToken();
+    const hasRefresh = Boolean(getRefreshToken());
+    if (hasToken || !hasRefresh) return;
+
+    let cancelled = false;
+    fetchAuthControllerRefresh({})
+      .then(() => {
+        if (cancelled) return;
+        const restoredToken = getAuthToken();
+        if (restoredToken) {
+          useAuthStore.setState({
+            token: restoredToken,
+            isAuthenticated: true,
+            isLoading: false,
+          });
+        } else {
+          useAuthStore.setState({ isLoading: false });
+        }
+      })
+      .catch(() => {
+        if (cancelled) return;
+        useAuthStore.setState({
+          user: null,
+          isAuthenticated: false,
+          isLoading: false,
+        });
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [token]);
 
   useEffect(() => {
