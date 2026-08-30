@@ -63,7 +63,7 @@ export default function ProfilePopover({ collapsed }: TProps) {
         align="start"
         side="right"
         sideOffset={12}
-        className="w-64 overflow-hidden p-0 mb-2"
+        className="w-72 overflow-hidden p-0 mb-2"
       >
         <div className="flex items-center gap-3 px-4 py-3.5">
           <Avatar className="size-10 shrink-0 rounded-sm bg-primary/10">

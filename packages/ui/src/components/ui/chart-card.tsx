@@ -30,7 +30,7 @@ export function ChartCard({
         className,
       )}
     >
-      <div className="flex items-center gap-2 px-3 py-2.5 border-b">
+      <div className="flex items-center gap-2 px-3 py-2.5 ">
         {Icon ? <Icon className="size-4" /> : null}
         <h3 className="text-sm font-semibold text-foreground">{title}</h3>
         {description ? (
@@ -50,7 +50,7 @@ export function ChartCard({
           </Tooltip>
         ) : null}
       </div>
-      <div className="w-full px-4 py-3">{children}</div>
+      <div className="w-full px-4 py-2">{children}</div>
     </div>
   );
 }
