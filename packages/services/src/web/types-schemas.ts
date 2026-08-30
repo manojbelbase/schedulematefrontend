@@ -267,6 +267,10 @@ export type ChatSendMessageResponse = {
   data: {
     userMessage: ChatMessage;
     assistantMessage: ChatMessage;
+    /**
+     * @example 7
+     */
+    requestsRemaining: number;
   };
 };
 
@@ -353,4 +357,265 @@ export type BackofficeAddUserResponse = {
   success: boolean;
   message: string;
   data: PublicUser;
+};
+
+export type LlmConfigData = {
+  /**
+   * @format uuid
+   */
+  id: string;
+  /**
+   * @example Production
+   */
+  name: string;
+  /**
+   * @example true
+   */
+  isActive: boolean;
+  /**
+   * @example deepseek
+   */
+  activeProvider: string;
+  /**
+   * @example sk-...
+   */
+  apiKey: string;
+  /**
+   * @example deepseek-chat
+   */
+  model: string;
+  /**
+   * @example https://api.deepseek.com
+   */
+  baseUrl: string;
+};
+
+export type LlmConfigResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: LlmConfigData;
+};
+
+export type LlmConfigListResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: LlmConfigData[];
+  pagination: {
+    previousPage: number | null;
+    nextPage: number | null;
+    total: number;
+    count: number;
+  };
+};
+
+export type LlmProvider = {
+  /**
+   * @example deepseek
+   */
+  key: string;
+  /**
+   * @example DeepSeek
+   */
+  label: string;
+  /**
+   * @example https://api.deepseek.com
+   */
+  baseUrl: string;
+  /**
+   * @example deepseek-chat
+   */
+  defaultModel: string;
+  /**
+   * @example deepseek-chat
+   * @example deepseek-reasoner
+   */
+  models: string[];
+  /**
+   * @example false
+   */
+  requiresReferer?: boolean;
+};
+
+export type LlmProviderListResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: LlmProvider[];
+};
+
+export type CreateLlmConfigDto = {
+  /**
+   * @minLength 1
+   * @maxLength 100
+   */
+  name: string;
+  isActive?: boolean;
+  /**
+   * @minLength 1
+   * @maxLength 100
+   */
+  activeProvider?: string;
+  /**
+   * @minLength 1
+   * @maxLength 500
+   */
+  apiKey: string;
+  /**
+   * @maxLength 200
+   */
+  model?: string;
+};
+
+export type UpdateLlmConfigDto = {
+  /**
+   * @minLength 1
+   * @maxLength 100
+   */
+  name?: string;
+  isActive?: boolean;
+  /**
+   * @minLength 1
+   * @maxLength 100
+   */
+  activeProvider?: string;
+  /**
+   * @maxLength 500
+   */
+  apiKey?: string;
+  /**
+   * @maxLength 200
+   */
+  model?: string;
+  /**
+   * @format uri
+   * @maxLength 500
+   */
+  baseUrl?: string;
+};
+
+export type UpdateUserLimitDto = {
+  /**
+   * @minimum 0
+   * @maximum 100000
+   * @example 10
+   */
+  apiRequestLimit?: number;
+  /**
+   * @example false
+   */
+  resetUsed?: boolean;
+};
+
+export type UserLimitResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: {
+    /**
+     * @format uuid
+     */
+    id: string;
+    /**
+     * @format email
+     */
+    email: string;
+    /**
+     * @example 10
+     */
+    apiRequestLimit: number;
+    /**
+     * @example 3
+     */
+    apiRequestsUsed: number;
+  };
+};
+
+export type UsersDashboardData = {
+  /**
+   * @example {"user":120,"admin":8}
+   */
+  countByRole: {
+    [key: string]: number;
+  };
+  /**
+   * @example 90
+   */
+  emailUsers: number;
+  /**
+   * @example 38
+   */
+  googleUsers: number;
+  /**
+   * @example 5123
+   */
+  totalApiRequestsUsed: number;
+  /**
+   * @example 5128
+   */
+  totalApiRequestLimit: number;
+  /**
+   * @format float
+   * @example 0.999
+   */
+  usageRatio: number;
+  /**
+   * @example {"deepseek":3,"openrouter":1}
+   */
+  countByProvider: {
+    [key: string]: number;
+  };
+  /**
+   * @example 412
+   */
+  totalChatConversations: number;
+  /**
+   * @example 8217
+   */
+  totalChatMessages: number;
+  /**
+   * @example {"user":4100,"assistant":4117}
+   */
+  chatMessagesByRole: {
+    [key: string]: number;
+  };
+  byPeriod: PeriodBucket[];
+};
+
+export type PeriodBucket = {
+  /**
+   * @format date-time
+   * @example 2026-08-30T00:00:00.000Z
+   */
+  period: string;
+  /**
+   * @example 12
+   */
+  signups: number;
+  /**
+   * @example 9
+   */
+  conversations: number;
+  /**
+   * @example 74
+   */
+  chatMessages: number;
+};
+
+export type UsersDashboardResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: UsersDashboardData;
 };

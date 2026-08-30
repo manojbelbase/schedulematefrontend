@@ -568,6 +568,34 @@ export type UsersDashboardData = {
    * @example 0.999
    */
   usageRatio: number;
+  /**
+   * @example {"deepseek":3,"openrouter":1}
+   */
+  countByProvider: {
+    [key: string]: number;
+  };
+  /**
+   * @example 412
+   */
+  totalChatConversations: number;
+  /**
+   * @example 8217
+   */
+  totalChatMessages: number;
+  /**
+   * @example {"user":4100,"assistant":4117}
+   */
+  chatMessagesByRole: {
+    [key: string]: number;
+  };
+  /**
+   * @example 12
+   */
+  googleCalendarConnected: number;
+  /**
+   * @example 108
+   */
+  googleCalendarNotConnected: number;
 };
 
 export type UsersDashboardResponse = {

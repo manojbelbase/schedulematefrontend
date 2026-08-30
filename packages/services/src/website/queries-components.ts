@@ -2223,6 +2223,808 @@ export const useBackofficeAuthControllerLogout = (
   });
 };
 
+export type LlmConfigControllerListConfigsQueryParams = {
+  /**
+   * Page number (0-indexed)
+   *
+   * @default 0
+   * @minimum 0
+   */
+  page?: number;
+  /**
+   * Items per page
+   *
+   * @default 10
+   * @minimum 1
+   * @maximum 100
+   */
+  take?: number;
+  /**
+   * Search by config name
+   */
+  query?: string;
+  /**
+   * Filter by createdAt >= dateFrom
+   *
+   * @format date-time
+   */
+  dateFrom?: string;
+  /**
+   * Filter by createdAt <= dateTo
+   *
+   * @format date-time
+   */
+  dateTo?: string;
+  /**
+   * Sort field
+   *
+   * @default createdAt
+   */
+  sortBy?: string;
+  /**
+   * Sort order
+   *
+   * @default DESC
+   */
+  sortOrder?: "ASC" | "DESC";
+};
+
+export type LlmConfigControllerListConfigsError = Fetcher.ErrorWrapper<
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 403;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type LlmConfigControllerListConfigsVariables = {
+  queryParams?: LlmConfigControllerListConfigsQueryParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchLlmConfigControllerListConfigs = (
+  variables: LlmConfigControllerListConfigsVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.LlmConfigListResponse,
+    LlmConfigControllerListConfigsError,
+    undefined,
+    {},
+    LlmConfigControllerListConfigsQueryParams,
+    {}
+  >({ url: "/api/backoffice/llm-config", method: "get", ...variables, signal });
+
+export function llmConfigControllerListConfigsQuery(
+  variables: LlmConfigControllerListConfigsVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (options: QueryFnOptions) => Promise<Schemas.LlmConfigListResponse>;
+};
+
+export function llmConfigControllerListConfigsQuery(
+  variables: LlmConfigControllerListConfigsVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((options: QueryFnOptions) => Promise<Schemas.LlmConfigListResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function llmConfigControllerListConfigsQuery(
+  variables: LlmConfigControllerListConfigsVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/backoffice/llm-config",
+      operationId: "llmConfigControllerListConfigs",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchLlmConfigControllerListConfigs(variables, signal),
+  };
+}
+
+export const useSuspenseLlmConfigControllerListConfigs = <
+  TData = Schemas.LlmConfigListResponse,
+>(
+  variables: LlmConfigControllerListConfigsVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.LlmConfigListResponse,
+      LlmConfigControllerListConfigsError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    Schemas.LlmConfigListResponse,
+    LlmConfigControllerListConfigsError,
+    TData
+  >({
+    ...llmConfigControllerListConfigsQuery(
+      deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useLlmConfigControllerListConfigs = <
+  TData = Schemas.LlmConfigListResponse,
+>(
+  variables: LlmConfigControllerListConfigsVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.LlmConfigListResponse,
+      LlmConfigControllerListConfigsError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    Schemas.LlmConfigListResponse,
+    LlmConfigControllerListConfigsError,
+    TData
+  >({
+    ...llmConfigControllerListConfigsQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type LlmConfigControllerCreateConfigError = Fetcher.ErrorWrapper<
+  | {
+      status: 400;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 403;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type LlmConfigControllerCreateConfigVariables = {
+  body: Schemas.CreateLlmConfigDto;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchLlmConfigControllerCreateConfig = (
+  variables: LlmConfigControllerCreateConfigVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.LlmConfigResponse,
+    LlmConfigControllerCreateConfigError,
+    Schemas.CreateLlmConfigDto,
+    {},
+    {},
+    {}
+  >({
+    url: "/api/backoffice/llm-config",
+    method: "post",
+    ...variables,
+    signal,
+  });
+
+export const useLlmConfigControllerCreateConfig = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.LlmConfigResponse,
+      LlmConfigControllerCreateConfigError,
+      LlmConfigControllerCreateConfigVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.LlmConfigResponse,
+    LlmConfigControllerCreateConfigError,
+    LlmConfigControllerCreateConfigVariables
+  >({
+    mutationFn: (variables: LlmConfigControllerCreateConfigVariables) =>
+      fetchLlmConfigControllerCreateConfig(
+        deepMerge(fetcherOptions, variables),
+      ),
+    ...options,
+  });
+};
+
+export type LlmConfigControllerListProvidersError = Fetcher.ErrorWrapper<
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 403;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type LlmConfigControllerListProvidersVariables =
+  QueriesContext["fetcherOptions"];
+
+export const fetchLlmConfigControllerListProviders = (
+  variables: LlmConfigControllerListProvidersVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.LlmProviderListResponse,
+    LlmConfigControllerListProvidersError,
+    undefined,
+    {},
+    {},
+    {}
+  >({
+    url: "/api/backoffice/llm-config/providers",
+    method: "get",
+    ...variables,
+    signal,
+  });
+
+export function llmConfigControllerListProvidersQuery(
+  variables: LlmConfigControllerListProvidersVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (
+    options: QueryFnOptions,
+  ) => Promise<Schemas.LlmProviderListResponse>;
+};
+
+export function llmConfigControllerListProvidersQuery(
+  variables: LlmConfigControllerListProvidersVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((options: QueryFnOptions) => Promise<Schemas.LlmProviderListResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function llmConfigControllerListProvidersQuery(
+  variables: LlmConfigControllerListProvidersVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/backoffice/llm-config/providers",
+      operationId: "llmConfigControllerListProviders",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchLlmConfigControllerListProviders(variables, signal),
+  };
+}
+
+export const useSuspenseLlmConfigControllerListProviders = <
+  TData = Schemas.LlmProviderListResponse,
+>(
+  variables: LlmConfigControllerListProvidersVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.LlmProviderListResponse,
+      LlmConfigControllerListProvidersError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    Schemas.LlmProviderListResponse,
+    LlmConfigControllerListProvidersError,
+    TData
+  >({
+    ...llmConfigControllerListProvidersQuery(
+      deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useLlmConfigControllerListProviders = <
+  TData = Schemas.LlmProviderListResponse,
+>(
+  variables: LlmConfigControllerListProvidersVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.LlmProviderListResponse,
+      LlmConfigControllerListProvidersError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    Schemas.LlmProviderListResponse,
+    LlmConfigControllerListProvidersError,
+    TData
+  >({
+    ...llmConfigControllerListProvidersQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type LlmConfigControllerGetActiveConfigError =
+  Fetcher.ErrorWrapper<undefined>;
+
+export type LlmConfigControllerGetActiveConfigVariables =
+  QueriesContext["fetcherOptions"];
+
+export const fetchLlmConfigControllerGetActiveConfig = (
+  variables: LlmConfigControllerGetActiveConfigVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.LlmConfigResponse,
+    LlmConfigControllerGetActiveConfigError,
+    undefined,
+    {},
+    {},
+    {}
+  >({
+    url: "/api/backoffice/llm-config/active",
+    method: "get",
+    ...variables,
+    signal,
+  });
+
+export function llmConfigControllerGetActiveConfigQuery(
+  variables: LlmConfigControllerGetActiveConfigVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (options: QueryFnOptions) => Promise<Schemas.LlmConfigResponse>;
+};
+
+export function llmConfigControllerGetActiveConfigQuery(
+  variables: LlmConfigControllerGetActiveConfigVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((options: QueryFnOptions) => Promise<Schemas.LlmConfigResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function llmConfigControllerGetActiveConfigQuery(
+  variables: LlmConfigControllerGetActiveConfigVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/backoffice/llm-config/active",
+      operationId: "llmConfigControllerGetActiveConfig",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchLlmConfigControllerGetActiveConfig(variables, signal),
+  };
+}
+
+export const useSuspenseLlmConfigControllerGetActiveConfig = <
+  TData = Schemas.LlmConfigResponse,
+>(
+  variables: LlmConfigControllerGetActiveConfigVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.LlmConfigResponse,
+      LlmConfigControllerGetActiveConfigError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    Schemas.LlmConfigResponse,
+    LlmConfigControllerGetActiveConfigError,
+    TData
+  >({
+    ...llmConfigControllerGetActiveConfigQuery(
+      deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useLlmConfigControllerGetActiveConfig = <
+  TData = Schemas.LlmConfigResponse,
+>(
+  variables: LlmConfigControllerGetActiveConfigVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.LlmConfigResponse,
+      LlmConfigControllerGetActiveConfigError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    Schemas.LlmConfigResponse,
+    LlmConfigControllerGetActiveConfigError,
+    TData
+  >({
+    ...llmConfigControllerGetActiveConfigQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type LlmConfigControllerUpdateConfigPathParams = {
+  /**
+   * @format uuid
+   */
+  id: string;
+};
+
+export type LlmConfigControllerUpdateConfigError = Fetcher.ErrorWrapper<
+  | {
+      status: 400;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 404;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type LlmConfigControllerUpdateConfigVariables = {
+  body?: Schemas.UpdateLlmConfigDto;
+  pathParams: LlmConfigControllerUpdateConfigPathParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchLlmConfigControllerUpdateConfig = (
+  variables: LlmConfigControllerUpdateConfigVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.LlmConfigResponse,
+    LlmConfigControllerUpdateConfigError,
+    Schemas.UpdateLlmConfigDto,
+    {},
+    {},
+    LlmConfigControllerUpdateConfigPathParams
+  >({
+    url: "/api/backoffice/llm-config/{id}",
+    method: "patch",
+    ...variables,
+    signal,
+  });
+
+export const useLlmConfigControllerUpdateConfig = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.LlmConfigResponse,
+      LlmConfigControllerUpdateConfigError,
+      LlmConfigControllerUpdateConfigVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.LlmConfigResponse,
+    LlmConfigControllerUpdateConfigError,
+    LlmConfigControllerUpdateConfigVariables
+  >({
+    mutationFn: (variables: LlmConfigControllerUpdateConfigVariables) =>
+      fetchLlmConfigControllerUpdateConfig(
+        deepMerge(fetcherOptions, variables),
+      ),
+    ...options,
+  });
+};
+
+export type LlmConfigControllerDeleteConfigPathParams = {
+  /**
+   * @format uuid
+   */
+  id: string;
+};
+
+export type LlmConfigControllerDeleteConfigError = Fetcher.ErrorWrapper<{
+  status: 404;
+  payload: Schemas.ErrorResponse;
+}>;
+
+export type LlmConfigControllerDeleteConfigVariables = {
+  pathParams: LlmConfigControllerDeleteConfigPathParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchLlmConfigControllerDeleteConfig = (
+  variables: LlmConfigControllerDeleteConfigVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.MessageResponse,
+    LlmConfigControllerDeleteConfigError,
+    undefined,
+    {},
+    {},
+    LlmConfigControllerDeleteConfigPathParams
+  >({
+    url: "/api/backoffice/llm-config/{id}",
+    method: "delete",
+    ...variables,
+    signal,
+  });
+
+export const useLlmConfigControllerDeleteConfig = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.MessageResponse,
+      LlmConfigControllerDeleteConfigError,
+      LlmConfigControllerDeleteConfigVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.MessageResponse,
+    LlmConfigControllerDeleteConfigError,
+    LlmConfigControllerDeleteConfigVariables
+  >({
+    mutationFn: (variables: LlmConfigControllerDeleteConfigVariables) =>
+      fetchLlmConfigControllerDeleteConfig(
+        deepMerge(fetcherOptions, variables),
+      ),
+    ...options,
+  });
+};
+
+export type BackofficeControllerUpdateUserLimitPathParams = {
+  /**
+   * @format uuid
+   */
+  id: string;
+};
+
+export type BackofficeControllerUpdateUserLimitError = Fetcher.ErrorWrapper<
+  | {
+      status: 400;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 403;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 404;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type BackofficeControllerUpdateUserLimitVariables = {
+  body?: Schemas.UpdateUserLimitDto;
+  pathParams: BackofficeControllerUpdateUserLimitPathParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchBackofficeControllerUpdateUserLimit = (
+  variables: BackofficeControllerUpdateUserLimitVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.UserLimitResponse,
+    BackofficeControllerUpdateUserLimitError,
+    Schemas.UpdateUserLimitDto,
+    {},
+    {},
+    BackofficeControllerUpdateUserLimitPathParams
+  >({
+    url: "/api/backoffice/users/{id}/limit",
+    method: "patch",
+    ...variables,
+    signal,
+  });
+
+export const useBackofficeControllerUpdateUserLimit = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.UserLimitResponse,
+      BackofficeControllerUpdateUserLimitError,
+      BackofficeControllerUpdateUserLimitVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.UserLimitResponse,
+    BackofficeControllerUpdateUserLimitError,
+    BackofficeControllerUpdateUserLimitVariables
+  >({
+    mutationFn: (variables: BackofficeControllerUpdateUserLimitVariables) =>
+      fetchBackofficeControllerUpdateUserLimit(
+        deepMerge(fetcherOptions, variables),
+      ),
+    ...options,
+  });
+};
+
+export type BackofficeControllerGetUsersDashboardQueryParams = {
+  /**
+   * Filter aggregates by createdAt >= dateFrom
+   *
+   * @format date-time
+   */
+  dateFrom?: string;
+  /**
+   * Filter aggregates by createdAt <= dateTo
+   *
+   * @format date-time
+   */
+  dateTo?: string;
+  /**
+   * Time bucket for the byPeriod trend series
+   *
+   * @default day
+   */
+  interval?: "hour" | "day" | "week" | "month";
+};
+
+export type BackofficeControllerGetUsersDashboardError = Fetcher.ErrorWrapper<
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 403;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type BackofficeControllerGetUsersDashboardVariables = {
+  queryParams?: BackofficeControllerGetUsersDashboardQueryParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchBackofficeControllerGetUsersDashboard = (
+  variables: BackofficeControllerGetUsersDashboardVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.UsersDashboardResponse,
+    BackofficeControllerGetUsersDashboardError,
+    undefined,
+    {},
+    BackofficeControllerGetUsersDashboardQueryParams,
+    {}
+  >({
+    url: "/api/backoffice/dashboard/users",
+    method: "get",
+    ...variables,
+    signal,
+  });
+
+export function backofficeControllerGetUsersDashboardQuery(
+  variables: BackofficeControllerGetUsersDashboardVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (options: QueryFnOptions) => Promise<Schemas.UsersDashboardResponse>;
+};
+
+export function backofficeControllerGetUsersDashboardQuery(
+  variables:
+    BackofficeControllerGetUsersDashboardVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((options: QueryFnOptions) => Promise<Schemas.UsersDashboardResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function backofficeControllerGetUsersDashboardQuery(
+  variables:
+    BackofficeControllerGetUsersDashboardVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/backoffice/dashboard/users",
+      operationId: "backofficeControllerGetUsersDashboard",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchBackofficeControllerGetUsersDashboard(variables, signal),
+  };
+}
+
+export const useSuspenseBackofficeControllerGetUsersDashboard = <
+  TData = Schemas.UsersDashboardResponse,
+>(
+  variables: BackofficeControllerGetUsersDashboardVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.UsersDashboardResponse,
+      BackofficeControllerGetUsersDashboardError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    Schemas.UsersDashboardResponse,
+    BackofficeControllerGetUsersDashboardError,
+    TData
+  >({
+    ...backofficeControllerGetUsersDashboardQuery(
+      deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useBackofficeControllerGetUsersDashboard = <
+  TData = Schemas.UsersDashboardResponse,
+>(
+  variables:
+    BackofficeControllerGetUsersDashboardVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.UsersDashboardResponse,
+      BackofficeControllerGetUsersDashboardError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    Schemas.UsersDashboardResponse,
+    BackofficeControllerGetUsersDashboardError,
+    TData
+  >({
+    ...backofficeControllerGetUsersDashboardQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
 export type QueryOperation =
   | {
       path: "/api/health";
@@ -2289,4 +3091,27 @@ export type QueryOperation =
       path: "/api/backoffice/auth/me";
       operationId: "backofficeAuthControllerMe";
       variables: BackofficeAuthControllerMeVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/backoffice/llm-config";
+      operationId: "llmConfigControllerListConfigs";
+      variables: LlmConfigControllerListConfigsVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/backoffice/llm-config/providers";
+      operationId: "llmConfigControllerListProviders";
+      variables:
+        LlmConfigControllerListProvidersVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/backoffice/llm-config/active";
+      operationId: "llmConfigControllerGetActiveConfig";
+      variables:
+        LlmConfigControllerGetActiveConfigVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/backoffice/dashboard/users";
+      operationId: "backofficeControllerGetUsersDashboard";
+      variables:
+        BackofficeControllerGetUsersDashboardVariables | reactQuery.SkipToken;
     };

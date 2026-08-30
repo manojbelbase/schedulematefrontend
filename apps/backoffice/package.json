@@ -13,6 +13,7 @@
   "dependencies": {
     "@repo/services": "workspace:*",
     "@repo/ui": "workspace:*",
+    "recharts": "^2.15.4",
     "rimraf": "^6.1.0"
   },
   "devDependencies": {
