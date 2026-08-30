@@ -1,7 +1,7 @@
 import type { TLinkPath } from "@ui/types/globals";
 
 export const LINKS = {
-  DASHBOARD: "/",
+  DASHBOARD: "/dashboard",
   USERS: "/users",
   LLM_CONFIG: "/llm-config",
   SERVICES: "/services",

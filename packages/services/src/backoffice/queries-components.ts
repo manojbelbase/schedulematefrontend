@@ -2879,6 +2879,21 @@ export const useBackofficeControllerUpdateUserLimit = (
   });
 };
 
+export type BackofficeControllerGetUsersDashboardQueryParams = {
+  /**
+   * Filter aggregates by createdAt >= dateFrom
+   *
+   * @format date-time
+   */
+  dateFrom?: string;
+  /**
+   * Filter aggregates by createdAt <= dateTo
+   *
+   * @format date-time
+   */
+  dateTo?: string;
+};
+
 export type BackofficeControllerGetUsersDashboardError = Fetcher.ErrorWrapper<
   | {
       status: 401;
@@ -2890,8 +2905,9 @@ export type BackofficeControllerGetUsersDashboardError = Fetcher.ErrorWrapper<
     }
 >;
 
-export type BackofficeControllerGetUsersDashboardVariables =
-  QueriesContext["fetcherOptions"];
+export type BackofficeControllerGetUsersDashboardVariables = {
+  queryParams?: BackofficeControllerGetUsersDashboardQueryParams;
+} & QueriesContext["fetcherOptions"];
 
 export const fetchBackofficeControllerGetUsersDashboard = (
   variables: BackofficeControllerGetUsersDashboardVariables,
@@ -2902,7 +2918,7 @@ export const fetchBackofficeControllerGetUsersDashboard = (
     BackofficeControllerGetUsersDashboardError,
     undefined,
     {},
-    {},
+    BackofficeControllerGetUsersDashboardQueryParams,
     {}
   >({
     url: "/api/backoffice/dashboard/users",

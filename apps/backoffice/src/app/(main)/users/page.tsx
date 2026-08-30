@@ -14,7 +14,12 @@ export default async function UsersPage(props: TQueryParams) {
     queryParams: withDefaultPagination(searchParams),
   });
   const dashboardInitialData = await fetchBackofficeControllerGetUsersDashboard(
-    {},
+    {
+      queryParams: {
+        dateFrom: searchParams.dateFrom as string | undefined,
+        dateTo: searchParams.dateTo as string | undefined,
+      },
+    },
   );
 
   return (

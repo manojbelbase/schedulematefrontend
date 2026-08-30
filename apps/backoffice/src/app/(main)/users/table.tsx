@@ -46,7 +46,12 @@ export function UsersTable({
   );
 
   const { data: dashboardData } = useBackofficeControllerGetUsersDashboard(
-    {},
+    {
+      queryParams: {
+        dateFrom: params.dateFrom,
+        dateTo: params.dateTo,
+      },
+    },
     { placeholderData: dashboardInitialData },
   );
 

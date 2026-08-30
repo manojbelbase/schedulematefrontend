@@ -36,7 +36,7 @@ export default function ChatLayout({
 
   const conversationsQuery = useChatControllerListConversations(
     {},
-    { initialData: data },
+    { placeholderData: data },
   );
   const conversations = useMemo(
     () => conversationsQuery.data?.data ?? [],
@@ -50,7 +50,7 @@ export default function ChatLayout({
 
   const { data: conversationData } = useChatControllerGetConversation(
     conversationId ? { pathParams: { id: conversationId } } : skipToken,
-    initialConversation ? { initialData: initialConversation } : undefined,
+    initialConversation ? { placeholderData: initialConversation } : undefined,
   );
 
   const { sendMessage, newChat } = useChatActions({ conversationId });
