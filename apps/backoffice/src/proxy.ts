@@ -11,9 +11,27 @@ const testPathnameRegex = (pages: string[], pathName: string): boolean => {
   return regex.test(pathName);
 };
 
+function isTokenValid(token: string): boolean {
+  try {
+    const parts = token.split(".");
+    if (parts.length !== 3) return false;
+    const payload = parts[1] ?? "";
+    const base64 = payload.replace(/-/g, "+").replace(/_/g, "/");
+    const padded = base64.padEnd(
+      base64.length + ((4 - (base64.length % 4)) % 4),
+      "=",
+    );
+    const data = JSON.parse(atob(padded)) as { exp?: number };
+    if (typeof data.exp !== "number") return false;
+    return Date.now() < data.exp * 1000;
+  } catch {
+    return false;
+  }
+}
+
 export const proxy = (req: NextRequest) => {
   const token = req.cookies.get(COOKIE_KEYS.AUTH_COOKIE_KEY)?.value;
-  const hasToken = !!token;
+  const hasToken = !!token && isTokenValid(token);
 
   const isAuthPage = testPathnameRegex(AUTH_PAGES, req.nextUrl.pathname);
 

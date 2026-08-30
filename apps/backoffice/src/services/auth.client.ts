@@ -7,6 +7,11 @@ export function getAuthToken(): string | null {
   return readCookieValue(COOKIE_KEYS.AUTH_COOKIE_KEY);
 }
 
+export function getRefreshToken(): string | null {
+  if (typeof document === "undefined") return null;
+  return readCookieValue(COOKIE_KEYS.REFRESH_COOKIE_KEY);
+}
+
 export function setAuthCookies(token: string, refreshToken?: string): void {
   setCookie(
     COOKIE_KEYS.AUTH_COOKIE_KEY,
