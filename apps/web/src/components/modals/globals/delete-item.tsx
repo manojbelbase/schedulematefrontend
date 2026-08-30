@@ -1,9 +1,11 @@
 "use client";
 
 import { useQueryClient, type UseMutationOptions } from "@tanstack/react-query";
+import { Trash2, TriangleAlert } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@ui/components/ui/button";
+import { cn } from "@ui/lib/utils";
 import type { _FormModalProps, TDeleteItemModalData } from "@ui/types/extended";
 
 import { useChatControllerDeleteConversation } from "@repo/services/web";
@@ -73,7 +75,21 @@ export default function DeleteItemModal({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center space-y-6 px-4 3xl:space-y-10">
+    <div className="flex w-full flex-col items-center justify-center space-y-6 px-4 3xl:space-y-8">
+      <div
+        className={cn(
+          "flex size-14 items-center justify-center rounded-full",
+          typedData?.id
+            ? "bg-destructive/10 text-destructive"
+            : "bg-amber-500/10 text-amber-500",
+        )}
+      >
+        {typedData?.id ? (
+          <Trash2 className="size-7" strokeWidth={1.75} />
+        ) : (
+          <TriangleAlert className="size-7" strokeWidth={1.75} />
+        )}
+      </div>
       <div className="space-y-4">
         <h3 className="text-center text-xl font-medium 3xl:text-2xl">
           Are you sure?
