@@ -2223,6 +2223,52 @@ export const useBackofficeAuthControllerLogout = (
   });
 };
 
+export type LlmConfigControllerListConfigsQueryParams = {
+  /**
+   * Page number (0-indexed)
+   *
+   * @default 0
+   * @minimum 0
+   */
+  page?: number;
+  /**
+   * Items per page
+   *
+   * @default 10
+   * @minimum 1
+   * @maximum 100
+   */
+  take?: number;
+  /**
+   * Search by config name
+   */
+  query?: string;
+  /**
+   * Filter by createdAt >= dateFrom
+   *
+   * @format date-time
+   */
+  dateFrom?: string;
+  /**
+   * Filter by createdAt <= dateTo
+   *
+   * @format date-time
+   */
+  dateTo?: string;
+  /**
+   * Sort field
+   *
+   * @default createdAt
+   */
+  sortBy?: string;
+  /**
+   * Sort order
+   *
+   * @default DESC
+   */
+  sortOrder?: "ASC" | "DESC";
+};
+
 export type LlmConfigControllerListConfigsError = Fetcher.ErrorWrapper<
   | {
       status: 401;
@@ -2234,8 +2280,9 @@ export type LlmConfigControllerListConfigsError = Fetcher.ErrorWrapper<
     }
 >;
 
-export type LlmConfigControllerListConfigsVariables =
-  QueriesContext["fetcherOptions"];
+export type LlmConfigControllerListConfigsVariables = {
+  queryParams?: LlmConfigControllerListConfigsQueryParams;
+} & QueriesContext["fetcherOptions"];
 
 export const fetchLlmConfigControllerListConfigs = (
   variables: LlmConfigControllerListConfigsVariables,
@@ -2246,7 +2293,7 @@ export const fetchLlmConfigControllerListConfigs = (
     LlmConfigControllerListConfigsError,
     undefined,
     {},
-    {},
+    LlmConfigControllerListConfigsQueryParams,
     {}
   >({ url: "/api/backoffice/llm-config", method: "get", ...variables, signal });
 

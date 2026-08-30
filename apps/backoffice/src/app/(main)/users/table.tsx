@@ -98,6 +98,10 @@ export function UsersTable({
         title: "Users",
       }}
       cards={{ items: cards }}
+      empty={{
+        icon: Users,
+        description: "Get started by adding your first user.",
+      }}
       functions={{
         add: {
           label: "Add User",
