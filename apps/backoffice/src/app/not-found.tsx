@@ -26,7 +26,7 @@ export default function NotFound() {
           <Link href={LINKS.DASHBOARD}>Go to dashboard</Link>
         </Button>
         <Button asChild variant="outline" size="lg">
-          <Link href="/auth/login">Sign in</Link>
+          <Link href="/login">Sign in</Link>
         </Button>
       </div>
     </main>

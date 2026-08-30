@@ -3,8 +3,8 @@ import type { QueriesContext } from "./queries-context";
 const baseUrl = process.env.NEXT_PUBLIC_BACKOFFICE_API_BASE_URL;
 
 let dynamicHeaderProvider:
-  | (() => Record<string, string> | Promise<Record<string, string>>)
-  | null = null;
+  (() => Record<string, string> | Promise<Record<string, string>>) | null =
+  null;
 
 export const setDynamicHeaderProvider = (
   provider: () => Record<string, string> | Promise<Record<string, string>>,
@@ -15,8 +15,7 @@ export const setDynamicHeaderProvider = (
 };
 
 export type ErrorWrapper<TError> =
-  | TError
-  | { status: "unknown"; payload: string };
+  TError | { status: "unknown"; payload: string };
 
 export type QueriesFetcherOptions<TBody, THeaders, TQueryParams, TPathParams> =
   {
@@ -106,9 +105,9 @@ export async function queriesFetch<
     if (response.status === 401) {
       if (isServer) {
         const { redirect } = await import("next/navigation");
-        redirect("/auth/login");
+        redirect("/login");
       } else if (typeof window !== "undefined") {
-        window.location.assign("/auth/login");
+        window.location.assign("/login");
         return new Promise<never>(() => {
           /**
            * keep promise pending until navigation completes
