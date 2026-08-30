@@ -155,16 +155,20 @@ export function UserRowActions({
           </ModalTrigger>
         ) : undefined
       }
-      remove={{
-        modalID: "DELETE_MODAL",
-        type: "MODAL",
-        label: "Delete",
-        data: {
-          id: "user",
-          name: row.name || row.email,
-          initiatorName: row.id,
-        },
-      }}
+      remove={
+        !isAdmin
+          ? {
+              modalID: "DELETE_MODAL",
+              type: "MODAL",
+              label: "Delete",
+              data: {
+                id: "user",
+                name: row.name || row.email,
+                initiatorName: row.id,
+              },
+            }
+          : undefined
+      }
       fromRightClick={fromRightClick}
       name="User"
       itemsPosition="first"

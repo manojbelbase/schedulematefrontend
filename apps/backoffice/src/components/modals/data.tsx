@@ -5,7 +5,6 @@ import EditUserForm from "./form/edit-user-form";
 import SetUserLimitForm from "./form/user-limit-form";
 import ConfirmFormExit from "./globals/confirm-form-exit";
 import DeleteItemModal from "./globals/delete-item";
-import ViewUserModal from "./user/user-view";
 
 export const EXIT_WARNING_MODAL = "CONFIRM_EXIT";
 
@@ -52,13 +51,7 @@ export const MODALS = {
     title: "Edit LLM Configuration",
     description: "",
   },
-  VIEW_USER: {
-    component: ViewUserModal,
-    variant: "default",
-    className: "max-w-md!",
-    title: "User Details",
-    description: "",
-  },
+
   DELETE_MODAL: {
     component: DeleteItemModal,
     variant: "warning",
@@ -68,11 +61,4 @@ export const MODALS = {
   },
 } as const;
 
-export const SHEETS = {
-  USER_PROFILE: {
-    component: ViewUserModal,
-    variant: "default",
-    className: "max-w-md!",
-    side: "right",
-  },
-} as const;
+export const SHEETS = {} as const;
