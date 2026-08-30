@@ -65,16 +65,16 @@ export function UsersTable({
       icon: <Users className="size-5" />,
     },
     {
-      id: "admins",
-      label: "Admins",
-      value: stats?.countByRole.admin ?? 0,
-      icon: <ShieldCheck className="size-5" />,
-    },
-    {
       id: "api-requests-used",
       label: "API Requests Used",
       value: stats?.totalApiRequestsUsed ?? 0,
       icon: <Activity className="size-5" />,
+    },
+    {
+      id: "google-users",
+      label: "Signed in with Google",
+      value: stats?.googleUsers ?? 0,
+      icon: <ShieldCheck className="size-5" />,
     },
     {
       id: "usage-ratio",
@@ -150,6 +150,7 @@ export function UsersTable({
           },
         },
       }}
+
       loading={{
         isLoading,
         Loader: <TableRowsLoading />,

@@ -180,7 +180,7 @@ export default function Functions<TData>({
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <PopoverContent className="w-52 p-1" align="end">
+          <PopoverContent className="w-52 p-1 " align="end">
             <div className="flex flex-col space-y-0.5">
               {exportable && data.length > 0 && (
                 <ExportManager

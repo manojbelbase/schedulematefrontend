@@ -24,7 +24,7 @@ export default function ColumnVisibility<TData>({ table }: TProps<TData>) {
           Columns
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" side="right">
+      <DropdownMenuContent align="center" side="right">
         {table
           .getAllColumns()
           .filter(

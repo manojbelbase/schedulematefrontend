@@ -18,6 +18,7 @@ export default function ConfirmFormExit({ close, data }: _TModalProps<Any>) {
             close();
             cancel?.();
           }}
+          size={"sm"}
         >
           {cancel ? "No" : "Cancel"}
         </Button>
@@ -27,6 +28,7 @@ export default function ConfirmFormExit({ close, data }: _TModalProps<Any>) {
             closeOpener?.();
             ok?.();
           }}
+          size={"sm"}
         >
           {ok ? "Yes" : "Confirm"}
         </Button>

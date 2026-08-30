@@ -2,7 +2,6 @@
 
 import { type ComponentProps } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { Power } from "lucide-react";
 
 import { ContextMenuItem } from "@ui/components/animate-ui/components/radix/context-menu";
 import { DropdownMenuItem } from "@ui/components/animate-ui/components/radix/dropdown-menu";
@@ -72,14 +71,17 @@ export const LLM_CONFIG_COLUMNS: _ColumnDef<LlmConfigData>[] = [
     exportHeader: "API Key",
     header: (props) => <DataTableColumnHeader {...props} title="API Key" />,
     accessorKey: "apiKey",
-    cell: ({ row }) =>
-      row.original.apiKey ? (
-        <span className="font-mono text-sm tracking-widest">
-          {"\u2022".repeat(16)}
-        </span>
-      ) : (
-        <span className="text-muted-foreground">—</span>
-      ),
+    cell: ({ row }) => {
+      const key = row.original.apiKey;
+      if (!key) return <span className="text-muted-foreground">—</span>;
+      const masked =
+        key.length > 4
+          ? `${key.slice(0, 4)}${"\u2022".repeat(key.length - 4)}`
+          : "\u2022".repeat(key.length);
+      return (
+        <span className="font-mono text-sm tracking-widest">{masked}</span>
+      );
+    },
     size: 200,
   },
   {
@@ -159,15 +161,6 @@ export function LlmConfigRowActions({
 }: ComponentProps<typeof ActionButtons> & {
   row: LlmConfigData;
 }) {
-  const queryClient = useQueryClient();
-  const MenuItem = fromRightClick ? ContextMenuItem : DropdownMenuItem;
-
-  const { mutate: setActive, isPending } = useLlmConfigControllerUpdateConfig(
-    options(undefined, async () => {
-      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.llmConfig });
-    }),
-  );
-
   return (
     <ActionButtons
       edit={{
@@ -185,23 +178,7 @@ export function LlmConfigRowActions({
           initiatorName: row.id,
         },
       }}
-      items={
-        !row.isActive ? (
-          <MenuItem
-            className="w-full px-3"
-            disabled={isPending}
-            onSelect={() =>
-              setActive({
-                pathParams: { id: row.id },
-                body: { isActive: true },
-              })
-            }
-          >
-            <Power size={16} className="mr-2.5" />
-            Set Active
-          </MenuItem>
-        ) : undefined
-      }
+
       itemsPosition="last"
       fromRightClick={fromRightClick}
       name="Configuration"
