@@ -3,8 +3,6 @@
 import { type ComponentProps } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { ContextMenuItem } from "@ui/components/animate-ui/components/radix/context-menu";
-import { DropdownMenuItem } from "@ui/components/animate-ui/components/radix/dropdown-menu";
 import ActionButtons from "@ui/components/data-table/action-buttons";
 import { DataTableColumnHeader } from "@ui/components/data-table/header";
 import SNCell from "@ui/components/data-table/sn-cell";
