@@ -56,6 +56,7 @@ import { TablePermissionProvider } from "../../hooks/table-permission";
 import type { TPageHeaderProps } from "../layout/page-header";
 import { type TTabLinksProps } from "../layout/tab-links";
 import { DefaultPagination } from "./default-pagination";
+import EmptyState, { type TEmptyStateProps } from "./empty-state";
 import type { TFiltersProps } from "./filters";
 import type { TFunctionsProps } from "./functions";
 import { DataTablePagination } from "./pagination";
@@ -74,6 +75,7 @@ export type TDataTableProps<TData, TValue, TStatistics> = {
   onlyLocalState?: boolean;
   hide?: ("HEADER" | "TABS" | "FUNCTIONS" | "FILTERS" | "CARDS")[];
   cards?: TCardsSectionProps<TStatistics>;
+  empty?: TEmptyStateProps;
   className?: string;
   pageSize?: number;
   pagination?: PaginationDTO;
@@ -95,6 +97,7 @@ function ReactTable<TData, TValue, TStatistics>({
   autoHeaderRowSpan,
   hide,
   cards,
+  empty,
   className,
   pageSize,
   pagination,
@@ -396,9 +399,17 @@ function ReactTable<TData, TValue, TStatistics>({
                     <TableRow>
                       <TableCell
                         colSpan={Number.MAX_SAFE_INTEGER}
-                        className="h-24 text-center"
+                        className="h-full p-0"
                       >
-                        No results.
+                        <EmptyState
+                          name={empty?.name ?? header?.title}
+                          title={empty?.title}
+                          description={empty?.description}
+                          icon={empty?.icon}
+                          add={functions?.add}
+                          hasEditPermission={hasEditPermission}
+                          className={empty?.className}
+                        />
                       </TableCell>
                     </TableRow>
                   </TableBody>

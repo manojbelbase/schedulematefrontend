@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, type ComponentProps, type ReactNode } from "react";
-import { Plus } from "lucide-react";
+import { Plus, type LucideIcon } from "lucide-react";
 
 import { type TOpenParams } from "@ui/context/modal-context";
 import { type Any } from "@ui/types/globals";
@@ -12,6 +12,7 @@ import { Button } from "../ui/button";
 export type TAddButtonProps = Partial<ComponentProps<typeof Button>> & {
   label: ReactNode;
   withoutShortcut?: boolean;
+  icon?: LucideIcon;
 } & (
     | {
         onClick: () => void;
@@ -25,10 +26,13 @@ export default function AddButton({
   label,
   children,
   withoutShortcut,
+  icon,
   ...rest
 }: TAddButtonProps) {
   const onClick = "onClick" in rest ? rest.onClick : () => {};
   const modal = "modal" in rest ? rest.modal : undefined;
+
+  const Icon = icon || Plus;
 
   const Component = (
     <Button
@@ -48,7 +52,7 @@ export default function AddButton({
         children
       ) : (
         <Fragment>
-          <Plus className="size-3 scale-165 mr-0.5" />
+          <Icon className="size-3 scale-165 mr-0.5" />
           {label}
         </Fragment>
       )}

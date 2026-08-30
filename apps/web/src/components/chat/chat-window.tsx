@@ -72,7 +72,7 @@ export default function ChatWindow({
 
       <div className="flex justify-center px-4 pb-4 pt-2 sm:px-6">
         <div className="w-full max-w-3xl">
-          <div className="flex items-end gap-1.5 rounded-full border  p-1">
+          <div className="flex items-end gap-1.5 rounded-full border p-1 ">
             <Textarea
               ref={textareaRef}
               value={value}
@@ -81,7 +81,7 @@ export default function ChatWindow({
               placeholder="Ask anything"
               rows={1}
               autoFocus
-              className="field-sizing-content  min-h-10 max-h-[160px] resize-none border-0  px-2.5 py-2 text-sm leading-relaxed shadow-none rounded-full focus-visible:ring-0  placeholder:text-muted-foreground/70"
+              className="field-sizing-content  min-h-10 max-h-[160px] resize-none border-0  px-2.5 py-2 text-sm leading-relaxed shadow-none rounded-full focus-visible:ring-0 bg-transparent placeholder:text-muted-foreground/70"
             />
             <Button
               size="icon"
@@ -89,7 +89,7 @@ export default function ChatWindow({
               disabled={!value.trim() || isSending}
               aria-label="Send message"
               className={cn(
-                "size-8 shrink-0 rounded-full transition-colors",
+                "size-8 shrink-0 mb-1 mr-1 rounded-full transition-colors",
                 value.trim() && !isSending
                   ? "bg-primary text-primary-foreground"
                   : "bg-foreground/5 text-foreground/40",

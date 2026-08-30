@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 
 import { Button } from "@ui/components/ui/button";
-import { Separator } from "@ui/components/ui/separator";
 import ModalTrigger from "@ui/components/ui/trigger";
 import { cn } from "@ui/lib/utils";
 import type { TDeleteItemModalData } from "@ui/types/extended";

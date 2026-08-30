@@ -406,6 +406,12 @@ export type LlmConfigListResponse = {
   success: boolean;
   message: string;
   data: LlmConfigData[];
+  pagination: {
+    previousPage: number | null;
+    nextPage: number | null;
+    total: number;
+    count: number;
+  };
 };
 
 export type LlmProvider = {
