@@ -12,7 +12,7 @@ type AuthState = {
   isAuthenticated: boolean;
   isLoading: boolean;
   setUser: (user: PublicUser | null) => void;
-  setToken: (token: string | null) => void;
+  setToken: (token: string | null, refreshToken?: string) => void;
   logout: () => Promise<void>;
 };
 
@@ -23,9 +23,9 @@ export const useAuthStore = create<AuthState>((set) => ({
   isLoading: false,
 
   setUser: (user) => set({ user, isAuthenticated: !!user }),
-  setToken: (token) => {
+  setToken: (token, refreshToken) => {
     if (token) {
-      setAuthCookies(token);
+      setAuthCookies(token, refreshToken);
     }
     set({ token });
   },

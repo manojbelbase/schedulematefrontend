@@ -7,7 +7,11 @@ import {
   useBackofficeAuthControllerMe,
 } from "@repo/services/backoffice";
 
-import { getAuthToken, getRefreshToken } from "@/services/auth.client";
+import {
+  getAuthToken,
+  getRefreshToken,
+  setAuthCookies,
+} from "@/services/auth.client";
 import { useAuthStore } from "@/zustand/auth";
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
@@ -31,15 +35,19 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
     let cancelled = false;
     fetchAuthControllerRefresh({})
-      .then(() => {
+      .then((data) => {
         if (cancelled) return;
-        const restoredToken = getAuthToken();
-        if (restoredToken) {
+        const refreshed = data?.data?.accessToken;
+        if (refreshed) {
+          setAuthCookies(refreshed, data.data.refreshToken);
           useAuthStore.setState({
-            token: restoredToken,
+            token: refreshed,
             isAuthenticated: true,
             isLoading: false,
           });
+          if (window.location.pathname === "/login") {
+            window.location.assign("/");
+          }
         } else {
           useAuthStore.setState({ isLoading: false });
         }
