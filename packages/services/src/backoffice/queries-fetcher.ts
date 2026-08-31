@@ -1,6 +1,7 @@
 import type { QueriesContext } from "./queries-context";
 
 const baseUrl = process.env.NEXT_PUBLIC_BACKOFFICE_API_BASE_URL;
+const AUTH_COOKIE_KEY = "scheduledmate_backoffice_token";
 
 let dynamicHeaderProvider:
   (() => Record<string, string> | Promise<Record<string, string>>) | null =
@@ -57,7 +58,12 @@ export async function queriesFetch<
   try {
     if (isServer) {
       const { cookies: getter } = await import("next/headers");
-      cookies = (await getter()).toString();
+      const allCookies = await getter();
+      cookies = allCookies.toString();
+      const authToken = allCookies.get(AUTH_COOKIE_KEY)?.value;
+      if (authToken) {
+        dynamicHeaders = { Authorization: `Bearer ${authToken}` };
+      }
     } else {
       if (dynamicHeaderProvider) {
         dynamicHeaders = await dynamicHeaderProvider();
