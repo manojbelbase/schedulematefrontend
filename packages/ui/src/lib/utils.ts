@@ -74,9 +74,13 @@ export const getBackendErrorMessage = (error: unknown): string => {
     const { message, contact } = e.payload.upgradeInfo;
     const parts = [message];
     if (contact) {
-      if (contact.email) parts.push(`📧 Email: ${contact.email}`);
+      if (contact.email)
+        parts.push(`📧 Email: [${contact.email}](mailto:${contact.email})`);
       if (contact.phone) parts.push(`📱 Phone: ${contact.phone}`);
-      if (contact.portfolio) parts.push(`🌐 Portfolio: ${contact.portfolio}`);
+      if (contact.portfolio)
+        parts.push(
+          `🌐 Portfolio: [${contact.portfolio}](${contact.portfolio})`,
+        );
     }
     return parts.join("\n\n");
   }
@@ -218,9 +222,9 @@ export const objectToQueryString = (
           return value;
         }
         if (Array.isArray(value)) {
-          return value.map((v) => `${key}=${encodeURIComponent(v)}`).join("&");
+          return value.map((v) => `${key}=${encodeURIComponent(v)} `).join("&");
         } else {
-          return `${key}=${encodeURIComponent(value)}`;
+          return `${key}=${encodeURIComponent(value)} `;
         }
       })
       .join("&")
