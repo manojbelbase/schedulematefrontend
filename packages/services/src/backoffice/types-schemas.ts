@@ -328,6 +328,18 @@ export type BackofficeAuthResponse = {
   };
 };
 
+export type RefreshResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: {
+    accessToken: string;
+    refreshToken?: string;
+  };
+};
+
 export type BackofficeUserResponse = {
   /**
    * @example true

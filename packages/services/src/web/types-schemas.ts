@@ -136,6 +136,18 @@ export type AuthResponse = {
   };
 };
 
+export type RefreshResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: {
+    accessToken: string;
+    refreshToken?: string;
+  };
+};
+
 export type CalendarConnectionStatusData = {
   /**
    * @example true

@@ -540,7 +540,7 @@ export const fetchAuthControllerRefresh = (
   signal?: AbortSignal,
 ) =>
   queriesFetch<
-    Schemas.MessageResponse,
+    Schemas.RefreshResponse,
     AuthControllerRefreshError,
     undefined,
     {},
@@ -551,7 +551,7 @@ export const fetchAuthControllerRefresh = (
 export const useAuthControllerRefresh = (
   options?: Omit<
     reactQuery.UseMutationOptions<
-      Schemas.MessageResponse,
+      Schemas.RefreshResponse,
       AuthControllerRefreshError,
       AuthControllerRefreshVariables
     >,
@@ -560,7 +560,7 @@ export const useAuthControllerRefresh = (
 ) => {
   const { fetcherOptions } = useQueriesContext();
   return reactQuery.useMutation<
-    Schemas.MessageResponse,
+    Schemas.RefreshResponse,
     AuthControllerRefreshError,
     AuthControllerRefreshVariables
   >({

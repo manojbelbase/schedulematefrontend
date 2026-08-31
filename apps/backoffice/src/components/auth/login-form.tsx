@@ -49,7 +49,7 @@ const LoginForm = () => {
     options(form.setError, async (data) => {
       const res = data as BackofficeAuthResponse;
       setUser(res.data.user);
-      setToken(res.data.accessToken);
+      setToken(res.data.accessToken, res.data.refreshToken);
       router.push(redirect);
     }),
   );

@@ -8,7 +8,11 @@ import {
 } from "@repo/services/web";
 
 import { registerApiAuth } from "@/services/api-auth";
-import { getAuthToken, getRefreshToken } from "@/services/auth-utils";
+import {
+  getAuthToken,
+  getRefreshToken,
+  setAuthCookies,
+} from "@/services/auth-utils";
 import { useAuthStore } from "@/zustand/auth";
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
@@ -38,12 +42,13 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
     let cancelled = false;
     fetchAuthControllerRefresh({})
-      .then(() => {
+      .then((data) => {
         if (cancelled) return;
-        const restoredToken = getAuthToken();
-        if (restoredToken) {
+        const refreshed = data?.data?.accessToken;
+        if (refreshed) {
+          setAuthCookies(refreshed, data.data.refreshToken);
           useAuthStore.setState({
-            token: restoredToken,
+            token: refreshed,
             isAuthenticated: true,
             isLoading: false,
           });
