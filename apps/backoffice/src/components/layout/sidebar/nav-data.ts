@@ -1,4 +1,10 @@
-import { Bot, LayoutDashboard, Users, type LucideIcon } from "lucide-react";
+import {
+  Bot,
+  LayoutDashboard,
+  ShieldCheck,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
 
 import { LINKS } from "@/config/links";
 
@@ -18,6 +24,11 @@ export const SIDEBAR_NAV: SidebarNavSection[] = [
     items: [
       { href: LINKS.DASHBOARD, label: "Dashboard", icon: LayoutDashboard },
       { href: LINKS.USERS, label: "Users", icon: Users },
+      {
+        href: LINKS.ACCESS_REQUESTS,
+        label: "Access Requests",
+        icon: ShieldCheck,
+      },
       { href: LINKS.LLM_CONFIG, label: "LLM Config", icon: Bot },
     ],
   },

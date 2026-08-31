@@ -156,6 +156,73 @@ export type CalendarConnectionStatusResponse = {
   data: CalendarConnectionStatusData;
 };
 
+export type RequestAccessDto = {
+  /**
+   * @maxLength 1000
+   * @example Please add me as a tester
+   */
+  message?: string;
+};
+
+export type AccessRequestStatusEnum = "pending" | "approved" | "rejected";
+
+export type AccessRequestData = {
+  /**
+   * @format uuid
+   */
+  id: string;
+  /**
+   * @format email
+   */
+  requesterEmail: string;
+  requesterName?: string | null;
+  message?: string | null;
+  status: AccessRequestStatusEnum;
+  /**
+   * @format date-time
+   */
+  createdAt: string;
+  user?: {
+    /**
+     * @format uuid
+     */
+    id?: string;
+    /**
+     * @format email
+     */
+    email?: string;
+    name?: string | null;
+  } | null;
+};
+
+export type AccessRequestResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: AccessRequestData;
+};
+
+export type AccessRequestListResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: AccessRequestData[];
+  pagination: {
+    previousPage: number | null;
+    nextPage: number | null;
+    total: number;
+    count: number;
+  };
+};
+
+export type UpdateAccessRequestStatusDto = {
+  status: AccessRequestStatusEnum;
+};
+
 export type CreateConversationDto = {
   /**
    * @maxLength 255

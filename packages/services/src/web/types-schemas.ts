@@ -136,18 +136,6 @@ export type AuthResponse = {
   };
 };
 
-export type RefreshResponse = {
-  /**
-   * @example true
-   */
-  success: boolean;
-  message: string;
-  data: {
-    accessToken: string;
-    refreshToken?: string;
-  };
-};
-
 export type CalendarConnectionStatusData = {
   /**
    * @example true
@@ -166,6 +154,95 @@ export type CalendarConnectionStatusResponse = {
   success: boolean;
   message: string;
   data: CalendarConnectionStatusData;
+};
+
+export type RequestAccessDto = {
+  /**
+   * @maxLength 1000
+   * @example Please add me as a tester
+   */
+  message?: string;
+};
+
+export type AccessRequestStatusEnum = "pending" | "approved" | "rejected";
+
+export type AccessRequestData = {
+  /**
+   * @format uuid
+   */
+  id: string;
+  /**
+   * @format email
+   */
+  requesterEmail: string;
+  requesterName?: string | null;
+  message?: string | null;
+  status: AccessRequestStatusEnum;
+  /**
+   * @format date-time
+   */
+  createdAt: string;
+  user?: {
+    /**
+     * @format uuid
+     */
+    id?: string;
+    /**
+     * @format email
+     */
+    email?: string;
+    name?: string | null;
+  } | null;
+};
+
+export type AccessRequestResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: AccessRequestData;
+};
+
+export type AccessRequestListResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: AccessRequestData[];
+  pagination: {
+    previousPage: number | null;
+    nextPage: number | null;
+    total: number;
+    count: number;
+  };
+};
+
+export type UpdateAccessRequestStatusDto = {
+  status: AccessRequestStatusEnum;
+};
+
+export type MyAccessRequestData = {
+  /**
+   * @format uuid
+   */
+  id: string;
+  status: AccessRequestStatusEnum;
+  message?: string | null;
+  /**
+   * @format date-time
+   */
+  createdAt: string;
+};
+
+export type MyAccessRequestResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: MyAccessRequestData | null;
 };
 
 export type CreateConversationDto = {
@@ -340,6 +417,18 @@ export type BackofficeAuthResponse = {
   };
 };
 
+export type RefreshResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: {
+    accessToken: string;
+    refreshToken?: string;
+  };
+};
+
 export type BackofficeUserResponse = {
   /**
    * @example true
@@ -440,12 +529,12 @@ export type LlmProvider = {
    */
   baseUrl: string;
   /**
-   * @example deepseek-chat
+   * @example deepseek-v4-flash
    */
   defaultModel: string;
   /**
-   * @example deepseek-chat
-   * @example deepseek-reasoner
+   * @example deepseek-v4-flash
+   * @example deepseek-v4-pro
    */
   models: string[];
   /**
@@ -600,27 +689,14 @@ export type UsersDashboardData = {
   chatMessagesByRole: {
     [key: string]: number;
   };
-  byPeriod: PeriodBucket[];
-};
-
-export type PeriodBucket = {
-  /**
-   * @format date-time
-   * @example 2026-08-30T00:00:00.000Z
-   */
-  period: string;
   /**
    * @example 12
    */
-  signups: number;
+  googleCalendarConnected: number;
   /**
-   * @example 9
+   * @example 108
    */
-  conversations: number;
-  /**
-   * @example 74
-   */
-  chatMessages: number;
+  googleCalendarNotConnected: number;
 };
 
 export type UsersDashboardResponse = {

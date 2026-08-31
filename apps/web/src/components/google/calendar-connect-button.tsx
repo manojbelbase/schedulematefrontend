@@ -14,17 +14,22 @@ import { Button } from "@ui/components/ui/button";
 import { cn, options } from "@ui/lib/utils";
 
 import {
+  accessRequestControllerGetMyAccessRequestQuery,
   calendarConnectionControllerGetConnectionStatusQuery,
+  useAccessRequestControllerGetMyAccessRequest,
   useCalendarConnectionControllerDisconnect,
   useCalendarConnectionControllerGetConnectionStatus,
 } from "@repo/services/web";
 
 import { calendarConnectUrl } from "@/config/api";
 
+import { RequestAccessForm } from "./request-access-form";
+
 export function CalendarConnectButton({ expanded }: { expanded: boolean }) {
   const queryClient = useQueryClient();
   const { data, isPending } =
     useCalendarConnectionControllerGetConnectionStatus({});
+  const accessQuery = useAccessRequestControllerGetMyAccessRequest({});
   const disconnect = useCalendarConnectionControllerDisconnect(
     options(
       undefined,
@@ -39,6 +44,13 @@ export function CalendarConnectButton({ expanded }: { expanded: boolean }) {
   );
 
   const connected = data?.data.connected ?? false;
+  const accessStatus = accessQuery.data?.data?.status ?? null;
+
+  async function handleRequested() {
+    await queryClient.invalidateQueries({
+      queryKey: accessRequestControllerGetMyAccessRequestQuery({}).queryKey,
+    });
+  }
 
   if (expanded) {
     if (isPending) {
@@ -82,7 +94,7 @@ export function CalendarConnectButton({ expanded }: { expanded: boolean }) {
           />
         </Button>
       </div>
-    ) : (
+    ) : accessStatus === "approved" ? (
       <Button
         asChild
         variant="outline"
@@ -94,7 +106,13 @@ export function CalendarConnectButton({ expanded }: { expanded: boolean }) {
           <span className="truncate">Connect Google Calendar</span>
         </Link>
       </Button>
+    ) : (
+      <RequestAccessForm status={accessStatus} onRequested={handleRequested} />
     );
+  }
+
+  if (!connected && accessStatus !== "approved") {
+    return null;
   }
 
   return (

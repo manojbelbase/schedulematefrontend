@@ -12,12 +12,16 @@ import { Skeleton } from "@ui/components/ui/skeleton";
 import { options } from "@ui/lib/utils";
 
 import {
+  accessRequestControllerGetMyAccessRequestQuery,
+  useAccessRequestControllerGetMyAccessRequest,
   useCalendarConnectionControllerDisconnect,
   useCalendarConnectionControllerGetConnectionStatus,
 } from "@repo/services/web";
 
 import { calendarConnectUrl } from "@/config/api";
 import { QUERY_KEYS } from "@/config/query-keys";
+
+import { RequestAccessForm } from "./request-access-form";
 
 export function GoogleCalendarConnect() {
   const searchParams = useSearchParams();
@@ -26,20 +30,24 @@ export function GoogleCalendarConnect() {
 
   const { data, isPending } =
     useCalendarConnectionControllerGetConnectionStatus({});
+  const accessQuery = useAccessRequestControllerGetMyAccessRequest({});
 
   const disconnect = useCalendarConnectionControllerDisconnect(
-    options(
-      undefined,
-      async () => {
-        await queryClient.invalidateQueries({
-          queryKey: QUERY_KEYS.calendar,
-        });
-      },
-      { successMessage: "Google Calendar disconnected." },
-    ),
+    options(undefined, async () => {
+      await queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.calendar,
+      });
+    }),
   );
 
   const connected = data?.data.connected ?? false;
+  const accessStatus = accessQuery.data?.data?.status ?? null;
+
+  async function handleRequested() {
+    await queryClient.invalidateQueries({
+      queryKey: accessRequestControllerGetMyAccessRequestQuery({}).queryKey,
+    });
+  }
 
   useEffect(() => {
     if (notifiedRef.current) return;
@@ -96,10 +104,15 @@ export function GoogleCalendarConnect() {
           )}
           Disconnect Google Calendar
         </Button>
-      ) : (
+      ) : accessStatus === "approved" ? (
         <Button asChild variant="outline" className="w-full gap-2">
           <Link href={calendarConnectUrl("/")}>Connect Google Calendar</Link>
         </Button>
+      ) : (
+        <RequestAccessForm
+          status={accessStatus}
+          onRequested={handleRequested}
+        />
       )}
     </div>
   );

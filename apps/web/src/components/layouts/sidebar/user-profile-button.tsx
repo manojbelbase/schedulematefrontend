@@ -65,7 +65,7 @@ export default function UserProfileButton({ expanded }: { expanded: boolean }) {
         align="start"
         side="right"
         sideOffset={12}
-        className="w-72 overflow-hidden p-0 mb-4 ml-2"
+        className="w-80 overflow-hidden p-0 mb-4 "
       >
         <div className="flex items-center gap-3 px-4 py-3.5">
           <Avatar className="size-10 shrink-0 bg-primary/10 rounded-sm">
@@ -84,15 +84,6 @@ export default function UserProfileButton({ expanded }: { expanded: boolean }) {
         </div>
         <Separator />
         <div className="p-1.5">
-          <button
-            type="button"
-            onClick={() => setOpen(false)}
-            className="flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-sm text-foreground transition-colors hover:bg-accent"
-          >
-            <Settings className="size-4 text-muted-foreground" />
-            Settings
-          </button>
-          <Separator className="my-1" />
           <ThemeToggle />
           <Link
             href="/auth/logout"

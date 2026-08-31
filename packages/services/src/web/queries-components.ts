@@ -1166,6 +1166,428 @@ export const useCalendarConnectionControllerDisconnect = (
   });
 };
 
+export type BackofficeAccessRequestControllerListQueryParams = {
+  /**
+   * Page number (0-indexed)
+   *
+   * @default 0
+   * @minimum 0
+   */
+  page?: number;
+  /**
+   * Items per page
+   *
+   * @default 10
+   * @minimum 1
+   * @maximum 100
+   */
+  take?: number;
+  /**
+   * Search by requester email or name
+   */
+  query?: string;
+  /**
+   * Filter by createdAt >= dateFrom
+   *
+   * @format date-time
+   */
+  dateFrom?: string;
+  /**
+   * Filter by createdAt <= dateTo
+   *
+   * @format date-time
+   */
+  dateTo?: string;
+  /**
+   * Sort field
+   *
+   * @default createdAt
+   */
+  sortBy?: string;
+  /**
+   * Sort order
+   *
+   * @default DESC
+   */
+  sortOrder?: "ASC" | "DESC";
+};
+
+export type BackofficeAccessRequestControllerListError = Fetcher.ErrorWrapper<
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 403;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type BackofficeAccessRequestControllerListVariables = {
+  queryParams?: BackofficeAccessRequestControllerListQueryParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchBackofficeAccessRequestControllerList = (
+  variables: BackofficeAccessRequestControllerListVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.AccessRequestListResponse,
+    BackofficeAccessRequestControllerListError,
+    undefined,
+    {},
+    BackofficeAccessRequestControllerListQueryParams,
+    {}
+  >({
+    url: "/api/backoffice/access-requests",
+    method: "get",
+    ...variables,
+    signal,
+  });
+
+export function backofficeAccessRequestControllerListQuery(
+  variables: BackofficeAccessRequestControllerListVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (
+    options: QueryFnOptions,
+  ) => Promise<Schemas.AccessRequestListResponse>;
+};
+
+export function backofficeAccessRequestControllerListQuery(
+  variables:
+    BackofficeAccessRequestControllerListVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((options: QueryFnOptions) => Promise<Schemas.AccessRequestListResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function backofficeAccessRequestControllerListQuery(
+  variables:
+    BackofficeAccessRequestControllerListVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/backoffice/access-requests",
+      operationId: "backofficeAccessRequestControllerList",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchBackofficeAccessRequestControllerList(variables, signal),
+  };
+}
+
+export const useSuspenseBackofficeAccessRequestControllerList = <
+  TData = Schemas.AccessRequestListResponse,
+>(
+  variables: BackofficeAccessRequestControllerListVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.AccessRequestListResponse,
+      BackofficeAccessRequestControllerListError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    Schemas.AccessRequestListResponse,
+    BackofficeAccessRequestControllerListError,
+    TData
+  >({
+    ...backofficeAccessRequestControllerListQuery(
+      deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useBackofficeAccessRequestControllerList = <
+  TData = Schemas.AccessRequestListResponse,
+>(
+  variables:
+    BackofficeAccessRequestControllerListVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.AccessRequestListResponse,
+      BackofficeAccessRequestControllerListError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    Schemas.AccessRequestListResponse,
+    BackofficeAccessRequestControllerListError,
+    TData
+  >({
+    ...backofficeAccessRequestControllerListQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type BackofficeAccessRequestControllerUpdateStatusPathParams = {
+  /**
+   * @format uuid
+   */
+  id: string;
+};
+
+export type BackofficeAccessRequestControllerUpdateStatusError =
+  Fetcher.ErrorWrapper<
+    | {
+        status: 400;
+        payload: Schemas.ErrorResponse;
+      }
+    | {
+        status: 401;
+        payload: Schemas.ErrorResponse;
+      }
+    | {
+        status: 403;
+        payload: Schemas.ErrorResponse;
+      }
+    | {
+        status: 404;
+        payload: Schemas.ErrorResponse;
+      }
+  >;
+
+export type BackofficeAccessRequestControllerUpdateStatusVariables = {
+  body: Schemas.UpdateAccessRequestStatusDto;
+  pathParams: BackofficeAccessRequestControllerUpdateStatusPathParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchBackofficeAccessRequestControllerUpdateStatus = (
+  variables: BackofficeAccessRequestControllerUpdateStatusVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.AccessRequestResponse,
+    BackofficeAccessRequestControllerUpdateStatusError,
+    Schemas.UpdateAccessRequestStatusDto,
+    {},
+    {},
+    BackofficeAccessRequestControllerUpdateStatusPathParams
+  >({
+    url: "/api/backoffice/access-requests/{id}/status",
+    method: "patch",
+    ...variables,
+    signal,
+  });
+
+export const useBackofficeAccessRequestControllerUpdateStatus = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.AccessRequestResponse,
+      BackofficeAccessRequestControllerUpdateStatusError,
+      BackofficeAccessRequestControllerUpdateStatusVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.AccessRequestResponse,
+    BackofficeAccessRequestControllerUpdateStatusError,
+    BackofficeAccessRequestControllerUpdateStatusVariables
+  >({
+    mutationFn: (
+      variables: BackofficeAccessRequestControllerUpdateStatusVariables,
+    ) =>
+      fetchBackofficeAccessRequestControllerUpdateStatus(
+        deepMerge(fetcherOptions, variables),
+      ),
+    ...options,
+  });
+};
+
+export type AccessRequestControllerRequestAccessError = Fetcher.ErrorWrapper<
+  | {
+      status: 400;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type AccessRequestControllerRequestAccessVariables = {
+  body?: Schemas.RequestAccessDto;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchAccessRequestControllerRequestAccess = (
+  variables: AccessRequestControllerRequestAccessVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.MessageResponse,
+    AccessRequestControllerRequestAccessError,
+    Schemas.RequestAccessDto,
+    {},
+    {},
+    {}
+  >({
+    url: "/api/access-request/request-access",
+    method: "post",
+    ...variables,
+    signal,
+  });
+
+export const useAccessRequestControllerRequestAccess = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.MessageResponse,
+      AccessRequestControllerRequestAccessError,
+      AccessRequestControllerRequestAccessVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.MessageResponse,
+    AccessRequestControllerRequestAccessError,
+    AccessRequestControllerRequestAccessVariables
+  >({
+    mutationFn: (variables: AccessRequestControllerRequestAccessVariables) =>
+      fetchAccessRequestControllerRequestAccess(
+        deepMerge(fetcherOptions, variables),
+      ),
+    ...options,
+  });
+};
+
+export type AccessRequestControllerGetMyAccessRequestError =
+  Fetcher.ErrorWrapper<{
+    status: 401;
+    payload: Schemas.ErrorResponse;
+  }>;
+
+export type AccessRequestControllerGetMyAccessRequestVariables =
+  QueriesContext["fetcherOptions"];
+
+export const fetchAccessRequestControllerGetMyAccessRequest = (
+  variables: AccessRequestControllerGetMyAccessRequestVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.MyAccessRequestResponse,
+    AccessRequestControllerGetMyAccessRequestError,
+    undefined,
+    {},
+    {},
+    {}
+  >({ url: "/api/access-request/me", method: "get", ...variables, signal });
+
+export function accessRequestControllerGetMyAccessRequestQuery(
+  variables: AccessRequestControllerGetMyAccessRequestVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (
+    options: QueryFnOptions,
+  ) => Promise<Schemas.MyAccessRequestResponse>;
+};
+
+export function accessRequestControllerGetMyAccessRequestQuery(
+  variables:
+    AccessRequestControllerGetMyAccessRequestVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((options: QueryFnOptions) => Promise<Schemas.MyAccessRequestResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function accessRequestControllerGetMyAccessRequestQuery(
+  variables:
+    AccessRequestControllerGetMyAccessRequestVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/access-request/me",
+      operationId: "accessRequestControllerGetMyAccessRequest",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchAccessRequestControllerGetMyAccessRequest(variables, signal),
+  };
+}
+
+export const useSuspenseAccessRequestControllerGetMyAccessRequest = <
+  TData = Schemas.MyAccessRequestResponse,
+>(
+  variables: AccessRequestControllerGetMyAccessRequestVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.MyAccessRequestResponse,
+      AccessRequestControllerGetMyAccessRequestError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    Schemas.MyAccessRequestResponse,
+    AccessRequestControllerGetMyAccessRequestError,
+    TData
+  >({
+    ...accessRequestControllerGetMyAccessRequestQuery(
+      deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useAccessRequestControllerGetMyAccessRequest = <
+  TData = Schemas.MyAccessRequestResponse,
+>(
+  variables:
+    AccessRequestControllerGetMyAccessRequestVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.MyAccessRequestResponse,
+      AccessRequestControllerGetMyAccessRequestError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    Schemas.MyAccessRequestResponse,
+    AccessRequestControllerGetMyAccessRequestError,
+    TData
+  >({
+    ...accessRequestControllerGetMyAccessRequestQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
 export type ChatControllerListConversationsError = Fetcher.ErrorWrapper<{
   status: 401;
   payload: Schemas.ErrorResponse;
@@ -2892,12 +3314,6 @@ export type BackofficeControllerGetUsersDashboardQueryParams = {
    * @format date-time
    */
   dateTo?: string;
-  /**
-   * Time bucket for the byPeriod trend series
-   *
-   * @default day
-   */
-  interval?: "hour" | "day" | "week" | "month";
 };
 
 export type BackofficeControllerGetUsersDashboardError = Fetcher.ErrorWrapper<
@@ -3064,6 +3480,19 @@ export type QueryOperation =
       operationId: "calendarConnectionControllerConnectCallback";
       variables:
         | CalendarConnectionControllerConnectCallbackVariables
+        | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/backoffice/access-requests";
+      operationId: "backofficeAccessRequestControllerList";
+      variables:
+        BackofficeAccessRequestControllerListVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/access-request/me";
+      operationId: "accessRequestControllerGetMyAccessRequest";
+      variables:
+        | AccessRequestControllerGetMyAccessRequestVariables
         | reactQuery.SkipToken;
     }
   | {
