@@ -89,10 +89,10 @@ export default function ChatWindow({
               disabled={!value.trim() || isSending}
               aria-label="Send message"
               className={cn(
-                "size-8 shrink-0 mb-1 mr-1 rounded-full transition-colors",
+                "size-8 shrink-0 mb-1 mr-1 rounded-full transition-colors border border-border",
                 value.trim() && !isSending
                   ? "bg-primary text-primary-foreground"
-                  : "bg-foreground/5 text-foreground/40",
+                  : "bg-foreground/20 text-foreground/40",
               )}
             >
               <SendHorizonal className="size-4" />
