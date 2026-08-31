@@ -58,8 +58,29 @@ export const getBackendErrorMessage = (error: unknown): string => {
     payload?: {
       statusCode?: number;
       message?: unknown;
+      code?: string;
+      upgradeInfo?: {
+        message?: string;
+        contact?: {
+          email?: string;
+          phone?: string;
+          portfolio?: string;
+        };
+      };
     };
   };
+
+  if (e?.payload?.code === "USER_QUOTA_EXCEEDED" && e?.payload?.upgradeInfo) {
+    const { message, contact } = e.payload.upgradeInfo;
+    const parts = [message];
+    if (contact) {
+      if (contact.email) parts.push(`📧 Email: ${contact.email}`);
+      if (contact.phone) parts.push(`📱 Phone: ${contact.phone}`);
+      if (contact.portfolio) parts.push(`🌐 Portfolio: ${contact.portfolio}`);
+    }
+    return parts.join("\n\n");
+  }
+
   const raw = e?.payload?.message ?? e?.message;
   return typeof raw === "string" && raw ? raw : "Something went wrong.";
 };
