@@ -138,7 +138,7 @@ function OtpInput({
           onKeyDown={(e) => handleKeyDown(e, index)}
           onPaste={(e) => handlePaste(e, index)}
           className={cn(
-            "border-input focus-visible:border-ring focus-visible:ring-ring/50 h-14 w-11 rounded-lg border bg-transparent text-center text-xl font-semibold tabular-nums shadow-xs outline-none focus-visible:ring-[3px]",
+            "border-input focus-visible:border-ring focus-visible:ring-ring/50 h-14 w-11 rounded-lg border bg-transparent text-center text-xl font-semibold tabular-nums outline-none focus-visible:ring-[3px]",
             "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
             classNamePerBox,
           )}

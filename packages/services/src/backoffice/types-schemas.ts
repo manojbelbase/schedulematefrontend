@@ -223,6 +223,28 @@ export type UpdateAccessRequestStatusDto = {
   status: AccessRequestStatusEnum;
 };
 
+export type MyAccessRequestData = {
+  /**
+   * @format uuid
+   */
+  id: string;
+  status: AccessRequestStatusEnum;
+  message?: string | null;
+  /**
+   * @format date-time
+   */
+  createdAt: string;
+};
+
+export type MyAccessRequestResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: MyAccessRequestData | null;
+};
+
 export type CreateConversationDto = {
   /**
    * @maxLength 255
@@ -554,6 +576,156 @@ export type CreateLlmConfigDto = {
 };
 
 export type UpdateLlmConfigDto = {
+  /**
+   * @minLength 1
+   * @maxLength 100
+   */
+  name?: string;
+  isActive?: boolean;
+  /**
+   * @minLength 1
+   * @maxLength 100
+   */
+  activeProvider?: string;
+  /**
+   * @maxLength 500
+   */
+  apiKey?: string;
+  /**
+   * @maxLength 200
+   */
+  model?: string;
+  /**
+   * @format uri
+   * @maxLength 500
+   */
+  baseUrl?: string;
+};
+
+export type EmbeddingConfigData = {
+  /**
+   * @format uuid
+   */
+  id: string;
+  /**
+   * @example Production
+   */
+  name: string;
+  /**
+   * @example true
+   */
+  isActive: boolean;
+  /**
+   * @example openrouter
+   */
+  activeProvider: string;
+  /**
+   * @example sk-...
+   */
+  apiKey: string;
+  /**
+   * @example openai/text-embedding-3-small
+   */
+  model: string;
+  /**
+   * @example https://openrouter.ai/api/v1
+   */
+  baseUrl: string;
+  /**
+   * @example 1536
+   */
+  dimension: number;
+};
+
+export type EmbeddingConfigResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: EmbeddingConfigData;
+};
+
+export type EmbeddingConfigListResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: EmbeddingConfigData[];
+  pagination: {
+    previousPage: number | null;
+    nextPage: number | null;
+    total: number;
+    count: number;
+  };
+};
+
+export type EmbeddingProvider = {
+  /**
+   * @example openrouter
+   */
+  key: string;
+  /**
+   * @example OpenRouter
+   */
+  label: string;
+  /**
+   * @example https://openrouter.ai/api/v1
+   */
+  baseUrl: string;
+  /**
+   * @example openai/text-embedding-3-small
+   */
+  defaultModel: string;
+  /**
+   * @example openai/text-embedding-3-small
+   * @example openai/text-embedding-3-large
+   */
+  models: string[];
+  /**
+   * @example 1536
+   */
+  dimension: number;
+  /**
+   * @example true
+   */
+  requiresReferer?: boolean;
+};
+
+export type EmbeddingProviderListResponse = {
+  /**
+   * @example true
+   */
+  success: boolean;
+  message: string;
+  data: EmbeddingProvider[];
+};
+
+export type CreateEmbeddingConfigDto = {
+  /**
+   * @minLength 1
+   * @maxLength 100
+   */
+  name: string;
+  isActive?: boolean;
+  /**
+   * @minLength 1
+   * @maxLength 100
+   */
+  activeProvider?: string;
+  /**
+   * @minLength 1
+   * @maxLength 500
+   */
+  apiKey: string;
+  /**
+   * @maxLength 200
+   */
+  model?: string;
+};
+
+export type UpdateEmbeddingConfigDto = {
   /**
    * @minLength 1
    * @maxLength 100

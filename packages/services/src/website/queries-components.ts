@@ -540,7 +540,7 @@ export const fetchAuthControllerRefresh = (
   signal?: AbortSignal,
 ) =>
   queriesFetch<
-    Schemas.MessageResponse,
+    Schemas.RefreshResponse,
     AuthControllerRefreshError,
     undefined,
     {},
@@ -551,7 +551,7 @@ export const fetchAuthControllerRefresh = (
 export const useAuthControllerRefresh = (
   options?: Omit<
     reactQuery.UseMutationOptions<
-      Schemas.MessageResponse,
+      Schemas.RefreshResponse,
       AuthControllerRefreshError,
       AuthControllerRefreshVariables
     >,
@@ -560,7 +560,7 @@ export const useAuthControllerRefresh = (
 ) => {
   const { fetcherOptions } = useQueriesContext();
   return reactQuery.useMutation<
-    Schemas.MessageResponse,
+    Schemas.RefreshResponse,
     AuthControllerRefreshError,
     AuthControllerRefreshVariables
   >({
@@ -1163,6 +1163,428 @@ export const useCalendarConnectionControllerDisconnect = (
         deepMerge(fetcherOptions, variables),
       ),
     ...options,
+  });
+};
+
+export type BackofficeAccessRequestControllerListQueryParams = {
+  /**
+   * Page number (0-indexed)
+   *
+   * @default 0
+   * @minimum 0
+   */
+  page?: number;
+  /**
+   * Items per page
+   *
+   * @default 10
+   * @minimum 1
+   * @maximum 100
+   */
+  take?: number;
+  /**
+   * Search by requester email or name
+   */
+  query?: string;
+  /**
+   * Filter by createdAt >= dateFrom
+   *
+   * @format date-time
+   */
+  dateFrom?: string;
+  /**
+   * Filter by createdAt <= dateTo
+   *
+   * @format date-time
+   */
+  dateTo?: string;
+  /**
+   * Sort field
+   *
+   * @default createdAt
+   */
+  sortBy?: string;
+  /**
+   * Sort order
+   *
+   * @default DESC
+   */
+  sortOrder?: "ASC" | "DESC";
+};
+
+export type BackofficeAccessRequestControllerListError = Fetcher.ErrorWrapper<
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 403;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type BackofficeAccessRequestControllerListVariables = {
+  queryParams?: BackofficeAccessRequestControllerListQueryParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchBackofficeAccessRequestControllerList = (
+  variables: BackofficeAccessRequestControllerListVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.AccessRequestListResponse,
+    BackofficeAccessRequestControllerListError,
+    undefined,
+    {},
+    BackofficeAccessRequestControllerListQueryParams,
+    {}
+  >({
+    url: "/api/backoffice/access-requests",
+    method: "get",
+    ...variables,
+    signal,
+  });
+
+export function backofficeAccessRequestControllerListQuery(
+  variables: BackofficeAccessRequestControllerListVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (
+    options: QueryFnOptions,
+  ) => Promise<Schemas.AccessRequestListResponse>;
+};
+
+export function backofficeAccessRequestControllerListQuery(
+  variables:
+    BackofficeAccessRequestControllerListVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((options: QueryFnOptions) => Promise<Schemas.AccessRequestListResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function backofficeAccessRequestControllerListQuery(
+  variables:
+    BackofficeAccessRequestControllerListVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/backoffice/access-requests",
+      operationId: "backofficeAccessRequestControllerList",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchBackofficeAccessRequestControllerList(variables, signal),
+  };
+}
+
+export const useSuspenseBackofficeAccessRequestControllerList = <
+  TData = Schemas.AccessRequestListResponse,
+>(
+  variables: BackofficeAccessRequestControllerListVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.AccessRequestListResponse,
+      BackofficeAccessRequestControllerListError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    Schemas.AccessRequestListResponse,
+    BackofficeAccessRequestControllerListError,
+    TData
+  >({
+    ...backofficeAccessRequestControllerListQuery(
+      deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useBackofficeAccessRequestControllerList = <
+  TData = Schemas.AccessRequestListResponse,
+>(
+  variables:
+    BackofficeAccessRequestControllerListVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.AccessRequestListResponse,
+      BackofficeAccessRequestControllerListError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    Schemas.AccessRequestListResponse,
+    BackofficeAccessRequestControllerListError,
+    TData
+  >({
+    ...backofficeAccessRequestControllerListQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type BackofficeAccessRequestControllerUpdateStatusPathParams = {
+  /**
+   * @format uuid
+   */
+  id: string;
+};
+
+export type BackofficeAccessRequestControllerUpdateStatusError =
+  Fetcher.ErrorWrapper<
+    | {
+        status: 400;
+        payload: Schemas.ErrorResponse;
+      }
+    | {
+        status: 401;
+        payload: Schemas.ErrorResponse;
+      }
+    | {
+        status: 403;
+        payload: Schemas.ErrorResponse;
+      }
+    | {
+        status: 404;
+        payload: Schemas.ErrorResponse;
+      }
+  >;
+
+export type BackofficeAccessRequestControllerUpdateStatusVariables = {
+  body: Schemas.UpdateAccessRequestStatusDto;
+  pathParams: BackofficeAccessRequestControllerUpdateStatusPathParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchBackofficeAccessRequestControllerUpdateStatus = (
+  variables: BackofficeAccessRequestControllerUpdateStatusVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.AccessRequestResponse,
+    BackofficeAccessRequestControllerUpdateStatusError,
+    Schemas.UpdateAccessRequestStatusDto,
+    {},
+    {},
+    BackofficeAccessRequestControllerUpdateStatusPathParams
+  >({
+    url: "/api/backoffice/access-requests/{id}/status",
+    method: "patch",
+    ...variables,
+    signal,
+  });
+
+export const useBackofficeAccessRequestControllerUpdateStatus = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.AccessRequestResponse,
+      BackofficeAccessRequestControllerUpdateStatusError,
+      BackofficeAccessRequestControllerUpdateStatusVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.AccessRequestResponse,
+    BackofficeAccessRequestControllerUpdateStatusError,
+    BackofficeAccessRequestControllerUpdateStatusVariables
+  >({
+    mutationFn: (
+      variables: BackofficeAccessRequestControllerUpdateStatusVariables,
+    ) =>
+      fetchBackofficeAccessRequestControllerUpdateStatus(
+        deepMerge(fetcherOptions, variables),
+      ),
+    ...options,
+  });
+};
+
+export type AccessRequestControllerRequestAccessError = Fetcher.ErrorWrapper<
+  | {
+      status: 400;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type AccessRequestControllerRequestAccessVariables = {
+  body?: Schemas.RequestAccessDto;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchAccessRequestControllerRequestAccess = (
+  variables: AccessRequestControllerRequestAccessVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.MessageResponse,
+    AccessRequestControllerRequestAccessError,
+    Schemas.RequestAccessDto,
+    {},
+    {},
+    {}
+  >({
+    url: "/api/access-request/request-access",
+    method: "post",
+    ...variables,
+    signal,
+  });
+
+export const useAccessRequestControllerRequestAccess = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.MessageResponse,
+      AccessRequestControllerRequestAccessError,
+      AccessRequestControllerRequestAccessVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.MessageResponse,
+    AccessRequestControllerRequestAccessError,
+    AccessRequestControllerRequestAccessVariables
+  >({
+    mutationFn: (variables: AccessRequestControllerRequestAccessVariables) =>
+      fetchAccessRequestControllerRequestAccess(
+        deepMerge(fetcherOptions, variables),
+      ),
+    ...options,
+  });
+};
+
+export type AccessRequestControllerGetMyAccessRequestError =
+  Fetcher.ErrorWrapper<{
+    status: 401;
+    payload: Schemas.ErrorResponse;
+  }>;
+
+export type AccessRequestControllerGetMyAccessRequestVariables =
+  QueriesContext["fetcherOptions"];
+
+export const fetchAccessRequestControllerGetMyAccessRequest = (
+  variables: AccessRequestControllerGetMyAccessRequestVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.MyAccessRequestResponse,
+    AccessRequestControllerGetMyAccessRequestError,
+    undefined,
+    {},
+    {},
+    {}
+  >({ url: "/api/access-request/me", method: "get", ...variables, signal });
+
+export function accessRequestControllerGetMyAccessRequestQuery(
+  variables: AccessRequestControllerGetMyAccessRequestVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (
+    options: QueryFnOptions,
+  ) => Promise<Schemas.MyAccessRequestResponse>;
+};
+
+export function accessRequestControllerGetMyAccessRequestQuery(
+  variables:
+    AccessRequestControllerGetMyAccessRequestVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((options: QueryFnOptions) => Promise<Schemas.MyAccessRequestResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function accessRequestControllerGetMyAccessRequestQuery(
+  variables:
+    AccessRequestControllerGetMyAccessRequestVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/access-request/me",
+      operationId: "accessRequestControllerGetMyAccessRequest",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchAccessRequestControllerGetMyAccessRequest(variables, signal),
+  };
+}
+
+export const useSuspenseAccessRequestControllerGetMyAccessRequest = <
+  TData = Schemas.MyAccessRequestResponse,
+>(
+  variables: AccessRequestControllerGetMyAccessRequestVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.MyAccessRequestResponse,
+      AccessRequestControllerGetMyAccessRequestError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    Schemas.MyAccessRequestResponse,
+    AccessRequestControllerGetMyAccessRequestError,
+    TData
+  >({
+    ...accessRequestControllerGetMyAccessRequestQuery(
+      deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useAccessRequestControllerGetMyAccessRequest = <
+  TData = Schemas.MyAccessRequestResponse,
+>(
+  variables:
+    AccessRequestControllerGetMyAccessRequestVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.MyAccessRequestResponse,
+      AccessRequestControllerGetMyAccessRequestError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    Schemas.MyAccessRequestResponse,
+    AccessRequestControllerGetMyAccessRequestError,
+    TData
+  >({
+    ...accessRequestControllerGetMyAccessRequestQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
   });
 };
 
@@ -2879,6 +3301,611 @@ export const useBackofficeControllerUpdateUserLimit = (
   });
 };
 
+export type EmbeddingConfigControllerListConfigsQueryParams = {
+  /**
+   * Page number (0-indexed)
+   *
+   * @default 0
+   * @minimum 0
+   */
+  page?: number;
+  /**
+   * Items per page
+   *
+   * @default 10
+   * @minimum 1
+   * @maximum 100
+   */
+  take?: number;
+  /**
+   * Search by config name
+   */
+  query?: string;
+  /**
+   * Filter by createdAt >= dateFrom
+   *
+   * @format date-time
+   */
+  dateFrom?: string;
+  /**
+   * Filter by createdAt <= dateTo
+   *
+   * @format date-time
+   */
+  dateTo?: string;
+  /**
+   * Sort field
+   *
+   * @default createdAt
+   */
+  sortBy?: string;
+  /**
+   * Sort order
+   *
+   * @default DESC
+   */
+  sortOrder?: "ASC" | "DESC";
+};
+
+export type EmbeddingConfigControllerListConfigsError = Fetcher.ErrorWrapper<
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 403;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type EmbeddingConfigControllerListConfigsVariables = {
+  queryParams?: EmbeddingConfigControllerListConfigsQueryParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchEmbeddingConfigControllerListConfigs = (
+  variables: EmbeddingConfigControllerListConfigsVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.EmbeddingConfigListResponse,
+    EmbeddingConfigControllerListConfigsError,
+    undefined,
+    {},
+    EmbeddingConfigControllerListConfigsQueryParams,
+    {}
+  >({
+    url: "/api/backoffice/embedding-config",
+    method: "get",
+    ...variables,
+    signal,
+  });
+
+export function embeddingConfigControllerListConfigsQuery(
+  variables: EmbeddingConfigControllerListConfigsVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (
+    options: QueryFnOptions,
+  ) => Promise<Schemas.EmbeddingConfigListResponse>;
+};
+
+export function embeddingConfigControllerListConfigsQuery(
+  variables:
+    EmbeddingConfigControllerListConfigsVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((
+        options: QueryFnOptions,
+      ) => Promise<Schemas.EmbeddingConfigListResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function embeddingConfigControllerListConfigsQuery(
+  variables:
+    EmbeddingConfigControllerListConfigsVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/backoffice/embedding-config",
+      operationId: "embeddingConfigControllerListConfigs",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchEmbeddingConfigControllerListConfigs(variables, signal),
+  };
+}
+
+export const useSuspenseEmbeddingConfigControllerListConfigs = <
+  TData = Schemas.EmbeddingConfigListResponse,
+>(
+  variables: EmbeddingConfigControllerListConfigsVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.EmbeddingConfigListResponse,
+      EmbeddingConfigControllerListConfigsError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    Schemas.EmbeddingConfigListResponse,
+    EmbeddingConfigControllerListConfigsError,
+    TData
+  >({
+    ...embeddingConfigControllerListConfigsQuery(
+      deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useEmbeddingConfigControllerListConfigs = <
+  TData = Schemas.EmbeddingConfigListResponse,
+>(
+  variables:
+    EmbeddingConfigControllerListConfigsVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.EmbeddingConfigListResponse,
+      EmbeddingConfigControllerListConfigsError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    Schemas.EmbeddingConfigListResponse,
+    EmbeddingConfigControllerListConfigsError,
+    TData
+  >({
+    ...embeddingConfigControllerListConfigsQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type EmbeddingConfigControllerCreateConfigError = Fetcher.ErrorWrapper<
+  | {
+      status: 400;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 403;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type EmbeddingConfigControllerCreateConfigVariables = {
+  body: Schemas.CreateEmbeddingConfigDto;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchEmbeddingConfigControllerCreateConfig = (
+  variables: EmbeddingConfigControllerCreateConfigVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.EmbeddingConfigResponse,
+    EmbeddingConfigControllerCreateConfigError,
+    Schemas.CreateEmbeddingConfigDto,
+    {},
+    {},
+    {}
+  >({
+    url: "/api/backoffice/embedding-config",
+    method: "post",
+    ...variables,
+    signal,
+  });
+
+export const useEmbeddingConfigControllerCreateConfig = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.EmbeddingConfigResponse,
+      EmbeddingConfigControllerCreateConfigError,
+      EmbeddingConfigControllerCreateConfigVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.EmbeddingConfigResponse,
+    EmbeddingConfigControllerCreateConfigError,
+    EmbeddingConfigControllerCreateConfigVariables
+  >({
+    mutationFn: (variables: EmbeddingConfigControllerCreateConfigVariables) =>
+      fetchEmbeddingConfigControllerCreateConfig(
+        deepMerge(fetcherOptions, variables),
+      ),
+    ...options,
+  });
+};
+
+export type EmbeddingConfigControllerListProvidersError = Fetcher.ErrorWrapper<
+  | {
+      status: 401;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 403;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type EmbeddingConfigControllerListProvidersVariables =
+  QueriesContext["fetcherOptions"];
+
+export const fetchEmbeddingConfigControllerListProviders = (
+  variables: EmbeddingConfigControllerListProvidersVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.EmbeddingProviderListResponse,
+    EmbeddingConfigControllerListProvidersError,
+    undefined,
+    {},
+    {},
+    {}
+  >({
+    url: "/api/backoffice/embedding-config/providers",
+    method: "get",
+    ...variables,
+    signal,
+  });
+
+export function embeddingConfigControllerListProvidersQuery(
+  variables: EmbeddingConfigControllerListProvidersVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (
+    options: QueryFnOptions,
+  ) => Promise<Schemas.EmbeddingProviderListResponse>;
+};
+
+export function embeddingConfigControllerListProvidersQuery(
+  variables:
+    EmbeddingConfigControllerListProvidersVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((
+        options: QueryFnOptions,
+      ) => Promise<Schemas.EmbeddingProviderListResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function embeddingConfigControllerListProvidersQuery(
+  variables:
+    EmbeddingConfigControllerListProvidersVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/backoffice/embedding-config/providers",
+      operationId: "embeddingConfigControllerListProviders",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchEmbeddingConfigControllerListProviders(variables, signal),
+  };
+}
+
+export const useSuspenseEmbeddingConfigControllerListProviders = <
+  TData = Schemas.EmbeddingProviderListResponse,
+>(
+  variables: EmbeddingConfigControllerListProvidersVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.EmbeddingProviderListResponse,
+      EmbeddingConfigControllerListProvidersError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    Schemas.EmbeddingProviderListResponse,
+    EmbeddingConfigControllerListProvidersError,
+    TData
+  >({
+    ...embeddingConfigControllerListProvidersQuery(
+      deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useEmbeddingConfigControllerListProviders = <
+  TData = Schemas.EmbeddingProviderListResponse,
+>(
+  variables:
+    EmbeddingConfigControllerListProvidersVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.EmbeddingProviderListResponse,
+      EmbeddingConfigControllerListProvidersError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    Schemas.EmbeddingProviderListResponse,
+    EmbeddingConfigControllerListProvidersError,
+    TData
+  >({
+    ...embeddingConfigControllerListProvidersQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type EmbeddingConfigControllerGetActiveConfigError =
+  Fetcher.ErrorWrapper<undefined>;
+
+export type EmbeddingConfigControllerGetActiveConfigVariables =
+  QueriesContext["fetcherOptions"];
+
+export const fetchEmbeddingConfigControllerGetActiveConfig = (
+  variables: EmbeddingConfigControllerGetActiveConfigVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.EmbeddingConfigResponse,
+    EmbeddingConfigControllerGetActiveConfigError,
+    undefined,
+    {},
+    {},
+    {}
+  >({
+    url: "/api/backoffice/embedding-config/active",
+    method: "get",
+    ...variables,
+    signal,
+  });
+
+export function embeddingConfigControllerGetActiveConfigQuery(
+  variables: EmbeddingConfigControllerGetActiveConfigVariables,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn: (
+    options: QueryFnOptions,
+  ) => Promise<Schemas.EmbeddingConfigResponse>;
+};
+
+export function embeddingConfigControllerGetActiveConfigQuery(
+  variables:
+    EmbeddingConfigControllerGetActiveConfigVariables | reactQuery.SkipToken,
+): {
+  queryKey: reactQuery.QueryKey;
+  queryFn:
+    | ((options: QueryFnOptions) => Promise<Schemas.EmbeddingConfigResponse>)
+    | reactQuery.SkipToken;
+};
+
+export function embeddingConfigControllerGetActiveConfigQuery(
+  variables:
+    EmbeddingConfigControllerGetActiveConfigVariables | reactQuery.SkipToken,
+) {
+  return {
+    queryKey: queryKeyFn({
+      path: "/api/backoffice/embedding-config/active",
+      operationId: "embeddingConfigControllerGetActiveConfig",
+      variables,
+    }),
+    queryFn:
+      variables === reactQuery.skipToken
+        ? reactQuery.skipToken
+        : ({ signal }: QueryFnOptions) =>
+            fetchEmbeddingConfigControllerGetActiveConfig(variables, signal),
+  };
+}
+
+export const useSuspenseEmbeddingConfigControllerGetActiveConfig = <
+  TData = Schemas.EmbeddingConfigResponse,
+>(
+  variables: EmbeddingConfigControllerGetActiveConfigVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.EmbeddingConfigResponse,
+      EmbeddingConfigControllerGetActiveConfigError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useSuspenseQuery<
+    Schemas.EmbeddingConfigResponse,
+    EmbeddingConfigControllerGetActiveConfigError,
+    TData
+  >({
+    ...embeddingConfigControllerGetActiveConfigQuery(
+      deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export const useEmbeddingConfigControllerGetActiveConfig = <
+  TData = Schemas.EmbeddingConfigResponse,
+>(
+  variables:
+    EmbeddingConfigControllerGetActiveConfigVariables | reactQuery.SkipToken,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.EmbeddingConfigResponse,
+      EmbeddingConfigControllerGetActiveConfigError,
+      TData
+    >,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { queryOptions, fetcherOptions } = useQueriesContext(options);
+  return reactQuery.useQuery<
+    Schemas.EmbeddingConfigResponse,
+    EmbeddingConfigControllerGetActiveConfigError,
+    TData
+  >({
+    ...embeddingConfigControllerGetActiveConfigQuery(
+      variables === reactQuery.skipToken
+        ? variables
+        : deepMerge(fetcherOptions, variables),
+    ),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type EmbeddingConfigControllerUpdateConfigPathParams = {
+  /**
+   * @format uuid
+   */
+  id: string;
+};
+
+export type EmbeddingConfigControllerUpdateConfigError = Fetcher.ErrorWrapper<
+  | {
+      status: 400;
+      payload: Schemas.ErrorResponse;
+    }
+  | {
+      status: 404;
+      payload: Schemas.ErrorResponse;
+    }
+>;
+
+export type EmbeddingConfigControllerUpdateConfigVariables = {
+  body?: Schemas.UpdateEmbeddingConfigDto;
+  pathParams: EmbeddingConfigControllerUpdateConfigPathParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchEmbeddingConfigControllerUpdateConfig = (
+  variables: EmbeddingConfigControllerUpdateConfigVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.EmbeddingConfigResponse,
+    EmbeddingConfigControllerUpdateConfigError,
+    Schemas.UpdateEmbeddingConfigDto,
+    {},
+    {},
+    EmbeddingConfigControllerUpdateConfigPathParams
+  >({
+    url: "/api/backoffice/embedding-config/{id}",
+    method: "patch",
+    ...variables,
+    signal,
+  });
+
+export const useEmbeddingConfigControllerUpdateConfig = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.EmbeddingConfigResponse,
+      EmbeddingConfigControllerUpdateConfigError,
+      EmbeddingConfigControllerUpdateConfigVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.EmbeddingConfigResponse,
+    EmbeddingConfigControllerUpdateConfigError,
+    EmbeddingConfigControllerUpdateConfigVariables
+  >({
+    mutationFn: (variables: EmbeddingConfigControllerUpdateConfigVariables) =>
+      fetchEmbeddingConfigControllerUpdateConfig(
+        deepMerge(fetcherOptions, variables),
+      ),
+    ...options,
+  });
+};
+
+export type EmbeddingConfigControllerDeleteConfigPathParams = {
+  /**
+   * @format uuid
+   */
+  id: string;
+};
+
+export type EmbeddingConfigControllerDeleteConfigError = Fetcher.ErrorWrapper<{
+  status: 404;
+  payload: Schemas.ErrorResponse;
+}>;
+
+export type EmbeddingConfigControllerDeleteConfigVariables = {
+  pathParams: EmbeddingConfigControllerDeleteConfigPathParams;
+} & QueriesContext["fetcherOptions"];
+
+export const fetchEmbeddingConfigControllerDeleteConfig = (
+  variables: EmbeddingConfigControllerDeleteConfigVariables,
+  signal?: AbortSignal,
+) =>
+  queriesFetch<
+    Schemas.MessageResponse,
+    EmbeddingConfigControllerDeleteConfigError,
+    undefined,
+    {},
+    {},
+    EmbeddingConfigControllerDeleteConfigPathParams
+  >({
+    url: "/api/backoffice/embedding-config/{id}",
+    method: "delete",
+    ...variables,
+    signal,
+  });
+
+export const useEmbeddingConfigControllerDeleteConfig = (
+  options?: Omit<
+    reactQuery.UseMutationOptions<
+      Schemas.MessageResponse,
+      EmbeddingConfigControllerDeleteConfigError,
+      EmbeddingConfigControllerDeleteConfigVariables
+    >,
+    "mutationFn"
+  >,
+) => {
+  const { fetcherOptions } = useQueriesContext();
+  return reactQuery.useMutation<
+    Schemas.MessageResponse,
+    EmbeddingConfigControllerDeleteConfigError,
+    EmbeddingConfigControllerDeleteConfigVariables
+  >({
+    mutationFn: (variables: EmbeddingConfigControllerDeleteConfigVariables) =>
+      fetchEmbeddingConfigControllerDeleteConfig(
+        deepMerge(fetcherOptions, variables),
+      ),
+    ...options,
+  });
+};
+
 export type BackofficeControllerGetUsersDashboardQueryParams = {
   /**
    * Filter aggregates by createdAt >= dateFrom
@@ -2892,12 +3919,6 @@ export type BackofficeControllerGetUsersDashboardQueryParams = {
    * @format date-time
    */
   dateTo?: string;
-  /**
-   * Time bucket for the byPeriod trend series
-   *
-   * @default day
-   */
-  interval?: "hour" | "day" | "week" | "month";
 };
 
 export type BackofficeControllerGetUsersDashboardError = Fetcher.ErrorWrapper<
@@ -3067,6 +4088,19 @@ export type QueryOperation =
         | reactQuery.SkipToken;
     }
   | {
+      path: "/api/backoffice/access-requests";
+      operationId: "backofficeAccessRequestControllerList";
+      variables:
+        BackofficeAccessRequestControllerListVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/access-request/me";
+      operationId: "accessRequestControllerGetMyAccessRequest";
+      variables:
+        | AccessRequestControllerGetMyAccessRequestVariables
+        | reactQuery.SkipToken;
+    }
+  | {
       path: "/api/chat/conversations";
       operationId: "chatControllerListConversations";
       variables:
@@ -3108,6 +4142,25 @@ export type QueryOperation =
       operationId: "llmConfigControllerGetActiveConfig";
       variables:
         LlmConfigControllerGetActiveConfigVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/backoffice/embedding-config";
+      operationId: "embeddingConfigControllerListConfigs";
+      variables:
+        EmbeddingConfigControllerListConfigsVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/backoffice/embedding-config/providers";
+      operationId: "embeddingConfigControllerListProviders";
+      variables:
+        EmbeddingConfigControllerListProvidersVariables | reactQuery.SkipToken;
+    }
+  | {
+      path: "/api/backoffice/embedding-config/active";
+      operationId: "embeddingConfigControllerGetActiveConfig";
+      variables:
+        | EmbeddingConfigControllerGetActiveConfigVariables
+        | reactQuery.SkipToken;
     }
   | {
       path: "/api/backoffice/dashboard/users";

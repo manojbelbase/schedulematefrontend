@@ -5,6 +5,7 @@ export const LINKS = {
   USERS: "/users",
   ACCESS_REQUESTS: "/access-requests",
   LLM_CONFIG: "/llm-config",
+  EMBEDDING_CONFIG: "/embedding-config",
   SERVICES: "/services",
   BOOKINGS: "/bookings",
   PROVIDERS: "/providers",

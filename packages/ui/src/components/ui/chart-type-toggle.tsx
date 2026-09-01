@@ -26,7 +26,7 @@ export function ChartTypeToggle<T extends string = string>({
   return (
     <div
       className={cn(
-        "border bg-background text-muted-foreground dark:border-input h-9 rounded-sm flex items-center shadow-xs",
+        "border bg-background text-muted-foreground dark:border-input h-9 rounded-sm flex items-center",
         className,
       )}
     >
