@@ -1,5 +1,6 @@
 import {
   Bot,
+  Brain,
   LayoutDashboard,
   ShieldCheck,
   Users,
@@ -30,6 +31,7 @@ export const SIDEBAR_NAV: SidebarNavSection[] = [
         icon: ShieldCheck,
       },
       { href: LINKS.LLM_CONFIG, label: "LLM Config", icon: Bot },
+      { href: LINKS.EMBEDDING_CONFIG, label: "Embedding Config", icon: Brain },
     ],
   },
 ];

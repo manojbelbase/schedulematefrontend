@@ -88,7 +88,7 @@ export function OverviewCard({
   return (
     <div
       className={cn(
-        "max-w-[270px] w-full shadow-sm group relative rounded-sm p-px bg-gradient-to-br cursor-pointer dark:bg-background dark:border ring-2 ring-secondary",
+        "max-w-[270px] w-full group relative rounded-sm p-px bg-gradient-to-br cursor-pointer dark:bg-background",
         color?.isActive,
         wrapperContainerClassname,
       )}
@@ -113,7 +113,7 @@ export function OverviewCard({
           <div className="flex items-center gap-2">
             <span
               className={cn(
-                "inline-flex size-5 items-center justify-center rounded-sm shadow-sm ring-1 ring-black/5 [&_svg]:size-3",
+                "inline-flex size-5 items-center justify-center rounded-sm ring-1 ring-black/5 [&_svg]:size-3",
                 color?.icon,
                 iconContainerClassName,
               )}

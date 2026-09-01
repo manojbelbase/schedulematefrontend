@@ -90,7 +90,7 @@ export default function TabLinks({
   return (
     <motion.div
       className={cn(
-        "flex items-center gap-2  shadow-sm rounded-lg p-0.5 bg-card border border-muted w-fit",
+        "flex items-center gap-2  rounded-lg p-0.5 bg-card border border-muted w-fit",
         variant === "form-select" && "h-8 border-0 p-0",
         containerClassName,
       )}

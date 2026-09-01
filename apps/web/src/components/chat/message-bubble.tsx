@@ -31,10 +31,11 @@ export function MessageBubble({ message }: MessageBubbleProps) {
         {isUser ? (
           <p className="whitespace-pre-wrap">{message.content}</p>
         ) : (
-          <div className="[&_pre]:overflow-x-auto [&_pre]:bg-muted/60 [&_pre]:p-3 [&_pre]:rounded-lg [&_pre]:my-2">
+          <div className="[&_pre]:overflow-x-auto [&_pre]:bg-muted/60 [&_pre]:p-3 [&_pre]:rounded-sm [&_pre]:my-2">
             <AIResponseParser
               content={message.content}
               textColor="var(--foreground)"
+              className="border-none"
             />
           </div>
         )}

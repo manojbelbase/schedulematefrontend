@@ -110,9 +110,9 @@ export default function ChatSidebar({
                         type="button"
                         onClick={() => onSelectConversation(conversation.id)}
                         className={cn(
-                          "flex w-full items-center gap-2.5 rounded-md border border-transparent px-3 py-2.5 text-left text-sm transition-colors",
+                          "flex w-full items-center gap-2.5 rounded-sm border border-transparent px-3 py-2.5 text-left text-sm transition-colors shadow-none",
                           isActive
-                            ? "border-sidebar-border bg-sidebar-accent text-sidebar-accent-foreground shadow-sm"
+                            ? "border-sidebar-border bg-sidebar-accent"
                             : "text-sidebar-foreground hover:bg-sidebar-accent",
                         )}
                       >

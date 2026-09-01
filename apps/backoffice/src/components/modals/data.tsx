@@ -1,5 +1,7 @@
+import AddEmbeddingConfigForm from "./form/add-embedding-config-form";
 import AddLlmConfigForm from "./form/add-llm-config-form";
 import AddUserForm from "./form/add-user-form";
+import EditEmbeddingConfigForm from "./form/edit-embedding-config-form";
 import EditLlmConfigForm from "./form/edit-llm-config-form";
 import EditUserForm from "./form/edit-user-form";
 import SetUserLimitForm from "./form/user-limit-form";
@@ -49,6 +51,20 @@ export const MODALS = {
     variant: "form",
     className: "max-w-lg!",
     title: "Edit LLM Configuration",
+    description: "",
+  },
+  ADD_EMBEDDING_CONFIG: {
+    component: AddEmbeddingConfigForm,
+    variant: "form",
+    className: "max-w-lg!",
+    title: "Add Embedding Configuration",
+    description: "",
+  },
+  EDIT_EMBEDDING_CONFIG: {
+    component: EditEmbeddingConfigForm,
+    variant: "form",
+    className: "max-w-lg!",
+    title: "Edit Embedding Configuration",
     description: "",
   },
 

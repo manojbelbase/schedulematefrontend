@@ -68,7 +68,7 @@ function DialogContent({
       <DialogOverlay />
       <DialogContentPrimitive
         className={cn(
-          "bg-background fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg sm:max-w-lg overflow-visible!",
+          "bg-background fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 sm:max-w-lg overflow-visible!",
           className,
         )}
         {...props}
@@ -80,7 +80,7 @@ function DialogContent({
           //   <span className="sr-only">Close</span>
           // </DialogClosePrimitive>
 
-          <DialogClosePrimitive className="absolute -right-2.5 3xl:-right-3 -top-2 3xl:-top-3 rounded-sm bg-background p-1 3xl:p-1.5 shadow-lg ring-offset-background transition-all duration-300 ease-in-out hover:-right-2 hover:-top-1 hover:opacity-100 focus:outline-none  focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground border group z-50!">
+          <DialogClosePrimitive className="absolute -right-2.5 3xl:-right-3 -top-2 3xl:-top-3 rounded-sm bg-background p-1 3xl:p-1.5 ring-offset-background transition-all duration-300 ease-in-out hover:-right-2 hover:-top-1 hover:opacity-100 focus:outline-none  focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground border group z-50!">
             <X className="size-4 3xl:size-5 transition-transform duration-300 hover:ease-in-out group-hover:rotate-90 cursor-pointer" />
             <span className="sr-only">Close</span>
           </DialogClosePrimitive>
