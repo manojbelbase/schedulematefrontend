@@ -35,19 +35,18 @@ export default function ProfilePopover({ collapsed }: TProps) {
           type="button"
           title={user ? `${displayName} · ${email ?? ""}`.trim() : "Account"}
           className={cn(
-            "group flex w-full items-center gap-2.5 rounded-sm border border-sidebar-border bg-sidebar/50 px-2 py-2 text-left transition-colors hover:bg-sidebar-accent data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground",
-            collapsed &&
-              "justify-center border-transparent px-0 bg-transparent hover:bg-sidebar-accent",
+            "flex w-full items-center gap-2.5 rounded-sm px-2 py-2 text-left transition-all duration-150 hover:bg-sidebar-accent/60 data-[state=open]:bg-sidebar-accent/60 border border-border/40 bg-sidebar-accent/40",
+            collapsed && "justify-center px-0",
           )}
         >
-          <Avatar className="size-9 shrink-0 rounded-sm bg-primary/10">
-            <AvatarFallback className="rounded-sm bg-primary/10 text-primary text-xs font-semibold">
+          <Avatar className="size-8 shrink-0 rounded-sm bg-primary/10">
+            <AvatarFallback className="rounded-sm bg-primary/10 text-xs font-semibold text-primary">
               {initial}
             </AvatarFallback>
           </Avatar>
           {!collapsed && (
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-foreground mb-0.5">
+              <p className="truncate text-sm font-medium text-foreground">
                 {displayName}
               </p>
               {email && (
@@ -65,9 +64,9 @@ export default function ProfilePopover({ collapsed }: TProps) {
         sideOffset={12}
         className="w-72 overflow-hidden p-0 mb-2"
       >
-        <div className="flex items-center gap-3 px-4 py-3.5">
-          <Avatar className="size-10 shrink-0 rounded-sm bg-primary/10">
-            <AvatarFallback className="rounded-sm bg-primary/10 text-primary text-sm font-semibold">
+        <div className="flex items-center gap-3 px-2 py-3">
+          <Avatar className="size-8 shrink-0 rounded-sm bg-primary/10">
+            <AvatarFallback className="rounded-sm bg-primary/10 text-sm  text-primary">
               {initial}
             </AvatarFallback>
           </Avatar>
@@ -81,13 +80,13 @@ export default function ProfilePopover({ collapsed }: TProps) {
           </div>
         </div>
         <Separator />
-        <div className="p-1.5">
+        <div className="p-1">
           <ThemeToggle />
           <Separator className="my-1" />
           <button
             type="button"
             onClick={() => void logout()}
-            className="flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-destructive"
+            className="flex w-full items-center gap-2.5 rounded-sm px-2.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
           >
             <LogOut className="size-4" />
             Sign out
