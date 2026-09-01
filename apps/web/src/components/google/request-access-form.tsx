@@ -31,34 +31,29 @@ export function RequestAccessForm({
 
   if (status === "pending") {
     return (
-      <div className="flex items-center gap-2 rounded-lg border border-dashed bg-muted/30 px-3 py-2.5">
-        <BadgeCheck className="size-4 shrink-0 text-primary" />
+      <div className="flex items-center gap-2.5 rounded-sm border border-primary/20 bg-primary/5 px-2.5 py-2">
+        <div className="flex size-6 shrink-0 items-center justify-center rounded-sm bg-primary/10">
+          <BadgeCheck className="size-3.5 text-primary" />
+        </div>
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-medium">Requested</p>
-          <p className="truncate text-xs text-muted-foreground">
-            Waiting for the developer&apos;s approval
+          <p className="truncate text-xs font-medium text-foreground/80">
+            Google Calendar
+          </p>
+          <p className="truncate text-[11px] text-muted-foreground">
+            Request pending
           </p>
         </div>
-        <Button
-          type="button"
-          size="sm"
-          variant="outline"
-          disabled
-          className="shrink-0 cursor-not-allowed"
-        >
-          Requested
-        </Button>
       </div>
     );
   }
 
   return (
-    <div className="rounded-sm border border-dashed bg-muted/30 p-2">
+    <div className="rounded-sm px-2.5 py-2">
       <div className="flex items-center gap-1.5">
         <Tooltip>
           <TooltipTrigger asChild>
             <span className="inline-flex cursor-help">
-              <InfoIcon className="text-muted-foreground size-4" />
+              <InfoIcon className="size-3.5 text-muted-foreground" />
             </span>
           </TooltipTrigger>
           <TooltipContent>
@@ -67,22 +62,20 @@ export function RequestAccessForm({
             Google account as a tester.
           </TooltipContent>
         </Tooltip>
-        <p className="text-sm font-medium">Connect Google Calendar</p>
+        <p className="text-xs font-medium text-muted-foreground">
+          Connect calendar
+        </p>
       </div>
-      <p className="mt-2 text-xs text-muted-foreground ">
-        This app is in test mode, so you can&apos;t connect directly — send a
-        request and the developer will grant you access.
-      </p>
       <Button
         type="button"
         size="sm"
         variant="outline"
-        className="mt-2 w-full gap-2"
+        className="mt-2 w-full border-dashed text-xs"
         disabled={requestAccess.isPending}
         onClick={() => requestAccess.mutate({})}
       >
         {requestAccess.isPending && (
-          <Loader2Icon className="size-4 animate-spin" />
+          <Loader2Icon className="mr-1 size-3.5 animate-spin" />
         )}
         Request Access
       </Button>

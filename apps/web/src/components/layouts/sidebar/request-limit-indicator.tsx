@@ -2,8 +2,6 @@
 
 import { Gauge } from "lucide-react";
 
-import { cn } from "@ui/lib/utils";
-
 import { useAuth } from "@/hooks/use-auth";
 
 export default function RequestLimitIndicator({
@@ -22,33 +20,36 @@ export default function RequestLimitIndicator({
   const ratio = Math.min(Math.max(used / limit, 0), 1);
   const percent = Math.round(ratio * 100);
 
-  const label = expanded ? (
-    <div className="space-y-1.5 border border-sidebar-border rounded-sm bg-sidebar/50 p-2">
-      <div className="flex items-center justify-between text-xs">
-        <span className="font-medium text-foreground">Request limits</span>
-        <span className="text-muted-foreground">
-          {used} / {limit} used
+  if (!expanded) {
+    return (
+      <div className="flex justify-center py-1.5">
+        <span
+          title={`${used} / ${limit} requests used · ${remaining} remaining`}
+          className="text-muted-foreground"
+        >
+          <Gauge className="size-4" />
         </span>
       </div>
-      <div className="h-1.5 w-full overflow-hidden rounded-full bg-sidebar-border">
+    );
+  }
+
+  return (
+    <div className="mb-1 rounded-sm border border-border/40 bg-sidebar-accent/40 px-3 py-2.5">
+      <div className="flex items-center justify-between text-xs">
+        <span className="font-medium text-foreground/80">Requests</span>
+        <span className="tabular-nums text-muted-foreground">
+          {used}/{limit}
+        </span>
+      </div>
+      <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-border/50">
         <div
-          className="h-full rounded-full bg-primary transition-all"
+          className="h-full rounded-full bg-primary/70 transition-all duration-300"
           style={{ width: `${percent}%` }}
         />
       </div>
-      <p className="text-xs text-muted-foreground">
-        {remaining} request{remaining === 1 ? "" : "s"} remaining
+      <p className="mt-1.5 text-[11px] text-muted-foreground">
+        {remaining} remaining
       </p>
-    </div>
-  ) : (
-    <span title={`${used} / ${limit} requests used · ${remaining} remaining`}>
-      <Gauge className="size-4 text-muted-foreground" />
-    </span>
-  );
-
-  return (
-    <div className={cn("shrink-0", !expanded && "flex justify-center")}>
-      {label}
     </div>
   );
 }

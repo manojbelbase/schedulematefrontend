@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "@ui/components/ui/button";
-import { cn, options } from "@ui/lib/utils";
+import { options } from "@ui/lib/utils";
 
 import {
   accessRequestControllerGetMyAccessRequestQuery,
@@ -55,57 +55,58 @@ export function CalendarConnectButton({ expanded }: { expanded: boolean }) {
   if (expanded) {
     if (isPending) {
       return (
-        <Button
-          variant="outline"
-          className="h-auto w-full justify-start gap-2 overflow-hidden py-2"
-          disabled
-        >
+        <div className="flex items-center gap-2.5 rounded-sm px-2.5 py-2 text-muted-foreground">
           <Loader2 className="size-4 shrink-0 animate-spin" />
-          <span className="truncate">Checking calendar…</span>
-        </Button>
+          <span className="truncate text-xs">Checking calendar…</span>
+        </div>
       );
     }
 
     return connected ? (
-      <div className="group flex items-center gap-2 overflow-hidden rounded-md border bg-card px-3 py-2.5">
-        <CalendarX2Icon className="size-4 shrink-0 text-primary" />
+      <div className="group flex items-center gap-2.5 rounded-sm border border-primary/20 bg-primary/5 px-2.5 py-2">
+        <div className="flex size-6 shrink-0 items-center justify-center rounded-sm bg-primary/10">
+          <CalendarX2Icon className="size-3.5 text-primary" />
+        </div>
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-medium">Google Calendar</p>
-          <p className="truncate text-xs text-muted-foreground">
-            Calendar connected
+          <p className="truncate text-xs font-medium text-foreground">
+            Google Calendar
+          </p>
+          <p className="truncate text-[11px] text-muted-foreground">
+            Connected
           </p>
         </div>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="size-7 shrink-0 text-destructive hover:bg-destructive/10 hover:text-destructive"
+        <button
+          type="button"
           title="Disconnect Google Calendar"
+          className="shrink-0 rounded-sm p-1 text-muted-foreground opacity-0 transition-all hover:bg-destructive/10 hover:text-destructive group-hover:opacity-100"
           disabled={disconnect.isPending}
           onClick={() => disconnect.mutate({})}
         >
-          <Loader2
-            className={cn(
-              "size-3.5 animate-spin",
-              !disconnect.isPending && "hidden",
-            )}
-          />
-          <LogOutIcon
-            className={cn("size-3.5", disconnect.isPending && "hidden")}
-          />
-        </Button>
+          {disconnect.isPending ? (
+            <Loader2 className="size-3.5 animate-spin" />
+          ) : (
+            <LogOutIcon className="size-3.5" />
+          )}
+        </button>
       </div>
     ) : accessStatus === "approved" ? (
-      <Button
-        asChild
-        variant="outline"
-        className="h-auto w-full justify-start gap-2 overflow-hidden py-2"
+      <Link
+        href={calendarConnectUrl("/")}
+        className="group flex items-center gap-2.5 rounded-sm border border-dashed border-border px-2.5 py-2 transition-colors hover:border-primary/30 hover:bg-primary/5 bg-sidebar-accent/40"
         title="Connect Google Calendar"
       >
-        <Link href={calendarConnectUrl("/")}>
-          <CalendarIcon className="size-4 shrink-0 text-primary" />
-          <span className="truncate">Connect Google Calendar</span>
-        </Link>
-      </Button>
+        <div className="flex size-6 shrink-0 items-center justify-center rounded-sm bg-muted">
+          <CalendarIcon className="size-3.5 text-muted-foreground group-hover:text-primary" />
+        </div>
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm font-medium text-foreground/80">
+            Google Calendar
+          </p>
+          <p className="truncate text-xs text-muted-foreground">
+            Connect to sync events
+          </p>
+        </div>
+      </Link>
     ) : (
       <RequestAccessForm status={accessStatus} onRequested={handleRequested} />
     );
@@ -116,24 +117,26 @@ export function CalendarConnectButton({ expanded }: { expanded: boolean }) {
   }
 
   return (
-    <Button
-      asChild
-      variant="ghost"
-      size="icon"
-      className="size-10"
-      title={
-        connected ? "Google Calendar connected" : "Connect Google Calendar"
-      }
-    >
-      {connected ? (
-        <span className="flex size-10 items-center justify-center">
-          <Check className="size-4 text-primary" />
-        </span>
-      ) : (
-        <Link href={calendarConnectUrl("/")}>
-          <CalendarIcon className="size-4" />
-        </Link>
-      )}
-    </Button>
+    <div className="flex justify-center py-1.5">
+      <Button
+        asChild
+        variant="ghost"
+        size="icon"
+        className="size-9"
+        title={
+          connected ? "Google Calendar connected" : "Connect Google Calendar"
+        }
+      >
+        {connected ? (
+          <span className="flex size-9 items-center justify-center">
+            <Check className="size-4 text-primary" />
+          </span>
+        ) : (
+          <Link href={calendarConnectUrl("/")}>
+            <CalendarIcon className="size-4" />
+          </Link>
+        )}
+      </Button>
+    </div>
   );
 }

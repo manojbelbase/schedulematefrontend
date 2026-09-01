@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { LogOut, Settings } from "lucide-react";
+import { LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@ui/components/ui/avatar";
 import {
@@ -13,18 +13,12 @@ import {
 import { Separator } from "@ui/components/ui/separator";
 import { cn } from "@ui/lib/utils";
 
-import { useCalendarConnectionControllerGetConnectionStatus } from "@repo/services/web";
-
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { useAuth } from "@/hooks/use-auth";
 
 export default function UserProfileButton({ expanded }: { expanded: boolean }) {
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
-  const { data } = useCalendarConnectionControllerGetConnectionStatus({});
-
-  const calendarConnected = data?.data.connected ?? false;
-
   const displayName = user?.name || user?.username || "Account";
   const subLabel = user ? `@${user.username ?? user.email}` : undefined;
   const initial = displayName.slice(0, 2).toUpperCase();
@@ -36,12 +30,12 @@ export default function UserProfileButton({ expanded }: { expanded: boolean }) {
           type="button"
           title={user ? `${displayName} · ${subLabel}` : "Account"}
           className={cn(
-            "group flex w-full items-center gap-3 rounded-md border px-2  py-2 text-left transition-colors hover:bg-accent",
+            "group flex w-full items-center gap-2.5 rounded-sm px-2 py-2 text-left transition-all duration-150 hover:bg-sidebar-accent/60 bg-sidebar-accent/40 border-border/40 border",
             !expanded && "justify-center px-0",
           )}
         >
-          <Avatar className="size-8 shrink-0 bg-primary/5 rounded-sm">
-            <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold rounded-sm">
+          <Avatar className="size-8 shrink-0 rounded-sm bg-primary/10">
+            <AvatarFallback className="rounded-sm bg-primary/10 text-xs text-primary">
               {initial}
             </AvatarFallback>
           </Avatar>
@@ -52,8 +46,8 @@ export default function UserProfileButton({ expanded }: { expanded: boolean }) {
               </p>
               {subLabel && (
                 <p className="truncate text-xs text-muted-foreground">
-                  {subLabel.length > 24
-                    ? `${subLabel.slice(0, 22)}…`
+                  {subLabel.length > 28
+                    ? `${subLabel.slice(0, 28)}…`
                     : subLabel}
                 </p>
               )}
@@ -65,11 +59,11 @@ export default function UserProfileButton({ expanded }: { expanded: boolean }) {
         align="start"
         side="right"
         sideOffset={12}
-        className="w-80 overflow-hidden p-0 mb-4 "
+        className="w-72 overflow-hidden p-0 mb-4"
       >
-        <div className="flex items-center gap-3 px-4 py-3.5">
-          <Avatar className="size-10 shrink-0 bg-primary/10 rounded-sm">
-            <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold rounded-sm">
+        <div className="flex items-center gap-3 px-4 py-3">
+          <Avatar className="size-10 shrink-0 rounded-sm bg-primary/10">
+            <AvatarFallback className="rounded-sm bg-primary/10 text-sm font-medium text-primary">
               {initial}
             </AvatarFallback>
           </Avatar>
@@ -83,11 +77,11 @@ export default function UserProfileButton({ expanded }: { expanded: boolean }) {
           </div>
         </div>
         <Separator />
-        <div className="p-1.5">
+        <div className="p-1">
           <ThemeToggle />
           <Link
             href="/auth/logout"
-            className="flex items-center gap-2.5 rounded-md px-2.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-destructive"
+            className="flex items-center gap-2.5 rounded-sm px-2.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
           >
             <LogOut className="size-4" />
             Sign out

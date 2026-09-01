@@ -5,9 +5,9 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   LibraryBig,
+  MessageSquare,
   MessageSquarePlus,
   PanelLeftClose,
-  Plus,
 } from "lucide-react";
 
 import { Button } from "@ui/components/ui/button";
@@ -55,15 +55,16 @@ export default function ChatSidebar({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        "relative flex h-full shrink-0 flex-col justify-between border-r border-border bg-sidebar transition-all ease-in-out duration-300",
-        expanded ? "w-72" : "w-20",
+        "relative flex h-full shrink-0 flex-col justify-between border-r border-border/50 bg-sidebar transition-all duration-200 ease-in-out",
+        expanded ? "w-72" : "w-[72px]",
       )}
     >
       <div className="flex h-full flex-col overflow-hidden">
-        <div className="flex h-16 shrink-0 items-center justify-between border-b border-sidebar-border px-4">
+        {/* Header */}
+        <div className="flex h-14 shrink-0 items-center justify-between px-3">
           {expanded ? (
             <Link href="/" className="min-w-0">
-              <Logo className="scale-[0.6] origin-left" />
+              <Logo className="scale-[0.55] origin-left" />
             </Link>
           ) : (
             <Link href="/" className="mx-auto">
@@ -74,7 +75,7 @@ export default function ChatSidebar({
             variant="ghost"
             size="icon"
             className={cn(
-              "hidden shrink-0 text-muted-foreground",
+              "hidden size-8 shrink-0 text-muted-foreground hover:text-foreground",
               expanded && "flex",
             )}
             onClick={() => setIsExpanded((prev) => !prev)}
@@ -84,24 +85,30 @@ export default function ChatSidebar({
           </Button>
         </div>
 
-        <div className="p-3">
+        {/* New chat */}
+        <div className="px-2 pb-1">
           <Button
             onClick={onNewChat}
-            className={cn("w-full", !expanded && "px-0")}
-            variant="default"
+            className={cn(
+              "w-full gap-2 border-dashed text-muted-foreground hover:text-foreground",
+              !expanded && "px-0 justify-center",
+            )}
+            variant="outline"
+            size="sm"
           >
             <MessageSquarePlus className="size-4 shrink-0" />
             {expanded && <span>New chat</span>}
           </Button>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-3 pb-4">
+        {/* Conversations */}
+        <div className="flex-1 overflow-y-auto px-2 py-1">
           {expanded ? (
             <>
-              <p className="mb-2 px-2 text-xs font-medium text-muted-foreground">
+              <p className="mb-1 px-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
                 Conversations
               </p>
-              <div className="space-y-1">
+              <div className="space-y-0.5">
                 {conversations.map((conversation) => {
                   const isActive = conversation.id === activeConversationId;
                   return (
@@ -110,13 +117,13 @@ export default function ChatSidebar({
                         type="button"
                         onClick={() => onSelectConversation(conversation.id)}
                         className={cn(
-                          "flex w-full items-center gap-2.5 rounded-sm border border-transparent px-3 py-2.5 text-left text-sm transition-colors shadow-none",
+                          "flex w-full items-center gap-2.5 rounded-sm px-2.5 py-2 text-left text-sm transition-all duration-150",
                           isActive
-                            ? "border-sidebar-border bg-sidebar-accent"
-                            : "text-sidebar-foreground hover:bg-sidebar-accent",
+                            ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                            : "text-sidebar-foreground/70 hover:bg-sidebar-accent/60 hover:text-sidebar-foreground",
                         )}
                       >
-                        <MessageSquarePlus className="size-4 shrink-0 text-muted-foreground" />
+                        <MessageSquare className="size-4 shrink-0" />
                         <span className="truncate">{conversation.title}</span>
                       </button>
                       <ModalTrigger<TDeleteItemModalData>
@@ -133,25 +140,39 @@ export default function ChatSidebar({
                           type="button"
                           aria-label={`Delete ${conversation.title}`}
                           className={cn(
-                            "absolute top-1/2 right-1.5 -translate-y-1/2 rounded p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-accent hover:text-destructive group-hover:opacity-100",
+                            "absolute top-1/2 right-1 -translate-y-1/2 rounded p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-destructive/10 hover:text-destructive group-hover:opacity-100",
                             isActive && "opacity-100",
                           )}
                         >
-                          <Plus className="size-3.5 rotate-45" />
+                          <span className="sr-only">Delete</span>
+                          <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 12 12"
+                            fill="none"
+                            className="currentColor"
+                          >
+                            <path
+                              d="M9 3L3 9M3 3l6 6"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                            />
+                          </svg>
                         </button>
                       </ModalTrigger>
                     </div>
                   );
                 })}
                 {conversations.length === 0 && (
-                  <p className="px-3 py-2 text-xs text-muted-foreground">
+                  <p className="px-2 py-3 text-xs text-muted-foreground">
                     No conversations yet
                   </p>
                 )}
               </div>
             </>
           ) : (
-            <div className="flex flex-col items-center gap-1">
+            <div className="flex flex-col items-center gap-1 pt-1">
               {conversations.map((conversation) => {
                 const isActive = conversation.id === activeConversationId;
                 return (
@@ -161,12 +182,12 @@ export default function ChatSidebar({
                     title={conversation.title}
                     onClick={() => onSelectConversation(conversation.id)}
                     className={cn(
-                      "flex size-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground",
+                      "flex size-9 items-center justify-center rounded-sm text-muted-foreground transition-all duration-150 hover:bg-sidebar-accent hover:text-foreground",
                       isActive &&
                         "bg-sidebar-accent text-sidebar-accent-foreground",
                     )}
                   >
-                    <MessageSquarePlus className="size-4" />
+                    <MessageSquare className="size-4" />
                   </button>
                 );
               })}
@@ -174,19 +195,12 @@ export default function ChatSidebar({
           )}
         </div>
 
-        <div className="shrink-0 px-3 py-2">
-          {expanded ? (
-            <div className="space-y-1 rounded-md border border-sidebar-border bg-sidebar/50 p-1.5">
-              <RequestLimitIndicator expanded={expanded} />
-              <CalendarConnectButton expanded={expanded} />
-              <UserProfileButton expanded={expanded} />
-            </div>
-          ) : (
-            <div className="flex flex-col items-center gap-2">
-              <CalendarConnectButton expanded={expanded} />
-              <UserProfileButton expanded={expanded} />
-            </div>
-          )}
+        {/* Bottom section */}
+        <div className="shrink-0 border-t border-border/50 px-2 py-2">
+          <RequestLimitIndicator expanded={expanded} />
+          <CalendarConnectButton expanded={expanded} />
+          <div className="my-1 border-t border-border/30" />
+          <UserProfileButton expanded={expanded} />
         </div>
       </div>
     </aside>
