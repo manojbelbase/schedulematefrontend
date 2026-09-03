@@ -8,6 +8,7 @@
     "format": "prettier --write --ignore-unknown",
     "check-types": "turbo run check-types",
     "prepare": "husky",
+    "test": "turbo run test",
     "generate-types": "pnpm run generate:web && pnpm run generate:backoffice && pnpm run generate:website",
     "generate:web": "openapi-codegen gen --config openapi-codegen.config.ts web",
     "generate:backoffice": "openapi-codegen gen --config openapi-codegen.config.ts backoffice",
