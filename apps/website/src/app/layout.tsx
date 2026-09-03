@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { Poppins } from "next/font/google";
 
+import { SITE } from "~/constants/content";
 import Provider from "~/provider";
 
 const poppins = Poppins({
@@ -14,8 +15,11 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "ScheduledMate",
-  description: "Book appointments, manage schedules, and stay organized.",
+  title: {
+    default: `${SITE.name} — ${SITE.tagline}`,
+    template: `%s | ${SITE.name}`,
+  },
+  description: SITE.description,
 };
 
 export default function Layout({

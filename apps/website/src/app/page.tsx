@@ -1,20 +1,31 @@
-import { Button } from "@ui/components/ui/button";
-import { Badge } from "@ui/components/ui/badge";
+"use client";
+
+import { Footer } from "~/components/footer";
+import { Navbar } from "~/components/navbar";
+import { AppDownload } from "~/components/sections/app-download";
+import { DemoPreview } from "~/components/sections/demo-preview";
+import { Faq } from "~/components/sections/faq";
+import { Features } from "~/components/sections/features";
+import { Hero } from "~/components/sections/hero";
+import { HowItWorks } from "~/components/sections/how-it-works";
+import { Pricing } from "~/components/sections/pricing";
+import { Stats } from "~/components/sections/stats";
 
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-6 p-8 text-center">
-      <Badge variant="default">ScheduledMate</Badge>
-      <h1 className="max-w-2xl text-4xl font-bold tracking-tight sm:text-5xl">
-        Book appointments, manage schedules, and stay organized.
-      </h1>
-      <p className="max-w-xl text-muted-foreground">
-        The easiest way to manage your schedules, appointments, and bookings.
-      </p>
-      <div className="flex gap-4">
-        <Button>Get Started</Button>
-        <Button variant="outline">Learn More</Button>
-      </div>
-    </main>
+    <>
+      <Navbar />
+      <main>
+        <Hero />
+        <Stats />
+        <Features />
+        <DemoPreview />
+        <HowItWorks />
+        <Pricing />
+        <AppDownload />
+        <Faq />
+      </main>
+      <Footer />
+    </>
   );
 }
