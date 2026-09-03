@@ -50,21 +50,21 @@ export function RequestAccessForm({
   return (
     <div className="rounded-sm px-2.5 py-2">
       <div className="flex items-center gap-1.5">
+        <p className="text-xs font-medium text-muted-foreground">
+          Connect calendar
+        </p>
         <Tooltip>
+          <TooltipContent className="max-w-sm text-xs w-fit ml-4 text-justify">
+            This app is in Google test mode, so you can&apos;t connect your
+            calendar directly. Send a request and the developer will add your
+            Google account as a tester.
+          </TooltipContent>
           <TooltipTrigger asChild>
             <span className="inline-flex cursor-help">
               <InfoIcon className="size-3.5 text-muted-foreground" />
             </span>
           </TooltipTrigger>
-          <TooltipContent>
-            This app is in Google test mode, so you can&apos;t connect your
-            calendar directly. Send a request and the developer will add your
-            Google account as a tester.
-          </TooltipContent>
         </Tooltip>
-        <p className="text-xs font-medium text-muted-foreground">
-          Connect calendar
-        </p>
       </div>
       <Button
         type="button"
