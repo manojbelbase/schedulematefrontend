@@ -2,7 +2,10 @@
   "name": "@repo/services",
   "version": "0.0.0",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
   "dependencies": {
     "dotenv": "^17.2.3"
   },
@@ -11,5 +14,8 @@
     "./web": "./src/web/index.ts",
     "./backoffice": "./src/backoffice/index.ts",
     "./website": "./src/website/index.ts"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.11"
   }
 }
