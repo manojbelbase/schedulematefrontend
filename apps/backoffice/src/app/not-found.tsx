@@ -1,4 +1,6 @@
-import Link from "next/link";
+"use client";
+
+import { useRouter } from "next/navigation";
 
 import { Button } from "@ui/components/ui/button";
 
@@ -6,11 +8,17 @@ import Logo from "@/components/logo";
 import { LINKS } from "@/config/links";
 
 export default function NotFound() {
+  const router = useRouter();
+
   return (
     <main className="flex min-h-dvh flex-col items-center justify-center bg-background px-6 text-center">
-      <Link href={LINKS.DASHBOARD} aria-label="ScheduledMate back office home">
+      <button
+        type="button"
+        onClick={() => router.push(LINKS.DASHBOARD)}
+        aria-label="ScheduledMate back office home"
+      >
         <Logo />
-      </Link>
+      </button>
 
       <h1 className="mt-8 font-display bg-gradient-to-r from-violet-600 to-indigo-500 bg-clip-text text-7xl font-bold tracking-tight text-transparent sm:text-8xl">
         404
@@ -22,11 +30,15 @@ export default function NotFound() {
       </p>
 
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-        <Button asChild size="lg">
-          <Link href={LINKS.DASHBOARD}>Go to dashboard</Link>
+        <Button size="lg" onClick={() => router.push(LINKS.DASHBOARD)}>
+          Go to dashboard
         </Button>
-        <Button asChild variant="outline" size="lg">
-          <Link href="/login">Sign in</Link>
+        <Button
+          variant="outline"
+          size="lg"
+          onClick={() => router.push("/login")}
+        >
+          Sign in
         </Button>
       </div>
     </main>
