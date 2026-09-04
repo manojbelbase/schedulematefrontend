@@ -60,7 +60,6 @@ export default function ChatSidebar({
       )}
     >
       <div className="flex h-full flex-col overflow-hidden">
-        {/* Header */}
         <div className="flex h-14 shrink-0 items-center justify-between px-3">
           {expanded ? (
             <Link href="/" className="min-w-0">

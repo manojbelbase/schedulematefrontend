@@ -4,15 +4,11 @@ import { describe, expect, it } from "vitest";
 import Logo from "@/components/logo";
 
 describe("Logo", () => {
-  it("renders ScheduleMate text", () => {
+  it("renders the ScheduleGPT logo image", () => {
     render(<Logo />);
-    expect(screen.getByText("Schedule")).toBeInTheDocument();
-    expect(screen.getByText("Mate")).toBeInTheDocument();
-  });
-
-  it("renders AI badge", () => {
-    render(<Logo />);
-    expect(screen.getByText("AI")).toBeInTheDocument();
+    const img = screen.getByAltText("ScheduleGPT");
+    expect(img).toBeInTheDocument();
+    expect(img.getAttribute("src")).toContain("scheduleGPT.svg");
   });
 
   it("applies custom className", () => {

@@ -15,7 +15,7 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.541 0.281 293.009);
+  --primary: #7c3aed;
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -27,8 +27,8 @@
   --destructive-foreground: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.541 0.281 293.009);
-  --chart-1: oklch(0.541 0.281 293.009);
+  --ring: #7c3aed;
+  --chart-1: #7c3aed;
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
@@ -36,12 +36,12 @@
   --radius: 0.625rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.541 0.281 293.009);
+  --sidebar-primary: #7c3aed;
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.541 0.281 293.009);
+  --sidebar-ring: #7c3aed;
 
   --icon-grey: #333;
   --text-high: #3f444a;
@@ -58,7 +58,7 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.19 0.005 286.3);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.58 0.18 280);
+  --primary: #8b5cf6;
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.24 0.01 286.3);
   --secondary-foreground: oklch(0.985 0 0);
@@ -70,20 +70,20 @@
   --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 14%);
-  --ring: oklch(0.58 0.18 280);
-  --chart-1: oklch(0.58 0.18 280);
+  --ring: #8b5cf6;
+  --chart-1: #8b5cf6;
   --chart-2: oklch(0.6 0.15 160);
   --chart-3: oklch(0.55 0.12 280);
   --chart-4: oklch(0.7 0.15 85);
   --chart-5: oklch(0.68 0.18 30);
   --sidebar: oklch(0.16 0.005 286.3);
   --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.58 0.18 280);
+  --sidebar-primary: #8b5cf6;
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.22 0.01 286.3);
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 12%);
-  --sidebar-ring: oklch(0.58 0.18 280);
+  --sidebar-ring: #8b5cf6;
 
   --color-icon-grey: var(--icon-grey);
   --color-primary: var(--primary);
