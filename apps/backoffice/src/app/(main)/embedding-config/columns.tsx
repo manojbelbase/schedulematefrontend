@@ -72,13 +72,8 @@ export const EMBEDDING_CONFIG_COLUMNS: _ColumnDef<EmbeddingConfigData>[] = [
     cell: ({ row }) => {
       const key = row.original.apiKey;
       if (!key) return <span className="text-muted-foreground">—</span>;
-      const masked =
-        key.length > 4
-          ? `${key.slice(0, 4)}${"\u2022".repeat(key.length - 4)}`
-          : "\u2022".repeat(key.length);
-      return (
-        <span className="font-mono text-sm tracking-widest">{masked}</span>
-      );
+
+      return <span className="font-mono text-sm tracking-widest">{key}</span>;
     },
     size: 200,
   },
