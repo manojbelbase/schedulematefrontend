@@ -13,7 +13,7 @@ export default function Logo({ className }: { className?: string }) {
         width={300}
       />
       <p className="text-4xl font-semibold flex mt-1">
-        Schedule <span className="text-primary">GPT</span>
+        Schedule <span className="text-primary font-extrabold">GPT</span>
       </p>
     </div>
   );
