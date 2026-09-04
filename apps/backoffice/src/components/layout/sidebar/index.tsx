@@ -26,7 +26,6 @@ export default function Sidebar() {
       )}
     >
       <div className="flex h-full flex-col overflow-hidden">
-        {/* Header */}
         <div
           className={cn(
             "flex h-14 shrink-0 items-center justify-between border-b border-border/50 px-3",
@@ -37,7 +36,7 @@ export default function Sidebar() {
             {collapsed ? (
               <LayoutDashboard className="size-5 text-primary" />
             ) : (
-              <Logo className="scale-75 origin-left" />
+              <Logo className="scale-50 origin-left ml-8" />
             )}
           </Link>
           {!collapsed && (
