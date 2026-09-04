@@ -1,6 +1,6 @@
 export const COOKIE_KEYS = {
-  AUTH_COOKIE_KEY: "scheduledmate-token",
-  REFRESH_COOKIE_KEY: "scheduledmate_refresh",
+  AUTH_COOKIE_KEY: "schedulegpt-token",
+  REFRESH_COOKIE_KEY: "schedulegpt_refresh",
 } as const;
 
 export const AUTH_COOKIE_DAYS = 7;

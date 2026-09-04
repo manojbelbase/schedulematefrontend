@@ -43,7 +43,7 @@ describe("ChatWindow", () => {
       <ChatWindow {...defaultProps} messages={messages} isSending={true} />,
     );
     expect(
-      screen.getByText(/ScheduledMate can make mistakes/),
+      screen.getByText(/scheduleGPT can make mistakes/),
     ).toBeInTheDocument();
   });
 

@@ -4,9 +4,9 @@ import { describe, expect, it } from "vitest";
 import Logo from "@/components/logo";
 
 describe("Logo", () => {
-  it("renders the ScheduleGPT logo image", () => {
+  it("renders the scheduleGPT logo image", () => {
     render(<Logo />);
-    const img = screen.getByAltText("ScheduleGPT");
+    const img = screen.getByAltText("scheduleGPT");
     expect(img).toBeInTheDocument();
     expect(img.getAttribute("src")).toContain("scheduleGPT.svg");
   });

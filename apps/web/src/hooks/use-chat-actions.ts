@@ -115,7 +115,6 @@ export function useChatActions({
           await sendChatMessage({
             pathParams: { id: targetId },
             body: {
-              conversationId: targetId,
               content,
               timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
             },

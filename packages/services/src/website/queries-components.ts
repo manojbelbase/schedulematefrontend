@@ -874,7 +874,7 @@ export type CalendarConnectionControllerConnectQueryParams = {
   /**
    * Path to return to after connecting
    *
-   * @default /settings
+   * @default /
    */
   redirect?: string;
 };

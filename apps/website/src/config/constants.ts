@@ -1,4 +1,4 @@
-export const APP_NAME = "ScheduledMate";
+export const APP_NAME = "scheduleGPT";
 export const APP_TAGLINE =
   "Book appointments, manage schedules, and stay organized.";
 

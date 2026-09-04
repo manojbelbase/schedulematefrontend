@@ -1,6 +1,6 @@
 # backoffice
 
-ScheduledMate admin / back office panel (port 3001).
+scheduleGPT admin / back office panel (port 3001).
 
 ## Getting Started
 

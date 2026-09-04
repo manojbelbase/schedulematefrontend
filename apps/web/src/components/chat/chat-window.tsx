@@ -99,7 +99,7 @@ export default function ChatWindow({
             </Button>
           </div>
           <p className="mt-2 text-center text-xs text-muted-foreground">
-            ScheduledMate can make mistakes. Check important info.
+            scheduleGPT can make mistakes. Check important info.
           </p>
         </div>
       </div>

@@ -58,7 +58,7 @@ export function Faq() {
               Frequently asked questions
             </h2>
             <p className="mt-4 max-w-md text-base text-zinc-600">
-              Everything you need to know about ScheduleGPT. Still have
+              Everything you need to know about scheduleGPT. Still have
               questions?
             </p>
             <a
