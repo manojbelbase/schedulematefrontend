@@ -39,7 +39,7 @@ export function RequestAccessForm({
           <p className="truncate text-xs font-medium text-foreground/80">
             Google Calendar
           </p>
-          <p className="truncate text-[11px] text-muted-foreground">
+          <p className="truncate text-xs text-muted-foreground">
             Request pending
           </p>
         </div>

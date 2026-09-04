@@ -98,9 +98,6 @@ export default function ChatWindow({
               <SendHorizonal className="size-4" />
             </Button>
           </div>
-          <p className="mt-2 text-center text-xs text-muted-foreground">
-            scheduleGPT can make mistakes. Check important info.
-          </p>
         </div>
       </div>
     </div>

@@ -34,7 +34,7 @@ export default function RequestLimitIndicator({
   }
 
   return (
-    <div className="mb-1 rounded-sm border border-border/40 bg-sidebar-accent/40 px-3 py-2.5">
+    <div className="mb-1 rounded-sm border border-border bg-sidebar-accent/40 px-3 py-2.5">
       <div className="flex items-center justify-between text-xs">
         <span className="font-medium text-foreground/80">Requests</span>
         <span className="tabular-nums text-muted-foreground">
@@ -47,7 +47,7 @@ export default function RequestLimitIndicator({
           style={{ width: `${percent}%` }}
         />
       </div>
-      <p className="mt-1.5 text-[11px] text-muted-foreground">
+      <p className="mt-1.5 text-xs text-muted-foreground">
         {remaining} remaining
       </p>
     </div>
