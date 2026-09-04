@@ -7,6 +7,7 @@ import {
   useBackofficeAuthControllerMe,
 } from "@repo/services/backoffice";
 
+import { registerApiAuth } from "@/services/api-auth";
 import {
   getAuthToken,
   getRefreshToken,
@@ -16,6 +17,8 @@ import { useAuthStore } from "@/zustand/auth";
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
   const token = useAuthStore((state) => state.token);
+
+  registerApiAuth();
 
   const { data, isPending } = useBackofficeAuthControllerMe(
     {},

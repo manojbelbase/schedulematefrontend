@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { LayoutDashboard, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 
+import { Button } from "@ui/components/ui/button";
 import { cn } from "@ui/lib/utils";
 
 import Logo from "@/components/logo";
@@ -25,7 +26,6 @@ export default function Sidebar() {
       )}
     >
       <div className="flex h-full flex-col overflow-hidden">
-        {/* Header */}
         <div
           className={cn(
             "flex h-14 shrink-0 items-center justify-between border-b border-border/50 px-3",
@@ -36,7 +36,7 @@ export default function Sidebar() {
             {collapsed ? (
               <LayoutDashboard className="size-5 text-primary" />
             ) : (
-              <Logo className="scale-75 origin-left" />
+              <Logo className="scale-50 origin-left ml-8" />
             )}
           </Link>
           {!collapsed && (
@@ -50,18 +50,17 @@ export default function Sidebar() {
             </button>
           )}
           {collapsed && (
-            <button
+            <Button
               type="button"
               onClick={() => setCollapsed(false)}
               className="absolute -right-3 top-20 z-10 flex size-6 items-center justify-center rounded-full border bg-background text-muted-foreground shadow-sm transition-colors hover:text-foreground"
               title="Expand sidebar"
             >
               <PanelLeftOpen className="size-3" />
-            </button>
+            </Button>
           )}
         </div>
 
-        {/* Navigation */}
         <nav className="flex-1 overflow-y-auto px-2 py-3">
           <LinksSection
             sections={SIDEBAR_NAV}
