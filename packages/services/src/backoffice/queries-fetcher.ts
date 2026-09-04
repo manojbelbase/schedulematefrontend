@@ -1,7 +1,7 @@
 import type { QueriesContext } from "./queries-context";
 
 const baseUrl = process.env.NEXT_PUBLIC_BACKOFFICE_API_BASE_URL;
-const AUTH_COOKIE_KEY = "scheduledmate_backoffice_token";
+const AUTH_COOKIE_KEY = "schedulegpt_backoffice_token";
 
 let dynamicHeaderProvider:
   (() => Record<string, string> | Promise<Record<string, string>>) | null =
@@ -114,9 +114,9 @@ export async function queriesFetch<
         redirect("/login");
       } else if (typeof window !== "undefined") {
         document.cookie =
-          "scheduledmate_backoffice_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; SameSite=Lax";
+          "schedulegpt_backoffice_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; SameSite=Lax";
         document.cookie =
-          "scheduledmate_backoffice_refresh=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; SameSite=Lax";
+          "schedulegpt_backoffice_refresh=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; SameSite=Lax";
         window.location.assign("/login");
         return new Promise<never>(() => {
           /**

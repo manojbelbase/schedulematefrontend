@@ -50,7 +50,7 @@ export function Hero() {
                 <div className="rounded-[1.5rem] bg-white overflow-hidden">
                   <div className="bg-[#7c3aed] px-4 py-3">
                     <p className="text-xs font-medium text-white/80">
-                      ScheduleGPT
+                      scheduleGPT
                     </p>
                   </div>
                   <div className="p-4 space-y-3">

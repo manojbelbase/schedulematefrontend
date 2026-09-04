@@ -7,7 +7,7 @@ export default function Logo({ className }: { className?: string }) {
     <div className={cn("flex items-center", className)}>
       <Image
         src="/scheduleGPT.svg"
-        alt="ScheduleGPT"
+        alt="scheduleGPT"
         className="size-16"
         height={300}
         width={300}

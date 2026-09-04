@@ -1,8 +1,8 @@
 export const WHATSAPP_URL =
-  "https://wa.me/9779801234567?text=Hi%20ScheduleGPT%2C%20I%20would%20like%20to%20get%20in%20touch.";
+  "https://wa.me/9779801234567?text=Hi%20scheduleGPT%2C%20I%20would%20like%20to%20get%20in%20touch.";
 
 export const SITE = {
-  name: "ScheduleGPT",
+  name: "scheduleGPT",
   tagline: "AI-Powered Scheduling",
   description:
     "Chat with AI to schedule meetings, book appointments, and manage your Google Calendar effortlessly.",
@@ -139,9 +139,9 @@ export const PRICING = {
 
 export const FAQ = [
   {
-    question: "What is ScheduleGPT?",
+    question: "What is scheduleGPT?",
     answer:
-      "ScheduleGPT is an AI scheduling assistant. You chat with it naturally — like texting a friend — to schedule meetings, book appointments, and manage your Google Calendar.",
+      "scheduleGPT is an AI scheduling assistant. You chat with it naturally — like texting a friend — to schedule meetings, book appointments, and manage your Google Calendar.",
   },
   {
     question: "How does the AI chat work?",
@@ -156,7 +156,7 @@ export const FAQ = [
   {
     question: "Which calendars do you support?",
     answer:
-      "Currently, ScheduleGPT integrates with Google Calendar. The AI reads and writes events directly to your calendar, keeping everything in sync.",
+      "Currently, scheduleGPT integrates with Google Calendar. The AI reads and writes events directly to your calendar, keeping everything in sync.",
   },
   {
     question: "Is my data secure?",
@@ -171,7 +171,7 @@ export const FAQ = [
   {
     question: "Do I need to install anything?",
     answer:
-      "No installation needed. ScheduleGPT works entirely in your web browser. Just sign up, connect your Google Calendar, and start chatting.",
+      "No installation needed. scheduleGPT works entirely in your web browser. Just sign up, connect your Google Calendar, and start chatting.",
   },
   {
     question: "How do I get help?",
@@ -183,7 +183,7 @@ export const FAQ = [
 export const APP_DOWNLOAD = {
   title: "Schedule from anywhere",
   subtitle:
-    "Access ScheduleGPT from your browser on any device. Chat with AI to manage your schedule on the go.",
+    "Access scheduleGPT from your browser on any device. Chat with AI to manage your schedule on the go.",
   features: [
     "Works on desktop, tablet, and mobile",
     "No app download required",
@@ -215,7 +215,7 @@ export const PRIVACY = {
   content: [
     {
       heading: "Introduction",
-      text: "This Privacy Policy explains how ScheduleGPT ('we', 'us', or 'our') collects, uses, and protects your personal information when you use our scheduling application and website.",
+      text: "This Privacy Policy explains how scheduleGPT ('we', 'us', or 'our') collects, uses, and protects your personal information when you use our scheduling application and website.",
     },
     {
       heading: "Information We Collect",
@@ -242,11 +242,11 @@ export const TERMS = {
   content: [
     {
       heading: "Acceptance of Terms",
-      text: "By accessing or using ScheduleGPT, you agree to be bound by these Terms and Conditions. If you do not agree, please do not use the service.",
+      text: "By accessing or using scheduleGPT, you agree to be bound by these Terms and Conditions. If you do not agree, please do not use the service.",
     },
     {
       heading: "Use of Service",
-      text: "ScheduleGPT provides an AI-powered scheduling assistant. You may use the service for lawful purposes only. You are responsible for maintaining the confidentiality of your account.",
+      text: "scheduleGPT provides an AI-powered scheduling assistant. You may use the service for lawful purposes only. You are responsible for maintaining the confidentiality of your account.",
     },
     {
       heading: "AI Assistant",
@@ -258,7 +258,7 @@ export const TERMS = {
     },
     {
       heading: "Intellectual Property",
-      text: "All content, features, and functionality of ScheduleGPT are owned by us and are protected by copyright, trademark, and other intellectual property laws.",
+      text: "All content, features, and functionality of scheduleGPT are owned by us and are protected by copyright, trademark, and other intellectual property laws.",
     },
     {
       heading: "Contact Us",

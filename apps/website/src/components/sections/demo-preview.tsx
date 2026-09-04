@@ -16,7 +16,7 @@ export function DemoPreview() {
             From a chat message to a booked meeting
           </h2>
           <p className="mt-4 text-base text-zinc-400 sm:text-lg">
-            Watch how ScheduleGPT turns a simple chat message into a calendar
+            Watch how scheduleGPT turns a simple chat message into a calendar
             event.
           </p>
         </AnimatedSection>

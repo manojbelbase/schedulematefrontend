@@ -1,6 +1,6 @@
-# ScheduledMate Frontend
+# scheduleGPT Frontend
 
-Turborepo + pnpm monorepo for the ScheduledMate frontend.
+Turborepo + pnpm monorepo for the scheduleGPT frontend.
 
 ## What's inside?
 
