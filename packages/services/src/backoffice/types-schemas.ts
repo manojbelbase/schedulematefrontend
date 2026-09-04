@@ -254,10 +254,6 @@ export type CreateConversationDto = {
 
 export type SendMessageDto = {
   /**
-   * @format uuid
-   */
-  conversationId?: string | null;
-  /**
    * @minLength 1
    * @maxLength 10000
    */
