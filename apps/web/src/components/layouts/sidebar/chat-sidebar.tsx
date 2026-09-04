@@ -62,7 +62,7 @@ export default function ChatSidebar({
       <div className="flex h-full flex-col overflow-hidden">
         <div className="flex h-14 shrink-0 items-center justify-between px-3">
           {expanded ? (
-            <Link href="/" className="min-w-0">
+            <Link href="/" className="min-w-0 ml-4">
               <Logo className="scale-[0.55] origin-left" />
             </Link>
           ) : (
