@@ -8,6 +8,8 @@ import {
 
 import { UsersTable } from "./table";
 
+export const metadata = { title: "Users" };
+
 export default async function UsersPage(props: TQueryParams) {
   const searchParams = await props.searchParams;
   const initialData = await fetchBackofficeControllerListUsers({

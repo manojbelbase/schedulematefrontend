@@ -30,7 +30,7 @@ export default function UserProfileButton({ expanded }: { expanded: boolean }) {
           type="button"
           title={user ? `${displayName} · ${subLabel}` : "Account"}
           className={cn(
-            "group flex w-full items-center gap-2.5 rounded-sm px-2 py-2 text-left transition-all duration-150 hover:bg-sidebar-accent/60 bg-sidebar-accent/40 border-border/40 border",
+            "group flex w-full items-center gap-2.5 rounded-sm px-2 py-2 text-left transition-all duration-150 hover:bg-sidebar-accent/60 bg-sidebar-accent/40 border-border border cursor-pointer",
             !expanded && "justify-center px-0",
           )}
         >

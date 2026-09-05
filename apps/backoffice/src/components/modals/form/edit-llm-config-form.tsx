@@ -230,8 +230,8 @@ export default function EditLlmConfigForm({
                 <FormLabel>API Key</FormLabel>
                 <FormControl>
                   <Input
-                    type="password"
-                    autoComplete="new-password"
+                    type="text"
+                    autoComplete="new-password webauthn"
                     placeholder="sk-..."
                     {...field}
                   />

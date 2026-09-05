@@ -8,6 +8,7 @@ import {
   MessageSquare,
   MessageSquarePlus,
   PanelLeftClose,
+  Trash,
 } from "lucide-react";
 
 import { Button } from "@ui/components/ui/button";
@@ -84,7 +85,6 @@ export default function ChatSidebar({
           </Button>
         </div>
 
-        {/* New chat */}
         <div className="px-2 pb-1">
           <Button
             onClick={onNewChat}
@@ -100,11 +100,10 @@ export default function ChatSidebar({
           </Button>
         </div>
 
-        {/* Conversations */}
         <div className="flex-1 overflow-y-auto px-2 py-1">
           {expanded ? (
             <>
-              <p className="mb-1 px-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+              <p className="mb-1 px-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 Conversations
               </p>
               <div className="space-y-0.5">
@@ -123,7 +122,9 @@ export default function ChatSidebar({
                         )}
                       >
                         <MessageSquare className="size-4 shrink-0" />
-                        <span className="truncate">{conversation.title}</span>
+                        <span className="truncate mr-5">
+                          {conversation.title}
+                        </span>
                       </button>
                       <ModalTrigger<TDeleteItemModalData>
                         modalID="DELETE_MODAL"
@@ -135,30 +136,18 @@ export default function ChatSidebar({
                           name: conversation.title,
                         }}
                       >
-                        <button
+                        <Button
                           type="button"
+                          size={"icon-xs"}
+                          variant={"secondary"}
                           aria-label={`Delete ${conversation.title}`}
                           className={cn(
-                            "absolute top-1/2 right-1 -translate-y-1/2 rounded p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-destructive/10 hover:text-destructive group-hover:opacity-100",
+                            "absolute top-1/2 right-1 -translate-y-1/2 rounded-sm   text-muted-foreground opacity-0 transition-opacity hover:bg-destructive/10 hover:text-destructive group-hover:opacity-100",
                             isActive && "opacity-100",
                           )}
                         >
-                          <span className="sr-only">Delete</span>
-                          <svg
-                            width="12"
-                            height="12"
-                            viewBox="0 0 12 12"
-                            fill="none"
-                            className="currentColor"
-                          >
-                            <path
-                              d="M9 3L3 9M3 3l6 6"
-                              stroke="currentColor"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                            />
-                          </svg>
-                        </button>
+                          <Trash className="size-4" />
+                        </Button>
                       </ModalTrigger>
                     </div>
                   );
@@ -194,11 +183,9 @@ export default function ChatSidebar({
           )}
         </div>
 
-        {/* Bottom section */}
-        <div className="shrink-0 border-t border-border/50 px-2 py-2">
+        <div className="shrink-0 border-t border-border/50 px-2 py-2 space-y-1">
           <RequestLimitIndicator expanded={expanded} />
           <CalendarConnectButton expanded={expanded} />
-          <div className="my-1 border-t border-border/30" />
           <UserProfileButton expanded={expanded} />
         </div>
       </div>

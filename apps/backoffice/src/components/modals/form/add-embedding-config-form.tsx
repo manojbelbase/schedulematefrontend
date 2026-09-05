@@ -202,12 +202,7 @@ export default function AddEmbeddingConfigForm({
               <FormItem>
                 <FormLabel>API Key</FormLabel>
                 <FormControl>
-                  <Input
-                    type="password"
-                    autoComplete="new-password"
-                    placeholder="sk-..."
-                    {...field}
-                  />
+                  <Input type="text" placeholder="sk-..." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -31,16 +31,12 @@ export function CalendarConnectButton({ expanded }: { expanded: boolean }) {
     useCalendarConnectionControllerGetConnectionStatus({});
   const accessQuery = useAccessRequestControllerGetMyAccessRequest({});
   const disconnect = useCalendarConnectionControllerDisconnect(
-    options(
-      undefined,
-      async () => {
-        await queryClient.invalidateQueries({
-          queryKey: calendarConnectionControllerGetConnectionStatusQuery({})
-            .queryKey,
-        });
-      },
-      { successMessage: "Google Calendar disconnected." },
-    ),
+    options(undefined, async () => {
+      await queryClient.invalidateQueries({
+        queryKey: calendarConnectionControllerGetConnectionStatusQuery({})
+          .queryKey,
+      });
+    }),
   );
 
   const connected = data?.data.connected ?? false;
@@ -63,7 +59,7 @@ export function CalendarConnectButton({ expanded }: { expanded: boolean }) {
     }
 
     return connected ? (
-      <div className="group flex items-center gap-2.5 rounded-sm border border-primary/20 bg-primary/5 px-2.5 py-2">
+      <div className="group flex items-center gap-2.5 rounded-sm border border-border  px-2.5 py-2">
         <div className="flex size-6 shrink-0 items-center justify-center rounded-sm bg-primary/10">
           <CalendarX2Icon className="size-3.5 text-primary" />
         </div>
@@ -71,14 +67,14 @@ export function CalendarConnectButton({ expanded }: { expanded: boolean }) {
           <p className="truncate text-xs font-medium text-foreground">
             Google Calendar
           </p>
-          <p className="truncate text-[11px] text-muted-foreground">
-            Connected
-          </p>
+          <p className="truncate text-xs text-muted-foreground">Connected</p>
         </div>
-        <button
+        <Button
           type="button"
+          variant={"outline"}
+          size={"icon-xs"}
           title="Disconnect Google Calendar"
-          className="shrink-0 rounded-sm p-1 text-muted-foreground opacity-0 transition-all hover:bg-destructive/10 hover:text-destructive group-hover:opacity-100"
+          className="shrink-0 rounded p-1 text-muted-foreground opacity-0 transition-all hover:bg-destructive/10 hover:text-destructive group-hover:opacity-100"
           disabled={disconnect.isPending}
           onClick={() => disconnect.mutate({})}
         >
@@ -87,7 +83,7 @@ export function CalendarConnectButton({ expanded }: { expanded: boolean }) {
           ) : (
             <LogOutIcon className="size-3.5" />
           )}
-        </button>
+        </Button>
       </div>
     ) : accessStatus === "approved" ? (
       <Link

@@ -198,8 +198,8 @@ export default function AddLlmConfigForm({ close, setForm }: _TModalProps) {
                 <FormLabel>API Key</FormLabel>
                 <FormControl>
                   <Input
-                    type="password"
-                    autoComplete="new-password"
+                    type="text"
+                    autoComplete="new-password webauthn"
                     placeholder="sk-..."
                     {...field}
                   />

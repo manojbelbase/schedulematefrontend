@@ -5,6 +5,8 @@ import { fetchBackofficeAccessRequestControllerList } from "@repo/services/backo
 
 import { AccessRequestsTable } from "./table";
 
+export const metadata = { title: "Access Requests" };
+
 export default async function AccessRequestsPage(props: TQueryParams) {
   const searchParams = await props.searchParams;
   const initialData = await fetchBackofficeAccessRequestControllerList({

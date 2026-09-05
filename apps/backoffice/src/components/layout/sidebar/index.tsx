@@ -69,7 +69,6 @@ export default function Sidebar() {
           />
         </nav>
 
-        {/* Bottom */}
         <div className="shrink-0 border-t border-border/50 px-2 py-2">
           <ProfilePopover collapsed={collapsed} />
         </div>
