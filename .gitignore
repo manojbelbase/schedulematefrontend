@@ -38,5 +38,5 @@ yarn-error.log*
 *.pem
 
 # MemPalace per-project files 
-mempalace.yaml
-entities.json
+# mempalace.yaml
+# entities.json
