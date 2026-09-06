@@ -143,7 +143,6 @@ export default function ChatSidebar({
                           aria-label={`Delete ${conversation.title}`}
                           className={cn(
                             "absolute top-1/2 right-1 -translate-y-1/2 rounded-sm   text-muted-foreground opacity-0 transition-opacity hover:bg-destructive/10 hover:text-destructive group-hover:opacity-100",
-                            isActive && "opacity-100",
                           )}
                         >
                           <Trash className="size-4" />
