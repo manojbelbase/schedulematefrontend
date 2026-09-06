@@ -36,3 +36,7 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+
+# MemPalace per-project files 
+# mempalace.yaml
+# entities.json
