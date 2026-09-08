@@ -1,8 +1,8 @@
 export const COOKIE_KEYS = {
-  AUTH_COOKIE_KEY: "schedulegpt_backoffice_token",
-  REFRESH_COOKIE_KEY: "schedulegpt_backoffice_refresh",
+  AUTH_COOKIE_KEY: "schedulemate_backoffice_token",
+  REFRESH_COOKIE_KEY: "schedulemate_backoffice_refresh",
   WORKSPACE_ID_COOKIE_KEY: "x-workspace-id",
-  CSRF_TOKEN_KEY: "schedulegpt-csrf-token",
+  CSRF_TOKEN_KEY: "schedulemate-csrf-token",
   SIDEBAR_OPEN_COOKIE_KEY: "sidebar_state",
 };
 export const OTP_LENGTH = 5;

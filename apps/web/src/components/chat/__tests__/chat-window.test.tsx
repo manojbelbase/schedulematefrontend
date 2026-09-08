@@ -42,9 +42,10 @@ describe("ChatWindow", () => {
     render(
       <ChatWindow {...defaultProps} messages={messages} isSending={true} />,
     );
-    expect(
-      screen.getByText(/scheduleGPT can make mistakes/),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Hello")).toBeInTheDocument();
+    expect(document.querySelectorAll(".animate-pulse").length).toBeGreaterThan(
+      0,
+    );
   });
 
   it("calls onSend with trimmed text when send button clicked", () => {

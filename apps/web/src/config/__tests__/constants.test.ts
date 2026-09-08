@@ -8,11 +8,11 @@ import {
 
 describe("COOKIE_KEYS", () => {
   it("has correct auth cookie key", () => {
-    expect(COOKIE_KEYS.AUTH_COOKIE_KEY).toBe("schedulegpt-token");
+    expect(COOKIE_KEYS.AUTH_COOKIE_KEY).toBe("schedulemate-token");
   });
 
   it("has correct refresh cookie key", () => {
-    expect(COOKIE_KEYS.REFRESH_COOKIE_KEY).toBe("schedulegpt_refresh");
+    expect(COOKIE_KEYS.REFRESH_COOKIE_KEY).toBe("schedulemate_refresh");
   });
 });
 

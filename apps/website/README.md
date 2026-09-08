@@ -1,6 +1,6 @@
 # website
 
-scheduleGPT marketing / landing website (port 3002).
+ScheduleMate AI marketing / landing website (port 3002).
 
 ## Getting Started
 

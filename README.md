@@ -1,6 +1,6 @@
-# scheduleGPT Frontend
+# ScheduleMate AI Frontend
 
-Monorepo for the **scheduleGPT** frontend — an AI-powered scheduling assistant built on [Next.js](https://nextjs.org/). It uses [Turborepo](https://turborepo.com/) for task orchestration and [pnpm](https://pnpm.io) workspaces for package management.
+Monorepo for the **ScheduleMate AI** frontend — an AI-powered scheduling assistant built on [Next.js](https://nextjs.org/). It uses [Turborepo](https://turborepo.com/) for task orchestration and [pnpm](https://pnpm.io) workspaces for package management.
 
 ## What's inside?
 

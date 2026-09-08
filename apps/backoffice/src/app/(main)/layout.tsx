@@ -4,8 +4,8 @@ import Sidebar from "@/components/layout/sidebar";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | scheduleGPT Backoffice",
-    default: "scheduleGPT Backoffice",
+    template: "%s | ScheduleMate AI Backoffice",
+    default: "ScheduleMate AI Backoffice",
   },
 };
 

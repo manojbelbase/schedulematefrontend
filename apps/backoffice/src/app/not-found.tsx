@@ -15,7 +15,7 @@ export default function NotFound() {
       <button
         type="button"
         onClick={() => router.push(LINKS.DASHBOARD)}
-        aria-label="scheduleGPT back office home"
+        aria-label="ScheduleMate AI back office home"
       >
         <Logo />
       </button>
