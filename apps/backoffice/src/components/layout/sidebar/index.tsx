@@ -36,14 +36,14 @@ export default function Sidebar() {
             {collapsed ? (
               <LayoutDashboard className="size-5 text-primary" />
             ) : (
-              <Logo className="scale-50 origin-left ml-8" />
+              <Logo className="scale-50 origin-left ml-12" />
             )}
           </Link>
           {!collapsed && (
             <button
               type="button"
               onClick={() => setCollapsed(true)}
-              className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-sidebar-accent/60 hover:text-foreground"
+              className="rounded-sm p-1.5 text-muted-foreground transition-colors hover:bg-sidebar-accent/60 hover:text-foreground"
               title="Collapse sidebar"
             >
               <PanelLeftClose className="size-4" />

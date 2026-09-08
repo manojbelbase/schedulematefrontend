@@ -4,7 +4,6 @@ import { Fragment, type ComponentProps, type ReactNode } from "react";
 import { Plus, type LucideIcon } from "lucide-react";
 
 import { type TOpenParams } from "@ui/context/modal-context";
-import { type Any } from "@ui/types/globals";
 
 import ModalTrigger from "../deployables/trigger";
 import { Button } from "../ui/button";
@@ -60,8 +59,7 @@ export default function AddButton({
   );
 
   if (modal) {
-    // modal is inferred as any here because modal trigger consumes props based on type of deployable opened
-    return <ModalTrigger {...(modal as Any)}>{Component}</ModalTrigger>;
+    return <ModalTrigger {...modal}>{Component}</ModalTrigger>;
   }
 
   return Component;

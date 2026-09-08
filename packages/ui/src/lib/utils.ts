@@ -9,8 +9,6 @@ import clsx, { type ClassValue } from "clsx";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 
-import type { Any } from "@ui/types/globals";
-
 import type { PaginationDTO } from "./pagination";
 
 export function cn(...inputs: ClassValue[]) {
@@ -46,7 +44,7 @@ type TOpts = {
 };
 
 type MutationHandlerOptions = Omit<
-  UseMutationOptions<any, any, any, unknown>,
+  UseMutationOptions<unknown, unknown, unknown, unknown>,
   "mutationFn"
 >;
 
@@ -91,17 +89,18 @@ export const getBackendErrorMessage = (error: unknown): string => {
 
 export const options = <T, Output>(
   setError?: UseFormSetError<T extends FieldValues ? T : FieldValues>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  successCallback?: (data: Output, variables: any) => void | Promise<void>,
+  successCallback?: (data: Output, variables: unknown) => void | Promise<void>,
   opts?: TOpts,
 ): MutationHandlerOptions => ({
   onSuccess(data, variables) {
     if (!opts?.disableDefaultToast) {
-      const message = opts?.successMessage || data?.message;
+      const message =
+        opts?.successMessage ||
+        (data as { message?: string } | undefined)?.message;
       if (message) toast.success(message);
     }
     if (successCallback) {
-      void successCallback(data, variables);
+      void successCallback(data as Output, variables);
     }
   },
   onError(data) {
@@ -282,17 +281,19 @@ export const copyToclipboard = async (text: string) => {
   }
 };
 
-export const filterDirtyData = <T extends Record<string, Any>>(
+export const filterDirtyData = <T extends Record<string, unknown>>(
   data: T,
   dirtyFields?: Partial<FieldNamesMarkedBoolean<T>>,
 ): Partial<T> => {
   const filteredData: Partial<T> = {};
   if (!dirtyFields) return data;
 
-  Object.entries(data).forEach(([key, value]) => {
+  for (const [key, value] of Object.entries(data) as Array<
+    [keyof T, T[keyof T]]
+  >) {
     const isDirty = dirtyFields[key as keyof typeof dirtyFields];
 
-    if (!isDirty) return;
+    if (!isDirty) continue;
 
     if (
       !Array.isArray(isDirty) &&
@@ -300,14 +301,17 @@ export const filterDirtyData = <T extends Record<string, Any>>(
       typeof value === "object" &&
       value !== null
     ) {
-      const nestedFilteredData = filterDirtyData<T>(value, isDirty);
+      const nestedFilteredData = filterDirtyData(
+        value as Record<string, unknown>,
+        isDirty as Partial<FieldNamesMarkedBoolean<Record<string, unknown>>>,
+      );
       if (Object.keys(nestedFilteredData).length > 0) {
-        filteredData[key as keyof T] = nestedFilteredData as T[keyof T];
+        filteredData[key] = nestedFilteredData as T[keyof T];
       }
     } else {
-      filteredData[key as keyof typeof filteredData] = value;
+      filteredData[key] = value;
     }
-  });
+  }
 
   return filteredData;
 };

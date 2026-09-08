@@ -1,11 +1,11 @@
 "use client";
 
-import type { Column, Table } from "@tanstack/react-table";
+import type { AccessorFnColumnDef, Column, Table } from "@tanstack/react-table";
 import ExcelJS from "exceljs";
 import { UploadIcon } from "lucide-react";
 
 import { TABLE_CONSTANTS } from "@ui/config/constants";
-import type { _ColumnDef, Any } from "@ui/types/globals";
+import type { _ColumnDef } from "@ui/types/globals";
 
 import { Button } from "../ui/button";
 
@@ -53,7 +53,7 @@ export default function ExportManager<TData>({
                 ? column.columnDef.header
                 : "";
 
-        const subColumns = (column as Any).columns;
+        const subColumns = column.columns;
         if (subColumns && subColumns.length > 0) {
           const mergeStart = currentColIndex;
           const mergeEnd = currentColIndex + subColumns.length - 1;
@@ -83,15 +83,19 @@ export default function ExportManager<TData>({
       const rowValues =
         columns && columns.length > 0
           ? columns.map((column) => {
-              const accessor =
-                (column as Any).accessorKey || (column as Any).accessorFn;
+              const keyAccessor = (
+                column.columnDef as _ColumnDef<TData, unknown>
+              ).accessorKey;
+              const fnAccessor = (
+                column.columnDef as AccessorFnColumnDef<TData, unknown>
+              ).accessorFn;
               let value;
               if (column.id === TABLE_CONSTANTS.SN_HEADER) {
                 value = idx + 1;
-              } else if (typeof accessor === "function") {
-                value = accessor(rowData);
-              } else if (accessor) {
-                value = rowData[accessor as keyof TData];
+              } else if (fnAccessor) {
+                value = fnAccessor(rowData, idx);
+              } else if (keyAccessor) {
+                value = rowData[keyAccessor as keyof TData];
               } else {
                 value = "";
               }

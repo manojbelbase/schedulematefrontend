@@ -9,12 +9,15 @@ import Trigger, {
   type TTriggerProps,
 } from "@ui/components/deployables/trigger";
 import { cn } from "@ui/lib/utils";
-import type { Any } from "@ui/types/globals";
 
 import { TableBody, TableRow } from "../ui/table";
 import TCellComponent from "./tcell";
 
-export default function TBodyComponent({ table }: { table: Table<Any> }) {
+export default function TBodyComponent<TData>({
+  table,
+}: {
+  table: Table<TData>;
+}) {
   const columnOrder = table.getState().columnOrder;
   const { onRowClick } = table.options.meta || {};
 
@@ -26,16 +29,15 @@ export default function TBodyComponent({ table }: { table: Table<Any> }) {
   return (
     <TableBody>
       {table.getRowModel().rows.map((row, rowIndex) => {
+        const rowTriggerProps = isModalTriggerProps
+          ? ({
+              ...triggerProps,
+              data: { ...row.original, "custom-data": triggerProps.data },
+            } as unknown as TTriggerProps)
+          : triggerProps;
+
         return (
-          <TriggerComponent
-            key={row.id}
-            {...triggerProps}
-            {...(isModalTriggerProps
-              ? {
-                  data: { ...row.original, "custom-data": triggerProps.data },
-                }
-              : {})}
-          >
+          <TriggerComponent key={row.id} {...rowTriggerProps}>
             <TableRow
               className={cn(
                 "even:bg-muted/40 dark:even:bg-muted/40",
@@ -91,6 +93,7 @@ export default function TBodyComponent({ table }: { table: Table<Any> }) {
   );
 }
 
-export const MemoizedTBodyComponent = memo(TBodyComponent, (prev, next) => {
-  return prev.table.options.data === next.table.options.data;
-});
+export const MemoizedTBodyComponent = memo(
+  TBodyComponent,
+  (prev, next) => prev.table.options.data === next.table.options.data,
+) as typeof TBodyComponent;

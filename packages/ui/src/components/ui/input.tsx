@@ -62,10 +62,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {...(type === "number" &&
           !ignoreDefaultOnChange && {
             onChange: (e) =>
-              props.onChange?.(
+              (
+                props.onChange as ((value: string | number) => void) | undefined
+              )?.(
                 Number.isNaN(e.target.valueAsNumber)
                   ? ""
-                  : (e.target.valueAsNumber as any),
+                  : e.target.valueAsNumber,
               ),
           })}
       />

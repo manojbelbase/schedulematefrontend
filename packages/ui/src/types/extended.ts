@@ -1,12 +1,12 @@
 import { type ReactNode } from "react";
-import type { UseFormReturn } from "react-hook-form";
+import { type FieldValues, type UseFormReturn } from "react-hook-form";
 
 import type { TModalContext } from "@ui/context/modal";
 
-import type { Any, TModalVariant } from "./globals";
+import type { TModalVariant } from "./globals";
 
 export type TSetDirtyFn = (
-  form: UseFormReturn<Any, unknown, undefined> | boolean,
+  form: UseFormReturn<FieldValues, unknown, undefined> | boolean,
   ignoredFields?: string[],
 ) => void;
 

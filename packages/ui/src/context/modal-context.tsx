@@ -1,13 +1,16 @@
 "use client";
 
 import { createContext, use, useCallback, useMemo, useState } from "react";
-import type { UseFormReturn } from "react-hook-form";
 
-import type { _TModalProps, Any, TLayoutProps } from "@ui/types/globals";
+import type {
+  _TModalProps,
+  TLayoutProps,
+  TStoredForm,
+} from "@ui/types/globals";
 
 export type TModalData<
   TData extends object = object,
-  TForm extends UseFormReturn<Any> = UseFormReturn<Any>,
+  TForm extends TStoredForm = TStoredForm,
 > = {
   isOpen: boolean;
   data?: TData;
@@ -56,7 +59,7 @@ export type TModalContext = {
   open: (params: TOpenParams) => void;
   close: (modalID: Keys.TModalKeys | Keys.TSheetKeys) => void;
   setForm: (
-    form: UseFormReturn<Any>,
+    form: TStoredForm,
     modalID: Keys.TModalKeys | Keys.TSheetKeys,
   ) => void;
 };

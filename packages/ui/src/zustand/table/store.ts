@@ -10,8 +10,6 @@ import type {
 } from "@tanstack/react-table";
 import { create } from "zustand";
 
-import type { Any } from "@ui/types/globals";
-
 type TTableState = {
   sorting: SortingState;
   columnFilters: ColumnFiltersState;
@@ -125,7 +123,11 @@ export const useTableConfig = (
             ? (updaterOrValue as (old: T) => T)(currentState)
             : updaterOrValue;
 
-        updateTableState(instanceId, key, newValue as Any);
+        updateTableState(
+          instanceId,
+          key,
+          newValue as TTableState[keyof TTableState],
+        );
       };
 
     return {

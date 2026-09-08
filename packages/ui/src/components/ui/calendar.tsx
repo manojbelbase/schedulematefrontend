@@ -14,7 +14,6 @@ import {
 
 import { Button, buttonVariants } from "@ui/components/ui/button";
 import { cn } from "@ui/lib/utils";
-import type { Any } from "@ui/types/globals";
 
 function Calendar({
   className,
@@ -220,7 +219,7 @@ function CalendarDayButton({
         defaultClassNames.day,
         className,
       )}
-      {...(props as Any)}
+      {...(props as React.ComponentProps<typeof Button>)}
     />
   );
 }

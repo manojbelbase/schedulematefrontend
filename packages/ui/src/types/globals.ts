@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import { type UseFormReturn } from "react-hook-form";
+import { type FieldValues, type FormState } from "react-hook-form";
 import type { ColumnDef, DeepKeys } from "@tanstack/react-table";
 import type { SearchParams } from "nuqs";
 
@@ -31,12 +31,14 @@ export type _ColumnDef<TData, TValue = unknown> = ColumnDef<TData, TValue> & {
   exportHeader?: string;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Any = any;
+export type TStoredForm = {
+  reset: () => void;
+  formState: Pick<FormState<FieldValues>, "isDirty" | "isSubmitting">;
+};
 
 export type _TModalProps<TData extends object = object> = {
   close: VoidFunction;
-  setForm: (form: UseFormReturn<Any>) => void;
+  setForm: (form: TStoredForm) => void;
   data: TData;
 } & Pick<TModalContext, "open">;
 
@@ -46,14 +48,14 @@ export enum ModalType {
 }
 
 export type TSheetProps = {
-  component: React.FC<Any>;
+  component: React.ComponentType<Record<string, unknown>>;
   variant: "form" | "warning" | "default";
   className?: string;
   side?: "top" | "right" | "bottom" | "left";
 };
 
 export type TModalProps = {
-  component: React.FC<Any>;
+  component: React.ComponentType<Record<string, unknown>>;
   variant: "form" | "warning" | "default";
   className?: string;
   title?: string;

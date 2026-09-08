@@ -1,27 +1,25 @@
 "use client";
 
-import { type UseFormReturn } from "react-hook-form";
-
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle,
 } from "@ui/components/ui/dialog";
-import { useModalContext } from "@ui/context/modal-context";
+import { useModalContext, type TOpenParams } from "@ui/context/modal-context";
 import { cn } from "@ui/lib/utils";
-import { ModalType, type Any } from "@ui/types/globals";
+import { ModalType, type TStoredForm } from "@ui/types/globals";
 
 type TProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   variant: "form" | "warning" | "default";
-  form?: UseFormReturn<Any>;
+  form?: TStoredForm;
   className?: string;
   title?: string;
   description?: string;
   children: React.ReactNode;
-  EXIT_WARNING_MODAL: Any;
+  EXIT_WARNING_MODAL: Keys.TModalKeys;
 };
 
 export default function Modal({
@@ -45,9 +43,9 @@ export default function Modal({
           close: () => onOpenChange(open),
           closeOpener: () => onOpenChange(open),
 
-          // This is inferred as any because here we won't know the type that EXIT_MODAL will consume
-        } as Any,
-      });
+          // The exit-warning modal consumes this payload; its shape is owned by the registry component.
+        } as Record<string, unknown>,
+      } as TOpenParams);
     } else {
       onOpenChange?.(open);
     }

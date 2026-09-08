@@ -3,7 +3,9 @@
   "mcp": {
     "mempalace": {
       "type": "local",
-      "command": ["mempalace-mcp"],
+      "command": [
+        "mempalace-mcp"
+      ],
       "enabled": true
     }
   }
