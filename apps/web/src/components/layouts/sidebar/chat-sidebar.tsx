@@ -89,7 +89,7 @@ export default function ChatSidebar({
           <Button
             onClick={onNewChat}
             className={cn(
-              "w-full gap-2 border-dashed text-muted-foreground hover:text-foreground",
+              "w-full gap-2 border-border text-muted-foreground rounded-sm hover:text-foreground",
               !expanded && "px-0 justify-center",
             )}
             variant="outline"

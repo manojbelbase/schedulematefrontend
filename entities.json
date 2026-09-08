@@ -1,5 +1,7 @@
 {
-  "people": [],
+  "people": [
+    "Manoj Belbase"
+  ],
   "projects": [
     "schedulemate-frontend",
     "Env"

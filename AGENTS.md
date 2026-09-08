@@ -4,8 +4,8 @@
 
 This repo has a local-first AI memory palace for development context. It is **not** part of the ScheduleMate AI product — it is a dev-tool that lets agents recall past work in this repo across sessions.
 
-- Access: via the `mempalace` MCP server (`opencode.json`). 36 tools are available.
-- Storage: Docker volume `mempalace-data`, palace at `/data/.mempalace` (one local ChromaDB/SQLite store). Nothing leaves the machine.
+- Access: via the `mempalace` MCP server (`opencode.json`, native binary). 36 tools are available.
+- Storage: local palace at `~/.mempalace/palace` (ChromaDB/SQLite). Nothing leaves the machine.
 - Per-project files `mempalace.yaml`, `entities.json` are gitignored (machine-specific).
 - Wing: `work` — rooms `apps`, `packages`, `frontend`, `general`.
 
@@ -31,13 +31,13 @@ This repo has a local-first AI memory palace for development context. It is **no
 
 ```sh
 # overview of what's stored
-docker run --rm -v mempalace-data:/data ghcr.io/mempalace/mempalace status
+mempalace status
 
 # search stored content
-docker run --rm -v mempalace-data:/data ghcr.io/mempalace/mempalace search "turborepo setup"
+mempalace search "turborepo setup"
 
-# re-mine the repo after major changes (mounted read-write so per-project files update)
-docker run --rm -v mempalace-data:/data -v "Z:\schedulematefrontend:/work" ghcr.io/mempalace/mempalace mine /work
+# re-mine the repo after major changes
+mempalace mine /home/manojbelbase/Projects/schedulematefrontend
 ```
 
 Note: `opencode.json` config only loads at opencode startup — restart opencode after editing `opencode.json`.
