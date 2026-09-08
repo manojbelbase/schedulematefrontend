@@ -1,10 +1,9 @@
 "use client";
 
 import { useMemo } from "react";
-import type { UseFormReturn } from "react-hook-form";
 
 import { useModalContext } from "@ui/context/modal-context";
-import { type Any } from "@ui/types/globals";
+import type { TStoredForm } from "@ui/types/globals";
 
 import Sheet from "./sheet";
 
@@ -26,7 +25,9 @@ export default function SheetX({ slot, items, EXIT_WARNING_MODAL }: TProps) {
     return key in items
       ? items[key]
       : {
-          component: (() => null) as React.FC<Any>,
+          component: (() => null) as React.ComponentType<
+            Record<string, unknown>
+          >,
           variant: "default" as const,
           className: "",
           side: "right" as const,
@@ -51,7 +52,7 @@ export default function SheetX({ slot, items, EXIT_WARNING_MODAL }: TProps) {
       }
     };
 
-    const setFormCallback = (form: UseFormReturn<Any>) => {
+    const setFormCallback = (form: TStoredForm) => {
       if (sheetId) setForm(form, sheetId);
 
       return () => {};
@@ -75,7 +76,7 @@ export default function SheetX({ slot, items, EXIT_WARNING_MODAL }: TProps) {
               open,
               data: sheetData,
               setForm: setFormCallback,
-            } as Any)}
+            } as Record<string, unknown>)}
           />
         )}
       </Sheet>

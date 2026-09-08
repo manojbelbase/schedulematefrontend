@@ -1,9 +1,20 @@
 "use client";
 
 import { Button } from "@ui/components/ui/button";
-import type { _TModalProps, Any } from "@ui/types/globals";
+import type { _TModalProps } from "@ui/types/globals";
 
-export default function ConfirmFormExit({ close, data }: _TModalProps<Any>) {
+type TConfirmFormExitData = {
+  ok?: () => void;
+  cancel?: () => void;
+  closeOpener?: () => void;
+  description?: string;
+  [key: string]: unknown;
+};
+
+export default function ConfirmFormExit({
+  close,
+  data,
+}: _TModalProps<TConfirmFormExitData>) {
   const { ok, cancel, closeOpener, description } = data || {};
   return (
     <div className="space-y-4">

@@ -4,6 +4,7 @@ import {
   parseAsString,
   parseAsStringLiteral,
   useQueryStates,
+  type ParserMap,
 } from "nuqs";
 
 import type { TFiltersProps } from "@ui/components/data-table/filters";
@@ -12,12 +13,11 @@ import {
   getFromToByPreset,
   SUPPORTED_PRESET_VALUES,
 } from "@ui/components/input/date-picker";
-import type { Any } from "@ui/types/globals";
 
 export default function useDataTableState(filters: TFiltersProps, now: Date) {
   const stateables = useMemo(
     () =>
-      Object.entries(filters.items || {}).reduce<Record<string, Any>>(
+      Object.entries(filters.items || {}).reduce<ParserMap>(
         (acc, [_, filter]) => {
           if (filter.type === "select") {
             acc[filter.key] = parseAsString.withDefault("");

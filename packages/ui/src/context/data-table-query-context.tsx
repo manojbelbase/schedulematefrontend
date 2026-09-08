@@ -14,13 +14,15 @@ import {
 } from "@ui/components/input/date-picker";
 import { useControllableState } from "@ui/hooks/use-controllable-state";
 import useDataTableState from "@ui/hooks/use-data-table-state";
-import type { Any, TLayoutProps } from "@ui/types/globals";
+import type { TLayoutProps } from "@ui/types/globals";
 
 import { useDataTableContext } from "./data-table-context";
 
+type TQueryState = Record<string, string | Date | null | undefined>;
+
 type TContext = {
-  state: Record<string, Any>;
-  setState: (newState: Record<string, Any>) => void;
+  state: TQueryState;
+  setState: (newState: TQueryState) => void;
   hasValueChanged: boolean;
   clearState: <Type extends TFilterType>(
     type: Type,
@@ -67,14 +69,17 @@ export default function DataTableQueryContextProvider({
   );
 
   const [queryState, setQueryState] = useDataTableState(filters, now);
-  const [localState, setLocalState] = useState<Record<string, Any>>(queryState);
+  const [localState, setLocalState] = useState<TQueryState>(queryState);
 
   const [state, setState] = useControllableState({
     prop: localState,
     defaultProp: queryState,
     onChange: (updated) => {
       setLocalState(updated);
-      if (!onlyLocalState) setQueryState(updated);
+      if (!onlyLocalState)
+        setQueryState(
+          updated as Exclude<Parameters<typeof setQueryState>[0], Function>,
+        );
     },
   });
 
@@ -118,10 +123,10 @@ export default function DataTableQueryContextProvider({
         const defaultValue = getFromToByPreset(defaultPreset, now);
 
         if (key === filter.key.dateFrom) {
-          return value.getTime() !== defaultValue?.from?.getTime();
+          return (value as Date).getTime() !== defaultValue?.from?.getTime();
         }
         if (key === filter.key.dateTo) {
-          return value.getTime() !== defaultValue?.to?.getTime();
+          return (value as Date).getTime() !== defaultValue?.to?.getTime();
         }
         if (key === filter.key.preset) {
           return value !== defaultPreset;
@@ -133,7 +138,7 @@ export default function DataTableQueryContextProvider({
   }, [state, filters, now]);
 
   const clearStates = () => {
-    const newState: Record<string, Any> = {};
+    const newState: TQueryState = {};
 
     Object.entries(filters.items || {}).forEach(([_, filter]) => {
       if (filter.type === "select" || filter.type === "custom") {
@@ -160,7 +165,7 @@ export default function DataTableQueryContextProvider({
     type: Type,
     keys: TFilterKeyByType<Type>,
   ) => {
-    const newState: Record<string, Any> = {};
+    const newState: TQueryState = {};
     const filtersList = Object.values(filters.items || {}) as TFilterItem[];
 
     const matches = (filter: TFilterItem) => {

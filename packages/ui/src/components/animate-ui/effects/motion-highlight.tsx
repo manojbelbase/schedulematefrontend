@@ -33,8 +33,7 @@ type MotionHighlightContextType<T extends string> = {
 };
 
 const MotionHighlightContext = React.createContext<
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  MotionHighlightContextType<any> | undefined
+  MotionHighlightContextType<string> | undefined
 >(undefined);
 
 function useMotionHighlight<T extends string>(): MotionHighlightContextType<T> {
@@ -128,7 +127,7 @@ function MotionHighlight<T extends string>({
   const localRef = React.useRef<HTMLDivElement>(null);
   React.useImperativeHandle(ref, () => localRef.current as HTMLDivElement);
 
-  const [activeValue, setActiveValue] = React.useState<T | null>(
+  const [activeValue, setActiveValue] = React.useState<string | null>(
     value ?? defaultValue ?? null,
   );
   const [boundsState, setBoundsState] = React.useState<Bounds | null>(null);
@@ -136,7 +135,7 @@ function MotionHighlight<T extends string>({
     React.useState<string>("");
 
   const safeSetActiveValue = React.useCallback(
-    (id: T | null) => {
+    (id: string | null) => {
       setActiveValue((prev) => (prev === id ? prev : id));
       if (id !== activeValue) onValueChange?.(id as T);
     },

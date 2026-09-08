@@ -5,10 +5,13 @@ import { AnimatePresence, motion } from "motion/react";
 
 import { useDataTableQueryContext } from "@ui/context/data-table-query-context";
 import { cn, unique } from "@ui/lib/utils";
-import { type Any } from "@ui/types/globals";
 
 import DatePicker, { type TDatePickerProps } from "../input/date-picker";
-import AsyncSelect, { type TOption } from "../input/select/async-select";
+import AsyncSelect, {
+  type FetcherLike,
+  type TFetcherFallback,
+  type TOption,
+} from "../input/select/async-select";
 import OptionSelect, { type TSelectProps } from "../input/select/option-select";
 import { Button } from "../ui/button";
 
@@ -19,7 +22,7 @@ export type TSelectFilter = {
 };
 
 export type TAsyncSelectFilter<
-  Fetcher extends (...args: any[]) => any,
+  Fetcher extends FetcherLike,
   Props = ComponentProps<typeof AsyncSelect<Fetcher>>,
 > = {
   key: {
@@ -47,7 +50,10 @@ export type TCustomFilter<Value = unknown> = {
 };
 
 export type TFilterItem =
-  TSelectFilter | TDateFilter | TCustomFilter | TAsyncSelectFilter<Any>;
+  | TSelectFilter
+  | TDateFilter
+  | TCustomFilter
+  | TAsyncSelectFilter<TFetcherFallback>;
 
 export type TFilterType = TFilterItem["type"];
 
@@ -85,8 +91,8 @@ export default function Filters({
               const value: DateRange | undefined =
                 state[filter.key.dateFrom] || state[filter.key.dateTo]
                   ? {
-                      from: state[filter.key.dateFrom],
-                      to: state[filter.key.dateTo],
+                      from: (state[filter.key.dateFrom] as Date) ?? undefined,
+                      to: (state[filter.key.dateTo] as Date) ?? undefined,
                     }
                   : undefined;
               const pickerValue: TDatePickerProps["value"] = {
@@ -143,7 +149,10 @@ export default function Filters({
                   transition={{ duration: 0.2, delay: index * 0.1 }}
                 >
                   {filter.render(
-                    (value) => setState({ [key]: value }),
+                    (value) =>
+                      setState({
+                        [key]: value as string | Date | null | undefined,
+                      }),
                     state[key],
                   )}
                 </motion.div>
@@ -151,15 +160,17 @@ export default function Filters({
             }
             if (filter.type === "select") {
               const getValue = ({ type }: { type: "single" | "multiple" }) => {
+                const raw = state[filter.key];
                 if (type === "single") {
-                  return typeof state[filter.key] === "string"
-                    ? state[filter.key]
-                    : Array.isArray(state[filter.key])
-                      ? state[filter.key][0]
-                      : "";
+                  if (typeof raw === "string") return raw;
+                  if (Array.isArray(raw)) {
+                    return (raw as string[])[0] ?? "";
+                  }
+                  return "";
                 } else {
-                  return Array.isArray(JSON.parse(state[filter.key] || "[]"))
-                    ? JSON.parse(state[filter.key] || "[]")
+                  const serialized = typeof raw === "string" ? raw : "[]";
+                  return Array.isArray(JSON.parse(serialized))
+                    ? JSON.parse(serialized)
                     : [];
                 }
               };
@@ -185,7 +196,7 @@ export default function Filters({
                         ...state,
                         [filter.key]:
                           filter.props.type === "single"
-                            ? value
+                            ? typeof value === "string"
                               ? value
                               : ""
                             : value.length > 0
@@ -366,7 +377,7 @@ export default function Filters({
   );
 }
 
-export function definePaginatedSelect<Fetcher extends (...args: Any[]) => Any>(
+export function definePaginatedSelect<Fetcher extends FetcherLike>(
   props: ComponentProps<typeof AsyncSelect<Fetcher>>,
 ): TAsyncSelectFilter<Fetcher> {
   return {

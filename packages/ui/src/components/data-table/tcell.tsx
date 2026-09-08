@@ -14,15 +14,14 @@ import ModalTrigger, {
 import { TABLE_CONSTANTS } from "@ui/config/constants";
 import { getCommonPinningStyles } from "@ui/lib/table";
 import { cn } from "@ui/lib/utils";
-import type { Any } from "@ui/types/globals";
 import { useTableUiConfigStore } from "@ui/zustand/table/expandable-textarea";
 
 import { TableCell } from "../ui/table";
 
 type TProps<TData> = {
   cell: Cell<TData, unknown>;
-  table: Table<Any>;
-  row: Row<Any>;
+  table: Table<TData>;
+  row: Row<TData>;
   className?: string;
 };
 
@@ -32,6 +31,12 @@ export default function TCellComponent<TData>({
   row,
   className,
 }: TProps<TData>) {
+  type TRightClickProps = {
+    id: string;
+    row: TData;
+    fromRightClick: boolean;
+    children: React.ReactNode;
+  };
   const { isDragging, setNodeRef, transform } = useSortable({
     id: cell.column.id,
     disabled: !!cell.column.getIsPinned(),
@@ -79,13 +84,17 @@ export default function TCellComponent<TData>({
         : {}) as TTriggerProps)}
     >
       <RightClickComponent
-        {...(idForMenu &&
-          RightClickComponent !== Fragment &&
-          ({
-            fromRightClick: true,
-            id: idForMenu,
-            row: row.original,
-          } as Any))}
+        {...(RightClickComponent !== Fragment
+          ? ({
+              fromRightClick: true,
+              id: idForMenu,
+              row: row.original,
+            } as TRightClickProps)
+          : ({
+              fromRightClick: false,
+              id: idForMenu,
+              row: row.original,
+            } as TRightClickProps))}
       >
         <TableCell
           className={cn(
@@ -202,7 +211,7 @@ export default function TCellComponent<TData>({
 //             fromRightClick: true,
 //             id: idForMenu,
 //             row: row.original,
-//           } as Any))}
+//           } as TRightClickProps))}
 //       >
 //         <TableCell
 //           className={cn(

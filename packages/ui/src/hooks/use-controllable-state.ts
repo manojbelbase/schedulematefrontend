@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import type { Any } from "@ui/types/globals";
-
 import { useLayoutEffect } from "./use-layout-effect";
 
 // Prevent bundlers from trying to optimize the import
 const useInsertionEffect: typeof useLayoutEffect =
-  (React as Any)[" useInsertionEffect ".trim().toString()] || useLayoutEffect;
+  ((React as Record<string, unknown>)[
+    " useInsertionEffect ".trim().toString()
+  ] as typeof useLayoutEffect | undefined) || useLayoutEffect;
 
 type ChangeHandler<T> = (state: T) => void;
 type SetStateFn<T> = React.Dispatch<React.SetStateAction<T>>;
@@ -55,7 +55,10 @@ export function useControllableState<T>({
   const setValue = React.useCallback<SetStateFn<T>>(
     (nextValue) => {
       if (isControlled) {
-        const value = isFunction(nextValue) ? nextValue(prop) : nextValue;
+        const value =
+          typeof nextValue === "function"
+            ? (nextValue as (prev: T) => T)(prop as T)
+            : nextValue;
         if (value !== prop) {
           onChangeRef.current?.(value);
         }
@@ -93,8 +96,4 @@ function useUncontrolledState<T>({
   }, [value, prevValueRef]);
 
   return [value, setValue, onChangeRef];
-}
-
-function isFunction(value: unknown): value is (...args: any[]) => any {
-  return typeof value === "function";
 }

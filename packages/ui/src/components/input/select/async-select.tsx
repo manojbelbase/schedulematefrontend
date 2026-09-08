@@ -35,9 +35,25 @@ import {
   withDefaultPagination,
   type PaginationDTO as PaginationResponseDTO,
 } from "@ui/lib/pagination";
-import { cn, parseInfiniteQueryData } from "@ui/lib/utils";
+import { cn } from "@ui/lib/utils";
 import type { TDeleteItemModalData } from "@ui/types/extended";
-import type { Any } from "@ui/types/globals";
+
+export type TFetcherCallableOptions = {
+  queryParams: Record<string, unknown>;
+  pathParams?: Record<string, unknown>;
+};
+
+export type TFetcherCallableResult = {
+  message: string;
+  data: unknown[];
+  pagination?: PaginationResponseDTO;
+};
+
+export type FetcherLike = (...args: never[]) => Promise<TFetcherCallableResult>;
+
+export type TFetcherFallback = (
+  options?: TFetcherCallableOptions,
+) => Promise<TFetcherCallableResult>;
 
 export type TPaginatedResponse<T> = {
   message: string;
@@ -46,10 +62,9 @@ export type TPaginatedResponse<T> = {
 };
 
 type TFetcher<
-  Fetcher extends (...args: any[]) => any,
-  FetcherParameters extends Parameters<Fetcher>[0] = Parameters<Fetcher>[0],
-  FetcherResponse extends TPaginatedResponse<Awaited<ReturnType<Fetcher>>> =
-    Awaited<ReturnType<Fetcher>>,
+  Fetcher extends FetcherLike,
+  FetcherParameters extends TFetcherCallableOptions = TFetcherCallableOptions,
+  FetcherResponse extends TFetcherCallableResult = Awaited<ReturnType<Fetcher>>,
   Item = FetcherResponse["data"][number],
   SearchQueryKey = FetcherParameters["queryParams"],
 > = {
@@ -120,10 +135,9 @@ type TComponents<Item, Option> = {
 );
 
 type TProps<
-  Fetcher extends (...args: any[]) => any,
+  Fetcher extends FetcherLike,
   _ModalProps extends object,
-  FetcherResponse extends TPaginatedResponse<Awaited<ReturnType<Fetcher>>> =
-    Awaited<ReturnType<Fetcher>>,
+  FetcherResponse extends TFetcherCallableResult = Awaited<ReturnType<Fetcher>>,
   Item = FetcherResponse["data"][number],
   TypeofAsyncSelect extends "single" | "multiple" = "single" | "multiple",
 > = {
@@ -207,16 +221,16 @@ type TCreateHandler = (
       },
 ) => void;
 
-const NULL_FETCHER: TFetcher<any> = {
+const NULL_FETCHER = {
   fn: async () => ({
     message: "No fetcher provided",
-    data: [],
+    data: [] as never[],
     pagination: {
       count: 0,
       total: 0,
     } satisfies PaginationResponseDTO,
   }),
-  queryKey: [],
+  queryKey: [] as string[],
   renderables: {
     getLabelFromItem: () => "",
     getValueFromItem: () => "",
@@ -226,11 +240,9 @@ const NULL_FETCHER: TFetcher<any> = {
 const TAKE = 10;
 
 export default function AsyncSelect<
-  T extends (...args: any[]) => any,
+  T extends FetcherLike,
   _ModalProps extends object = object,
-  FetcherResponse extends TPaginatedResponse<Awaited<ReturnType<T>>> = Awaited<
-    ReturnType<T>
-  >,
+  FetcherResponse extends TFetcherCallableResult = Awaited<ReturnType<T>>,
   Item = FetcherResponse["data"][number],
 >({
   type = "single",
@@ -292,7 +304,10 @@ export default function AsyncSelect<
   const search = useDebounce(input, 300);
 
   const queryable: NonNullable<typeof fetcher> = useMemo(
-    () => fetcher || NULL_FETCHER,
+    () =>
+      fetcher ??
+      // Fallback fetcher only kicks in when no fetcher is provided; it returns an empty page.
+      (NULL_FETCHER as NonNullable<typeof fetcher>),
     [fetcher],
   );
 
@@ -305,7 +320,11 @@ export default function AsyncSelect<
   } = useInfiniteQuery({
     queryKey: [...queryable.queryKey, queryable.search && search ? search : ""],
     queryFn: ({ pageParam }) =>
-      queryable.fn({
+      (
+        queryable.fn as unknown as (
+          options: TFetcherCallableOptions,
+        ) => Promise<TFetcherCallableResult>
+      )({
         queryParams: withDefaultPagination({
           ...(queryable.search && search ? { [queryable.search]: search } : {}),
           ...queryable.params?.queryParams,
@@ -314,17 +333,24 @@ export default function AsyncSelect<
         }),
         pathParams: queryable.params?.pathParams,
       }),
-    getNextPageParam: (data: FetcherResponse) => {
+    getNextPageParam: (data: TFetcherCallableResult) => {
       if (!data || !data.pagination || !("nextPage" in data.pagination))
         return undefined;
-      return data.pagination.nextPage;
+      return data.pagination.nextPage ?? undefined;
     },
     initialPageParam: 0,
     enabled: autoSelectFirst || (open && !!fetcher),
   });
 
   const data = useMemo(
-    () => (fetcher ? parseInfiniteQueryData<Item>(results) : {}),
+    () =>
+      fetcher
+        ? {
+            data: (results?.pages ?? []).flatMap((page) => page.data ?? []),
+            count: results?.pages.at(0)?.data?.length || 0,
+            pagination: results?.pages.at(-1)?.pagination,
+          }
+        : {},
     [results, fetcher],
   );
 
@@ -451,7 +477,8 @@ export default function AsyncSelect<
     return (
       typeof obj === "object" &&
       obj !== null &&
-      (obj as any)["@instanceof"] === Symbol.for("option")
+      (obj as Record<string | symbol, unknown>)["@instanceof"] ===
+        Symbol.for("option")
     );
   }, []);
 
@@ -598,7 +625,7 @@ export default function AsyncSelect<
                   classNames?.trigger,
                 )}
                 data-test-id={id || label || "async-select"}
-                {...(popover?.trigger as any)}
+                {...(popover?.trigger as React.ComponentProps<typeof Button>)}
               >
                 {(prependLabel &&
                   ((!Array.isArray(state) && state.value) ||
@@ -654,7 +681,7 @@ export default function AsyncSelect<
                 classNames?.trigger,
               )}
               data-test-id={id || label || "async-select"}
-              {...(popover?.trigger as any)}
+              {...(popover?.trigger as React.ComponentProps<typeof Button>)}
             >
               {(prependLabel &&
                 ((!Array.isArray(state) && state.value) ||
@@ -849,7 +876,8 @@ export default function AsyncSelect<
                 );
               })}
               {fetcher &&
-                data.data?.map((item) => {
+                data.data?.map((rawItem) => {
+                  const item = rawItem as Item;
                   const label = fetcher.renderables.getLabelFromItem(item);
                   const value = fetcher.renderables.getValueFromItem(item);
                   const icon = fetcher.renderables.getIconFromItem?.(item);
@@ -980,7 +1008,7 @@ export default function AsyncSelect<
             </CommandGroup>
           </CommandList>
           {create?.type === "form" && (
-            <ModalTrigger {...(create.event as Any)}>
+            <ModalTrigger {...(create.event as TTriggerProps)}>
               <Button className="w-full mt-2" variant="secondary">
                 <PlusIcon />
                 {create.label}

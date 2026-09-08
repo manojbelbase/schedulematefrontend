@@ -20,7 +20,7 @@ import PageHeader, {
   type TPageHeaderProps,
 } from "@ui/components/layout/page-header";
 import TabLinks, { type TTabLinksProps } from "@ui/components/layout/tab-links";
-import type { Any, TLayoutProps } from "@ui/types/globals";
+import type { TLayoutProps } from "@ui/types/globals";
 
 type TContext = {
   filters: ReactNode | undefined;
@@ -120,10 +120,10 @@ export function DataTableTabLinks({
   return props ? Component : tabs;
 }
 
-export function DataTableFunctions({
+export function DataTableFunctions<TData>({
   hide,
   props,
-}: TSlot<TFunctionsProps<Any>>) {
+}: TSlot<TFunctionsProps<TData>>) {
   const { setFunctions, functions } = useDataTableContext();
 
   const Component = useMemo(() => <Functions {...props} />, [props]);
@@ -152,10 +152,10 @@ export function DataTableFilters({ hide, props }: TSlot<TFiltersProps>) {
   return props ? Component : filters;
 }
 
-export function DataTableCards({
+export function DataTableCards<TData>({
   hide,
   props,
-}: TSlot<TCardsSectionProps<Any>>) {
+}: TSlot<TCardsSectionProps<TData>>) {
   const { setCards, cards } = useDataTableContext();
 
   const Component = useMemo(

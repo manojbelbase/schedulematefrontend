@@ -22,7 +22,6 @@ import ModalTrigger, {
 } from "@ui/components/deployables/trigger";
 import { Button } from "@ui/components/ui/button";
 import { cn } from "@ui/lib/utils";
-import { type Any } from "@ui/types/globals";
 
 type TLink = {
   path: string;
@@ -119,7 +118,7 @@ export default function ActionButtons({
         {itemsPosition === "first" && items}
         {!fromRightClick && children}
         {view && "modalID" in view && (
-          <ModalTrigger {...(view as Any)}>
+          <ModalTrigger {...(view as TTriggerProps)}>
             <Item
               onContextMenu={(e) => {
                 e.stopPropagation();
@@ -151,7 +150,7 @@ export default function ActionButtons({
           </Item>
         )}
         {edit && "modalID" in edit && (
-          <ModalTrigger {...(edit as Any)}>
+          <ModalTrigger {...(edit as TTriggerProps)}>
             <Item
               onContextMenu={(e) => {
                 e.stopPropagation();
@@ -184,7 +183,7 @@ export default function ActionButtons({
           </Item>
         )}
         {remove && (
-          <ModalTrigger {...(remove as Any)}>
+          <ModalTrigger {...(remove as TTriggerProps)}>
             <Item
               className={cn(
                 "text-red-500 font-medium px-3 hover:text-red-500!",

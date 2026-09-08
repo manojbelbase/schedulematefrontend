@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import type { CellContext, Column, Table } from "@tanstack/react-table";
 
 import { TABLE_CONSTANTS } from "@ui/config/constants";
-import type { _ColumnDef, Any } from "@ui/types/globals";
+import type { _ColumnDef } from "@ui/types/globals";
 
 import { DEFAULT_PAGINATION_FILTER } from "./pagination";
 
@@ -53,10 +53,10 @@ export function getCommonPinningStyles<TData>(
   };
 }
 
-export function columnSizingHandler(
+export function columnSizingHandler<TData>(
   thElem: HTMLElement | null,
-  table: Table<Any>,
-  column: Column<Any>,
+  table: Table<TData>,
+  column: Column<TData>,
 ) {
   if (!thElem) return;
   // If you don't do that, there will be an infinite loop. We update the value in state only if the value has actually changed.

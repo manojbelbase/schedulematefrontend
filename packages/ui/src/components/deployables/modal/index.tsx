@@ -1,10 +1,9 @@
 "use client";
 
 import { useMemo } from "react";
-import type { UseFormReturn } from "react-hook-form";
 
 import { useModalContext } from "@ui/context/modal-context";
-import type { Any } from "@ui/types/globals";
+import type { TStoredForm } from "@ui/types/globals";
 
 import Modal from "./modal";
 
@@ -51,6 +50,12 @@ export default function ModalX({ slot, items, EXIT_WARNING_MODAL }: TProps) {
       description = "",
     } = safeExtract(modalId);
 
+    // The deployed modal components own heterogeneous props; the registry entry is widened so the
+    // generic deployment layer can spread its runtime payload (close/open/data/setForm) over them.
+    const ModalComp = ModalComponent as unknown as React.ComponentType<
+      Record<string, unknown>
+    > | null;
+
     const handleClose = () => {
       if (modalId) {
         close(modalId);
@@ -58,7 +63,7 @@ export default function ModalX({ slot, items, EXIT_WARNING_MODAL }: TProps) {
       }
     };
 
-    const setFormCallback = (form: UseFormReturn<Any>) => {
+    const setFormCallback = (form: TStoredForm) => {
       if (modalId) setForm(form, modalId);
 
       return () => {};
@@ -76,15 +81,15 @@ export default function ModalX({ slot, items, EXIT_WARNING_MODAL }: TProps) {
         className={className}
         EXIT_WARNING_MODAL={EXIT_WARNING_MODAL}
       >
-        {ModalComponent && (
-          <ModalComponent
+        {ModalComp && (
+          <ModalComp
             {...({
               close: handleClose,
               open,
 
               data: modalData,
               setForm: setFormCallback,
-            } as Any)}
+            } as Record<string, unknown>)}
           />
         )}
       </Modal>

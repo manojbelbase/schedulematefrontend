@@ -25,7 +25,10 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import type { TCardsSectionProps } from "@ui/components/cards-section";
+import type {
+  TCardItem,
+  TCardsSectionProps,
+} from "@ui/components/cards-section";
 import {
   Table,
   TableBody,
@@ -291,7 +294,7 @@ function ReactTable<TData, TValue, TStatistics>({
               ...functions,
               table,
               hasEditPermission,
-              cardItems: cards?.items,
+              cardItems: cards?.items as unknown as TCardItem<TData>[],
               headerTitle: header?.title,
             }}
             hide={hide?.includes("FUNCTIONS")}

@@ -1,8 +1,6 @@
-import { type UseFormReturn } from "react-hook-form";
-
 import { Button } from "@ui/components/ui/button";
 import { cn } from "@ui/lib/utils";
-import { type Any } from "@ui/types/globals";
+import type { TStoredForm } from "@ui/types/globals";
 
 export const FormButtons = ({
   form,
@@ -12,7 +10,7 @@ export const FormButtons = ({
   className,
   onReset,
 }: {
-  form: UseFormReturn<Any>;
+  form: TStoredForm;
   className?: string;
   name: string;
   disabled?: boolean;
