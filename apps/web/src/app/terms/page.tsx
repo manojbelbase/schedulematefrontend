@@ -3,21 +3,21 @@ import type { Metadata } from "next";
 import LegalPage from "@/components/legal/legal-page";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — scheduleGPT AI",
+  title: "Terms of Service — ScheduleMate AI",
 };
 
 export default function TermsPage() {
   return (
     <LegalPage title="Terms of Service" lastUpdated="August 31, 2026">
       <p>
-        These Terms of Service ("Terms") govern your use of the scheduleGPT AI
+        These Terms of Service ("Terms") govern your use of the ScheduleMate AI
         app at https://schedulemateweb.vercel.app. By using the app, you agree
         to these Terms.
       </p>
 
       <h2 className="text-base font-semibold">Use of the app</h2>
       <p>
-        You may use scheduleGPT AI to create, manage, and coordinate your
+        You may use ScheduleMate AI to create, manage, and coordinate your
         appointments and schedules. You must be at least 13 years old to use the
         app, and you are responsible for activity under your account.
       </p>

@@ -12,7 +12,9 @@ export default function Logo({ className }: { className?: string }) {
           <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10z" />
         </svg>
       </div>
-      <span className="text-base font-semibold text-zinc-900">scheduleGPT</span>
+      <span className="text-base font-semibold text-zinc-900">
+        ScheduleMate AI
+      </span>
     </div>
   );
 }

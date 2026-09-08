@@ -1,5 +1,5 @@
 {
-  "name": "schedulegpt-frontend",
+  "name": "schedulemate-frontend",
   "private": true,
   "scripts": {
     "build": "turbo run build",

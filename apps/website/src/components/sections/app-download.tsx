@@ -71,7 +71,7 @@ export function AppDownload() {
                 <span className="size-3 rounded-full bg-zinc-200" />
                 <span className="size-3 rounded-full bg-zinc-200" />
                 <span className="ml-2 rounded-md border border-black/5 bg-white px-3 py-1 text-xs text-zinc-400">
-                  app.schedulegpt.app
+                  app.schedulemate.app
                 </span>
               </div>
               <div className="space-y-3 p-5">

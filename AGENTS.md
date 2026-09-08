@@ -2,7 +2,7 @@
 
 ## Project memory (MemPalace)
 
-This repo has a local-first AI memory palace for development context. It is **not** part of the scheduleGPT product — it is a dev-tool that lets agents recall past work in this repo across sessions.
+This repo has a local-first AI memory palace for development context. It is **not** part of the ScheduleMate AI product — it is a dev-tool that lets agents recall past work in this repo across sessions.
 
 - Access: via the `mempalace` MCP server (`opencode.json`). 36 tools are available.
 - Storage: Docker volume `mempalace-data`, palace at `/data/.mempalace` (one local ChromaDB/SQLite store). Nothing leaves the machine.

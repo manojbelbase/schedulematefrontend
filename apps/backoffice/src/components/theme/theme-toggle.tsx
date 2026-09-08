@@ -15,8 +15,7 @@ export function ThemeToggle() {
   const isDark = mounted ? resolvedTheme === "dark" : false;
 
   return (
-    <button
-      type="button"
+    <div
       role="switch"
       aria-checked={isDark}
       aria-label="Toggle theme"
@@ -37,6 +36,6 @@ export function ThemeToggle() {
         checked={isDark}
         onCheckedChange={(v) => setTheme(v ? "dark" : "light")}
       />
-    </button>
+    </div>
   );
 }

@@ -7,7 +7,7 @@ import Logo from "@/components/logo";
 export default function NotFound() {
   return (
     <main className="flex min-h-dvh flex-col items-center justify-center bg-background px-6 text-center">
-      <Link href="/" aria-label="scheduleGPT home">
+      <Link href="/" aria-label="ScheduleMate AI home">
         <Logo />
       </Link>
 

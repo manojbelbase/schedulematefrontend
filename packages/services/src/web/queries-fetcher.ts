@@ -1,7 +1,7 @@
 import type { QueriesContext } from "./queries-context";
 
 const baseUrl = process.env.NEXT_PUBLIC_WEB_API_BASE_URL;
-const AUTH_COOKIE_KEY = "schedulegpt-token";
+const AUTH_COOKIE_KEY = "schedulemate-token";
 
 let dynamicHeaderProvider:
   (() => Record<string, string> | Promise<Record<string, string>>) | null =

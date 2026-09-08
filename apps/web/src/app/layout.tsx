@@ -14,7 +14,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "scheduleGPT",
+  title: "ScheduleMate AI",
   description: "A platform to book and manage your schedules.",
 };
 

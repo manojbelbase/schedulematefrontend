@@ -1,6 +1,6 @@
 # web
 
-scheduleGPT customer-facing web application (port 3000).
+ScheduleMate AI customer-facing web application (port 3000).
 
 ## Getting Started
 

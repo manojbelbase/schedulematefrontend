@@ -15,8 +15,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "scheduleGPT Backoffice",
-  description: "Admin panel for the scheduleGPT platform.",
+  title: "ScheduleMate AI Backoffice",
+  description: "Admin panel for the ScheduleMate AI platform.",
 };
 
 export default function Layout({
