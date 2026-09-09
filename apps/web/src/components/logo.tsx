@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { Badge } from "@ui/components/ui/badge";
 import { cn } from "@ui/lib/utils";
 
 export default function Logo({ className }: { className?: string }) {
@@ -14,7 +15,13 @@ export default function Logo({ className }: { className?: string }) {
       />
       <p className="text-4xl font-semibold flex mt-1">
         Schedule<span className="text-primary font-extrabold">Mate</span>{" "}
-        <span className="text-primary font-extrabold">AI</span>
+        <Badge
+          variant="outline"
+          size={"xs"}
+          className="text-xl px-2.5 ml-1 rounded-sm"
+        >
+          AI
+        </Badge>
       </p>
     </div>
   );

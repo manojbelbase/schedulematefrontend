@@ -81,7 +81,7 @@ export default function ChatWindow({
               placeholder="Ask anything"
               rows={1}
               autoFocus
-              className="field-sizing-content  min-h-10 max-h-[160px] resize-none border-0  px-2.5 py-2 text-sm leading-relaxed shadow-none rounded-full focus-visible:ring-0 bg-transparent placeholder:text-muted-foreground/70"
+              className="field-sizing-content  min-h-10 max-h-[160px] resize-none border-none  px-2.5 py-2 text-sm leading-relaxed shadow-none rounded-full focus-visible:ring-0 bg-transparent placeholder:text-muted-foreground/70"
             />
             <Button
               size="icon"
@@ -89,7 +89,7 @@ export default function ChatWindow({
               disabled={!value.trim() || isSending}
               aria-label="Send message"
               className={cn(
-                "size-8 shrink-0 mb-1 mr-1 rounded-full transition-colors border border-border",
+                "size-8 shrink-0 mb-1 mr-1 rounded-full transition-colors border dark:border-border",
                 value.trim() && !isSending
                   ? "bg-primary text-primary-foreground"
                   : "bg-foreground/20 text-foreground/40",
