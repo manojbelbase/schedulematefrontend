@@ -7,7 +7,7 @@ export default function Logo({ className }: { className?: string }) {
   return (
     <div className={cn("flex items-center justify-center", className)}>
       <Image
-        src="/schedulemate.svg"
+        src="/schedulemate-logo.png"
         alt="ScheduleMate AI"
         className="size-14"
         height={300}

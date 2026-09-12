@@ -8,7 +8,7 @@ describe("Logo", () => {
     render(<Logo />);
     const img = screen.getByAltText("ScheduleMate AI");
     expect(img).toBeInTheDocument();
-    expect(img.getAttribute("src")).toContain("schedulemate.svg");
+    expect(img.getAttribute("src")).toContain("schedulemate-logo.png");
   });
 
   it("applies custom className", () => {

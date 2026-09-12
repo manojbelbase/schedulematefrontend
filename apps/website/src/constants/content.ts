@@ -1,5 +1,5 @@
 export const WHATSAPP_URL =
-  "https://wa.me/9779801234567?text=Hi%20ScheduleMate%20AI%2C%20I%20would%20like%20to%20get%20in%20touch.";
+  "https://wa.me/9864415071?text=Hi%20ScheduleMate%20AI%2C%20I%20would%20like%20to%20get%20in%20touch.";
 
 export const APP_URL = "https://schedulemateweb.vercel.app/";
 
