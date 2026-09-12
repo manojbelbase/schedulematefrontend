@@ -1,20 +1,31 @@
+import Image from "next/image";
+
 import { cn } from "@ui/lib/utils";
 
-export default function Logo({ className }: { className?: string }) {
+export default function Logo({
+  className,
+  dark = false,
+}: {
+  className?: string;
+  dark?: boolean;
+}) {
   return (
-    <div className={cn("flex items-center gap-2", className)}>
-      <div className="flex size-8 items-center justify-center rounded-lg bg-[#7c3aed]">
-        <svg
-          className="size-4 text-white"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-        >
-          <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10z" />
-        </svg>
-      </div>
-      <span className="text-base font-semibold text-zinc-900">
-        ScheduleMate AI
+    <span className={cn("inline-flex items-center gap-2.5", className)}>
+      <Image
+        src="/schedulemate.svg"
+        alt="ScheduleMate AI"
+        width={32}
+        height={32}
+        className="size-8 shrink-0"
+      />
+      <span
+        className={cn(
+          "text-[15px] font-semibold tracking-tight",
+          dark ? "text-white" : "text-zinc-900",
+        )}
+      >
+        ScheduleMate<span className="text-[#7c3aed]">&nbsp;AI</span>
       </span>
-    </div>
+    </span>
   );
 }

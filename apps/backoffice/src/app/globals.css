@@ -1,6 +1,11 @@
 @config "../../tailwind.config.ts";
 @import "@repo/ui/globals.css";
 
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
 .no-scrollbar {
   scrollbar-width: none;
   -ms-overflow-style: none;

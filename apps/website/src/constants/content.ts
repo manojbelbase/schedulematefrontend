@@ -24,13 +24,6 @@ export const HERO = {
   secondaryCta: { label: "See How It Works", href: "#how-it-works" },
 } as const;
 
-export const STATS = [
-  { value: "10", label: "Free AI requests on signup" },
-  { value: "1 click", label: "Google Calendar connection" },
-  { value: "<2 min", label: "From sign-up to first booking" },
-  { value: "100%", label: "In your browser — no install" },
-] as const;
-
 export const FEATURES = [
   {
     icon: "MessageSquare",
@@ -69,6 +62,13 @@ export const FEATURES = [
       "Keep all your scheduling conversations organized. Pick up where you left off in any previous chat.",
   },
 ] as const;
+
+export const PRODUCT = {
+  kicker: "See it in action",
+  title: "A chat that books your calendar",
+  subtitle:
+    "Real screens from the app — book a meeting from a chat message, all through your Google Calendar.",
+} as const;
 
 export const HOW_IT_WORKS = {
   title: "How it works",
@@ -180,17 +180,6 @@ export const FAQ = [
   },
 ] as const;
 
-export const APP_DOWNLOAD = {
-  title: "Schedule from anywhere",
-  subtitle:
-    "Access ScheduleMate AI from your browser on any device. Chat with AI to manage your schedule on the go.",
-  features: [
-    "Works on desktop, tablet, and mobile",
-    "No app download required",
-    "Same experience across all devices",
-  ],
-} as const;
-
 export const FOOTER = {
   description:
     "AI-powered scheduling through chat. Manage your Google Calendar with natural language.",
@@ -207,6 +196,13 @@ export const FOOTER = {
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },
   ],
+} as const;
+
+export const CTA = {
+  title: "Ready to get your schedule under control?",
+  subtitle:
+    "Start free with 10 AI requests on signup. No credit card required.",
+  primaryCta: { label: "Get Started Free", href: "/auth/login" },
 } as const;
 
 export const PRIVACY = {
