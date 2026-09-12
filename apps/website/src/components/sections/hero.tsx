@@ -3,6 +3,7 @@
 import { CalendarDays, CheckCircle2 } from "lucide-react";
 
 import { Button } from "@ui/components/ui/button";
+import { Typewriter } from "@ui/components/ui/typewriter";
 
 import scheduleShot from "~/assets/hero-schedule-chat.png";
 import { AnimatedSection } from "~/components/ui/animated-section";
@@ -22,8 +23,15 @@ export function Hero() {
       />
       <div className="relative mx-auto max-w-6xl">
         <AnimatedSection className="relative mx-auto max-w-3xl text-center">
-          <h1 className="text-balance whitespace-pre-line text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl sm:leading-[1.08] lg:text-[3.5rem] lg:leading-[1.05]">
-            {HERO.title}
+          <h1 className="text-balance text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl sm:leading-[1.08] lg:text-[3.5rem] lg:leading-[1.05]">
+            <span className="block">
+              Your{" "}
+              <Typewriter
+                words={["meetings", "events", "plans"]}
+                className="text-primary"
+              />
+            </span>
+            <span className="block">managed by chat.</span>
           </h1>
 
           <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-zinc-600 sm:text-lg">

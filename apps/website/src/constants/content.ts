@@ -19,7 +19,6 @@ export const NAV_LINKS = [
 
 export const HERO = {
   badge: "Early access — 10 free requests",
-  title: "Your schedule,\nmanaged by chat.",
   subtitleIntro: "Stop juggling calendars. Just tell the AI what you need — ",
   subtitleQuote: "Book a meeting with Sarah Thursday at 3 PM",
   subtitleOutro: " — and it's done. Connects to your Google Calendar.",
