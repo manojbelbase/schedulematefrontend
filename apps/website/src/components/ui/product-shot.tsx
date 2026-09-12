@@ -1,19 +1,19 @@
 "use client";
 
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { useState, type ReactNode } from "react";
 
 type ProductShotProps = {
-  src: string;
+  src: string | StaticImageData;
   alt: string;
-  fallback: ReactNode;
+  fallback?: ReactNode;
   priority?: boolean;
 };
 
 export function ProductShot({
   src,
   alt,
-  fallback,
+  fallback = null,
   priority = false,
 }: ProductShotProps) {
   const [failed, setFailed] = useState(false);
@@ -26,8 +26,8 @@ export function ProductShot({
         <Image
           src={src}
           alt={alt}
-          width={1280}
-          height={860}
+          width={1920}
+          height={1048}
           unoptimized
           priority={priority}
           onError={() => setFailed(true)}

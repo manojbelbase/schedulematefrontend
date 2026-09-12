@@ -8,7 +8,7 @@ import { CTA } from "~/constants/content";
 
 export function CtaBanner() {
   return (
-    <section className="border-t border-zinc-100 px-4 py-24 sm:px-6 lg:px-8">
+    <section className="border-t border-zinc-100 px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <AnimatedSection className="mx-auto max-w-3xl text-center">
           <WeekStrip className="mx-auto mb-8" />

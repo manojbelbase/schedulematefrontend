@@ -13,7 +13,7 @@ export default function PrivacyPage() {
   return (
     <>
       <Navbar />
-      <main className="mx-auto max-w-2xl px-4 py-20 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-2xl px-4 py-14 sm:py-20 sm:px-6 lg:px-8">
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-950">
           {PRIVACY.title}
         </h1>
