@@ -15,7 +15,7 @@ export function Pricing() {
   return (
     <section
       id="pricing"
-      className="relative scroll-mt-20 overflow-hidden border-t border-zinc-100 bg-zinc-50/60 px-4 py-24 sm:px-6 lg:px-8"
+      className="relative scroll-mt-20 overflow-hidden border-t border-zinc-100 bg-zinc-50/60 px-4 py-16 sm:px-6 sm:py-24 lg:px-8"
     >
       <div
         aria-hidden
@@ -38,11 +38,11 @@ export function Pricing() {
           </p>
         </AnimatedSection>
 
-        <StaggerContainer className="mt-14 grid max-w-6xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <StaggerContainer className="mt-10 grid max-w-6xl gap-5 sm:mt-14 sm:grid-cols-2 lg:grid-cols-3">
           {PRICING.plans.map((plan) => (
             <StaggerItem key={plan.name} className="flex">
               <div
-                className={`flex w-full flex-col rounded-xl border bg-white p-7 ${
+                className={`flex w-full flex-col rounded-xl border bg-white p-6 sm:p-7 ${
                   plan.featured
                     ? "border-[#7c3aed]/30 shadow-sm ring-1 ring-[#7c3aed]/15"
                     : "border-zinc-200"

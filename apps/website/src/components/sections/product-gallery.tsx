@@ -55,7 +55,10 @@ function CalendarFallback() {
 
 export function ProductGallery() {
   return (
-    <section id="product" className="scroll-mt-20 px-4 py-24 sm:px-6 lg:px-8">
+    <section
+      id="product"
+      className="scroll-mt-20 px-4 py-16 sm:px-6 sm:py-24 lg:px-8"
+    >
       <div className="mx-auto max-w-6xl">
         <AnimatedSection className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
@@ -69,7 +72,7 @@ export function ProductGallery() {
           </p>
         </AnimatedSection>
 
-        <div className="mt-16 space-y-20">
+        <div className="mt-12 space-y-16 sm:mt-16 sm:space-y-20">
           <AnimatedSection>
             <div className="grid items-center gap-10 lg:grid-cols-2">
               <div>

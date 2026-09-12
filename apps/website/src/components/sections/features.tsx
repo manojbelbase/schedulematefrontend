@@ -30,7 +30,7 @@ export function Features() {
   return (
     <section
       id="features"
-      className="relative scroll-mt-20 border-t border-zinc-100 px-4 py-24 sm:px-6 lg:px-8"
+      className="relative scroll-mt-20 border-t border-zinc-100 px-4 py-16 sm:px-6 sm:py-24 lg:px-8"
     >
       <WeekStrip className="absolute right-10 top-14 hidden opacity-50 lg:flex" />
       <div className="mx-auto max-w-6xl">
@@ -47,7 +47,7 @@ export function Features() {
           </p>
         </AnimatedSection>
 
-        <StaggerContainer className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <StaggerContainer className="mt-10 grid gap-5 sm:mt-14 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map((feature) => {
             const Icon = iconMap[feature.icon as keyof typeof iconMap];
             return (

@@ -1,5 +1,7 @@
 "use client";
 
+import { CalendarDays, CheckCircle2 } from "lucide-react";
+
 import { Button } from "@ui/components/ui/button";
 
 import scheduleShot from "~/assets/hero-schedule-chat.png";
@@ -9,30 +11,32 @@ import { HERO } from "~/constants/content";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-zinc-200/70 bg-[#f6f3fc] px-4 pb-16 pt-20 sm:px-6 lg:px-8">
+    <section className="relative overflow-hidden border-b border-zinc-200/70 bg-[#f6f3fc] px-4 pb-16 pt-16 sm:px-6 sm:pt-24 lg:px-8">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(124,58,237,0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgba(124,58,237,0.07)_1px,transparent_1px)] bg-[size:44px_44px] [mask-image:radial-gradient(70%_65%_at_50%_0%,black,transparent_75%)]"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(124,58,237,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(124,58,237,0.05)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(75%_65%_at_50%_0%,black,transparent_80%)]"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(60%_100%_at_50%_0%,rgba(124,58,237,0.12),transparent_70%)]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(50%_100%_at_50%_0%,rgba(124,58,237,0.1),transparent_70%)]"
       />
       <div className="relative mx-auto max-w-6xl">
-        <AnimatedSection className="mx-auto max-w-3xl text-center">
-          <h1 className="text-balance whitespace-pre-line text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl lg:text-[3.75rem] lg:leading-[1.05]">
+        <AnimatedSection className="relative mx-auto max-w-3xl text-center">
+          <h1 className="text-balance whitespace-pre-line text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl sm:leading-[1.08] lg:text-[3.5rem] lg:leading-[1.05]">
             {HERO.title}
           </h1>
 
-          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-zinc-600">
-            {HERO.subtitle}
+          <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-zinc-600 sm:text-lg">
+            {HERO.subtitleIntro}
+            <em className="italic text-zinc-700">{`'${HERO.subtitleQuote}'`}</em>
+            {HERO.subtitleOutro}
           </p>
 
-          <div className="mt-8 flex items-center justify-center">
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button
               size="lg"
               asChild
-              className="h-12 rounded-sm border-0 bg-zinc-900 px-7 text-sm font-medium text-white hover:bg-zinc-800"
+              className="h-11 w-full rounded-sm bg-primary px-6 text-sm font-medium text-white shadow-[0_12px_30px_-12px_rgba(124,58,237,0.6)] hover:bg-primary/90 sm:w-auto"
             >
               <a
                 href={HERO.primaryCta.href}
@@ -42,26 +46,59 @@ export function Hero() {
                 {HERO.primaryCta.label}
               </a>
             </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              asChild
+              className="h-11 w-full rounded-sm border-zinc-300 bg-white px-6 text-sm font-medium text-zinc-900 hover:bg-zinc-50 sm:w-auto"
+            >
+              <a href={HERO.secondaryCta.href}>{HERO.secondaryCta.label}</a>
+            </Button>
           </div>
         </AnimatedSection>
 
         <AnimatedSection
           delay={0.12}
-          className="relative mx-auto mt-12 max-w-6xl"
+          className="relative mx-auto mt-10 max-w-6xl sm:mt-16 lg:mt-20"
         >
           <div
             aria-hidden
-            className="absolute -top-10 left-[5%] -z-10 size-40 rounded-full bg-primary/15 blur-3xl"
+            className="pointer-events-none absolute -top-16 left-1/2 -z-10 h-56 w-[560px] max-w-full -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(124,58,237,0.16),transparent_70%)] blur-2xl"
           />
           <div
             aria-hidden
-            className="absolute -right-8 top-1/3 -z-10 size-56 rounded-full bg-[radial-gradient(circle_at_center,rgba(124,58,237,0.18),transparent_65%)] blur-2xl"
+            className="pointer-events-none absolute -top-10 left-1/2 -z-10 h-72 w-[520px] max-w-full -translate-x-1/2 rounded-full border border-primary/15 [mask-image:linear-gradient(to_bottom,black,transparent_85%)]"
           />
-          <ProductShot
-            src={scheduleShot}
-            alt="ScheduleMate AI booking a meeting in chat"
-            priority
-          />
+
+          <div className="relative">
+            <div className="absolute -left-3 -top-5 z-10 hidden items-center gap-2.5 rounded-lg border border-zinc-200 bg-white/90 p-2.5 pr-4 shadow-sm backdrop-blur sm:flex lg:-left-10">
+              <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary/10">
+                <CalendarDays className="size-4 text-primary" />
+              </span>
+              <div className="text-left">
+                <p className="text-xs font-semibold text-zinc-900">
+                  Google Calendar synced
+                </p>
+                <p className="text-[11px] leading-tight text-zinc-500">
+                  Reading your availability
+                </p>
+              </div>
+            </div>
+
+            <div className="absolute -right-3 -top-6 z-10 hidden items-center gap-2 rounded-lg border border-zinc-200 bg-white/90 px-3.5 py-2.5 shadow-sm backdrop-blur sm:flex lg:-right-8">
+              <CheckCircle2 className="size-4 text-primary" />
+              <p className="text-xs font-semibold text-zinc-900">
+                Meeting confirmed for{" "}
+                <span className="text-primary">Thu 3:00 PM</span>
+              </p>
+            </div>
+
+            <ProductShot
+              src={scheduleShot}
+              alt="ScheduleMate AI booking a meeting in chat"
+              priority
+            />
+          </div>
         </AnimatedSection>
       </div>
     </section>

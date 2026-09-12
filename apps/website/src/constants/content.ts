@@ -20,8 +20,9 @@ export const NAV_LINKS = [
 export const HERO = {
   badge: "Early access — 10 free requests",
   title: "Your schedule,\nmanaged by chat.",
-  subtitle:
-    "Stop juggling calendars. Just tell the AI what you need — 'Book a meeting with Sarah Thursday at 3 PM' — and it's done. Connects to your Google Calendar.",
+  subtitleIntro: "Stop juggling calendars. Just tell the AI what you need — ",
+  subtitleQuote: "Book a meeting with Sarah Thursday at 3 PM",
+  subtitleOutro: " — and it's done. Connects to your Google Calendar.",
   primaryCta: { label: "Get Started Free", href: APP_URL },
   secondaryCta: { label: "See How It Works", href: "#how-it-works" },
 } as const;

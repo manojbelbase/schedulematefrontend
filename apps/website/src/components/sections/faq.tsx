@@ -47,7 +47,10 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
 
 export function Faq() {
   return (
-    <section id="faq" className="scroll-mt-20 px-4 py-24 sm:px-6 lg:px-8">
+    <section
+      id="faq"
+      className="scroll-mt-20 px-4 py-16 sm:px-6 sm:py-24 lg:px-8"
+    >
       <div className="mx-auto max-w-2xl">
         <AnimatedSection className="text-center">
           <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
@@ -58,13 +61,16 @@ export function Faq() {
           </h2>
         </AnimatedSection>
 
-        <AnimatedSection delay={0.1} className="mt-12 border-t border-zinc-200">
+        <AnimatedSection
+          delay={0.1}
+          className="mt-10 border-t border-zinc-200 sm:mt-12"
+        >
           {FAQ.map((item) => (
             <FaqItem key={item.question} {...item} />
           ))}
         </AnimatedSection>
 
-        <AnimatedSection delay={0.15} className="mt-12 text-center">
+        <AnimatedSection delay={0.15} className="mt-10 text-center sm:mt-12">
           <p className="text-sm text-zinc-600">Still have questions?</p>
           <a
             href={WHATSAPP_URL}
