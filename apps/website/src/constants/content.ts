@@ -73,7 +73,7 @@ export const PRODUCT = {
 } as const;
 
 export const HOW_IT_WORKS = {
-  title: "How it works",
+  title: "From chat to booked in three steps",
   subtitle:
     "From sign-up to your first AI-scheduled meeting in under 2 minutes.",
   steps: [
@@ -102,6 +102,7 @@ export const HOW_IT_WORKS = {
 } as const;
 
 export const PRICING = {
+  kicker: "Pricing",
   title: "Simple plans with room to grow",
   subtitle:
     "Start with a free trial, then pick the plan that fits your club — cloud sync, staff tools, and capacity as you scale.",

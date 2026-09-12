@@ -27,7 +27,10 @@ export function Pricing() {
       />
       <div className="relative mx-auto max-w-6xl">
         <AnimatedSection className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl">
+          <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
+            {PRICING.kicker}
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl">
             {PRICING.title}
           </h2>
           <p className="mt-4 text-base leading-relaxed text-zinc-600">

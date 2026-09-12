@@ -3,6 +3,7 @@
 import { Button } from "@ui/components/ui/button";
 
 import { AnimatedSection } from "~/components/ui/animated-section";
+import { WeekStrip } from "~/components/ui/week-strip";
 import { CTA } from "~/constants/content";
 
 export function CtaBanner() {
@@ -10,6 +11,7 @@ export function CtaBanner() {
     <section className="border-t border-zinc-100 px-4 py-24 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <AnimatedSection className="mx-auto max-w-3xl text-center">
+          <WeekStrip className="mx-auto mb-8" />
           <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl">
             {CTA.title}
           </h2>
