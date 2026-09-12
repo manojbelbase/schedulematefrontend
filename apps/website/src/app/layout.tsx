@@ -2,17 +2,10 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 
-import { Poppins } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
 
 import { SITE } from "~/constants/content";
 import Provider from "~/provider";
-
-const poppins = Poppins({
-  weight: ["400", "500", "600", "700"],
-  subsets: ["latin"],
-  variable: "--font-poppins",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: {
@@ -28,7 +21,11 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={poppins.variable}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${GeistSans.variable} scroll-smooth`}
+    >
       <body className="antialiased">
         <Provider>{children}</Provider>
       </body>

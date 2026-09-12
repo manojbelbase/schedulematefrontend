@@ -2,37 +2,23 @@
 
 import Link from "next/link";
 
+import Logo from "~/components/ui/logo";
 import { FOOTER, SITE } from "~/constants/content";
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-zinc-950 px-4 py-16 sm:px-6 lg:px-8">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(124,58,237,0.1),transparent_55%)]" />
-
-      <div className="relative mx-auto max-w-6xl">
+    <footer className="bg-zinc-950 px-4 py-16 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2">
-              <div className="flex size-8 items-center justify-center rounded-lg bg-[#7c3aed]">
-                <svg
-                  className="size-4 text-white"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10z" />
-                </svg>
-              </div>
-              <span className="text-base font-semibold text-white">
-                {SITE.name}
-              </span>
-            </div>
-            <p className="mt-4 max-w-xs text-sm text-zinc-400 leading-relaxed">
+            <Logo dark />
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-zinc-400">
               {FOOTER.description}
             </p>
           </div>
 
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-[#7c3aed]/80">
+            <h3 className="text-xs font-medium uppercase tracking-wider text-zinc-500">
               Product
             </h3>
             <ul className="mt-4 space-y-2.5">
@@ -40,7 +26,7 @@ export function Footer() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-sm text-zinc-400 hover:text-white transition-colors"
+                    className="text-sm text-zinc-400 transition-colors hover:text-white"
                   >
                     {link.label}
                   </a>
@@ -50,7 +36,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-[#7c3aed]/80">
+            <h3 className="text-xs font-medium uppercase tracking-wider text-zinc-500">
               Resources
             </h3>
             <ul className="mt-4 space-y-2.5">
@@ -58,7 +44,7 @@ export function Footer() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-sm text-zinc-400 hover:text-white transition-colors"
+                    className="text-sm text-zinc-400 transition-colors hover:text-white"
                   >
                     {link.label}
                   </a>
@@ -68,7 +54,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-[#7c3aed]/80">
+            <h3 className="text-xs font-medium uppercase tracking-wider text-zinc-500">
               Legal
             </h3>
             <ul className="mt-4 space-y-2.5">
@@ -76,7 +62,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-zinc-400 hover:text-white transition-colors"
+                    className="text-sm text-zinc-400 transition-colors hover:text-white"
                   >
                     {link.label}
                   </Link>
