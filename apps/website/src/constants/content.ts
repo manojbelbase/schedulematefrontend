@@ -108,9 +108,10 @@ export const PRICING = {
     "Start with a free trial, then pick the plan that fits your club — cloud sync, staff tools, and capacity as you scale.",
   plans: [
     {
-      name: "Free",
+      name: "Legend",
       price: "$0",
       period: "forever",
+      tagline: "Legend for free",
       description: "Everything you need to try AI scheduling.",
       features: [
         "10 AI scheduling requests",
@@ -123,9 +124,26 @@ export const PRICING = {
       featured: true,
     },
     {
+      name: "Pioneer",
+      price: "$9",
+      period: "month",
+      tagline: "For solo schedulers who want more",
+      description: "For busy professionals who outgrow the free plan.",
+      features: [
+        "50 AI scheduling requests",
+        "Google Calendar sync",
+        "Multi-participant meetings",
+        "Conversation history",
+        "Priority booking speed",
+      ],
+      cta: { label: "Start Free Trial", href: APP_URL },
+      featured: false,
+    },
+    {
       name: "Early Access",
       price: "Soon",
       period: "",
+      tagline: "Be first in line",
       description: "For power users who want more, sooner.",
       features: [
         "More AI requests",

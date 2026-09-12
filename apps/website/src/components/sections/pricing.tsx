@@ -38,7 +38,7 @@ export function Pricing() {
           </p>
         </AnimatedSection>
 
-        <StaggerContainer className="mt-14 grid max-w-6xl gap-5 sm:grid-cols-2">
+        <StaggerContainer className="mt-14 grid max-w-6xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {PRICING.plans.map((plan) => (
             <StaggerItem key={plan.name} className="flex">
               <div
@@ -69,7 +69,14 @@ export function Pricing() {
                     </span>
                   )}
                 </div>
-                <p className="mt-2 text-sm text-zinc-500">{plan.description}</p>
+                {plan.tagline && (
+                  <p className="mt-1.5 text-xs font-medium uppercase tracking-wider text-primary">
+                    {plan.tagline}
+                  </p>
+                )}
+                <p className="mt-3 text-sm leading-relaxed text-zinc-500">
+                  {plan.description}
+                </p>
 
                 <ul className="mt-6 flex-1 space-y-2.5">
                   {plan.features.map((feature) => (
