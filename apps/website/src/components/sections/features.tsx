@@ -14,6 +14,7 @@ import {
   StaggerContainer,
   StaggerItem,
 } from "~/components/ui/animated-section";
+import { WeekStrip } from "~/components/ui/week-strip";
 import { FEATURES } from "~/constants/content";
 
 const iconMap = {
@@ -29,8 +30,9 @@ export function Features() {
   return (
     <section
       id="features"
-      className="scroll-mt-20 border-t border-zinc-100 px-4 py-24 sm:px-6 lg:px-8"
+      className="relative scroll-mt-20 border-t border-zinc-100 px-4 py-24 sm:px-6 lg:px-8"
     >
+      <WeekStrip className="absolute right-10 top-14 hidden opacity-50 lg:flex" />
       <div className="mx-auto max-w-6xl">
         <AnimatedSection className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
