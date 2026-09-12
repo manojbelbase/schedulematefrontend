@@ -8,42 +8,21 @@ import {
 } from "lucide-react";
 
 import { AnimatedSection } from "~/components/ui/animated-section";
+import { BookingChatCard } from "~/components/ui/booking-chat-card";
 import { ProductShot } from "~/components/ui/product-shot";
 import { PRODUCT } from "~/constants/content";
 
 function BookingFallback() {
   return (
-    <div className="flex aspect-[1280/860] w-full items-center justify-center bg-zinc-50 p-10">
-      <div className="w-full max-w-sm rounded-xl border border-zinc-200 bg-white p-5 shadow-sm">
-        <div className="flex items-center justify-between border-b border-zinc-100 pb-3 text-xs">
-          <span className="text-zinc-400">ScheduleMate AI</span>
-          <span className="inline-flex items-center gap-1.5 font-medium text-zinc-500">
-            <span className="size-1.5 rounded-full bg-emerald-500" />
-            Online
-          </span>
-        </div>
-        <div className="space-y-3 pt-4">
-          <div className="ml-auto w-fit max-w-[90%] rounded-lg rounded-br-sm bg-zinc-900 px-3.5 py-2 text-left text-sm text-zinc-50">
-            Book a 30-min call with Sarah on Thursday at 3 PM.
-          </div>
-          <div className="w-fit max-w-[90%] rounded-lg rounded-bl-sm border border-zinc-200 bg-white px-3.5 py-2.5 text-left">
-            <div className="flex items-center gap-2 text-sm font-medium text-zinc-900">
-              <CheckCircle2 className="size-4 shrink-0 text-primary" />
-              Done — booked Thu 3:00–3:30 PM
-            </div>
-            <p className="mt-1 text-xs text-zinc-500">
-              Invite sent to Sarah · Synced to Google Calendar
-            </p>
-          </div>
-        </div>
-      </div>
+    <div className="flex aspect-[1280/860] w-full items-center justify-center bg-zinc-50 p-6 sm:p-10">
+      <BookingChatCard className="max-w-xs" />
     </div>
   );
 }
 
 function CalendarFallback() {
   return (
-    <div className="flex aspect-[1280/860] w-full items-center justify-center bg-zinc-50 p-10">
+    <div className="flex aspect-[1280/860] w-full items-center justify-center bg-zinc-50 p-6 sm:p-10">
       <div className="w-full max-w-sm rounded-xl border border-zinc-200 bg-white p-5 shadow-sm">
         <div className="flex items-center gap-2.5 border-b border-zinc-100 pb-3">
           <div className="flex size-7 items-center justify-center rounded-md border border-zinc-200 bg-zinc-50">
