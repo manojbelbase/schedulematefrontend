@@ -1,6 +1,8 @@
 export const WHATSAPP_URL =
   "https://wa.me/9779801234567?text=Hi%20ScheduleMate%20AI%2C%20I%20would%20like%20to%20get%20in%20touch.";
 
+export const APP_URL = "https://schedulemateweb.vercel.app/";
+
 export const SITE = {
   name: "ScheduleMate AI",
   tagline: "AI-Powered Scheduling",
@@ -20,7 +22,7 @@ export const HERO = {
   title: "Your schedule,\nmanaged by chat.",
   subtitle:
     "Stop juggling calendars. Just tell the AI what you need — 'Book a meeting with Sarah Thursday at 3 PM' — and it's done. Connects to your Google Calendar.",
-  primaryCta: { label: "Get Started Free", href: "/auth/login" },
+  primaryCta: { label: "Get Started Free", href: APP_URL },
   secondaryCta: { label: "See How It Works", href: "#how-it-works" },
 } as const;
 
@@ -100,10 +102,9 @@ export const HOW_IT_WORKS = {
 } as const;
 
 export const PRICING = {
-  kicker: "Pricing",
   title: "Simple plans with room to grow",
   subtitle:
-    "Start free and schedule right away. Paid plans are coming — join the waitlist to stay first in line.",
+    "Start with a free trial, then pick the plan that fits your club — cloud sync, staff tools, and capacity as you scale.",
   plans: [
     {
       name: "Free",
@@ -117,7 +118,7 @@ export const PRICING = {
         "Conversation history",
         "Works in any browser",
       ],
-      cta: { label: "Get Started Free", href: "/auth/login" },
+      cta: { label: "Get Started Free", href: APP_URL },
       featured: true,
     },
     {
@@ -202,7 +203,7 @@ export const CTA = {
   title: "Ready to get your schedule under control?",
   subtitle:
     "Start free with 10 AI requests on signup. No credit card required.",
-  primaryCta: { label: "Get Started Free", href: "/auth/login" },
+  primaryCta: { label: "Get Started Free", href: APP_URL },
 } as const;
 
 export const PRIVACY = {

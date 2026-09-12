@@ -46,8 +46,16 @@ function ShotPlaceholder() {
 
 export function Hero() {
   return (
-    <section className="px-4 pb-24 pt-24 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl">
+    <section className="relative overflow-hidden border-b border-zinc-200/70 bg-[#f6f3fc] px-4 pb-16 pt-20 sm:px-6 lg:px-8">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(124,58,237,0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgba(124,58,237,0.07)_1px,transparent_1px)] bg-[size:44px_44px] [mask-image:radial-gradient(70%_65%_at_50%_0%,black,transparent_75%)]"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(60%_100%_at_50%_0%,rgba(124,58,237,0.12),transparent_70%)]"
+      />
+      <div className="relative mx-auto max-w-6xl">
         <AnimatedSection className="mx-auto max-w-3xl text-center">
           <h1 className="text-balance whitespace-pre-line text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl lg:text-[3.75rem] lg:leading-[1.05]">
             {HERO.title}
@@ -57,18 +65,24 @@ export function Hero() {
             {HERO.subtitle}
           </p>
 
-          <div className="mt-9 flex items-center justify-center">
+          <div className="mt-8 flex items-center justify-center">
             <Button
               size="lg"
               asChild
               className="h-12 rounded-sm border-0 bg-zinc-900 px-7 text-sm font-medium text-white hover:bg-zinc-800"
             >
-              <a href={HERO.primaryCta.href}>{HERO.primaryCta.label}</a>
+              <a
+                href={HERO.primaryCta.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {HERO.primaryCta.label}
+              </a>
             </Button>
           </div>
         </AnimatedSection>
 
-        <AnimatedSection delay={0.12} className="mx-auto mt-16 max-w-5xl">
+        <AnimatedSection delay={0.12} className="mx-auto mt-12 max-w-6xl">
           <ProductShot
             src="/screenshots/chat.png"
             alt="ScheduleMate AI booking a meeting in chat"
