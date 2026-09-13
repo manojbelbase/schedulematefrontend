@@ -32,7 +32,7 @@ export function Hero() {
                 className="text-primary"
               />
             </span>
-            <span className="block">managed by chat.</span>
+            <span className="block">simplified with AI</span>
           </h1>
 
           <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-zinc-600 sm:text-lg">
@@ -41,11 +41,11 @@ export function Hero() {
             {HERO.subtitleOutro}
           </p>
 
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="mt-4 sm:mt-8 flex  items-center justify-center gap-3 flex-row ">
             <Button
               size="lg"
               asChild
-              className="h-11 w-full rounded-sm bg-primary px-6 text-sm font-medium text-white shadow-[0_12px_30px_-12px_rgba(124,58,237,0.6)] hover:bg-primary/90 sm:w-auto"
+              className="h-11 w-fit  rounded-sm bg-primary px-6 text-sm font-medium text-white shadow-[0_12px_30px_-12px_rgba(124,58,237,0.6)] hover:bg-primary/90 sm:w-auto"
             >
               <a
                 href={HERO.primaryCta.href}
@@ -59,7 +59,7 @@ export function Hero() {
               size="lg"
               variant="outline"
               asChild
-              className="h-11 w-full rounded-sm border-zinc-300 bg-white px-6 text-sm font-medium text-zinc-900 hover:bg-zinc-50 sm:w-auto"
+              className="h-11 w-fit rounded-sm border-zinc-300 bg-white px-6 text-sm font-medium text-zinc-900 hover:bg-zinc-50 sm:w-auto"
             >
               <a href={HERO.secondaryCta.href}>{HERO.secondaryCta.label}</a>
             </Button>
@@ -76,12 +76,18 @@ export function Hero() {
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute -top-10 left-1/2 -z-10 h-72 w-[520px] max-w-full -translate-x-1/2 rounded-full border border-primary/15 [mask-image:linear-gradient(to_bottom,black,transparent_85%)]"
+            className="pointer-events-none absolute -top-10 left-1/2 -z-10 h-72 w-[520px] max-w-full -translate-x-1/2 rounded-sm border border-primary/15 [mask-image:linear-gradient(to_bottom,black,transparent_85%)]"
           />
 
-          <div className="relative">
-            <div className="absolute -left-3 -top-5 z-10 hidden items-center gap-2.5 rounded-lg border border-zinc-200 bg-white/90 p-2.5 pr-4 shadow-sm backdrop-blur sm:flex lg:-left-10">
-              <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary/10">
+          <div className="relative flex flex-col items-center gap-2 sm:block">
+            <ProductShot
+              src={scheduleShot}
+              alt="ScheduleMate AI booking a meeting in chat"
+              priority
+            />
+
+            <div className="flex w-full max-w-sm items-center gap-2.5 rounded-sm border border-zinc-200 bg-white/90 p-2.5 pr-4 shadow-sm backdrop-blur sm:absolute sm:-bottom-5 sm:left-1/2 sm:mt-0 sm:w-auto sm:-translate-x-1/2">
+              <span className="flex size-8 shrink-0 items-center justify-center rounded-sm bg-primary/10">
                 <GoogleCalendarIcon className="size-5" />
               </span>
               <div className="text-left">
@@ -94,19 +100,13 @@ export function Hero() {
               </div>
             </div>
 
-            <div className="absolute -right-3 -top-6 z-10 hidden items-center gap-2 rounded-lg border border-zinc-200 bg-white/90 px-3.5 py-2.5 shadow-sm backdrop-blur sm:flex lg:-right-8">
+            <div className="flex w-full max-w-sm items-center gap-2 rounded-sm border border-zinc-200 bg-white/90 px-3.5 py-2.5 shadow-sm backdrop-blur sm:absolute sm:-right-3 sm:-top-6 sm:mt-0 sm:w-auto lg:-right-8">
               <CheckCircle2 className="size-4 text-primary" />
               <p className="text-xs font-semibold text-zinc-900">
                 Meeting confirmed for{" "}
                 <span className="text-primary">Thu 3:00 PM</span>
               </p>
             </div>
-
-            <ProductShot
-              src={scheduleShot}
-              alt="ScheduleMate AI booking a meeting in chat"
-              priority
-            />
           </div>
         </AnimatedSection>
       </div>

@@ -9,7 +9,7 @@ export function WeekStrip({ className }: { className?: string }) {
         <span
           key={`${day}-${i}`}
           className={cn(
-            "flex size-7 items-center justify-center rounded-md border text-[11px] font-medium",
+            "flex size-7 items-center justify-center rounded-sm border text-xs font-medium",
             i === 2
               ? "border-[#7c3aed]/30 bg-[#7c3aed]/10 text-[#6d28d9]"
               : "border-zinc-200 bg-white text-zinc-500",

@@ -121,7 +121,7 @@ export const PRICING = {
         "Works in any browser",
       ],
       cta: { label: "Get Started Free", href: APP_URL },
-      featured: true,
+      featured: false,
     },
     {
       name: "Pioneer",
@@ -137,7 +137,7 @@ export const PRICING = {
         "Priority booking speed",
       ],
       cta: { label: "Start Free Trial", href: APP_URL },
-      featured: false,
+      featured: true,
     },
     {
       name: "Early Access",

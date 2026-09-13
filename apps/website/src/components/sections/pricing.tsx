@@ -42,7 +42,7 @@ export function Pricing() {
           {PRICING.plans.map((plan) => (
             <StaggerItem key={plan.name} className="flex">
               <div
-                className={`flex w-full flex-col rounded-xl border bg-white p-6 sm:p-7 ${
+                className={`flex w-full flex-col rounded-sm border bg-white p-6 sm:p-7 ${
                   plan.featured
                     ? "border-[#7c3aed]/30 shadow-sm ring-1 ring-[#7c3aed]/15"
                     : "border-zinc-200"
@@ -53,14 +53,14 @@ export function Pricing() {
                     {plan.name}
                   </h3>
                   {plan.featured && (
-                    <span className="rounded-full bg-[#7c3aed]/10 px-2.5 py-0.5 text-[11px] font-medium text-[#6d28d9]">
+                    <span className="rounded-full px-2.5 py-0.5 text-[11px] text-primary font-medium border border-primary">
                       Recommended
                     </span>
                   )}
                 </div>
 
                 <div className="mt-4 flex items-baseline gap-1">
-                  <span className="text-4xl font-semibold tracking-tight text-zinc-950">
+                  <span className="text-2xl sm:text-4xl font-semibold tracking-tight text-zinc-950">
                     {plan.price}
                   </span>
                   {plan.period && (

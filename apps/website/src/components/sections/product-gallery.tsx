@@ -19,9 +19,9 @@ function BookingFallback() {
 function CalendarFallback() {
   return (
     <div className="flex aspect-[1280/860] w-full items-center justify-center bg-zinc-50 p-6 sm:p-10">
-      <div className="w-full max-w-sm rounded-xl border border-zinc-200 bg-white p-5 shadow-sm">
+      <div className="w-full max-w-sm rounded-sm border border-zinc-200 bg-white p-5 shadow-sm">
         <div className="flex items-center gap-2.5 border-b border-zinc-100 pb-3">
-          <div className="flex size-7 items-center justify-center rounded-md border border-zinc-200 bg-zinc-50">
+          <div className="flex size-7 items-center justify-center rounded-sm border border-zinc-200 bg-zinc-50">
             <GoogleCalendarIcon className="size-4" />
           </div>
           <div>
@@ -32,15 +32,15 @@ function CalendarFallback() {
           </div>
         </div>
         <div className="space-y-3 pt-4">
-          <div className="flex items-center justify-between rounded-lg border border-zinc-200 px-3.5 py-2.5">
+          <div className="flex items-center justify-between rounded-sm border border-zinc-200 px-3.5 py-2.5">
             <span className="text-xs text-zinc-600">
               Sync events automatically
             </span>
           </div>
-          <div className="rounded-lg border border-zinc-200 bg-zinc-50 px-3.5 py-2.5 text-xs text-zinc-500">
+          <div className="rounded-sm border border-zinc-200 bg-zinc-50 px-3.5 py-2.5 text-xs text-zinc-500">
             Connect to let ScheduleMate read and write your calendar for you.
           </div>
-          <div className="rounded-lg bg-zinc-900 px-3.5 py-2.5 text-center text-xs font-medium text-white">
+          <div className="rounded-sm bg-zinc-900 px-3.5 py-2.5 text-center text-xs font-medium text-white">
             Connect to sync events
           </div>
         </div>
@@ -53,7 +53,7 @@ export function ProductGallery() {
   return (
     <section
       id="product"
-      className="scroll-mt-20 px-4 py-16 sm:px-6 sm:py-24 lg:px-8"
+      className="scroll-mt-20 px-4 py-16 sm:px-6 sm:py-24 lg:px-8 border-t border-zinc-100 bg-zinc-50/60"
     >
       <div className="mx-auto max-w-6xl">
         <AnimatedSection className="mx-auto max-w-2xl text-center">
@@ -72,7 +72,7 @@ export function ProductGallery() {
           <AnimatedSection>
             <div className="grid items-center gap-10 lg:grid-cols-2">
               <div>
-                <div className="mb-4 flex size-10 items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50">
+                <div className="mb-4 flex size-10 items-center justify-center rounded-sm border border-zinc-200 bg-zinc-50">
                   <MessageSquareText className="size-5 text-zinc-700" />
                 </div>
                 <h3 className="text-2xl font-semibold tracking-tight text-zinc-950">
@@ -112,7 +112,7 @@ export function ProductGallery() {
           <AnimatedSection>
             <div className="grid items-center gap-10 lg:grid-cols-2">
               <div className="lg:order-2">
-                <div className="mb-4 flex size-10 items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50">
+                <div className="mb-4 flex size-10 items-center justify-center rounded-sm border border-zinc-200 bg-zinc-50">
                   <GoogleCalendarIcon className="size-5" />
                 </div>
                 <h3 className="text-2xl font-semibold tracking-tight text-zinc-950">
