@@ -49,16 +49,16 @@ export function RequestAccessForm({
   }
 
   return (
-    <div className="rounded-sm px-2.5 py-2">
+    <div className="rounded-sm px-2.5 py-2 border border-border">
       <div className="flex items-center gap-1.5">
         <p className="text-xs font-medium text-muted-foreground">
-          Connect calendar
+          Connect Google Calendar
         </p>
         <Tooltip>
-          <TooltipContent className="max-w-sm text-xs w-fit ml-4 text-justify">
-            This app is in Google test mode, so you can&apos;t connect your
-            calendar directly. Send a request and the developer will add your
-            Google account as a tester.
+          <TooltipContent className="max-w-xs w-full text-xs  ml-4 text-start">
+            We’re still in testing and haven’t publicly launched the app yet.
+            You can become a test user to connect your Google Calendar. Send a
+            request, and we’ll add your Google account as a tester.
           </TooltipContent>
           <TooltipTrigger asChild>
             <span className="inline-flex cursor-help">
@@ -78,6 +78,7 @@ export function RequestAccessForm({
         {requestAccess.isPending && (
           <Loader2Icon className="mr-1 size-3.5 animate-spin" />
         )}
+        <GoogleCalendarIcon className="mr-1 size-3" />
         Request Access
       </Button>
     </div>

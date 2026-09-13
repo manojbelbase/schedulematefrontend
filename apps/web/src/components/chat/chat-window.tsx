@@ -78,7 +78,7 @@ export default function ChatWindow({
               value={value}
               onChange={(e) => setValue(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Ask anything"
+              placeholder="Type your message..."
               rows={1}
               autoFocus
               className="field-sizing-content  min-h-10 max-h-[160px] resize-none border-none  px-2.5 py-2 text-sm leading-relaxed shadow-none rounded-full focus-visible:ring-0 bg-transparent placeholder:text-muted-foreground/70"
