@@ -136,7 +136,7 @@ export const PRICING = {
         "Conversation history",
         "Priority booking speed",
       ],
-      cta: { label: "Start Free Trial", href: APP_URL },
+      cta: { label: "Join The Waitlist", href: APP_URL },
       featured: true,
     },
     {
