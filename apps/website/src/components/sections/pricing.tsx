@@ -42,18 +42,14 @@ export function Pricing() {
           {PRICING.plans.map((plan) => (
             <StaggerItem key={plan.name} className="flex">
               <div
-                className={`flex w-full flex-col rounded-sm border bg-white p-6 sm:p-7 ${
-                  plan.featured
-                    ? "border-[#7c3aed]/30 shadow-sm ring-1 ring-[#7c3aed]/15"
-                    : "border-zinc-200"
-                }`}
+                className={`flex w-full flex-col rounded-sm border bg-white p-6 sm:p-7 `}
               >
                 <div className="flex items-center justify-between gap-3">
                   <h3 className="text-base font-semibold text-zinc-950">
                     {plan.name}
                   </h3>
                   {plan.featured && (
-                    <span className="rounded-full px-2.5 py-0.5 text-[11px] text-primary font-medium border border-primary">
+                    <span className="rounded-full px-2.5 py-0.5 text-xs text-primary font-medium border border-primary">
                       Recommended
                     </span>
                   )}

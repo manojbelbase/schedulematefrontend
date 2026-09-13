@@ -13,7 +13,7 @@ export function EmptyState({ userName, onPromptClick }: EmptyStateProps) {
   return (
     <div className="mx-auto flex h-full w-full max-w-3xl flex-col items-center justify-center gap-6 px-4">
       <div className="flex flex-col items-center gap-3 text-center">
-        <div className="flex size-11 items-center justify-center rounded-full border border-sidebar-border bg-sidebar shadow-sm">
+        <div className="flex size-11 items-center justify-center rounded-full border border-sidebar-border bg-sidebar">
           <Bot className="size-5 text-primary" />
         </div>
         <h2 className="text-lg font-semibold">
@@ -30,7 +30,7 @@ export function EmptyState({ userName, onPromptClick }: EmptyStateProps) {
             key={prompt.title}
             type="button"
             onClick={() => onPromptClick(prompt.title)}
-            className="group flex flex-col gap-2 rounded-xl border bg-card p-4 text-left transition-colors hover:border-primary/40 hover:bg-accent"
+            className="group flex flex-col gap-2 rounded-md border bg-card p-4 text-left transition-colors hover:border-primary/40 hover:bg-accent"
             style={{ animationDelay: `${i * 60}ms` }}
           >
             <span className="text-sm font-medium text-foreground">
