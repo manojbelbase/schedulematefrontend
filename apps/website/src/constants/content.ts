@@ -136,14 +136,14 @@ export const PRICING = {
         "Conversation history",
         "Priority booking speed",
       ],
-      cta: { label: "Join The Waitlist", href: APP_URL },
+      cta: { label: "Get Started", href: APP_URL },
       featured: true,
     },
     {
-      name: "Early Access",
-      price: "Soon",
+      name: "Enterprise",
+      price: "Contact us",
       period: "",
-      tagline: "Be first in line",
+      tagline: "",
       description: "For power users who want more, sooner.",
       features: [
         "More AI requests",
@@ -151,7 +151,7 @@ export const PRICING = {
         "Early feature access",
         "Direct feedback line",
       ],
-      cta: { label: "Join the Waitlist", href: WHATSAPP_URL },
+      cta: { label: "Join The Waitlist", href: APP_URL },
       featured: false,
     },
   ],
@@ -207,10 +207,6 @@ export const FOOTER = {
     { label: "Features", href: "#features" },
     { label: "How It Works", href: "#how-it-works" },
     { label: "Pricing", href: "#pricing" },
-  ],
-  resources: [
-    { label: "Blog", href: "/blog" },
-    { label: "Help Center", href: "/help" },
   ],
   legal: [
     { label: "Privacy Policy", href: "/privacy" },
