@@ -19,7 +19,7 @@ export function ProductShot({
   const [failed, setFailed] = useState(false);
 
   return (
-    <div className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-[0_24px_50px_-30px_rgba(0,0,0,0.25)]">
+    <div className="overflow-hidden rounded-md border border-zinc-200 bg-white shadow-[0_24px_50px_-30px_rgba(0,0,0,0.25)]">
       {failed || !src ? (
         fallback
       ) : (

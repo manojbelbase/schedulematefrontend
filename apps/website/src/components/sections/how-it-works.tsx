@@ -1,15 +1,16 @@
 "use client";
 
-import { Calendar, Mail, MessageSquare } from "lucide-react";
+import { Mail, MessageSquare } from "lucide-react";
 
 import {
   AnimatedSection,
   StaggerContainer,
   StaggerItem,
 } from "~/components/ui/animated-section";
+import { GoogleCalendarIcon } from "~/components/ui/google-calendar-icon";
 import { HOW_IT_WORKS } from "~/constants/content";
 
-const STEP_ICONS = [Mail, Calendar, MessageSquare] as const;
+const STEP_ICONS = [Mail, GoogleCalendarIcon, MessageSquare] as const;
 
 export function HowItWorks() {
   return (
@@ -40,7 +41,7 @@ export function HowItWorks() {
             return (
               <StaggerItem key={step.number}>
                 <div className="relative flex flex-col items-center text-center sm:px-8">
-                  <div className="relative z-10 flex size-14 items-center justify-center rounded-lg border border-zinc-200 bg-white shadow-xs">
+                  <div className="relative z-10 flex size-14 items-center justify-center rounded-sm border border-zinc-200 bg-white shadow-xs">
                     <Icon className="size-5 text-zinc-700" strokeWidth={1.5} />
                     <span className="absolute -right-1.5 -top-1.5 flex size-5 items-center justify-center rounded-full bg-[#7c3aed] text-[10px] font-semibold text-white">
                       {step.number}

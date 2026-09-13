@@ -26,9 +26,6 @@ export function BookingChatCard({ className }: { className?: string }) {
             <CheckCircle2 className="size-4 shrink-0 text-primary" />
             Done — booked Thu 3:00–3:30 PM
           </div>
-          <p className="mt-1 text-xs text-zinc-500">
-            Invite sent to Sarah · Synced to Google Calendar
-          </p>
         </div>
       </div>
     </div>

@@ -36,7 +36,7 @@ export function Footer() {
             <div className="mt-6">
               <Button
                 asChild
-                className="h-10 rounded-full border-0 bg-white text-sm font-medium text-zinc-950 hover:bg-zinc-200"
+                className="h-10 rounded-sm border-0 bg-white text-sm font-medium text-zinc-950 hover:bg-zinc-200"
               >
                 <a href={APP_URL} target="_blank" rel="noopener noreferrer">
                   Get Started Free

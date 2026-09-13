@@ -58,7 +58,7 @@ export function Navbar() {
               <Button
                 size="sm"
                 asChild
-                className="h-9 rounded-full border-0 bg-zinc-900 px-5 text-sm font-medium text-white hover:bg-zinc-800"
+                className="h-9 rounded-sm border-0 bg-zinc-900 px-5 text-sm font-medium text-white hover:bg-zinc-800"
               >
                 <a href={APP_URL} target="_blank" rel="noopener noreferrer">
                   Get Started
