@@ -1,15 +1,16 @@
 "use client";
 
-import { Calendar, Mail, MessageSquare } from "lucide-react";
+import { Mail, MessageSquare } from "lucide-react";
 
 import {
   AnimatedSection,
   StaggerContainer,
   StaggerItem,
 } from "~/components/ui/animated-section";
+import { GoogleCalendarIcon } from "~/components/ui/google-calendar-icon";
 import { HOW_IT_WORKS } from "~/constants/content";
 
-const STEP_ICONS = [Mail, Calendar, MessageSquare] as const;
+const STEP_ICONS = [Mail, GoogleCalendarIcon, MessageSquare] as const;
 
 export function HowItWorks() {
   return (

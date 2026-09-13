@@ -1,12 +1,13 @@
 "use client";
 
-import { CalendarDays, CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
 import { Button } from "@ui/components/ui/button";
 import { Typewriter } from "@ui/components/ui/typewriter";
 
 import scheduleShot from "~/assets/hero-schedule-chat.png";
 import { AnimatedSection } from "~/components/ui/animated-section";
+import { GoogleCalendarIcon } from "~/components/ui/google-calendar-icon";
 import { ProductShot } from "~/components/ui/product-shot";
 import { HERO } from "~/constants/content";
 
@@ -81,7 +82,7 @@ export function Hero() {
           <div className="relative">
             <div className="absolute -left-3 -top-5 z-10 hidden items-center gap-2.5 rounded-lg border border-zinc-200 bg-white/90 p-2.5 pr-4 shadow-sm backdrop-blur sm:flex lg:-left-10">
               <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary/10">
-                <CalendarDays className="size-4 text-primary" />
+                <GoogleCalendarIcon className="size-5" />
               </span>
               <div className="text-left">
                 <p className="text-xs font-semibold text-zinc-900">

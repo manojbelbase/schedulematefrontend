@@ -1,14 +1,10 @@
 "use client";
 
-import {
-  CalendarDays,
-  CheckCircle2,
-  MessageSquareText,
-  Zap,
-} from "lucide-react";
+import { CheckCircle2, MessageSquareText, Zap } from "lucide-react";
 
 import { AnimatedSection } from "~/components/ui/animated-section";
 import { BookingChatCard } from "~/components/ui/booking-chat-card";
+import { GoogleCalendarIcon } from "~/components/ui/google-calendar-icon";
 import { ProductShot } from "~/components/ui/product-shot";
 import { PRODUCT } from "~/constants/content";
 
@@ -26,7 +22,7 @@ function CalendarFallback() {
       <div className="w-full max-w-sm rounded-xl border border-zinc-200 bg-white p-5 shadow-sm">
         <div className="flex items-center gap-2.5 border-b border-zinc-100 pb-3">
           <div className="flex size-7 items-center justify-center rounded-md border border-zinc-200 bg-zinc-50">
-            <CalendarDays className="size-4 text-zinc-700" />
+            <GoogleCalendarIcon className="size-4" />
           </div>
           <div>
             <p className="text-xs font-semibold text-zinc-900">
@@ -117,7 +113,7 @@ export function ProductGallery() {
             <div className="grid items-center gap-10 lg:grid-cols-2">
               <div className="lg:order-2">
                 <div className="mb-4 flex size-10 items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50">
-                  <CalendarDays className="size-5 text-zinc-700" />
+                  <GoogleCalendarIcon className="size-5" />
                 </div>
                 <h3 className="text-2xl font-semibold tracking-tight text-zinc-950">
                   Connected to your Google Calendar

@@ -2,7 +2,6 @@
 
 import {
   ArrowRight,
-  Calendar,
   CheckCircle2,
   Clock,
   MessageCircle,
@@ -18,12 +17,13 @@ import {
   StaggerContainer,
   StaggerItem,
 } from "~/components/ui/animated-section";
+import { GoogleCalendarIcon } from "~/components/ui/google-calendar-icon";
 import { WeekStrip } from "~/components/ui/week-strip";
 import { FEATURES } from "~/constants/content";
 
 const iconMap = {
   MessageSquare,
-  Calendar,
+  Calendar: GoogleCalendarIcon,
   Clock,
   Users,
   RefreshCw,
@@ -213,7 +213,7 @@ export function Features() {
                   <div className="flex flex-1 flex-col p-5">
                     <div className="flex items-center gap-2.5">
                       <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-primary/10">
-                        <Icon className="size-3.5 text-primary" />
+                        <Icon className="size-4 text-primary" />
                       </span>
                       <h3 className="text-[15px] font-semibold text-zinc-950">
                         {feature.title}
