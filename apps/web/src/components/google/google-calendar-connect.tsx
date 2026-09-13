@@ -4,10 +4,11 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { CalendarIcon, CalendarX2Icon, Loader2Icon } from "lucide-react";
+import { Loader2Icon } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@ui/components/ui/button";
+import { GoogleCalendarIcon } from "@ui/components/ui/google-calendar-icon";
 import { Skeleton } from "@ui/components/ui/skeleton";
 import { options } from "@ui/lib/utils";
 
@@ -78,11 +79,7 @@ export function GoogleCalendarConnect() {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
-        {connected ? (
-          <CalendarIcon className="text-primary size-5" />
-        ) : (
-          <CalendarX2Icon className="text-muted-foreground size-5" />
-        )}
+        <GoogleCalendarIcon className="size-5" />
         <div>
           <p className="text-foreground text-sm font-medium">Google Calendar</p>
           <p className="text-muted-foreground text-xs">

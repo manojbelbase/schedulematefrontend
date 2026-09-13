@@ -2,15 +2,10 @@
 
 import Link from "next/link";
 import { useQueryClient } from "@tanstack/react-query";
-import {
-  CalendarIcon,
-  CalendarX2Icon,
-  Check,
-  Loader2,
-  LogOut as LogOutIcon,
-} from "lucide-react";
+import { Check, Loader2, LogOut as LogOutIcon } from "lucide-react";
 
 import { Button } from "@ui/components/ui/button";
+import { GoogleCalendarIcon } from "@ui/components/ui/google-calendar-icon";
 import { options } from "@ui/lib/utils";
 
 import {
@@ -61,7 +56,7 @@ export function CalendarConnectButton({ expanded }: { expanded: boolean }) {
     return connected ? (
       <div className="group flex items-center gap-2.5 rounded-sm border border-border  px-2.5 py-2">
         <div className="flex size-6 shrink-0 items-center justify-center rounded-sm bg-primary/10">
-          <CalendarX2Icon className="size-3.5 text-primary" />
+          <GoogleCalendarIcon className="size-4" />
         </div>
         <div className="min-w-0 flex-1">
           <p className="truncate text-xs font-medium text-foreground">
@@ -92,7 +87,7 @@ export function CalendarConnectButton({ expanded }: { expanded: boolean }) {
         title="Connect Google Calendar"
       >
         <div className="flex size-6 shrink-0 items-center justify-center rounded-sm bg-muted">
-          <CalendarIcon className="size-3.5 text-muted-foreground group-hover:text-primary" />
+          <GoogleCalendarIcon className="size-4" />
         </div>
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-medium text-foreground/80">
@@ -129,7 +124,7 @@ export function CalendarConnectButton({ expanded }: { expanded: boolean }) {
           </span>
         ) : (
           <Link href={calendarConnectUrl("/")}>
-            <CalendarIcon className="size-4" />
+            <GoogleCalendarIcon className="size-4" />
           </Link>
         )}
       </Button>

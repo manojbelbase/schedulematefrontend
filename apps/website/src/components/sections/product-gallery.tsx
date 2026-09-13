@@ -2,9 +2,10 @@
 
 import { CheckCircle2, MessageSquareText, Zap } from "lucide-react";
 
+import { GoogleCalendarIcon } from "@ui/components/ui/google-calendar-icon";
+
 import { AnimatedSection } from "~/components/ui/animated-section";
 import { BookingChatCard } from "~/components/ui/booking-chat-card";
-import { GoogleCalendarIcon } from "~/components/ui/google-calendar-icon";
 import { ProductShot } from "~/components/ui/product-shot";
 import { PRODUCT } from "~/constants/content";
 

@@ -2,12 +2,13 @@
 
 import { Mail, MessageSquare } from "lucide-react";
 
+import { GoogleCalendarIcon } from "@ui/components/ui/google-calendar-icon";
+
 import {
   AnimatedSection,
   StaggerContainer,
   StaggerItem,
 } from "~/components/ui/animated-section";
-import { GoogleCalendarIcon } from "~/components/ui/google-calendar-icon";
 import { HOW_IT_WORKS } from "~/constants/content";
 
 const STEP_ICONS = [Mail, GoogleCalendarIcon, MessageSquare] as const;

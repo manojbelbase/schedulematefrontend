@@ -10,6 +10,7 @@ import {
   Users,
 } from "lucide-react";
 
+import { GoogleCalendarIcon } from "@ui/components/ui/google-calendar-icon";
 import { cn } from "@ui/lib/utils";
 
 import {
@@ -17,7 +18,6 @@ import {
   StaggerContainer,
   StaggerItem,
 } from "~/components/ui/animated-section";
-import { GoogleCalendarIcon } from "~/components/ui/google-calendar-icon";
 import { WeekStrip } from "~/components/ui/week-strip";
 import { FEATURES } from "~/constants/content";
 
