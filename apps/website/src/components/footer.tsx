@@ -11,7 +11,6 @@ const CONTACT_EMAIL = "support@schedulemate.app";
 
 const FOOTER_COLUMNS = [
   { title: "Product", links: FOOTER.product },
-  { title: "Resources", links: FOOTER.resources },
   { title: "Legal", links: FOOTER.legal },
 ] as const;
 
@@ -27,7 +26,7 @@ export function Footer() {
         className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-[radial-gradient(50%_100%_at_50%_0%,rgba(124,58,237,0.12),transparent_70%)]"
       />
       <div className="relative z-10 mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-6 lg:gap-8">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-8">
           <div className="sm:col-span-2 lg:col-span-2">
             <Logo dark />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-zinc-400">
