@@ -18,7 +18,7 @@ export default function Logo({ className }: { className?: string }) {
         <Badge
           variant="outline"
           size={"xs"}
-          className="text-sm sm:text-xl sm:px-2.5 ml-1 rounded-sm"
+          className="text-sm sm:text-lg sm:px-2.5 ml-1 rounded-sm"
         >
           AI
         </Badge>
