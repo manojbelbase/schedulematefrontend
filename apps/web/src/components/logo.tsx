@@ -9,16 +9,16 @@ export default function Logo({ className }: { className?: string }) {
       <Image
         src="/schedulemate-logo.png"
         alt="ScheduleMate AI"
-        className="size-14"
+        className="size-8 sm:size-14"
         height={300}
         width={300}
       />
-      <p className="text-4xl font-semibold flex mt-1">
+      <p className="text-lg sm:text-4xl font-semibold flex mt-1">
         Schedule<span className="text-primary font-extrabold">Mate</span>{" "}
         <Badge
           variant="outline"
           size={"xs"}
-          className="text-xl px-2.5 ml-1 rounded-sm"
+          className="text-sm sm:text-xl sm:px-2.5 ml-1 rounded-sm"
         >
           AI
         </Badge>
