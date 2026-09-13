@@ -55,10 +55,6 @@ function CalendarPreview() {
     <div className="w-full max-w-[240px] rounded-lg border border-zinc-200 bg-white p-3 shadow-xs">
       <div className="mb-2 flex items-center justify-between gap-2">
         <WeekStrip />
-        <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-primary">
-          <span className="size-1 rounded-full bg-emerald-500" />
-          Synced
-        </span>
       </div>
       <div className="space-y-1.5">
         <div className="flex items-center gap-2 rounded-md border border-zinc-200 px-2 py-1.5 text-[11px] text-zinc-700">

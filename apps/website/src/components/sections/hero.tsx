@@ -27,7 +27,7 @@ export function Hero() {
             <span className="block">
               Your{" "}
               <Typewriter
-                words={["meetings", "events", "plans"]}
+                words={["meetings,", "events,", "plans,"]}
                 className="text-primary"
               />
             </span>
