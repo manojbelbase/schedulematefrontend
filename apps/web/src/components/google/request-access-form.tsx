@@ -1,6 +1,6 @@
 "use client";
 
-import { BadgeCheck, InfoIcon, Loader2Icon } from "lucide-react";
+import { InfoIcon, Loader2Icon } from "lucide-react";
 
 import {
   Tooltip,
@@ -8,6 +8,7 @@ import {
   TooltipTrigger,
 } from "@ui/components/animate-ui/components/radix/tooltip";
 import { Button } from "@ui/components/ui/button";
+import { GoogleCalendarIcon } from "@ui/components/ui/google-calendar-icon";
 import { options } from "@ui/lib/utils";
 
 import {
@@ -33,7 +34,7 @@ export function RequestAccessForm({
     return (
       <div className="flex items-center gap-2.5 rounded-sm border border-primary/20 bg-primary/5 px-2.5 py-2">
         <div className="flex size-6 shrink-0 items-center justify-center rounded-sm bg-primary/10">
-          <BadgeCheck className="size-3.5 text-primary" />
+          <GoogleCalendarIcon className="size-4" />
         </div>
         <div className="min-w-0 flex-1">
           <p className="truncate text-xs font-medium text-foreground/80">

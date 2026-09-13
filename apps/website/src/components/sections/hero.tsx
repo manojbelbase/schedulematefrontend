@@ -3,11 +3,11 @@
 import { CheckCircle2 } from "lucide-react";
 
 import { Button } from "@ui/components/ui/button";
+import { GoogleCalendarIcon } from "@ui/components/ui/google-calendar-icon";
 import { Typewriter } from "@ui/components/ui/typewriter";
 
 import scheduleShot from "~/assets/hero-schedule-chat.png";
 import { AnimatedSection } from "~/components/ui/animated-section";
-import { GoogleCalendarIcon } from "~/components/ui/google-calendar-icon";
 import { ProductShot } from "~/components/ui/product-shot";
 import { HERO } from "~/constants/content";
 
