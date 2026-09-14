@@ -13,7 +13,16 @@ import { ModalsRenderer } from "@/components/modals";
 import AuthProvider from "./auth-provider";
 
 export default function Provider({ children }: { children: ReactNode }) {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+          },
+        },
+      }),
+  );
 
   return (
     <ThemeProvider

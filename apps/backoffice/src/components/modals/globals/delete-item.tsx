@@ -9,6 +9,7 @@ import type { _TModalProps } from "@ui/types/globals";
 
 import {
   useBackofficeControllerDeleteUser,
+  useEmbeddingConfigControllerDeleteConfig,
   useLlmConfigControllerDeleteConfig,
 } from "@repo/services/backoffice";
 
@@ -28,6 +29,8 @@ export default function DeleteItemModal<T extends object = object>({
         return QUERY_KEYS.users;
       case "llm-config":
         return QUERY_KEYS.llmConfig;
+      case "embedding-config":
+        return QUERY_KEYS.embeddingConfig;
       default:
         return [];
     }
@@ -58,6 +61,8 @@ export default function DeleteItemModal<T extends object = object>({
   const { mutate: mutateUser } = useBackofficeControllerDeleteUser(handler);
   const { mutate: mutateLlmConfig } =
     useLlmConfigControllerDeleteConfig(handler);
+  const { mutate: mutateEmbeddingConfig } =
+    useEmbeddingConfigControllerDeleteConfig(handler);
 
   const fn = () => {
     if (typedData?.initiatorName) {
@@ -71,6 +76,13 @@ export default function DeleteItemModal<T extends object = object>({
           break;
         case "llm-config":
           mutateLlmConfig({
+            pathParams: {
+              id: typedData.initiatorName,
+            },
+          });
+          break;
+        case "embedding-config":
+          mutateEmbeddingConfig({
             pathParams: {
               id: typedData.initiatorName,
             },
