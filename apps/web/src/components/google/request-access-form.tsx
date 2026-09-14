@@ -32,7 +32,7 @@ export function RequestAccessForm({
 
   if (status === "pending") {
     return (
-      <div className="flex items-center gap-2.5 rounded-sm border border-primary/20 bg-primary/5 px-2.5 py-2">
+      <div className="flex items-center gap-2.5 rounded-sm border border-border bg-primary/5 dark:bg-background px-2.5 py-2">
         <div className="flex size-6 shrink-0 items-center justify-center rounded-sm bg-primary/10">
           <GoogleCalendarIcon className="size-4" />
         </div>
