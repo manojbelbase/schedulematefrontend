@@ -49,18 +49,14 @@ export function Faq() {
   return (
     <section
       id="faq"
-      className="scroll-mt-20 px-4 py-16 sm:px-6 sm:py-24 lg:px-8"
+      className="scroll-mt-20 px-4 py-24 sm:px-6 sm:py-18 lg:px-8"
     >
-      <div className="mx-auto max-w-2xl">
+      <div className="mx-auto max-w-3xl">
         <AnimatedSection className="text-center">
-          <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
-            FAQ
-          </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl">
             Frequently asked questions
           </h2>
         </AnimatedSection>
-
         <AnimatedSection
           delay={0.1}
           className="mt-10 border-t border-zinc-200 sm:mt-12"
