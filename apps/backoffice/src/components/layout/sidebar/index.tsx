@@ -1,9 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { LayoutDashboard, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 
 import { Button } from "@ui/components/ui/button";
 import { cn } from "@ui/lib/utils";
@@ -32,33 +33,31 @@ export default function Sidebar() {
             collapsed && "justify-center px-0",
           )}
         >
-          <Link href="/" className="min-w-0">
+          <Link href="/" className={cn("min-w-0", collapsed && "mx-auto")}>
             {collapsed ? (
-              <LayoutDashboard className="size-5 text-primary" />
+              <Image
+                src="/schedulemate-logo.png"
+                alt="ScheduleMate AI"
+                width={300}
+                height={300}
+                className="size-8"
+              />
             ) : (
               <Logo className="scale-50 origin-left ml-12" />
             )}
           </Link>
-          {!collapsed && (
-            <button
-              type="button"
-              onClick={() => setCollapsed(true)}
-              className="rounded-sm p-1.5 text-muted-foreground transition-colors hover:bg-sidebar-accent/60 hover:text-foreground"
-              title="Collapse sidebar"
-            >
-              <PanelLeftClose className="size-4" />
-            </button>
-          )}
-          {collapsed && (
-            <Button
-              type="button"
-              onClick={() => setCollapsed(false)}
-              className="absolute -right-3 top-20 z-10 flex size-6 items-center justify-center rounded-full border bg-background text-muted-foreground shadow-sm transition-colors hover:text-foreground"
-              title="Expand sidebar"
-            >
+          <Button
+            type="button"
+            onClick={() => setCollapsed((prev) => !prev)}
+            className="absolute -right-3 top-4 z-10 flex size-6 items-center justify-center  rounded-full border bg-background hover:bg-accent text-muted-foreground shadow-xs transition-colors hover:text-foreground"
+            title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {collapsed ? (
               <PanelLeftOpen className="size-3" />
-            </Button>
-          )}
+            ) : (
+              <PanelLeftClose className="size-3" />
+            )}
+          </Button>
         </div>
 
         <nav className="flex-1 overflow-y-auto px-2 py-3">

@@ -1,13 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
-  LibraryBig,
   MessageSquare,
   MessageSquarePlus,
   PanelLeftClose,
+  PanelLeftOpen,
   Trash,
 } from "lucide-react";
 
@@ -41,20 +41,11 @@ export default function ChatSidebar({
   onNewChat,
   onSelectConversation,
 }: ChatSidebarProps) {
-  const path = usePathname();
   const [isExpanded, setIsExpanded] = useState(true);
-  const [isHovered, setIsHovered] = useState(false);
-  const expanded = isExpanded || isHovered;
-
-  useEffect(() => {
-    setIsExpanded(true);
-    setIsHovered(false);
-  }, [path]);
+  const expanded = isExpanded;
 
   return (
     <aside
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       className={cn(
         "relative flex h-full shrink-0 flex-col justify-between border-r border-border/50 bg-sidebar transition-all duration-200 ease-in-out",
         expanded ? "w-72" : "w-[72px]",
@@ -62,26 +53,34 @@ export default function ChatSidebar({
     >
       <div className="flex h-full flex-col overflow-hidden">
         <div className="flex h-14 shrink-0 items-center justify-between px-3">
-          {expanded ? (
-            <Link href="/" className="min-w-0 ml-4">
+          <Link
+            href="/"
+            className={cn("min-w-0", expanded ? "ml-4" : "mx-auto")}
+          >
+            {expanded ? (
               <Logo className="scale-[0.55] origin-left  ml-6" />
-            </Link>
-          ) : (
-            <Link href="/" className="mx-auto">
-              <LibraryBig className="size-5 text-primary" />
-            </Link>
-          )}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
-              "hidden size-8 shrink-0 text-muted-foreground hover:text-foreground",
-              expanded && "flex",
+            ) : (
+              <Image
+                src="/schedulemate-logo.png"
+                alt="ScheduleMate AI"
+                width={300}
+                height={300}
+                className="size-8"
+              />
             )}
+          </Link>
+          <Button
+            variant="outline"
+            size="icon"
+            className="absolute top-4 -right-3 z-30 size-6 rounded-full border-border bg-background text-muted-foreground shadow-xs  hover:text-foreground"
             onClick={() => setIsExpanded((prev) => !prev)}
             aria-label="Toggle sidebar"
           >
-            <PanelLeftClose className="size-4" />
+            {expanded ? (
+              <PanelLeftClose className="size-3.5" />
+            ) : (
+              <PanelLeftOpen className="size-3.5" />
+            )}
           </Button>
         </div>
 
