@@ -22,7 +22,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
     >
       <div
         className={cn(
-          "rounded-2xl px-4 py-3 text-sm leading-relaxed",
+          "rounded-xl px-4 py-3 text-sm leading-relaxed",
           isUser
             ? "max-w-[75%] rounded-br-sm bg-primary text-primary-foreground"
             : "w-fit max-w-full rounded-tl-sm border border-border bg-card text-foreground",
@@ -31,7 +31,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
         {isUser ? (
           <p className="whitespace-pre-wrap">{message.content}</p>
         ) : (
-          <div className="[&_pre]:overflow-x-auto [&_pre]:bg-muted/60 [&_pre]:p-3 [&_pre]:rounded-sm [&_pre]:my-2">
+          <div className="[&_pre]:overflow-x-auto [&_pre]:bg-muted/60 [&_pre]:p-3 [&_pre]:rounded-sm [&_pre]:my-2 ">
             <AIResponseParser
               content={message.content}
               textColor="var(--foreground)"
