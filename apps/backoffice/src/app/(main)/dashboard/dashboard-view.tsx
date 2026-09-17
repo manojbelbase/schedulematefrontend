@@ -68,33 +68,38 @@ export function DashboardView({
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
-        <DatePicker
-          value={pickerValue}
-          onChange={(next) => {
-            void setParams({
-              dateFrom: next.date?.from ?? null,
-              dateTo: next.date?.to ?? null,
-              preset: next.preset ?? null,
-            });
-          }}
-          onFilterRemove={handleReset}
-        />
-      </div>
-
-      <StatCards stats={stats} />
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <CalendarConnectionDonut stats={stats} />
-        <SignupMethodDonut stats={stats} />
-        <div className="col-span-2">
-          <ProviderDonut stats={stats} />
+    <div className="flex flex-col min-h-0 flex-1">
+      <header className="w-full shrink-0 sticky top-0 z-30 bg-background border-b border-gray-200">
+        <div className="flex justify-between items-center py-1 sm:py-3 gap-2">
+          <div className="flex items-center gap-2">
+            <h1 className="text-base sm:text-lg font-semibold">Dashboard</h1>
+          </div>
+          <DatePicker
+            value={pickerValue}
+            onChange={(next) => {
+              void setParams({
+                dateFrom: next.date?.from ?? null,
+                dateTo: next.date?.to ?? null,
+                preset: next.preset ?? null,
+              });
+            }}
+            onFilterRemove={handleReset}
+          />
         </div>
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-        <UsersByRoleChart stats={stats} />
-        <ChatRoleDonut stats={stats} />
+      </header>
+      <div className="w-full overflow-auto pt-4 flex flex-col gap-4 custom-scrollbar-thin">
+        <StatCards stats={stats} />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <CalendarConnectionDonut stats={stats} />
+          <SignupMethodDonut stats={stats} />
+          <div className="col-span-2">
+            <ProviderDonut stats={stats} />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <UsersByRoleChart stats={stats} />
+          <ChatRoleDonut stats={stats} />
+        </div>
       </div>
     </div>
   );
