@@ -16,6 +16,7 @@ const optionalUrl = (message: string) =>
 
 const EnvSchema = z.object({
   NEXT_PUBLIC_WEB_API_BASE_URL: optionalUrl("API URL is not in 'url' pattern."),
+  NEXT_PUBLIC_SCHEDULEMATE_AUTH_TOKEN_KEY: optionalString(),
   DOCS_AUTH_TOKEN: optionalString(),
   NODE_ENV: z.enum(["development", "production", "test"]),
 });
@@ -26,6 +27,8 @@ export function validateEnv(): TEnvSchema {
   const parsedEnv = EnvSchema.safeParse({
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_WEB_API_BASE_URL: process.env.NEXT_PUBLIC_WEB_API_BASE_URL,
+    NEXT_PUBLIC_SCHEDULEMATE_AUTH_TOKEN_KEY:
+      process.env.NEXT_PUBLIC_SCHEDULEMATE_AUTH_TOKEN_KEY,
     DOCS_AUTH_TOKEN: process.env.DOCS_AUTH_TOKEN,
   });
   if (!parsedEnv.success) {

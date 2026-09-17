@@ -2,59 +2,31 @@
 
 import { useEffect, type ReactNode } from "react";
 
-import {
-  fetchAuthControllerRefresh,
-  useAuthControllerMe,
-} from "@repo/services/web";
+import { useAuthControllerMe } from "@repo/services/web";
 
-import { registerApiAuth } from "@/services/api-auth";
-import {
-  getAuthToken,
-  getRefreshToken,
-  setAuthCookies,
-} from "@/services/auth-utils";
 import { useAuthStore } from "@/zustand/auth";
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
-  const token = useAuthStore((state) => state.token);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   const { data, isPending } = useAuthControllerMe(
     {},
-    { retry: false, enabled: Boolean(token) },
+    { retry: false, enabled: isAuthenticated },
   );
 
+  // The session cookie is httpOnly, so JavaScript cannot read it. Attempt a
+  // silent refresh on mount: if the browser holds a refresh cookie the route
+  // re-issues the pair, otherwise it answers 401 and we settle logged-out.
   useEffect(() => {
-    registerApiAuth();
-  }, []);
-
-  useEffect(() => {
-    if (!token) {
-      useAuthStore.setState({ token: getAuthToken() ?? null });
-    }
-  }, [token]);
-
-  // If there is no access token but a refresh token exists, attempt to restore
-  // the session before the app settles on a logged-out state.
-  useEffect(() => {
-    const hasToken = token ?? getAuthToken();
-    const hasRefresh = Boolean(getRefreshToken());
-    if (hasToken || !hasRefresh) return;
-
     let cancelled = false;
-    fetchAuthControllerRefresh({})
-      .then((data) => {
+
+    fetch("/api/auth/refresh", { method: "POST" })
+      .then((res) => {
         if (cancelled) return;
-        const refreshed = data?.data?.accessToken;
-        if (refreshed) {
-          setAuthCookies(refreshed, data.data.refreshToken);
-          useAuthStore.setState({
-            token: refreshed,
-            isAuthenticated: true,
-            isLoading: false,
-          });
-        } else {
-          useAuthStore.setState({ isLoading: false });
-        }
+        useAuthStore.setState({
+          isAuthenticated: res.ok,
+          isLoading: false,
+        });
       })
       .catch(() => {
         if (cancelled) return;
@@ -68,13 +40,12 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     return () => {
       cancelled = true;
     };
-  }, [token]);
+  }, []);
 
   useEffect(() => {
-    if (!token) {
+    if (!isAuthenticated) {
       useAuthStore.setState({
         user: null,
-        isAuthenticated: false,
         isLoading: false,
       });
       return;
@@ -88,7 +59,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     } else if (!isPending) {
       useAuthStore.setState({ isLoading: false });
     }
-  }, [data, isPending, token]);
+  }, [data, isPending, isAuthenticated]);
 
   return children;
 }

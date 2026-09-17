@@ -1,19 +1,7 @@
 import type { QueriesContext } from "./queries-context";
 
-const baseUrl = process.env.NEXT_PUBLIC_WEB_API_BASE_URL;
-const AUTH_COOKIE_KEY = "schedulemate-token";
-
-let dynamicHeaderProvider:
-  (() => Record<string, string> | Promise<Record<string, string>>) | null =
-  null;
-
-export const setDynamicHeaderProvider = (
-  provider: () => Record<string, string> | Promise<Record<string, string>>,
-) => {
-  // only set on client side
-  if (typeof window === "undefined") return;
-  dynamicHeaderProvider = provider;
-};
+const AUTH_COOKIE_KEY =
+  process.env.NEXT_PUBLIC_SCHEDULEMATE_AUTH_TOKEN_KEY || "schedulemate-token";
 
 export type ErrorWrapper<TError> =
   TError | { status: "unknown"; payload: string };
@@ -150,10 +138,6 @@ async function executeRequest<
     if (authToken) {
       dynamicHeaders = { Authorization: `Bearer ${authToken}` };
     }
-  } else {
-    if (dynamicHeaderProvider) {
-      dynamicHeaders = await dynamicHeaderProvider();
-    }
   }
   const requestHeaders: HeadersInit = {
     ...(body instanceof FormData ? {} : { "Content-Type": "application/json" }),
@@ -177,6 +161,12 @@ async function executeRequest<
   ) {
     delete requestHeaders["Content-Type"];
   }
+
+  // The browser talks to the same-origin proxy; the Next.js runtime talks
+  // straight to the API server and forwards the session cookie itself.
+  const baseUrl = isServer
+    ? process.env.NEXT_PUBLIC_WEB_API_BASE_URL
+    : "/api/upstream";
 
   return fetch(`${baseUrl}${resolveUrl(url, queryParams, pathParams)}`, {
     signal,
