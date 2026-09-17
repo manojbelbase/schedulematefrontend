@@ -4,23 +4,14 @@ import { create } from "zustand";
 
 import {
   fetchAuthControllerForgotPassword,
-  fetchAuthControllerLogin,
   fetchAuthControllerMe,
-  fetchAuthControllerRegister,
   fetchAuthControllerResetPassword,
   fetchAuthControllerVerifyOtp,
   type PublicUser,
 } from "@repo/services/web";
 
-import {
-  clearAuthCookies,
-  getAuthToken,
-  setAuthCookies,
-} from "@/services/auth-utils";
-
 type AuthState = {
   user: PublicUser | null;
-  token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (credentials: { email: string; password: string }) => Promise<void>;
@@ -40,40 +31,61 @@ type AuthState = {
   ) => Promise<void>;
 };
 
-export const useAuthStore = create<AuthState>((set, get) => ({
+async function postAuth(
+  path: string,
+  body: unknown,
+): Promise<{ user: PublicUser; accessToken?: string; refreshToken?: string }> {
+  const res = await fetch(path, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  const payload = (await res.json().catch(() => null)) as {
+    success?: boolean;
+    message?: string;
+    data?: { user: PublicUser; accessToken?: string; refreshToken?: string };
+  } | null;
+
+  if (!res.ok || !payload?.data) {
+    throw new Error(
+      payload?.message ?? "Something went wrong. Please try again.",
+    );
+  }
+
+  return payload.data;
+}
+
+export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  token: null,
   isAuthenticated: false,
   isLoading: false,
 
   login: async ({ email, password }) => {
-    const data = await fetchAuthControllerLogin({ body: { email, password } });
-    setAuthCookies(data.data.accessToken, data.data.refreshToken);
-    set({
-      token: data.data.accessToken,
-      user: data.data.user,
-      isAuthenticated: true,
-    });
+    try {
+      const data = await postAuth("/api/auth/login", { email, password });
+      set({ user: data.user, isAuthenticated: true });
+    } catch (error) {
+      set({ user: null, isAuthenticated: false });
+      throw error;
+    }
   },
 
   register: async ({ email, name, password }) => {
-    const data = await fetchAuthControllerRegister({
-      body: { email, name, password },
-    });
-    setAuthCookies(data.data.accessToken, data.data.refreshToken);
-    set({
-      token: data.data.accessToken,
-      user: data.data.user,
-      isAuthenticated: true,
-    });
+    try {
+      const data = await postAuth("/api/auth/register", {
+        email,
+        name,
+        password,
+      });
+      set({ user: data.user, isAuthenticated: true });
+    } catch (error) {
+      set({ user: null, isAuthenticated: false });
+      throw error;
+    }
   },
 
   refreshProfile: async () => {
-    const token = get().token ?? getAuthToken();
-    if (!token) {
-      set({ isAuthenticated: false, user: null });
-      return;
-    }
     try {
       const data = await fetchAuthControllerMe({});
       set({ user: data.data, isAuthenticated: true, isLoading: false });
@@ -83,8 +95,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   logout: async () => {
-    clearAuthCookies();
-    set({ user: null, token: null, isAuthenticated: false, isLoading: false });
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+    } finally {
+      set({ user: null, isAuthenticated: false, isLoading: false });
+    }
   },
 
   forgotPassword: async (email) => {

@@ -1,5 +1,8 @@
+import { env } from "./env";
+
 export const COOKIE_KEYS = {
-  AUTH_COOKIE_KEY: "schedulemate-token",
+  AUTH_COOKIE_KEY:
+    env.NEXT_PUBLIC_SCHEDULEMATE_AUTH_TOKEN_KEY || "schedulemate-token",
   REFRESH_COOKIE_KEY: "schedulemate_refresh",
 } as const;
 

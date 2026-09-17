@@ -29,7 +29,6 @@ describe("EmailForm", () => {
     vi.clearAllMocks();
     useAuthStore.setState({
       user: null,
-      token: null,
       isAuthenticated: false,
       isLoading: false,
     });

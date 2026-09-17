@@ -1,11 +1,6 @@
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-import {
-  AUTH_COOKIE_DAYS,
-  COOKIE_KEYS,
-  REFRESH_COOKIE_DAYS,
-} from "@/config/constants";
+import { setAuthCookies } from "../_utils";
 
 function safeRedirectPath(value: unknown): string {
   if (
@@ -30,21 +25,10 @@ export async function GET(request: Request) {
     return NextResponse.redirect(url);
   }
 
-  const cookieStore = await cookies();
-
-  cookieStore.set(COOKIE_KEYS.AUTH_COOKIE_KEY, token, {
-    path: "/",
-    sameSite: "lax",
-    maxAge: AUTH_COOKIE_DAYS * 24 * 60 * 60,
-  });
-
-  if (typeof refresh === "string" && refresh.length > 0) {
-    cookieStore.set(COOKIE_KEYS.REFRESH_COOKIE_KEY, refresh, {
-      path: "/",
-      sameSite: "lax",
-      maxAge: REFRESH_COOKIE_DAYS * 24 * 60 * 60,
-    });
-  }
+  await setAuthCookies(
+    token,
+    typeof refresh === "string" ? refresh : undefined,
+  );
 
   return NextResponse.redirect(new URL(redirect, request.url));
 }

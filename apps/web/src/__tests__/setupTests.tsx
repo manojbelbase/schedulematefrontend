@@ -160,7 +160,6 @@ vi.mock("@repo/services/web", () => ({
   useChatControllerCreateConversation: vi.fn(() => ({
     mutateAsync: vi.fn(),
   })),
-  setDynamicHeaderProvider: vi.fn(),
 }));
 
 vi.mock("@/config/env", () => ({

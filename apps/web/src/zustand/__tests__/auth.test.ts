@@ -1,26 +1,31 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import * as services from "@repo/services/web";
-
-import * as authUtils from "@/services/auth-utils";
 import { useAuthStore } from "@/zustand/auth";
 
-vi.mock("@/services/auth-utils", () => ({
-  getAuthToken: vi.fn(() => null),
-  getRefreshToken: vi.fn(() => null),
-  setAuthCookies: vi.fn(),
-  clearAuthCookies: vi.fn(),
-}));
+const fetchMock = vi.fn();
+
+function mockFetchOnce(status: number, body?: unknown) {
+  fetchMock.mockResolvedValueOnce(
+    new Response(JSON.stringify(body ?? null), {
+      status,
+      headers: { "Content-Type": "application/json" },
+    }),
+  );
+}
 
 describe("useAuthStore", () => {
   beforeEach(() => {
+    vi.stubGlobal("fetch", fetchMock);
     useAuthStore.setState({
       user: null,
-      token: null,
       isAuthenticated: false,
       isLoading: false,
     });
-    vi.clearAllMocks();
+    fetchMock.mockReset();
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
   });
 
   describe("initial state", () => {
@@ -38,58 +43,43 @@ describe("useAuthStore", () => {
   });
 
   describe("login", () => {
-    it("sets user and token on successful login", async () => {
+    it("sets user and authenticated state on success", async () => {
       const mockUser = { id: "1", email: "test@test.com", name: "Test" };
-      vi.mocked(services.fetchAuthControllerLogin).mockResolvedValue({
-        data: {
-          accessToken: "access-token",
-          refreshToken: "refresh-token",
-          user: mockUser,
-        },
-      } as never);
+      mockFetchOnce(200, { data: { user: mockUser } });
 
       await useAuthStore.getState().login({
         email: "test@test.com",
         password: "password",
       });
 
-      expect(useAuthStore.getState().user).toEqual(mockUser);
-      expect(useAuthStore.getState().token).toBe("access-token");
-      expect(useAuthStore.getState().isAuthenticated).toBe(true);
-      expect(authUtils.setAuthCookies).toHaveBeenCalledWith(
-        "access-token",
-        "refresh-token",
+      expect(fetchMock).toHaveBeenCalledWith(
+        "/api/auth/login",
+        expect.objectContaining({ method: "POST" }),
       );
+      expect(useAuthStore.getState().user).toEqual(mockUser);
+      expect(useAuthStore.getState().isAuthenticated).toBe(true);
     });
-  });
 
-  describe("logout", () => {
-    it("clears user, token and auth state", async () => {
-      useAuthStore.setState({
-        user: { id: "1", email: "test@test.com", name: "Test" },
-        token: "token",
-        isAuthenticated: true,
-      });
+    it("throws and stays logged out on failure", async () => {
+      mockFetchOnce(401, { message: "Invalid credentials" });
+      useAuthStore.setState({ isAuthenticated: true });
 
-      await useAuthStore.getState().logout();
+      await expect(
+        useAuthStore.getState().login({
+          email: "test@test.com",
+          password: "wrong",
+        }),
+      ).rejects.toThrow("Invalid credentials");
 
       expect(useAuthStore.getState().user).toBeNull();
-      expect(useAuthStore.getState().token).toBeNull();
       expect(useAuthStore.getState().isAuthenticated).toBe(false);
-      expect(authUtils.clearAuthCookies).toHaveBeenCalled();
     });
   });
 
   describe("register", () => {
-    it("sets user and token on successful registration", async () => {
+    it("sets user and authenticated state on success", async () => {
       const mockUser = { id: "2", email: "new@test.com", name: "New" };
-      vi.mocked(services.fetchAuthControllerRegister).mockResolvedValue({
-        data: {
-          accessToken: "new-access",
-          refreshToken: "new-refresh",
-          user: mockUser,
-        },
-      } as never);
+      mockFetchOnce(200, { data: { user: mockUser } });
 
       await useAuthStore.getState().register({
         email: "new@test.com",
@@ -97,8 +87,43 @@ describe("useAuthStore", () => {
         password: "password123",
       });
 
+      expect(fetchMock).toHaveBeenCalledWith(
+        "/api/auth/register",
+        expect.objectContaining({ method: "POST" }),
+      );
       expect(useAuthStore.getState().user).toEqual(mockUser);
       expect(useAuthStore.getState().isAuthenticated).toBe(true);
+    });
+  });
+
+  describe("logout", () => {
+    it("clears user and auth state", async () => {
+      mockFetchOnce(200, { success: true });
+      useAuthStore.setState({
+        user: { id: "1", email: "test@test.com", name: "Test" },
+        isAuthenticated: true,
+      });
+
+      await useAuthStore.getState().logout();
+
+      expect(fetchMock).toHaveBeenCalledWith("/api/auth/logout", {
+        method: "POST",
+      });
+      expect(useAuthStore.getState().user).toBeNull();
+      expect(useAuthStore.getState().isAuthenticated).toBe(false);
+    });
+
+    it("still clears state if the logout request fails", async () => {
+      mockFetchOnce(500, { message: "Upstream down" });
+      useAuthStore.setState({
+        user: { id: "1", email: "test@test.com", name: "Test" },
+        isAuthenticated: true,
+      });
+
+      await useAuthStore.getState().logout();
+
+      expect(useAuthStore.getState().user).toBeNull();
+      expect(useAuthStore.getState().isAuthenticated).toBe(false);
     });
   });
 });
