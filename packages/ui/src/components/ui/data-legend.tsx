@@ -30,7 +30,7 @@ export function DataLegend({
   return (
     <div
       className={cn(
-        "flex gap-x-4 gap-y-1",
+        "flex gap-x-4 gap-y-1.5",
         direction === "horizontal" && "flex-wrap items-center",
         direction === "vertical" && "flex-col",
         className,
@@ -44,35 +44,28 @@ export function DataLegend({
             type="button"
             onClick={() => onToggle?.(item.id)}
             className={cn(
-              "flex items-center gap-1.5 text-xs transition-opacity",
-              isToggleable && "cursor-pointer hover:opacity-80",
+              "flex items-center gap-1.5 rounded-sm text-xs transition-colors",
+              isToggleable && "-mx-1 px-1 py-0.5 hover:bg-accent/60",
+              !isToggleable && "cursor-default",
               isToggleable && !isSelected && "opacity-40",
             )}
           >
-            <div className="flex items-center gap-1.5">
-              <p
-                className="size-2.5 rounded-sm flex-shrink-0"
-                style={{ backgroundColor: item.color }}
-              />
-              <span className="font-medium text-sm text-muted-foreground">
-                {item.label}
-              </span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span
-                className={cn(
-                  "font-semibold tabular-nums",
-                  isSelected ? "text-foreground" : "text-muted-foreground",
-                )}
-              >
-                {item.count.toLocaleString()}
-              </span>
-              {item.percent && (
-                <span className="text-black font-normal">
-                  ({item.percent}%)
-                </span>
+            <span
+              className="size-2.5 shrink-0 rounded-sm"
+              style={{ backgroundColor: item.color }}
+            />
+            <span className="font-medium text-foreground/80">{item.label}</span>
+            <span
+              className={cn(
+                "font-semibold tabular-nums",
+                isSelected ? "text-foreground" : "text-foreground/60",
               )}
-            </div>
+            >
+              {item.count.toLocaleString()}
+            </span>
+            {item.percent ? (
+              <span className="text-foreground/70">({item.percent}%)</span>
+            ) : null}
           </button>
         );
       })}

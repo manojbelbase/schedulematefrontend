@@ -2,25 +2,30 @@
 
 import { CalendarDays } from "lucide-react";
 
-import { DonutChartCard } from "@ui/components/ui/donut-chart-card";
+import { StackedBarCard } from "@ui/components/ui/stacked-bar-card";
 
 import type { UsersDashboardData } from "@repo/services/backoffice";
 
-export function CalendarConnectionDonut({
+export function CalendarConnectionCard({
   stats,
 }: {
   stats?: UsersDashboardData;
 }) {
   const connected = stats?.googleCalendarConnected ?? 0;
   const notConnected = stats?.googleCalendarNotConnected ?? 0;
+  const total = connected + notConnected;
 
   return (
-    <DonutChartCard
+    <StackedBarCard
       icon={CalendarDays}
       title="Google Calendar"
       description="Users with a connected calendar"
-      centerLabel="connected"
-      centerValue={connected}
+      headlineValue={connected}
+      headlineLabel={
+        total > 0
+          ? `connected (${((connected / total) * 100).toFixed(1)}%)`
+          : "connected"
+      }
       items={[
         {
           id: "connected",

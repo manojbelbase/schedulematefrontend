@@ -26,31 +26,32 @@ export function ChartTypeToggle<T extends string = string>({
   return (
     <div
       className={cn(
-        "border bg-background text-muted-foreground dark:border-input h-9 rounded-sm flex items-center",
+        "flex h-8 items-center rounded-sm border bg-background text-muted-foreground",
         className,
       )}
     >
       {options.flatMap((opt, i) => {
         const items: React.ReactNode[] = [];
         if (i > 0) {
-          items.push(<div key={`sep-${i}`} className="w-px h-5 bg-border" />);
+          items.push(<div key={`sep-${i}`} className="h-4 w-px bg-border" />);
         }
         items.push(
           <button
             key={opt.value}
             type="button"
             onClick={() => onChange(opt.value)}
+            title={opt.label}
+            aria-label={opt.label}
             className={cn(
-              "h-full px-2 transition-colors",
+              "flex h-full items-center px-1.5 transition-colors",
               i === 0 && "rounded-l-sm",
               i === options.length - 1 && "rounded-r-sm",
               value === opt.value
                 ? "bg-primary text-primary-foreground"
                 : "text-muted-foreground hover:text-foreground",
             )}
-            title={opt.label}
           >
-            <opt.icon size={16} />
+            <opt.icon size={15} />
           </button>,
         );
         return items;

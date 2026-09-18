@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
 
@@ -26,6 +27,8 @@ type Props = {
   items: DonutChartItem[];
   centerLabel?: string;
   centerValue?: number;
+  isLoading?: boolean;
+  className?: string;
 };
 
 export function DonutChartCard({
@@ -35,25 +38,58 @@ export function DonutChartCard({
   items,
   centerLabel,
   centerValue,
+  isLoading,
+  className,
 }: Props) {
-  const total = items.reduce((sum, i) => sum + i.value, 0);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>();
+
+  const allIds = useMemo(() => items.map((i) => i.id), [items]);
+  const allTotal = useMemo(
+    () => items.reduce((sum, i) => sum + i.value, 0),
+    [items],
+  );
+
+  const toggleItem = (id: string) => {
+    setSelectedIds((prev) => {
+      const base = prev ?? new Set(allIds);
+      const next = new Set(base);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const visibleItems = useMemo(() => {
+    if (!selectedIds) return items;
+    return items.filter((i) => selectedIds.has(i.id));
+  }, [items, selectedIds]);
+
+  const total = visibleItems.reduce((sum, i) => sum + i.value, 0);
 
   const chartConfig = items.reduce<ChartConfig>((acc, item) => {
     acc[item.id] = { label: item.label, color: item.color };
     return acc;
   }, {});
 
-  const chartData = items.map((item) => ({
+  const chartData = visibleItems.map((item) => ({
     name: item.id,
     value: item.value,
     fill: `var(--color-${item.id})`,
     percentage: total === 0 ? 0 : (item.value / total) * 100,
   }));
 
-  const hasData = total > 0;
+  const hasData = visibleItems.length > 0 && total > 0;
+  const centerNumber =
+    centerValue !== undefined && !selectedIds ? centerValue : total;
 
   return (
-    <ChartCard icon={icon} title={title} description={description}>
+    <ChartCard
+      icon={icon}
+      title={title}
+      description={description}
+      isLoading={isLoading}
+      className={className}
+    >
       {!hasData ? (
         <div className="flex aspect-square max-h-[220px] items-center justify-center text-sm text-muted-foreground">
           No data in the selected period
@@ -62,7 +98,7 @@ export function DonutChartCard({
         <>
           <ChartContainer
             config={chartConfig}
-            className="mx-auto aspect-square max-h-[220px]"
+            className="mx-auto aspect-square max-h-[220px] w-full"
           >
             <PieChart>
               <ChartTooltip
@@ -72,8 +108,8 @@ export function DonutChartCard({
                     nameKey="name"
                     hideLabel
                     formatter={(value, _name, item) => [
-                      `${Number(value).toLocaleString()} (${item?.payload.percentage.toFixed(1)}%)`,
-                      item?.payload.name,
+                      `${Number(value).toLocaleString()} (${(item?.payload?.percentage ?? 0).toFixed(1)}%)`,
+                      item?.payload?.name,
                     ]}
                   />
                 }
@@ -102,16 +138,14 @@ export function DonutChartCard({
                         <tspan
                           x={box.cx}
                           y={box.cy}
-                          className="fill-foreground text-3xl font-bold"
+                          className="fill-foreground text-2xl font-semibold tabular-nums"
                         >
-                          {centerValue !== undefined
-                            ? centerValue.toLocaleString()
-                            : total.toLocaleString()}
+                          {centerNumber.toLocaleString()}
                         </tspan>
                         <tspan
                           x={box.cx}
-                          y={(box.cy ?? 0) + 24}
-                          className="fill-muted-foreground"
+                          y={(box.cy ?? 0) + 22}
+                          className="fill-muted-foreground text-xs"
                         >
                           {centerLabel ?? "total"}
                         </tspan>
@@ -125,13 +159,17 @@ export function DonutChartCard({
           <DataLegend
             direction="vertical"
             className="mt-4 gap-2"
+            selectedIds={selectedIds}
+            onToggle={toggleItem}
             items={items.map((item) => ({
               id: item.id,
               label: item.label,
               color: item.color,
               count: item.value,
               percent:
-                total === 0 ? "0" : ((item.value / total) * 100).toFixed(1),
+                allTotal === 0
+                  ? "0"
+                  : ((item.value / allTotal) * 100).toFixed(1),
             }))}
           />
         </>

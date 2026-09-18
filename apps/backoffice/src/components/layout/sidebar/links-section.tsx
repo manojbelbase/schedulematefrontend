@@ -38,7 +38,7 @@ export default function LinksSection({ sections, path, collapsed }: TProps) {
                   collapsed && "justify-center px-0",
                   active
                     ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                    : "text-sidebar-foreground/60 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
+                    : "text-sidebar-foreground/80 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
                 )}
               >
                 {active && (
