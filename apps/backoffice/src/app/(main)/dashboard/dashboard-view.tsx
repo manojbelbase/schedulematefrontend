@@ -17,9 +17,9 @@ import {
   type UsersDashboardResponse,
 } from "@repo/services/backoffice";
 
-import { CalendarConnectionDonut } from "@/components/dashboard/calendar-connection-donut";
-import { ChatRoleDonut } from "@/components/dashboard/chat-role-donut";
-import { ProviderDonut } from "@/components/dashboard/provider-donut";
+import { CalendarConnectionCard } from "@/components/dashboard/calendar-connection-card";
+import { ChatRoleChart } from "@/components/dashboard/chat-role-chart";
+import { ProviderChart } from "@/components/dashboard/provider-chart";
 import { SignupMethodDonut } from "@/components/dashboard/signup-method-donut";
 import { StatCards } from "@/components/dashboard/stat-cards";
 import { UsersByRoleChart } from "@/components/dashboard/users-by-role-chart";
@@ -91,13 +91,6 @@ export function DashboardView({
       </header>
       <div className="w-full overflow-auto pt-4 flex flex-col gap-4 custom-scrollbar-thin">
         <StatCards stats={stats} />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <CalendarConnectionDonut stats={stats} />
-          <SignupMethodDonut stats={stats} />
-          <div className="col-span-2">
-            <ProviderDonut stats={stats} />
-          </div>
-        </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <RadialChartCard
             icon={Gauge}
@@ -107,8 +100,13 @@ export function DashboardView({
             max={stats?.totalApiRequestLimit ?? 0}
             centerLabel="used"
           />
+          <CalendarConnectionCard stats={stats} />
+          <SignupMethodDonut stats={stats} />
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <UsersByRoleChart stats={stats} />
-          <ChatRoleDonut stats={stats} />
+          <ChatRoleChart stats={stats} />
+          <ProviderChart stats={stats} />
         </div>
       </div>
     </div>

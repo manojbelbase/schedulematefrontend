@@ -47,6 +47,7 @@ type Props = {
   description?: string;
   items: DistributionChartItem[];
   height?: number;
+  defaultChartType?: TChartType;
   isLoading?: boolean;
   className?: string;
 };
@@ -61,11 +62,12 @@ export function DistributionChartCard({
   description,
   items,
   height = 260,
+  defaultChartType = "bar-horizontal",
   isLoading,
   className,
 }: Props) {
   const gradientId = `fill-count-${useId().replace(/:/g, "")}`;
-  const [chartType, setChartType] = useState<TChartType>("bar-horizontal");
+  const [chartType, setChartType] = useState<TChartType>(defaultChartType);
   const [selectedIds, setSelectedIds] = useState<Set<string>>();
 
   const allIds = useMemo(() => items.map((i) => i.id), [items]);

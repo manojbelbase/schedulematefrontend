@@ -46,9 +46,7 @@ export function ChartCard({
     >
       <div className="flex items-start justify-between gap-3 px-4 py-3">
         <div className="flex min-w-0 items-center gap-2">
-          {Icon ? (
-            <Icon className="size-4 shrink-0 text-muted-foreground" />
-          ) : null}
+          {Icon ? <Icon className="size-4 shrink-0" /> : null}
           <h3 className="truncate text-sm font-semibold text-foreground">
             {title}
           </h3>

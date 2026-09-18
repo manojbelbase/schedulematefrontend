@@ -17,7 +17,7 @@ const CHART_PALETTE = [
   "#94A3B8",
 ];
 
-export function ProviderDonut({ stats }: { stats?: UsersDashboardData }) {
+export function ProviderChart({ stats }: { stats?: UsersDashboardData }) {
   const entries = useMemo(
     () => Object.entries(stats?.countByProvider ?? {}),
     [stats?.countByProvider],
@@ -42,6 +42,7 @@ export function ProviderDonut({ stats }: { stats?: UsersDashboardData }) {
       icon={Boxes}
       title="LLM Providers"
       description="Configurations by provider"
+      defaultChartType="area"
       items={items}
     />
   );

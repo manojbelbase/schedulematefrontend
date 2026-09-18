@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { Users } from "lucide-react";
 
-import { DonutChartCard } from "@ui/components/ui/donut-chart-card";
+import { DistributionChartCard } from "@ui/components/ui/distribution-chart-card";
 
 import type { UsersDashboardData } from "@repo/services/backoffice";
 
@@ -25,17 +25,17 @@ export function UsersByRoleChart({ stats }: { stats?: UsersDashboardData }) {
           CHART_PALETTE[index % CHART_PALETTE.length] ??
           CHART_PALETTE[0] ??
           "var(--color-chart-1)",
-        value: count,
+        count,
       })),
     [stats?.countByRole],
   );
 
   return (
-    <DonutChartCard
+    <DistributionChartCard
       icon={Users}
       title="Users by Role"
       description="Registered users grouped by role"
-      centerLabel="users"
+      defaultChartType="bar-horizontal"
       items={items}
     />
   );

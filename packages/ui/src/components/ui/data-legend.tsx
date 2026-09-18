@@ -54,19 +54,17 @@ export function DataLegend({
               className="size-2.5 shrink-0 rounded-sm"
               style={{ backgroundColor: item.color }}
             />
-            <span className="font-medium text-muted-foreground">
-              {item.label}
-            </span>
+            <span className="font-medium text-foreground/80">{item.label}</span>
             <span
               className={cn(
                 "font-semibold tabular-nums",
-                isSelected ? "text-foreground" : "text-muted-foreground",
+                isSelected ? "text-foreground" : "text-foreground/60",
               )}
             >
               {item.count.toLocaleString()}
             </span>
             {item.percent ? (
-              <span className="text-muted-foreground">({item.percent}%)</span>
+              <span className="text-foreground/70">({item.percent}%)</span>
             ) : null}
           </button>
         );
