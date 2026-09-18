@@ -45,9 +45,11 @@ function TooltipContent({
   className,
   sideOffset,
   children,
+  arrow = true,
   arrowClassName,
   ...props
 }: TooltipContentProps & {
+  arrow?: boolean;
   arrowClassName?: string;
 }) {
   return (
@@ -61,12 +63,14 @@ function TooltipContent({
         {...props}
       >
         {children}
-        <TooltipArrowPrimitive
-          className={cn(
-            "bg-primary fill-primary z-50 size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-xs",
-            arrowClassName,
-          )}
-        />
+        {arrow && (
+          <TooltipArrowPrimitive
+            className={cn(
+              "bg-primary fill-primary z-50 size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-xs",
+              arrowClassName,
+            )}
+          />
+        )}
       </TooltipContentPrimitive>
     </TooltipPortalPrimitive>
   );
