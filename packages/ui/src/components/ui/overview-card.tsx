@@ -87,9 +87,9 @@ export function OverviewCard({
       </TooltipTrigger>
       {info && (
         <TooltipContent
-          className="max-w-xs bg-background text-foreground border p-3"
+          className="max-w-xs mt-1 bg-background text-foreground border p-3"
           side="bottom"
-          arrowClassName="hidden"
+          arrow={false}
         >
           <p className="text-sm">{info}</p>
         </TooltipContent>

@@ -289,7 +289,7 @@ export default function OptionSelect({
             "h-9 3xl:h-10 grid gap-1 focus-visible:border-primary! focus-within:border-primary!",
             (isInputFocused || open) && "border-primary ring-primary/50 ",
             isForfilter && type === "multiple" && "h-9 p-0! border-none",
-            isForfilter && type === "single" && "h-10 3xl:h-11 rounded-sm!",
+            isForfilter && type === "single" && "rounded-sm!",
             isForfilter &&
               type === "single" &&
               Boolean(state) &&
@@ -302,7 +302,7 @@ export default function OptionSelect({
           )}
           onClick={(e) => {
             if (type === "single" && !disabled) {
-              setOpen((prev) => !prev);
+              setOpen(true);
               e.stopPropagation();
             }
           }}
@@ -423,7 +423,7 @@ export default function OptionSelect({
               {SelectedIcon && (
                 <span
                   onClick={() => {
-                    setOpen((prev) => !prev);
+                    setOpen(true);
                   }}
                   className="absolute w-8 h-6 top-1/2 -translate-y-1/2 left-3 -translate-x-1/2 overflow-hidden flex items-center justify-center rounded-sm cursor-pointer"
                 >
@@ -483,7 +483,7 @@ export default function OptionSelect({
               ) : (
                 <span
                   onClick={() => {
-                    if (!disabled) setOpen((prev) => !prev);
+                    if (!disabled) setOpen(true);
                   }}
                   className="absolute top-1/2 -translate-y-1/2 -right-2 -translate-x-1/2 overflow-hidden flex items-center justify-center cursor-pointer"
                 >
