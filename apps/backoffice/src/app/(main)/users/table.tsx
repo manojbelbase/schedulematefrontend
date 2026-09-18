@@ -14,8 +14,6 @@ import {
   type UsersDashboardResponse,
 } from "@repo/services/backoffice";
 
-import TableRowsLoading from "@/components/loaders/table-rows-loading";
-
 import { USER_COLUMNS, UserRowActions } from "./columns";
 
 export function UsersTable({
@@ -160,10 +158,7 @@ export function UsersTable({
         },
       }}
 
-      loading={{
-        isLoading,
-        Loader: <TableRowsLoading />,
-      }}
+      loading={{ isLoading }}
     />
   );
 }

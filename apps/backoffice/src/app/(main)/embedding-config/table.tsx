@@ -12,8 +12,6 @@ import {
   type EmbeddingConfigListResponse,
 } from "@repo/services/backoffice";
 
-import TableRowsLoading from "@/components/loaders/table-rows-loading";
-
 import { EMBEDDING_CONFIG_COLUMNS, EmbeddingConfigRowActions } from "./columns";
 
 export function EmbeddingConfigTable({
@@ -95,10 +93,7 @@ export function EmbeddingConfigTable({
         icon: Zap,
         description: "Connect an embedding provider to get started.",
       }}
-      loading={{
-        isLoading,
-        Loader: <TableRowsLoading />,
-      }}
+      loading={{ isLoading }}
     />
   );
 }

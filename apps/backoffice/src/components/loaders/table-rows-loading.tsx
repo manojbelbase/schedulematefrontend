@@ -1,8 +1,10 @@
 import { Table, TableBody, TableCell, TableRow } from "@ui/components/ui/table";
 import { cn } from "@ui/lib/utils";
 
-const MIN_ROWS = 15;
+const MIN_ROWS = 12;
 const MIN_COLUMNS = 8;
+
+const BAR_WIDTHS = [100, 78, 92, 64, 85, 58, 72, 66];
 
 type TableRowsLoadingProps = {
   rows?: number;
@@ -17,7 +19,7 @@ export default function TableRowsLoading({
   const safeColumns = Math.max(columns, MIN_COLUMNS);
 
   return (
-    <div className="rounded-md overflow-hidden pointer-events-none">
+    <div className="rounded-sm overflow-hidden pointer-events-none">
       <Table>
         <TableBody>
           {Array.from({ length: safeRows }).map((_, rowIndex) => (
@@ -25,7 +27,7 @@ export default function TableRowsLoading({
               key={`table-row-loading-${rowIndex}`}
               className={cn(
                 "border-b border-gray-100 last:border-b-0 dark:border-gray-800",
-                rowIndex === 0 && "bg-[#f9fbfd]! dark:bg-background",
+                rowIndex === 0 && "bg-secondary! dark:bg-secondary!",
               )}
             >
               {Array.from({ length: safeColumns }).map((_, colIndex) => (
@@ -35,8 +37,14 @@ export default function TableRowsLoading({
                 >
                   <div
                     className={cn(
-                      "h-5 rounded-sm animate-pulse bg-gray-200/50 dark:bg-gray-700",
+                      "h-5 rounded-sm animate-pulse bg-accent",
+                      colIndex === safeColumns - 1 && "ml-auto!",
                     )}
+                    style={{
+                      width: `${
+                        BAR_WIDTHS[colIndex % BAR_WIDTHS.length] ?? 100
+                      }%`,
+                    }}
                   />
                 </TableCell>
               ))}

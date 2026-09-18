@@ -1,6 +1,7 @@
 import FilterLoading from "@/components/loaders/filter-loading";
 import PaginationLoading from "@/components/loaders/pagination-loading";
 import TablePageHeaderLoading from "@/components/loaders/table-page-header-loading";
+import TableRowsLoading from "@/components/loaders/table-rows-loading";
 
 type TProps = {
   children?: React.ReactNode;
@@ -17,7 +18,9 @@ export default function TableLoading({ children }: TProps) {
         <FilterLoading />
       </div>
       {children}
-      <div className="loading flex-1 bg-gray-100/60 rounded-sm" />
+      <div className="flex-1 rounded-sm overflow-hidden">
+        <TableRowsLoading />
+      </div>
       <PaginationLoading />
     </div>
   );

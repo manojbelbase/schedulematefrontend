@@ -12,8 +12,6 @@ import {
   type LlmConfigListResponse,
 } from "@repo/services/backoffice";
 
-import TableRowsLoading from "@/components/loaders/table-rows-loading";
-
 import { LLM_CONFIG_COLUMNS, LlmConfigRowActions } from "./columns";
 
 export function LlmConfigTable({
@@ -95,10 +93,7 @@ export function LlmConfigTable({
         icon: Bot,
         description: "Connect an LLM provider to get started.",
       }}
-      loading={{
-        isLoading,
-        Loader: <TableRowsLoading />,
-      }}
+      loading={{ isLoading }}
     />
   );
 }
