@@ -12,8 +12,6 @@ import {
   type BackofficeAccessRequestControllerListQueryParams,
 } from "@repo/services/backoffice";
 
-import TableRowsLoading from "@/components/loaders/table-rows-loading";
-
 import { ACCESS_REQUEST_COLUMNS, AccessRequestRowActions } from "./columns";
 
 export function AccessRequestsTable({
@@ -84,10 +82,7 @@ export function AccessRequestsTable({
           },
         },
       }}
-      loading={{
-        isLoading,
-        Loader: <TableRowsLoading />,
-      }}
+      loading={{ isLoading }}
     />
   );
 }

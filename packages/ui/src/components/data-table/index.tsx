@@ -85,7 +85,6 @@ export type TDataTableProps<TData, TValue, TStatistics> = {
   hasEditPermission?: boolean;
   loading?: {
     isLoading: boolean;
-    Loader: React.ReactNode;
   };
 };
 
@@ -108,7 +107,6 @@ function ReactTable<TData, TValue, TStatistics>({
   hasEditPermission,
   loading = {
     isLoading: false,
-    Loader: null,
   },
 }: TDataTableProps<TData, TValue, TStatistics>) {
   const ref = useRef<HTMLTableElement>(null);
@@ -327,9 +325,95 @@ function ReactTable<TData, TValue, TStatistics>({
         />
       )}
       {loading?.isLoading ? (
-        <div className="mt-3 overflow-hidden  border border-gray-200 dark:border-gray rounded-md">
-          {loading.Loader}
-        </div>
+        <>
+          <DndContext
+            id={`${instanceId}-skeleton-dnd-context`}
+            collisionDetection={closestCenter}
+            modifiers={[restrictToHorizontalAxis]}
+            onDragEnd={handleDragEnd}
+            sensors={sensors}
+          >
+            <div
+              className={cn(
+                "grid rounded-sm mt-3 pointer-events-none",
+                state.stickyHeader
+                  ? "flex-1 min-h-0 overflow-auto custom-scrollbar-thin"
+                  : "overflow-hidden",
+                className,
+              )}
+              ref={tableContainerRef}
+            >
+              <Table
+                ref={ref}
+                containerClassName={
+                  state.stickyHeader ? "overflow-visible" : undefined
+                }
+                style={{
+                  direction: table.options.columnResizeDirection,
+                }}
+              >
+                <TableHeader
+                  className={cn(
+                    "bg-secondary! dark:bg-secondary!",
+                    state.stickyHeader && "sticky top-0 z-50",
+                  )}
+                >
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <TableRow key={headerGroup.id}>
+                      <SortableContext
+                        items={state.columnOrder}
+                        strategy={horizontalListSortingStrategy}
+                      >
+                        {headerGroup.headers
+                          .filter(
+                            (f) => f.column.columnDef.meta?.exportOnly !== true,
+                          )
+                          .map((header) => {
+                            return (
+                              <THeadComponent
+                                key={header.id}
+                                table={table}
+                                header={header}
+                                autoHeaderRowSpan={autoHeaderRowSpan}
+                              />
+                            );
+                          })}
+                      </SortableContext>
+                    </TableRow>
+                  ))}
+                </TableHeader>
+                <TableBody>
+                  {Array.from({ length: Math.max(_pageSize, 5) }).map(
+                    (_, rowIndex) => (
+                      <TableRow
+                        key={`skeleton-row-${rowIndex}`}
+                        className="border-b border-gray-100 last:border-b-0 dark:border-gray-800"
+                      >
+                        {table
+                          .getVisibleLeafColumns()
+                          .filter(
+                            (col) => col.columnDef.meta?.exportOnly !== true,
+                          )
+                          .map((col) => (
+                            <TableCell key={col.id} className="py-3">
+                              <div
+                                className={cn(
+                                  "h-5 rounded-sm animate-pulse bg-accent",
+                                  col.id === TABLE_CONSTANTS.ACTIONS_HEADER &&
+                                    "w-16 ml-auto!",
+                                  col.id === TABLE_CONSTANTS.SN_HEADER && "w-6",
+                                )}
+                              />
+                            </TableCell>
+                          ))}
+                      </TableRow>
+                    ),
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          </DndContext>
+        </>
       ) : (
         <>
           <DndContext
