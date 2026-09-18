@@ -81,7 +81,7 @@ export function OverviewCard({
         >
           <div
             className={cn(
-              "overflow-hidden group relative transition-all ease-in-out rounded-sm p-3.5 flex flex-col gap-3 h-full",
+              "overflow-hidden group relative transition-all ease-in-out rounded-sm p-3 flex flex-col gap-3 h-full",
               className,
             )}
           >

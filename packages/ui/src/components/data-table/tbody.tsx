@@ -67,8 +67,8 @@ export default function TBodyComponent<TData>({
                   const pinnedStripe =
                     pinned &&
                     (rowIndex % 2 === 1
-                      ? "bg-[#fafafd]! dark:bg-transparent!"
-                      : "bg-background! dark:bg-transparent!");
+                      ? "bg-muted/40! group-hover/trow:bg-muted/50! group-data-[state=selected]/trow:bg-accent/10! dark:bg-transparent!"
+                      : "bg-background! group-hover/trow:bg-muted/50! group-data-[state=selected]/trow:bg-accent/10! dark:bg-transparent!");
                   return (
                     <SortableContext
                       key={cell.id}

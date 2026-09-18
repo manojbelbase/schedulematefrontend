@@ -98,8 +98,7 @@ export default function TCellComponent<TData>({
       >
         <TableCell
           className={cn(
-            cell.column.getIsPinned() &&
-              "max-w-sm! group-hover/trow:bg-[#f2f5f7]! dark:group-hover/trow:bg-transparent! py-2",
+            cell.column.getIsPinned() && "max-w-sm! py-2",
             [
               TABLE_CONSTANTS.SN_HEADER,
               TABLE_CONSTANTS.ACTIONS_HEADER,
@@ -107,16 +106,10 @@ export default function TCellComponent<TData>({
               cn(
                 "w-0! min-w-0! max-w-fit!",
                 cell.column.getIsPinned() && "min-w-8!",
-                cell.column.getIsPinned() &&
-                  row.getIsSelected() &&
-                  "bg-[#e5ebf0]! group-hover/trow:bg-[#e5ebf0]! dark:bg-transparent! dark:group-hover/trow:bg-transparent!",
               ),
             "group/tcell max-w-sm!",
             cell.column.getIsResizing() && "not-last:border-r-blue-500",
             className,
-            cell.column.getIsPinned() &&
-              row.getIsSelected() &&
-              "bg-[#e5ebf0]! group-hover/trow:bg-[#e5ebf0]! dark:bg-transparent! dark:group-hover/trow:bg-transparent!",
           )}
           style={{
             ...style,
