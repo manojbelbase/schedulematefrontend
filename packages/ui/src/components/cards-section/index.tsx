@@ -3,17 +3,13 @@
 import type { ReactNode } from "react";
 import type { OnChangeFn, VisibilityState } from "@tanstack/react-table";
 
-import {
-  OverviewCard,
-  type TColorVariant,
-} from "@ui/components/ui/overview-card";
+import { OverviewCard } from "@ui/components/ui/overview-card";
 
 export type TCardItem<TData = object> = {
   id: string;
   label: string;
   value: string | number | ((data: TData[]) => string | number);
   icon?: ReactNode;
-  colorVariant?: TColorVariant;
   info?: string;
   className?: string;
   accentClassName?: string;
@@ -52,7 +48,6 @@ export default function CardsSection<TData = object>({
             title={item.label}
             value={value}
             icon={item.icon}
-            colorVariant={item.colorVariant}
             info={item.info}
             iconContainerClassName={item.accentClassName}
             wrapperContainerClassname="max-w-full"
