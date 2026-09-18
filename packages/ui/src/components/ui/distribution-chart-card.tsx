@@ -1,13 +1,16 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import {
+  AreaChart as AreaChartIcon,
   BarChart3,
   BarChartHorizontal,
   LineChart as LineChartIcon,
   type LucideIcon,
 } from "lucide-react";
 import {
+  Area,
+  AreaChart,
   Bar,
   BarChart,
   CartesianGrid,
@@ -36,7 +39,7 @@ export type DistributionChartItem = {
   count: number;
 };
 
-export type TChartType = "bar-horizontal" | "bar-vertical" | "line";
+export type TChartType = "bar-horizontal" | "bar-vertical" | "line" | "area";
 
 type Props = {
   icon?: LucideIcon;
@@ -44,6 +47,7 @@ type Props = {
   description?: string;
   items: DistributionChartItem[];
   height?: number;
+  isLoading?: boolean;
   className?: string;
 };
 
@@ -57,8 +61,10 @@ export function DistributionChartCard({
   description,
   items,
   height = 260,
+  isLoading,
   className,
 }: Props) {
+  const gradientId = `fill-count-${useId().replace(/:/g, "")}`;
   const [chartType, setChartType] = useState<TChartType>("bar-horizontal");
   const [selectedIds, setSelectedIds] = useState<Set<string>>();
 
@@ -104,9 +110,9 @@ export function DistributionChartCard({
                 y={props.y}
                 dy={4}
                 textAnchor="end"
-                fill="var(--foreground)"
+                className="fill-foreground"
                 fontSize={13}
-                fontWeight={600}
+                fontWeight={500}
               >
                 {props.payload.value}
               </text>
@@ -152,7 +158,7 @@ export function DistributionChartCard({
             width={40}
           />
           <ChartTooltip
-            cursor={{ fill: "rgba(0, 0, 0, 0.05)" }}
+            cursor={{ fill: "var(--color-muted)" }}
             content={<ChartTooltipContent />}
           />
           <Bar dataKey="count" radius={[3, 3, 0, 0]} barSize={28}>
@@ -167,6 +173,56 @@ export function DistributionChartCard({
             />
           </Bar>
         </BarChart>
+      );
+    }
+    if (chartType === "area") {
+      return (
+        <AreaChart
+          data={filteredItems}
+          margin={{ top: 8, right: 40, left: 8, bottom: 8 }}
+        >
+          <defs>
+            <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+              <stop
+                offset="5%"
+                stopColor="var(--color-chart-1)"
+                stopOpacity={0.35}
+              />
+              <stop
+                offset="95%"
+                stopColor="var(--color-chart-1)"
+                stopOpacity={0.02}
+              />
+            </linearGradient>
+          </defs>
+          <CartesianGrid strokeDasharray="3 3" vertical={false} />
+          <XAxis
+            dataKey="label"
+            tickLine={false}
+            axisLine={false}
+            tick={{ fontSize: 12 }}
+            dy={8}
+          />
+          <YAxis
+            tickLine={false}
+            axisLine={false}
+            tick={{ fontSize: 12 }}
+            width={40}
+          />
+          <ChartTooltip
+            cursor={{ stroke: "var(--color-border)" }}
+            content={<ChartTooltipContent />}
+          />
+          <Area
+            type="monotone"
+            dataKey="count"
+            stroke="var(--color-chart-1)"
+            strokeWidth={2}
+            fill={`url(#${gradientId})`}
+            dot={{ r: 3, strokeWidth: 0, fill: "var(--color-chart-1)" }}
+            activeDot={{ r: 5 }}
+          />
+        </AreaChart>
       );
     }
     return (
@@ -189,16 +245,16 @@ export function DistributionChartCard({
           width={40}
         />
         <ChartTooltip
-          cursor={{ fill: "rgba(0, 0, 0, 0.05)" }}
+          cursor={{ stroke: "var(--color-border)" }}
           content={<ChartTooltipContent />}
         />
         <Line
           type="monotone"
           dataKey="count"
-          stroke="#385AD0"
+          stroke="var(--color-chart-1)"
           strokeWidth={2}
-          dot={{ r: 4 }}
-          activeDot={{ r: 6 }}
+          dot={{ r: 3, strokeWidth: 0, fill: "var(--color-chart-1)" }}
+          activeDot={{ r: 5 }}
         />
       </LineChart>
     );
@@ -209,20 +265,9 @@ export function DistributionChartCard({
       icon={icon}
       title={title}
       description={description}
+      isLoading={isLoading}
       className={className}
-    >
-      <div className="flex items-center justify-between mb-2">
-        <DataLegend
-          items={items.map((i) => ({
-            id: i.id,
-            label: i.label,
-            color: i.color,
-            count: i.count,
-          }))}
-          selectedIds={selectedIds}
-          onToggle={toggleItem}
-          className="flex-1"
-        />
+      action={
         <ChartTypeToggle<TChartType>
           value={chartType}
           onChange={setChartType}
@@ -242,9 +287,26 @@ export function DistributionChartCard({
               icon: LineChartIcon,
               label: "Line chart",
             },
+            {
+              value: "area",
+              icon: AreaChartIcon,
+              label: "Area chart",
+            },
           ]}
         />
-      </div>
+      }
+    >
+      <DataLegend
+        items={items.map((i) => ({
+          id: i.id,
+          label: i.label,
+          color: i.color,
+          count: i.count,
+        }))}
+        selectedIds={selectedIds}
+        onToggle={toggleItem}
+        className="mb-3"
+      />
       {!hasData ? (
         <div
           className="flex items-center justify-center text-sm text-muted-foreground"

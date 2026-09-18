@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { Gauge } from "lucide-react";
 import { parseAsIsoDateTime, parseAsStringLiteral, useQueryStates } from "nuqs";
 
 import DatePicker, {
@@ -9,6 +10,7 @@ import DatePicker, {
   SUPPORTED_PRESET_VALUES,
   type TDatePickerProps,
 } from "@ui/components/input/date-picker";
+import { RadialChartCard } from "@ui/components/ui/radial-chart-card";
 
 import {
   useBackofficeControllerGetUsersDashboard,
@@ -69,7 +71,7 @@ export function DashboardView({
 
   return (
     <div className="flex flex-col min-h-0 flex-1">
-      <header className="w-full shrink-0 sticky top-0 z-30 bg-background border-b border-gray-200">
+      <header className="w-full shrink-0 sticky top-0 z-30 bg-background border-b border-border/50">
         <div className="flex justify-between items-center py-1 sm:py-3 gap-2">
           <div className="flex items-center gap-2">
             <h1 className="text-base sm:text-lg font-semibold">Dashboard</h1>
@@ -96,7 +98,15 @@ export function DashboardView({
             <ProviderDonut stats={stats} />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <RadialChartCard
+            icon={Gauge}
+            title="API Requests"
+            description="Share of the API request limit consumed"
+            value={stats?.totalApiRequestsUsed ?? 0}
+            max={stats?.totalApiRequestLimit ?? 0}
+            centerLabel="used"
+          />
           <UsersByRoleChart stats={stats} />
           <ChatRoleDonut stats={stats} />
         </div>

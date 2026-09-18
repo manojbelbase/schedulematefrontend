@@ -38,14 +38,15 @@ export function OverviewCard({
       <TooltipTrigger asChild>
         <div
           className={cn(
-            "max-w-[270px] w-full group relative rounded-sm bg-background border border-border cursor-pointer transition-colors hover:bg-accent/40",
+            "group relative w-full max-w-[270px] rounded-sm border border-border bg-background transition-colors hover:bg-accent/40",
+            onClick && "cursor-pointer",
             wrapperContainerClassname,
           )}
           onClick={onClick}
         >
           <div
             className={cn(
-              "overflow-hidden group relative transition-all ease-in-out rounded-sm p-3 flex flex-col gap-3 h-full",
+              "flex h-full flex-col gap-3 overflow-hidden rounded-sm p-3 transition-all ease-in-out",
               className,
             )}
           >
@@ -53,31 +54,24 @@ export function OverviewCard({
               <div className="flex items-center gap-2">
                 <span
                   className={cn(
-                    "inline-flex size-5 3xl:size-7 [&_svg]:size-3 3xl:[&_svg]:size-4 items-center justify-center rounded-sm bg-muted text-foreground/80 ring-1 ring-black/5",
+                    "inline-flex size-5 items-center justify-center rounded-sm bg-muted text-foreground/80 ring-1 ring-black/5 3xl:size-7 [&_svg]:size-3 3xl:[&_svg]:size-4",
                     iconContainerClassName,
                   )}
                 >
                   {icon}
                 </span>
-                <h6 className="font-medium text-foreground/80 dark:text-white flex-shrink-0 truncate text-xs 3xl:text-base">
+                <h6 className="flex-shrink-0 truncate text-xs font-medium text-foreground/80 3xl:text-base">
                   {title}
                 </h6>
               </div>
+              {info ? (
+                <Info className="size-3 shrink-0 text-muted-foreground" />
+              ) : null}
             </div>
             <div className="flex justify-between">
-              <div className="flex justify-between truncate">
-                <h1
-                  className="text-lg font-semibold truncate line-clamp-1"
-                  title={typeof value === "string" ? value : undefined}
-                >
-                  {value}
-                </h1>
-              </div>
-              {info && (
-                <div className="items-center flex group-hover:hidden transition-all ease-in-out duration-300">
-                  <Info size={12} className="text-blue-400" />
-                </div>
-              )}
+              <h1 className="truncate text-lg font-semibold tabular-nums">
+                {value}
+              </h1>
             </div>
             {description ? (
               <p className="text-xs text-muted-foreground">{description}</p>
@@ -85,15 +79,15 @@ export function OverviewCard({
           </div>
         </div>
       </TooltipTrigger>
-      {info && (
+      {info ? (
         <TooltipContent
-          className="max-w-xs mt-1 bg-background text-foreground border p-3"
+          className="mt-1 max-w-xs border bg-background p-3 text-foreground"
           side="bottom"
           arrow={false}
         >
           <p className="text-sm">{info}</p>
         </TooltipContent>
-      )}
+      ) : null}
     </Tooltip>
   );
 }
