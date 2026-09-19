@@ -88,7 +88,7 @@ export function DashboardView({
 
   return (
     <div className="flex flex-col min-h-0 flex-1">
-      <header className="w-full shrink-0 sticky top-0 z-30 border-b border-border/50 bg-background/80 backdrop-blur-sm">
+      <header className="w-full shrink-0 sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur-sm">
         <div className="flex justify-between items-center py-1 sm:py-3 gap-2">
           <div className="flex items-center gap-2">
             <h1 className="text-base sm:text-lg font-semibold">Dashboard</h1>

@@ -42,7 +42,7 @@ export function OverviewCard({
       <TooltipTrigger asChild>
         <div
           className={cn(
-            "group relative w-full max-w-[270px] overflow-hidden rounded-md border border-border bg-gradient-to-br transition-colors hover:border-foreground/20",
+            "group relative w-full max-w-[270px] overflow-hidden rounded-md border border-border bg-gradient-to-br",
             gradientClassName ?? "from-primary/10 via-background to-background",
             onClick && "cursor-pointer",
             wrapperContainerClassname,
@@ -84,7 +84,7 @@ export function OverviewCard({
       </TooltipTrigger>
       {info || description ? (
         <TooltipContent
-          className="max-w-xs bg-background text-foreground p-3 mt-1 shadow-md"
+          className="max-w-xs bg-background text-foreground p-3 mt-1 "
           side="bottom"
           arrow={false}
         >

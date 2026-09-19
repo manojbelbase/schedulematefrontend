@@ -43,7 +43,7 @@ export function ChartCard({
   return (
     <div
       className={cn(
-        "group flex flex-col rounded-md border border-border bg-card transition-colors hover:border-foreground/20",
+        "group flex flex-col rounded-md border border-border bg-card",
         className,
       )}
     >
@@ -63,7 +63,7 @@ export function ChartCard({
                 </button>
               </TooltipTrigger>
               <TooltipContent
-                className="max-w-xs bg-background text-foreground p-3 shadow-md"
+                className="max-w-xs bg-background text-foreground p-3"
                 side="bottom"
                 arrow={false}
               >

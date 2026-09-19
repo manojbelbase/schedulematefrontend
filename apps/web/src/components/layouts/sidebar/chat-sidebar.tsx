@@ -47,7 +47,7 @@ export default function ChatSidebar({
   return (
     <aside
       className={cn(
-        "relative flex h-full shrink-0 flex-col justify-between border-r border-border/50 bg-sidebar transition-all duration-200 ease-in-out",
+        "relative flex h-full shrink-0 flex-col justify-between border-r border-border bg-sidebar transition-all duration-200 ease-in-out",
         expanded ? "w-72" : "w-[72px]",
       )}
     >
@@ -181,7 +181,7 @@ export default function ChatSidebar({
           )}
         </div>
 
-        <div className="shrink-0 border-t border-border/50 px-2 py-2 space-y-1">
+        <div className="shrink-0 border-t border-border px-2 py-2 space-y-1">
           <RequestLimitIndicator expanded={expanded} />
           <CalendarConnectButton expanded={expanded} />
           <UserProfileButton expanded={expanded} />

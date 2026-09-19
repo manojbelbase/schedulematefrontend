@@ -83,7 +83,7 @@ export function CalendarConnectButton({ expanded }: { expanded: boolean }) {
     ) : accessStatus === "approved" ? (
       <Link
         href={calendarConnectUrl("/")}
-        className="group flex items-center gap-2.5 rounded-sm border border-dashed border-border px-2.5 py-2 transition-colors hover:border-primary/30 hover:bg-primary/5 bg-sidebar-accent/40"
+        className="group flex items-center gap-2.5 rounded-sm border border-dashed border-border px-2.5 py-2 transition-colors hover:bg-primary/5 bg-sidebar-accent/40"
         title="Connect Google Calendar"
       >
         <div className="flex size-6 shrink-0 items-center justify-center rounded-sm bg-muted">
