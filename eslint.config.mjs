@@ -11,7 +11,7 @@ import tsEslint from "typescript-eslint";
 
 export default [
   {
-    ignores: ["packages/services/**", "apps/*/.next/**", ".ignore/**"],
+    ignores: ["packages/services/**", "apps/*/.next/**", ".ignore/**", ".agents/**"],
   },
   eslint.configs.recommended,
   ...tsEslint.configs.recommended,
