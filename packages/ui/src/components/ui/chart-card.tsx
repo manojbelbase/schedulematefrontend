@@ -50,13 +50,13 @@ export function ChartCard({
       <div className="flex items-start justify-between gap-3 px-4 py-3">
         <div className="flex min-w-0 items-center gap-2">
           {Icon ? <Icon className="size-4 shrink-0 text-subtle" /> : null}
-          <h3 className="truncate text-sm font-medium text-heading">{title}</h3>
+          <h3 className="truncate text-xs font-medium text-heading">{title}</h3>
           {description ? (
             <Tooltip>
               <TooltipTrigger asChild>
                 <button
                   type="button"
-                  className="inline-flex shrink-0 items-center justify-center text-subtle transition-colors hover:text-heading"
+                  className="inline-flex shrink-0  items-center justify-center text-subtle transition-colors hover:text-heading"
                   aria-label={title}
                 >
                   <Info className="size-3.5" />
