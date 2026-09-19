@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "skills": {
+    "next-cache-components-adoption": {
+      "source": "vercel/next.js",
+      "sourceType": "github",
+      "skillPath": "skills/next-cache-components-adoption/SKILL.md",
+      "computedHash": "e8048c51a37d8973349477c9bb0a32d9f5f796a70ebaa10c89b59ac8015b9c55"
+    },
+    "next-dev-loop": {
+      "source": "vercel/next.js",
+      "sourceType": "github",
+      "skillPath": "skills/next-dev-loop/SKILL.md",
+      "computedHash": "18d8a8f48b8dc50e084de85afe6bd517a178c83684d45c1ebd16cf396428bedf"
+    },
+    "shadcn": {
+      "source": "shadcn/ui",
+      "sourceType": "github",
+      "skillPath": "skills/shadcn/SKILL.md",
+      "computedHash": "f615de216e085a84e31593ad0fa9062232adc40cd87b7c7ab2b8e49abf6500be"
+    },
+    "tailwind": {
+      "source": "rbaumier/skills",
+      "sourceType": "github",
+      "skillPath": "tailwind/SKILL.md",
+      "computedHash": "7ef3f54f6588b32c47c75d29a1058471155a510d5c8c5dc4bb0a5e23ae80b770"
+    }
+  }
+}

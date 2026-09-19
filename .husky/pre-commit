@@ -3,7 +3,7 @@
 BRANCH=`git rev-parse --abbrev-ref HEAD`
 PROTECTED_BRANCHES="^(dev|production|main)$"
 
-if [[ "$BRANCH" =~ $PROTECTED_BRANCHES ]]; then
+if printf '%s' "$BRANCH" | grep -qE "$PROTECTED_BRANCHES"; then
   echo "[ERROR] Prevented commit to protected branch \"$BRANCH\""
   exit 1
 fi
