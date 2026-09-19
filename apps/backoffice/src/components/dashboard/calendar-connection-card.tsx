@@ -8,8 +8,10 @@ import type { UsersDashboardData } from "@repo/services/backoffice";
 
 export function CalendarConnectionCard({
   stats,
+  className,
 }: {
   stats?: UsersDashboardData;
+  className?: string;
 }) {
   const connected = stats?.googleCalendarConnected ?? 0;
   const notConnected = stats?.googleCalendarNotConnected ?? 0;
@@ -20,6 +22,7 @@ export function CalendarConnectionCard({
       icon={CalendarDays}
       title="Google Calendar"
       description="Users with a connected calendar"
+      className={className}
       headlineValue={connected}
       headlineLabel={
         total > 0

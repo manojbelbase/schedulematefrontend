@@ -42,27 +42,32 @@ export function ChartCard({
 }) {
   return (
     <div
-      className={cn("flex flex-col rounded-sm border bg-background", className)}
+      className={cn(
+        "group flex flex-col rounded-md border border-border bg-card transition-colors hover:border-foreground/20",
+        className,
+      )}
     >
       <div className="flex items-start justify-between gap-3 px-4 py-3">
         <div className="flex min-w-0 items-center gap-2">
-          {Icon ? <Icon className="size-4 shrink-0" /> : null}
-          <h3 className="truncate text-sm font-semibold text-foreground">
-            {title}
-          </h3>
+          {Icon ? <Icon className="size-4 shrink-0 text-subtle" /> : null}
+          <h3 className="truncate text-sm font-medium text-heading">{title}</h3>
           {description ? (
             <Tooltip>
               <TooltipTrigger asChild>
                 <button
                   type="button"
-                  className="inline-flex shrink-0 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
+                  className="inline-flex shrink-0 items-center justify-center text-subtle transition-colors hover:text-heading"
                   aria-label={title}
                 >
-                  <Info className="size-3" />
+                  <Info className="size-3.5" />
                 </button>
               </TooltipTrigger>
-              <TooltipContent side="bottom">
-                <p>{description}</p>
+              <TooltipContent
+                className="max-w-xs bg-background text-foreground p-3 shadow-md"
+                side="bottom"
+                arrow={false}
+              >
+                <p className="text-xs text-subtle">{description}</p>
               </TooltipContent>
             </Tooltip>
           ) : null}

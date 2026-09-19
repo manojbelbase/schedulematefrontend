@@ -26,7 +26,7 @@ export function ChartTypeToggle<T extends string = string>({
   return (
     <div
       className={cn(
-        "flex h-8 items-center rounded-sm border bg-background text-muted-foreground",
+        "flex h-8 items-center rounded-sm border bg-background text-subtle",
         className,
       )}
     >
@@ -48,7 +48,7 @@ export function ChartTypeToggle<T extends string = string>({
               i === options.length - 1 && "rounded-r-sm",
               value === opt.value
                 ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground hover:text-foreground",
+                : "text-subtle hover:text-heading",
             )}
           >
             <opt.icon size={15} />

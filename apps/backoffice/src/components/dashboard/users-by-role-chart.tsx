@@ -15,7 +15,13 @@ const CHART_PALETTE = [
   "var(--color-chart-5)",
 ];
 
-export function UsersByRoleChart({ stats }: { stats?: UsersDashboardData }) {
+export function UsersByRoleChart({
+  stats,
+  className,
+}: {
+  stats?: UsersDashboardData;
+  className?: string;
+}) {
   const items = useMemo(
     () =>
       Object.entries(stats?.countByRole ?? {}).map(([role, count], index) => ({
@@ -37,6 +43,7 @@ export function UsersByRoleChart({ stats }: { stats?: UsersDashboardData }) {
       description="Registered users grouped by role"
       defaultChartType="bar-horizontal"
       items={items}
+      className={className}
     />
   );
 }

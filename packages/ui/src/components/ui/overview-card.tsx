@@ -20,6 +20,8 @@ type OverviewCardProps = {
   className?: string;
   wrapperContainerClassname?: string;
   onClick?: () => void;
+  footer?: ReactNode;
+  gradientClassName?: string;
 };
 
 export function OverviewCard({
@@ -32,13 +34,16 @@ export function OverviewCard({
   className,
   wrapperContainerClassname,
   onClick,
+  footer,
+  gradientClassName,
 }: OverviewCardProps) {
   return (
     <Tooltip delayDuration={300}>
       <TooltipTrigger asChild>
         <div
           className={cn(
-            "group relative w-full max-w-[270px] rounded-sm border border-border bg-background transition-colors hover:bg-accent/40",
+            "group relative w-full max-w-[270px] overflow-hidden rounded-md border border-border bg-gradient-to-br transition-colors hover:border-foreground/20",
+            gradientClassName ?? "from-primary/10 via-background to-background",
             onClick && "cursor-pointer",
             wrapperContainerClassname,
           )}
@@ -46,46 +51,49 @@ export function OverviewCard({
         >
           <div
             className={cn(
-              "flex h-full flex-col gap-3 overflow-hidden rounded-sm p-3 transition-all ease-in-out",
+              "flex h-full flex-col gap-2 overflow-hidden p-3 transition-all ease-in-out",
               className,
             )}
           >
             <div className="flex items-center justify-between gap-1">
-              <div className="flex items-center gap-2">
+              <div className="flex min-w-0 items-center gap-1.5">
                 <span
                   className={cn(
-                    "inline-flex size-5 items-center justify-center rounded-sm bg-muted text-foreground/80 ring-1 ring-black/5 3xl:size-7 [&_svg]:size-3 3xl:[&_svg]:size-4",
+                    "inline-flex size-5 shrink-0 items-center justify-center rounded-md bg-muted text-subtle [&_svg]:size-3",
                     iconContainerClassName,
                   )}
                 >
                   {icon}
                 </span>
-                <h6 className="flex-shrink-0 truncate text-xs font-medium text-foreground/80 3xl:text-base">
+                <h6 className="truncate text-sm font-medium text-heading">
                   {title}
                 </h6>
               </div>
-              {info ? (
-                <Info className="size-3 shrink-0 text-muted-foreground" />
+              {info || description ? (
+                <Info className="size-3.5 shrink-0 text-subtle" />
               ) : null}
             </div>
-            <div className="flex justify-between">
-              <h1 className="truncate text-lg font-semibold tabular-nums">
+            <div className="mt-auto flex items-end justify-between gap-2">
+              <h1 className="truncate text-2xl leading-none font-semibold tracking-tight text-heading tabular-nums">
                 {value}
               </h1>
+              {footer}
             </div>
-            {description ? (
-              <p className="text-xs text-muted-foreground">{description}</p>
-            ) : null}
           </div>
         </div>
       </TooltipTrigger>
-      {info ? (
+      {info || description ? (
         <TooltipContent
-          className="mt-1 max-w-xs border bg-background p-3 text-foreground"
+          className="max-w-xs bg-background text-foreground p-3 mt-1 shadow-md"
           side="bottom"
           arrow={false}
         >
-          <p className="text-sm">{info}</p>
+          <div className="flex flex-col gap-1 text-xs">
+            {description ? (
+              <p className="font-medium text-heading">{description}</p>
+            ) : null}
+            {info ? <p className="text-subtle">{info}</p> : null}
+          </div>
         </TooltipContent>
       ) : null}
     </Tooltip>
