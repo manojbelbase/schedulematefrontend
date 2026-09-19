@@ -30,7 +30,7 @@ export function EmptyState({ userName, onPromptClick }: EmptyStateProps) {
             key={prompt.title}
             type="button"
             onClick={() => onPromptClick(prompt.title)}
-            className="group flex flex-col gap-2 rounded-md border bg-card p-4 text-left transition-colors hover:border-primary/40 hover:bg-accent"
+            className="group flex flex-col gap-2 rounded-md border border-border bg-card p-4 text-left transition-colors hover:bg-accent"
             style={{ animationDelay: `${i * 60}ms` }}
           >
             <span className="text-sm font-medium text-foreground">

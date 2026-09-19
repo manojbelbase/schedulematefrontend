@@ -91,14 +91,14 @@ export function DonutChartCard({
       className={className}
     >
       {!hasData ? (
-        <div className="flex aspect-square max-h-[220px] items-center justify-center text-sm text-muted-foreground">
+        <div className="flex flex-1 items-center justify-center text-sm text-subtle">
           No data in the selected period
         </div>
       ) : (
-        <>
+        <div className="flex flex-1 flex-col">
           <ChartContainer
             config={chartConfig}
-            className="mx-auto aspect-square max-h-[220px] w-full"
+            className="mx-auto min-h-[160px] w-full flex-1"
           >
             <PieChart>
               <ChartTooltip
@@ -172,7 +172,7 @@ export function DonutChartCard({
                   : ((item.value / allTotal) * 100).toFixed(1),
             }))}
           />
-        </>
+        </div>
       )}
     </ChartCard>
   );

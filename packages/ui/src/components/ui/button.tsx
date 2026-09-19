@@ -20,9 +20,9 @@ const buttonVariants = cva(
         outline:
           "border bg-background text-dark-500 dark:bg-input/30 dark:border-input dark:hover:bg-input/50 focus-visible:ring-secondary focus-visible:border-border",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80 focus-visible:ring-secondary focus-visible:border-gray-300",
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80 focus-visible:ring-secondary focus-visible:border-border",
         ghost:
-          "hover:bg-accent border border-transparent dark:hover:bg-secondary/20 shadow-none focus-visible:ring-secondary focus-visible:border focus-visible:border-gray-300",
+          "hover:bg-accent border border-transparent dark:hover:bg-secondary/20 shadow-none focus-visible:ring-secondary focus-visible:border focus-visible:border-border",
         "table-header": "bg-none shadow-none text-dark font-semibold",
         success:
           "bg-green-500 text-white hover:bg-success/90 border border-green-600/70 focus-visible:border-green-700/50 focus-visible:ring-green-500/20 dark:focus-visible:ring-green-600/40 dark:bg-green-600/60",

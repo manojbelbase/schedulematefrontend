@@ -311,16 +311,16 @@ export function DistributionChartCard({
       />
       {!hasData ? (
         <div
-          className="flex items-center justify-center text-sm text-muted-foreground"
-          style={{ height }}
+          className="flex flex-1 items-center justify-center text-sm text-subtle"
+          style={{ minHeight: height }}
         >
           No data in the selected period
         </div>
       ) : (
         <ChartContainer
           config={chartConfig}
-          className="w-full aspect-auto"
-          style={{ height }}
+          className="w-full flex-1 aspect-auto"
+          style={{ minHeight: height }}
         >
           {renderChart()}
         </ChartContainer>

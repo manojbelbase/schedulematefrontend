@@ -7,7 +7,13 @@ import { DistributionChartCard } from "@ui/components/ui/distribution-chart-card
 
 import type { UsersDashboardData } from "@repo/services/backoffice";
 
-export function ChatRoleChart({ stats }: { stats?: UsersDashboardData }) {
+export function ChatRoleChart({
+  stats,
+  className,
+}: {
+  stats?: UsersDashboardData;
+  className?: string;
+}) {
   const byRole = stats?.chatMessagesByRole ?? {};
 
   const items = useMemo(
@@ -33,8 +39,9 @@ export function ChatRoleChart({ stats }: { stats?: UsersDashboardData }) {
       icon={MessagesSquare}
       title="Messages"
       description="User vs assistant messages"
-      defaultChartType="bar-vertical"
+      defaultChartType="bar-horizontal"
       items={items}
+      className={className}
     />
   );
 }

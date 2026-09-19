@@ -387,7 +387,7 @@ function ReactTable<TData, TValue, TStatistics>({
                     (_, rowIndex) => (
                       <TableRow
                         key={`skeleton-row-${rowIndex}`}
-                        className="border-b border-gray-100 last:border-b-0 dark:border-gray-800"
+                        className="border-b border-border last:border-b-0"
                       >
                         {table
                           .getVisibleLeafColumns()
@@ -425,7 +425,7 @@ function ReactTable<TData, TValue, TStatistics>({
           >
             <div
               className={cn(
-                "grid rounded-sm mt-3 border border-gray-200 dark:border-border",
+                "grid rounded-sm mt-3 border border-border",
                 state.stickyHeader
                   ? "flex-1 min-h-0 overflow-auto custom-scrollbar-thin"
                   : "overflow-hidden",

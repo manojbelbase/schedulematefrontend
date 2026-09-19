@@ -48,7 +48,7 @@ export function RadialChartCard({
       className={className}
     >
       {!hasData ? (
-        <div className="flex aspect-square max-h-[220px] items-center justify-center text-sm text-muted-foreground">
+        <div className="flex aspect-square max-h-[220px] items-center justify-center text-sm text-subtle">
           No data in the selected period
         </div>
       ) : (
@@ -84,9 +84,7 @@ export function RadialChartCard({
               {percent.toFixed(0)}%
             </span>
             {centerLabel ? (
-              <span className="text-xs text-muted-foreground">
-                {centerLabel}
-              </span>
+              <span className="text-xs text-subtle">{centerLabel}</span>
             ) : null}
           </div>
         </div>

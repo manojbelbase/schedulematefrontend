@@ -45,20 +45,18 @@ export function StackedBarCard({
       className={className}
     >
       {!hasData ? (
-        <div className="flex min-h-[180px] items-center justify-center text-sm text-muted-foreground">
+        <div className="flex min-h-[180px] items-center justify-center text-sm text-subtle">
           No data in the selected period
         </div>
       ) : (
-        <div className="flex h-full min-h-[180px] flex-col justify-center gap-4">
+        <div className="flex h-full min-h-[180px] flex-col justify-between gap-4">
           {headlineValue !== undefined ? (
             <div className="flex items-baseline gap-2">
               <span className="text-2xl font-semibold tabular-nums tracking-tight">
                 {headlineValue.toLocaleString()}
               </span>
               {headlineLabel ? (
-                <span className="text-xs text-foreground/70">
-                  {headlineLabel}
-                </span>
+                <span className="text-xs text-subtle">{headlineLabel}</span>
               ) : null}
             </div>
           ) : null}

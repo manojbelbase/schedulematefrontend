@@ -26,7 +26,7 @@ export default function TableRowsLoading({
             <TableRow
               key={`table-row-loading-${rowIndex}`}
               className={cn(
-                "border-b border-gray-100 last:border-b-0 dark:border-gray-800",
+                "border-b border-border last:border-b-0",
                 rowIndex === 0 && "bg-secondary! dark:bg-secondary!",
               )}
             >

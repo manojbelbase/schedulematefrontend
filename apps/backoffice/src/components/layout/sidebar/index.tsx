@@ -22,14 +22,14 @@ export default function Sidebar() {
   return (
     <aside
       className={cn(
-        "relative flex h-full shrink-0 flex-col border-r border-border/50 bg-sidebar transition-all duration-200",
-        collapsed ? "w-[60px]" : "w-60",
+        "relative flex h-full shrink-0 flex-col border-r border-border bg-sidebar transition-all duration-200",
+        collapsed ? "w-[60px]" : "w-56",
       )}
     >
       <div className="flex h-full flex-col overflow-hidden">
         <div
           className={cn(
-            "flex h-14 shrink-0 items-center justify-between border-b border-border/50 px-3",
+            "flex h-14 shrink-0 items-center justify-between border-b border-border px-3",
             collapsed && "justify-center px-0",
           )}
         >
@@ -68,7 +68,7 @@ export default function Sidebar() {
           />
         </nav>
 
-        <div className="shrink-0 border-t border-border/50 px-2 py-2">
+        <div className="shrink-0 border-t border-border px-2 py-2">
           <ProfilePopover collapsed={collapsed} />
         </div>
       </div>
