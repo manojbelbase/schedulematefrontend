@@ -72,11 +72,11 @@ export function OverviewCard({
               )}
             >
               <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 border">
                   {icon && (
                     <span
                       className={cn(
-                        "inline-flex size-6 shrink-0 items-center justify-center rounded-md bg-muted text-subtle [&_svg]:size-3.5",
+                        "inline-flex size-6 shrink-0 items-center justify-center rounded-md border border-border bg-background text-subtle [&_svg]:size-3.5",
                         iconContainerClassName,
                       )}
                     >

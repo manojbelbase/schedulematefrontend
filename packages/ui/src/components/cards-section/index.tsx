@@ -13,6 +13,8 @@ export type TCardItem<TData = object> = {
   info?: string;
   className?: string;
   accentClassName?: string;
+  subtitle?: string;
+  stats?: { label: string; value: string | number; className?: string }[];
 };
 
 export type TCardsSectionProps<TData = object> = {
@@ -49,6 +51,8 @@ export default function CardsSection<TData = object>({
             value={value}
             icon={item.icon}
             info={item.info}
+            subtitle={item.subtitle}
+            stats={item.stats}
             iconContainerClassName={item.accentClassName}
             wrapperContainerClassname="max-w-full"
             className={item.className}
