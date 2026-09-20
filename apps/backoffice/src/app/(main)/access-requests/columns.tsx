@@ -155,7 +155,7 @@ export function AccessRequestRowActions({
             disabled={isPending}
             onClick={() => changeStatus("approved")}
           >
-            <Check size={16} className="mr-2.5 text-green-600" />
+            <Check size={16} className="mr-2.5 text-status-success" />
             Approve
           </MenuItem>
           <MenuItem
@@ -163,7 +163,7 @@ export function AccessRequestRowActions({
             disabled={isPending}
             onClick={() => changeStatus("rejected")}
           >
-            <X size={16} className="mr-2.5 text-red-500" />
+            <X size={16} className="mr-2.5 text-destructive" />
             Reject
           </MenuItem>
         </>

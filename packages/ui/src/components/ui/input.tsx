@@ -3,7 +3,7 @@ import * as React from "react";
 import { cn, formatNumber } from "@ui/lib/utils";
 
 export const INPUT_CLASSNAME = cn(
-  "flex h-10 3xl:h-11 w-full rounded-sm border border-border bg-background px-3 py-2 text-xs 3xl:text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground dark:placeholder:text-gray-500 disabled:cursor-not-allowed disabled:opacity-50 focus:pl-3.5 transition-all ease-in-out duration-300 outline-none",
+  "flex h-10 3xl:h-11 w-full rounded-sm border border-border bg-background px-3 py-2 text-xs 3xl:text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground dark:placeholder:text-text-secondary disabled:cursor-not-allowed disabled:opacity-50 focus:pl-3.5 transition-all ease-in-out duration-300 outline-none",
 );
 
 export type InputProps = {

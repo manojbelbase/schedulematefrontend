@@ -27,7 +27,6 @@ type OverviewCardProps = {
   wrapperContainerClassname?: string;
   onClick?: () => void;
   footer?: ReactNode;
-  gradientClassName?: string;
   subtitle?: string;
   stats?: StatItem[];
 };
@@ -43,7 +42,6 @@ export function OverviewCard({
   wrapperContainerClassname,
   onClick,
   footer,
-  gradientClassName,
   subtitle,
   stats,
 }: OverviewCardProps) {
@@ -54,11 +52,7 @@ export function OverviewCard({
       <TooltipTrigger asChild>
         <div
           className={cn(
-            "group relative w-full overflow-hidden rounded-sm border border-border",
-            hasStats ? "bg-card" : "bg-gradient-to-br",
-            !hasStats &&
-              (gradientClassName ??
-                "from-primary/10 via-background to-background"),
+            "group relative w-full overflow-hidden rounded-sm border border-border bg-card",
             onClick && "cursor-pointer",
             wrapperContainerClassname,
           )}
@@ -72,11 +66,11 @@ export function OverviewCard({
               )}
             >
               <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 border">
                   {icon && (
                     <span
                       className={cn(
-                        "inline-flex size-6 shrink-0 items-center justify-center rounded-md bg-muted text-subtle [&_svg]:size-3.5",
+                        "inline-flex size-6 shrink-0 items-center justify-center rounded-md border border-border bg-background text-subtle [&_svg]:size-3.5",
                         iconContainerClassName,
                       )}
                     >

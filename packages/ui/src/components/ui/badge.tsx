@@ -24,15 +24,15 @@ const badgeVariants = cva(
         orange: "bg-orange-600/10 border-orange-600/30 text-orange-600",
         pending: "bg-yellow-500/20 border-yellow-300 text-yellow-600",
         processing: "bg-blue-500/20 border-blue-300 text-blue-600",
-        bridging: "bg-gray-500/20 border-gray-300 text-gray-600",
+        bridging: "bg-surface-muted border-border text-text-secondary",
         granted: "bg-green-500/20 border-green-300 text-green-600",
         rejected: "bg-red-500/20 border-red-300 text-red-600",
       },
       size: {
         md: "py-0.5",
         lg: "py-1 px-2 text-sm",
-        sm: "py-0.5 px-1.5 text-[10px]",
-        xs: "py-0.5 px-1.5 text-[10px]",
+        sm: "py-0.5 px-1.5 text-xs",
+        xs: "py-0.5 px-1 text-xs",
       },
     },
     defaultVariants: {

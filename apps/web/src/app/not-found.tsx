@@ -11,7 +11,7 @@ export default function NotFound() {
         <Logo />
       </Link>
 
-      <h1 className="mt-8 font-display bg-gradient-to-r from-violet-600 to-indigo-500 bg-clip-text text-7xl font-bold tracking-tight text-transparent sm:text-8xl">
+      <h1 className="mt-8 font-display bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-7xl font-bold tracking-tight text-transparent sm:text-8xl">
         404
       </h1>
       <p className="mt-4 text-lg font-medium text-foreground">Page not found</p>

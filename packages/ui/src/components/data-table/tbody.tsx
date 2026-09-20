@@ -41,7 +41,7 @@ export default function TBodyComponent<TData>({
             <TableRow
               className={cn(
                 "even:bg-muted/40 dark:even:bg-muted/40",
-                row.getIsPinned() && "bg-[#f4f5f7]! dark:bg-secondary!",
+                row.getIsPinned() && "bg-surface-muted! dark:bg-secondary!",
                 onRowClick && "cursor-pointer",
               )}
               data-state={row.getIsSelected() && "selected"}

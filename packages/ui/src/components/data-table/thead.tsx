@@ -99,7 +99,7 @@ export default function THeadComponent<TData>({
             "group/thead font-semibold",
             header.column.getIsResizing() && "not-last:border-r-blue-500",
             header.column.getIsPinned() &&
-              "bg-secondary! dark:bg-secondary! group-hover/trow:bg-[#eceff1]! dark:group-hover/trow:bg-foreground/5!",
+              "bg-secondary! dark:bg-secondary! group-hover/trow:bg-surface-muted! dark:group-hover/trow:bg-foreground/5!",
           )}
           style={{
             ...style,

@@ -13,7 +13,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        link: "text-blue-700 bg-none hover:text-blue-700 hover:underline shadow-none",
+        link: "text-primary bg-none hover:text-primary hover:underline shadow-none",
         default: "bg-primary text-primary-foreground hover:bg-primary/90 ",
         destructive:
           "bg-background text-destructive hover:bg-secondary border border-destructive focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
@@ -25,7 +25,7 @@ const buttonVariants = cva(
           "hover:bg-accent border border-transparent dark:hover:bg-secondary/20 shadow-none focus-visible:ring-secondary focus-visible:border focus-visible:border-border",
         "table-header": "bg-none shadow-none text-dark font-semibold",
         success:
-          "bg-green-500 text-white hover:bg-success/90 border border-green-600/70 focus-visible:border-green-700/50 focus-visible:ring-green-500/20 dark:focus-visible:ring-green-600/40 dark:bg-green-600/60",
+          "bg-status-success text-white hover:bg-status-success/90 border border-status-success/70 focus-visible:border-status-success/50 focus-visible:ring-status-success/20 dark:bg-status-success/60",
       },
       size: {
         default: "h-10 px-4 py-2 has-[>svg]:px-3",
@@ -52,9 +52,9 @@ const rippleVariants = cva("absolute rounded-full size-5 pointer-events-none", {
     variant: {
       default: "bg-secondary",
       destructive: "bg-destructive/20",
-      outline: "bg-gray-300/80",
-      secondary: "bg-gray-300/80",
-      ghost: "bg-gray-300/70",
+      outline: "bg-surface-muted/80",
+      secondary: "bg-surface-muted/80",
+      ghost: "bg-surface-muted/70",
       success: "bg-secondary/80",
       link: "",
       "table-header": "",
@@ -66,7 +66,7 @@ const rippleVariants = cva("absolute rounded-full size-5 pointer-events-none", {
 });
 
 const shortcutVariants = cva(
-  "bg-white/20 aspect-square ms-1 -me-1 inline-flex h-[17px] items-center rounded border-[0.5px] border-white/30 px-1 font-[inherit] text-[0.625rem] font-medium",
+  "bg-white/20 aspect-square ms-1 -me-1 inline-flex h-[17px] items-center rounded border-[0.5px] border-white/30 px-1 font-[inherit] text-xs font-medium",
   {
     variants: {
       variant: {
@@ -75,7 +75,7 @@ const shortcutVariants = cva(
         ghost: "border-border",
         outline: "bg-secondary border-border",
         secondary: "bg-background border-border",
-        success: "bg-green-200",
+        success: "bg-status-success/20",
         link: "",
         "table-header": "",
       },

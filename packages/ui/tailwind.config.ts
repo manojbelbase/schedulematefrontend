@@ -8,11 +8,7 @@ const config: Config = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {
-      colors: {
-        danger: "#DC2626",
-      },
-    },
+    extend: {},
   },
   plugins: [],
 };

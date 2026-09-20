@@ -611,7 +611,7 @@ export default function AsyncSelect<
               <Button
                 variant="outline"
                 className={cn(
-                  "justify-between text-[14px] 3xl:text-sm gap-3 px-3 h-10 3xl:h-11 border-border text-primary! placeholder:text-muted-foreground focus-visible:border-primary! focus-visible:ring-primary/50! bg-accent hover:bg-accent/90!",
+                  "justify-between text-sm 3xl:text-sm gap-3 px-3 h-10 3xl:h-11 border-border text-primary! placeholder:text-muted-foreground focus-visible:border-primary! focus-visible:ring-primary/50! bg-accent hover:bg-accent/90!",
                   open && "border-primary! focus-visible:ring-primary/50!",
                   type === "single" &&
                     !Array.isArray(state) &&
@@ -886,7 +886,7 @@ export default function AsyncSelect<
                   const isDisabled = disabledOptions?.includes(value) || false;
 
                   const className = cn(
-                    "relative py-3 px-3 group/commandInput hover:bg-gray-100/50!",
+                    "relative py-3 px-3 group/commandInput hover:bg-surface-muted/50!",
                     isSelected &&
                       "bg-accent/90! hover:bg-accent/90! text-accent-foreground",
                     isDisabled && "opacity-50 cursor-not-allowed ",
