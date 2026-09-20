@@ -25,9 +25,8 @@ const cardItems = [
     description: "Registered accounts",
     icon: <Users />,
     info: "Total registered users in the selected period",
-    gradientClassName: "from-violet-500/15 via-background to-background",
     accentClassName:
-      "bg-violet-500/15 text-violet-600 dark:bg-violet-500/20 dark:text-violet-400",
+      "bg-primary/15 text-primary dark:bg-primary/20 dark:text-primary",
   },
   {
     id: "api-requests-used",
@@ -35,9 +34,8 @@ const cardItems = [
     description: "Requests against the limit",
     icon: <Activity />,
     info: "Total API requests consumed in the selected period",
-    gradientClassName: "from-sky-500/15 via-background to-background",
     accentClassName:
-      "bg-sky-500/15 text-sky-600 dark:bg-sky-500/20 dark:text-sky-400",
+      "bg-chart-2/15 text-chart-2 dark:bg-chart-2/20 dark:text-chart-2",
   },
   {
     id: "total-messages",
@@ -45,9 +43,8 @@ const cardItems = [
     description: "Chat messages exchanged",
     icon: <MessagesSquare />,
     info: "Total chat messages in the selected period",
-    gradientClassName: "from-emerald-500/15 via-background to-background",
     accentClassName:
-      "bg-emerald-500/15 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400",
+      "bg-status-success/15 text-status-success dark:bg-status-success/20 dark:text-status-success",
   },
   {
     id: "total-conversations",
@@ -55,9 +52,8 @@ const cardItems = [
     description: "Chat sessions started",
     icon: <User />,
     info: "Total chat conversations in the selected period",
-    gradientClassName: "from-amber-500/15 via-background to-background",
     accentClassName:
-      "bg-amber-500/15 text-amber-600 dark:bg-amber-500/20 dark:text-amber-400",
+      "bg-status-warning/15 text-status-warning dark:bg-status-warning/20 dark:text-status-warning",
   },
 ] as const;
 
@@ -93,7 +89,6 @@ export function StatCards({
           icon={item.icon}
           iconContainerClassName={item.accentClassName}
           info={item.info}
-          gradientClassName={item.gradientClassName}
           footer={
             <MetricTrend
               change={computeChange(values[item.id], previousValues[item.id])}

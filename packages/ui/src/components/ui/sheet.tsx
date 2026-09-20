@@ -95,7 +95,7 @@ function SheetContent({
             //     className={cn("size-10", btnOutside && "text-primary 3xl:size-7")}
             //   />
             //   <span className="sr-only">Close</span>
-            className="absolute top-8 right-8 hover:bg-red-500/5 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none group"
+            className="absolute top-8 right-8 hover:bg-destructive/5 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none group"
           >
             <XIcon className="size-6 text-destructive cursor-pointer group-hover:scale-110 transition-easeIn duration-200" />
 

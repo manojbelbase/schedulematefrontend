@@ -551,7 +551,7 @@ export default function OptionSelect({
                     className={cn(
                       isSelected &&
                         "bg-accent/90! hover:bg-accent/90! text-accent-foreground rounded-none",
-                      "min-h-10 flex items-center justify-between group/command-item hover:bg-gray-100/50!",
+                      "min-h-10 flex items-center justify-between group/command-item hover:bg-surface-muted/50!",
                       option.className,
                     )}
                     onSelect={() => handleSelect(option.value)}

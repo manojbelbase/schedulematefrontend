@@ -33,14 +33,15 @@ export function MetricTrend({ change }: { change?: number }) {
   return (
     <span className="inline-flex shrink-0 items-center gap-1 text-xs">
       <Icon
-        className={cn("size-3.5", isUp ? "text-emerald-500" : "text-rose-500")}
+        className={cn(
+          "size-3.5",
+          isUp ? "text-status-success" : "text-status-error",
+        )}
       />
       <span
         className={cn(
           "font-medium tabular-nums",
-          isUp
-            ? "text-emerald-600 dark:text-emerald-400"
-            : "text-rose-600 dark:text-rose-400",
+          isUp ? "text-status-success" : "text-status-error",
         )}
       >
         {Math.abs(change).toFixed(1)}%

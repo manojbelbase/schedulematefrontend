@@ -22,7 +22,7 @@ export default function LinksSection({ sections, path, collapsed }: TProps) {
             (collapsed ? (
               <div className="mx-2 my-1 h-px bg-border/40" />
             ) : (
-              <p className="px-2.5 pb-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60">
+              <p className="px-2.5 pb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground/60">
                 {section.label}
               </p>
             ))}

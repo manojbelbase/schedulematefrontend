@@ -81,7 +81,7 @@ export default function DeleteItemModal({
           "flex size-14 items-center justify-center rounded-full",
           typedData?.id
             ? "bg-destructive/10 text-destructive"
-            : "bg-amber-500/10 text-amber-500",
+            : "bg-status-warning/10 text-status-warning",
         )}
       >
         {typedData?.id ? (

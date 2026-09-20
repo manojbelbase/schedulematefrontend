@@ -197,7 +197,7 @@ export function ExpandableTextArea({
             </span>
           )
         ) : (
-          <span className="text-gray-400 dark:text-gray-500 text-sm flex items-center gap-2">
+          <span className="text-text-tertiary text-sm flex items-center gap-2">
             <MessageCirclePlus className="w-6 h-6" />
             <span className="px-2 py-1 border rounded-lg border-dashed">
               {placeholder}
@@ -232,7 +232,7 @@ export function ExpandableTextArea({
           }
         }}
         className={cn(
-          "resize-none py-1 px-3 placeholder:text-gray-300 dark:placeholder:text-gray-600 border-none focus:border-none focus:ring-0 bg-transparent text-sm overflow-hidden transition-all duration-200 ease-in-out min-h-[40px] max-h-[200px] w-full disabled:focus-none",
+          "resize-none py-1 px-3 placeholder:text-text-disabled border-none focus:border-none focus:ring-0 bg-transparent text-sm overflow-hidden transition-all duration-200 ease-in-out min-h-[40px] max-h-[200px] w-full disabled:focus-none",
           className,
         )}
         placeholder={"Press Enter to save."}

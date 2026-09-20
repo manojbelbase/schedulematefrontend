@@ -186,13 +186,13 @@ export default function ActionButtons({
           <ModalTrigger {...(remove as TTriggerProps)}>
             <Item
               className={cn(
-                "text-red-500 font-medium px-3 hover:text-red-500!",
+                "text-destructive font-medium px-3 hover:text-destructive!",
               )}
               onContextMenu={(e) => {
                 e.stopPropagation();
               }}
             >
-              <Trash2 size={16} className="mr-2.5 text-red-500" />
+              <Trash2 size={16} className="mr-2.5 text-destructive" />
               {remove.label || "Delete "} {name}
             </Item>
           </ModalTrigger>

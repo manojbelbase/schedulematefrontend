@@ -10,7 +10,7 @@ type TProps = {
 export default function TableLoading({ children }: TProps) {
   return (
     <div className="space-y-6 flex flex-col flex-1 pt-4">
-      <div className="space-y-4 bg-gray-100/10 rounded-sm">
+      <div className="space-y-4 bg-surface-muted/10 rounded-sm">
         <div className="flex w-full items-center justify-between">
           <TablePageHeaderLoading />
           <TablePageHeaderLoading className="w-80" />
