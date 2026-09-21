@@ -1,18 +1,12 @@
-import type { Metadata } from "next";
-
 import LegalPage from "@/components/legal/legal-page";
 
-export const metadata: Metadata = {
-  title: "Terms of Service — ScheduleMate AI",
-};
-
-export default function TermsPage() {
+export function TermsView() {
   return (
     <LegalPage title="Terms of Service" lastUpdated="August 31, 2026">
       <p>
-        These Terms of Service ("Terms") govern your use of the ScheduleMate AI
-        app at https://schedulemateweb.vercel.app. By using the app, you agree
-        to these Terms.
+        These Terms of Service (&quot;Terms&quot;) govern your use of the
+        ScheduleMate AI app at https://schedulemateweb.vercel.app. By using the
+        app, you agree to these Terms.
       </p>
 
       <h2 className="text-base font-semibold">Use of the app</h2>
@@ -39,9 +33,9 @@ export default function TermsPage() {
 
       <h2 className="text-base font-semibold">No warranties</h2>
       <p>
-        The app is provided "as is" without warranties of any kind. To the
-        maximum extent allowed by law, we are not liable for any damages related
-        to your use of the app.
+        The app is provided &quot;as is&quot; without warranties of any kind. To
+        the maximum extent allowed by law, we are not liable for any damages
+        related to your use of the app.
       </p>
 
       <h2 className="text-base font-semibold">Changes</h2>

@@ -3,7 +3,7 @@ import type { TQueryParams } from "@ui/types/globals";
 
 import { fetchBackofficeAccessRequestControllerList } from "@repo/services/backoffice";
 
-import { AccessRequestsTable } from "./table";
+import { AccessRequestsTable } from "@/components/pages/access-requests/table";
 
 export const metadata = { title: "Access Requests" };
 

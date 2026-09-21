@@ -6,7 +6,7 @@ import {
   fetchBackofficeControllerListUsers,
 } from "@repo/services/backoffice";
 
-import { UsersTable } from "./table";
+import { UsersTable } from "@/components/pages/users/table";
 
 export const metadata = { title: "Users" };
 

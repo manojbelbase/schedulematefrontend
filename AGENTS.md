@@ -1,5 +1,50 @@
 # AGENTS.md
 
+## Project conventions
+
+### Route groups (auth vs public)
+
+Pages are split into route groups per app. Route groups do **not** change URLs.
+
+- `(with-auth)/` — protected pages (server-rendered; the layout checks the auth token and redirects to login).
+- `(without-auth)/` — login/auth pages.
+- Public pages like `privacy`, `terms`, `auth/login`, `not-found` stay loose at the app root (web app convention).
+
+```
+apps/web/src/app/
+  (with-auth)/chat/, (with-auth)/ → protected chat layout (home + /chat)
+  (without-auth)/auth/login, auth/logout, privacy, terms → public/login pages
+  not-found → loose at root (global 404)
+
+apps/backoffice/src/app/
+  (with-auth)/             → dashboard, users, llm-config, embedding-config, access-requests
+  (without-auth)/login/    → login
+```
+
+### Page components live in `components/pages/` (restroX convention)
+
+Keep `app/.../page.tsx` and `loading.tsx` thin (page fetches data + renders, placeholder for initial data). All page UI — data tables, columns, views — lives under `src/components/pages/<route>/`, named simply `table.tsx`, `columns.tsx` (or `*-view.tsx`).
+
+```
+apps/backoffice/src/components/pages/
+  users/            table.tsx, columns.tsx
+  access-requests/  table.tsx, columns.tsx
+  llm-config/       table.tsx, columns.tsx
+  embedding-config/ table.tsx, columns.tsx
+  dashboard/        dashboard-view.tsx
+
+apps/web/src/components/pages/
+  chat/             chat-layout.tsx (chat page UI)
+  privacy/          privacy-view.tsx
+  terms/            terms-view.tsx
+```
+
+Page imports: `import { UsersTable } from "@/components/pages/users/table";` (table + columns co-located, so `./columns` relative imports still work).
+
+### Route group naming across apps
+
+`(with-auth)` / `(without-auth)` everywhere — do not introduce `(main)`, `(auth)`, `(public)`, etc.
+
 ## Project memory (MemPalace)
 
 This repo has a local-first AI memory palace for development context. It is **not** part of the ScheduleMate AI product — it is a dev-tool that lets agents recall past work in this repo across sessions.

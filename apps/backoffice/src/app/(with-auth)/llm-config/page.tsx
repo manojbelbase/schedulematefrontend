@@ -5,7 +5,7 @@ import type { TQueryParams } from "@ui/types/globals";
 
 import { fetchLlmConfigControllerListConfigs } from "@repo/services/backoffice";
 
-import { LlmConfigTable } from "./table";
+import { LlmConfigTable } from "@/components/pages/llm-config/table";
 
 export const metadata: Metadata = { title: "LLM Config" };
 
