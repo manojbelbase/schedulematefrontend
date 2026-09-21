@@ -5,7 +5,7 @@ import type { TQueryParams } from "@ui/types/globals";
 
 import { fetchEmbeddingConfigControllerListConfigs } from "@repo/services/backoffice";
 
-import { EmbeddingConfigTable } from "./table";
+import { EmbeddingConfigTable } from "@/components/pages/embedding-config/table";
 
 export const metadata: Metadata = { title: "Embedding Config" };
 

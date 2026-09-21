@@ -2,7 +2,7 @@ import type { TQueryParams } from "@ui/types/globals";
 
 import { fetchBackofficeControllerGetUsersDashboard } from "@repo/services/backoffice";
 
-import { DashboardView } from "./dashboard-view";
+import { DashboardView } from "@/components/pages/dashboard/dashboard-view";
 
 export default async function DashboardPage(props: TQueryParams) {
   const searchParams = await props.searchParams;

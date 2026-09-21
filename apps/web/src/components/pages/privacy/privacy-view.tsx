@@ -1,18 +1,13 @@
-import type { Metadata } from "next";
-
 import LegalPage from "@/components/legal/legal-page";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy — ScheduleMate AI",
-};
-
-export default function PrivacyPage() {
+export function PrivacyView() {
   return (
     <LegalPage title="Privacy Policy" lastUpdated="August 31, 2026">
       <p>
-        This Privacy Policy explains how ScheduleMate AI ("ScheduleMate AI",
-        "we", "us") collects, uses, and protects your information when you use
-        our app at https://schedulemateweb.vercel.app.
+        This Privacy Policy explains how ScheduleMate AI (&quot;ScheduleMate
+        AI&quot;, &quot;we&quot;, &quot;us&quot;) collects, uses, and protects
+        your information when you use our app at
+        https://schedulemateweb.vercel.app.
       </p>
 
       <h2 className="text-base font-semibold">What we collect</h2>
