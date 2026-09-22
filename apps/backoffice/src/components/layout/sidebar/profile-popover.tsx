@@ -35,7 +35,7 @@ export default function ProfilePopover({ collapsed }: TProps) {
           type="button"
           title={user ? `${displayName} · ${email ?? ""}`.trim() : "Account"}
           className={cn(
-            "flex w-full items-center gap-2 rounded-sm px-1 py-2 text-left transition-all duration-150 hover:bg-sidebar-accent/60 data-[state=open]:bg-sidebar-accent/60 border border-border bg-sidebar-accent/40",
+            "flex w-full items-center gap-2 cursor-pointer rounded-sm px-1.5 py-2 text-left transition-all duration-150 hover:bg-sidebar-accent/60 data-[state=open]:bg-sidebar-accent/60 border border-border bg-sidebar-accent/40",
             collapsed && "justify-center px-0",
           )}
         >
