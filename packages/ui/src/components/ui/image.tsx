@@ -2,7 +2,6 @@ import * as NImage from "next/image";
 import { forwardRef } from "react";
 
 import { ASSETS } from "@ui/assets";
-// import { ASSETS } from "@ui/assets";
 import type { PartialBy } from "@ui/types/globals";
 
 type TProps = PartialBy<NImage.ImageProps, "src" | "alt" | "height" | "width">;

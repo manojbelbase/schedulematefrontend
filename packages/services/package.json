@@ -3,13 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {},
-  "dependencies": {
-    "dotenv": "^17.2.3"
-  },
+  "dependencies": {},
   "exports": {
     ".": "./src/index.ts",
     "./web": "./src/web/index.ts",
-    "./backoffice": "./src/backoffice/index.ts",
-    "./website": "./src/website/index.ts"
+    "./backoffice": "./src/backoffice/index.ts"
   }
 }

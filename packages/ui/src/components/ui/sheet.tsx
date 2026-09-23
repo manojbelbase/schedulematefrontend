@@ -46,12 +46,10 @@ function SheetContent({
   className,
   children,
   side = "right",
-  btnOutside,
   hideExit = false,
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Content> & {
   side?: "top" | "right" | "bottom" | "left";
-  btnOutside?: boolean;
   hideExit?: boolean;
 }) {
   return (
@@ -82,21 +80,7 @@ function SheetContent({
           {children}
         </div>
         {!hideExit && (
-          <SheetPrimitive.Close
-            //   className={cn(
-            //     "absolute right-4 top-4 flex items-center justify-center rounded-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none",
-            //     btnOutside &&
-            //       "top-4  -left-16 bg-background size-[45px] p-2.5 rounded-md border",
-            //     side === "bottom" && "-top-12  left-1/2 -translate-x-1/2"
-            //   )}
-            // >
-            //   <pre>Close Button</pre>
-            //   <X
-            //     className={cn("size-10", btnOutside && "text-primary 3xl:size-7")}
-            //   />
-            //   <span className="sr-only">Close</span>
-            className="absolute top-8 right-8 hover:bg-destructive/5 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none group"
-          >
+          <SheetPrimitive.Close className="absolute top-8 right-8 hover:bg-destructive/5 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none group">
             <XIcon className="size-6 text-destructive cursor-pointer group-hover:scale-110 transition-easeIn duration-200" />
 
             <span className="sr-only">Close</span>

@@ -230,20 +230,6 @@ function ReactTable<TData, TValue, TStatistics>({
       setStickyHeader: handlers.onStickyHeaderChange,
     },
   });
-  // const sizes = useMemo(() => {
-  //   const headers = table.getFlatHeaders();
-
-  //   const colSizes: { [key: string]: number } = {};
-
-  //   for (let i = 0; i < headers.length; i++) {
-  //     const header = headers[i]!;
-  //     colSizes[`--header-${header.id}-size`] = header.getSize();
-  //     colSizes[`--col-${header.column.id}-size`] = header.column.getSize();
-  //   }
-
-  //   return colSizes;
-  // }, [table.getState().columnSizingInfo, table.getState().columnSizing]);
-
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     if (active && over && active.id !== over.id) {
