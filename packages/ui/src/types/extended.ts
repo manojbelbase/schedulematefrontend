@@ -34,8 +34,6 @@ export type TDeleteItemModalData<T extends object = object> = {
   queryKeys?: string[][];
 };
 
-export type _SheetModalProps<T = object> = _FormModalProps<T>;
-
 export type _TModal<
   T extends _FormModalProps<object> = _FormModalProps<object>,
 > = {

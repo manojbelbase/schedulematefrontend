@@ -14,11 +14,6 @@ export type _LayoutProps = {
   children: React.ReactNode;
 };
 
-export type _PageProps<P = object, Q = object> = {
-  params: Promise<P>;
-  searchParams: Promise<Q>;
-};
-
 export type TModalVariant = "form" | "warning" | "default" | "no-exit";
 
 export type TLinkPath = {

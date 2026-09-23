@@ -5,7 +5,6 @@ import { validateEnv } from "@/config/env";
 validateEnv();
 
 const nextConfig: NextConfig = {
-  serverExternalPackages: ["rimraf"],
   logging: {
     fetches: {
       fullUrl: true,

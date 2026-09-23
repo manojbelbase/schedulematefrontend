@@ -56,28 +56,4 @@ export default defineConfig({
       });
     },
   },
-  website: {
-    from: {
-      source: "url",
-      url: `${process.env.NEXT_PUBLIC_WEBSITE_API_BASE_URL}/docs-json`,
-      method: "get",
-      headers: {
-        Authorization: `Basic ${process.env.DOCS_AUTH_TOKEN}`,
-      },
-    },
-    outputDir: "packages/services/src/website",
-    to: async (context) => {
-      const { schemasFiles } = await generateSchemaTypes(context, {
-        filenameCase: "kebab",
-        filenamePrefix: "types.",
-      });
-
-      await generateReactQueryComponents(context, {
-        filenameCase: "kebab",
-        filenamePrefix: "queries.",
-        useEnums: true,
-        schemasFiles,
-      });
-    },
-  },
 });

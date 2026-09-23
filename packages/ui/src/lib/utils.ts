@@ -4,37 +4,14 @@ import type {
   Path,
   UseFormSetError,
 } from "react-hook-form";
-import type { InfiniteData, UseMutationOptions } from "@tanstack/react-query";
+import type { UseMutationOptions } from "@tanstack/react-query";
 import clsx, { type ClassValue } from "clsx";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 
-import type { PaginationDTO } from "./pagination";
-
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-
-export const parseInfiniteQueryData = <T>(
-  data?: InfiniteData<
-    {
-      message: string;
-      data: T[];
-      pagination: PaginationDTO;
-    },
-    unknown
-  >,
-) => {
-  if (!data) return {};
-
-  const count = data.pages.at(0)?.data.length || 0;
-
-  return {
-    data: data.pages.map((page) => page.data).flat(),
-    count,
-    pagination: data.pages.at(-1)?.pagination,
-  };
-};
 
 type TOpts = {
   successMessage?: string;
@@ -237,49 +214,6 @@ export function unique<T>(arr: T[], byKey?: keyof T): T[] {
     return [...new Map(arr.map((item) => [item[byKey], item])).values()];
   }
 }
-
-export const parsePrice = (
-  price?: string | number | null,
-  isCent: boolean = false,
-) => {
-  let parsedPrice: number | null = null;
-
-  if (price === null) {
-    parsedPrice = null;
-  } else if (typeof price === "string") {
-    if (price === "") {
-      parsedPrice = null;
-    } else {
-      parsedPrice = Number.isNaN(Number(price))
-        ? 0
-        : Number(price) / (isCent ? 100 : 1);
-    }
-  } else if (typeof price === "number") {
-    parsedPrice = price / (isCent ? 100 : 1);
-  }
-
-  return {
-    value: price === null ? null : Number(parsedPrice?.toFixed(2)),
-    toCent: function () {
-      return this.value !== null ? Math.round(this.value * 100) : null;
-    },
-    toDollar: function () {
-      return this.value;
-    },
-    toAddComa: function () {
-      const rs = new Intl.NumberFormat("en-US").format(this.value || 0);
-      return rs;
-    },
-  };
-};
-
-export const copyToclipboard = async (text: string) => {
-  try {
-    await navigator.clipboard.writeText(text);
-  } catch (err) {
-    console.error("Failed to copy: ", err);
-  }
-};
 
 export const filterDirtyData = <T extends Record<string, unknown>>(
   data: T,

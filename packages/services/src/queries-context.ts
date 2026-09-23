@@ -7,10 +7,8 @@ import {
 
 import type { QueryOperation as BackofficeQueryOperation } from "./backoffice/queries-components";
 import type { QueryOperation as WebQueryOperation } from "./web/queries-components";
-import type { QueryOperation as WebsiteQueryOperation } from "./website/queries-components";
 
-type QueryOperation =
-  WebQueryOperation | BackofficeQueryOperation | WebsiteQueryOperation;
+type QueryOperation = WebQueryOperation | BackofficeQueryOperation;
 
 export type QueriesContext<
   TQueryFnData = unknown,
