@@ -10,6 +10,8 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "../../apps/web/src"),
       "@ui": path.resolve(__dirname, "../../packages/ui/src"),
+      // The published package declares `main: lib/index.cjs.js`, which is not
+      // in the tarball, so bare-specifier resolution fails during transform.
       "ai-response-parser": path.resolve(
         __dirname,
         "../../apps/web/src/__mocks__/ai-response-parser.tsx",

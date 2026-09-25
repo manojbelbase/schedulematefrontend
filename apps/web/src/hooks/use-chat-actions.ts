@@ -7,19 +7,16 @@ import { useQueryClient } from "@tanstack/react-query";
 import { getBackendErrorMessage, options } from "@ui/lib/utils";
 
 import {
+  chatControllerListConversationsQuery,
   useChatControllerCreateConversation,
   useChatControllerListConversations,
   useChatControllerSendMessage,
+  type ChatConversationListResponse,
 } from "@repo/services/web";
 
 import { QUERY_KEYS } from "@/config/query-keys";
 import { buildPendingMessages } from "@/utils/chat.utils";
 import { useChatStore } from "@/zustand/chat";
-
-type ChatConversationRef = {
-  id: string;
-  title: string;
-};
 
 export function useChatActions({
   conversationId,
@@ -46,16 +43,21 @@ export function useChatActions({
     }),
   );
 
+  // The generated list response is flat - `{ success, message, data: Chat[] }` -
+  // so the array lives at `cached.data`, not `cached.data.data`.
+  const findReusableConversation = useCallback(() => {
+    const cached = queryClient.getQueryData<ChatConversationListResponse>(
+      chatControllerListConversationsQuery({}).queryKey,
+    );
+    return cached?.data?.find((c) => c.title === "New conversation");
+  }, [queryClient]);
+
   // Lazy-create or reuse an empty ("New conversation") thread when the user is
   // on a screen without a real conversation yet (e.g. `/chat` or `/`). The
   // first message always belongs to a valid conversation, so the API never
   // receives `undefined`/stale ids.
   const ensureConversation = useCallback(async (): Promise<string> => {
-    const cached = queryClient.getQueryData(QUERY_KEYS.conversations) as
-      { data: { data: ChatConversationRef[] } } | undefined;
-    const emptyConv = cached?.data?.data?.find(
-      (c) => c.title === "New conversation",
-    );
+    const emptyConv = findReusableConversation();
     if (emptyConv?.id) return emptyConv.id;
 
     const created = await createNewConversation({ body: {} });
@@ -64,13 +66,8 @@ export function useChatActions({
       throw new Error("Could not create a conversation.");
     }
 
-    queryClient.setQueryData([...QUERY_KEYS.conversations, conversation.id], {
-      success: true,
-      message: "Conversation fetched successfully",
-      data: conversation,
-    });
     return conversation.id;
-  }, [createNewConversation, queryClient]);
+  }, [createNewConversation, findReusableConversation]);
 
   const sendMessage = useCallback(
     (content: string) => {
@@ -149,12 +146,7 @@ export function useChatActions({
   );
 
   const newChat = useCallback(async () => {
-    const cached = queryClient.getQueryData(QUERY_KEYS.conversations) as
-      { data: { data: ChatConversationRef[] } } | undefined;
-    const emptyConv = cached?.data?.data?.find(
-      (c) => c.title === "New conversation",
-    );
-    const emptyId = emptyConv?.id;
+    const emptyId = findReusableConversation()?.id;
     // Reuse an empty thread unless it is the one the user is already on.
     if (emptyId && emptyId !== conversationId) {
       window.location.href = `/chat/${emptyId}`;
@@ -165,13 +157,8 @@ export function useChatActions({
     const conversation = created?.data;
     if (!conversation?.id) return;
 
-    queryClient.setQueryData([...QUERY_KEYS.conversations, conversation.id], {
-      success: true,
-      message: "Conversation fetched successfully",
-      data: conversation,
-    });
     window.location.href = `/chat/${conversation.id}`;
-  }, [conversationId, createNewConversation, queryClient]);
+  }, [conversationId, createNewConversation, findReusableConversation]);
 
   return { sendMessage, newChat };
 }

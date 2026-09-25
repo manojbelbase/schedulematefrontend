@@ -23,7 +23,10 @@ export default async function ChatPage() {
   const conversationId = response.data?.id;
 
   if (!conversationId) {
-    redirect("/auth/login");
+    // The (with-auth) layout already proved a session exists, so a failure
+    // here is a backend problem - sending the user to /auth/login would be
+    // a lie and would needlessly drop them out of the app.
+    throw new Error("Could not create a new conversation.");
   }
 
   redirect(`/chat/${conversationId}`);

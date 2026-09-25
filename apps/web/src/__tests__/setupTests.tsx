@@ -192,16 +192,6 @@ vi.mock("sonner", () => ({
   },
 }));
 
-vi.mock("ai-response-parser", () => ({
-  AIResponseParser: ({
-    content,
-  }: {
-    content: string;
-    textColor?: string;
-    className?: string;
-  }) => <div data-testid="ai-response-parser">{content}</div>,
-}));
-
 Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: vi.fn().mockImplementation((query: string) => ({
