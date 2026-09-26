@@ -50,7 +50,7 @@ describe("ChatWindow", () => {
 
   it("calls onSend with trimmed text when send button clicked", () => {
     render(<ChatWindow {...defaultProps} />);
-    const textarea = screen.getByPlaceholderText("Ask anything");
+    const textarea = screen.getByPlaceholderText("Type your message...");
     fireEvent.change(textarea, { target: { value: "  Hello AI  " } });
     const sendButton = screen.getByLabelText("Send message");
     fireEvent.click(sendButton);
@@ -66,7 +66,7 @@ describe("ChatWindow", () => {
 
   it("calls onSend on Enter key (without shift)", () => {
     render(<ChatWindow {...defaultProps} />);
-    const textarea = screen.getByPlaceholderText("Ask anything");
+    const textarea = screen.getByPlaceholderText("Type your message...");
     fireEvent.change(textarea, { target: { value: "Hello" } });
     fireEvent.keyDown(textarea, { key: "Enter" });
     expect(defaultProps.onSend).toHaveBeenCalledWith("Hello");

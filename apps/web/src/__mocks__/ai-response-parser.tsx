@@ -5,5 +5,5 @@ export function AIResponseParser({
   textColor?: string;
   className?: string;
 }) {
-  return null;
+  return <div data-testid="ai-response-parser">{content}</div>;
 }
