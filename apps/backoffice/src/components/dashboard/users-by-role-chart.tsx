@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo } from "react";
-import { Users } from "lucide-react";
 
 import { DistributionChartCard } from "@ui/components/ui/distribution-chart-card";
 
@@ -38,7 +37,6 @@ export function UsersByRoleChart({
 
   return (
     <DistributionChartCard
-      icon={Users}
       title="Users by Role"
       description="Registered users grouped by role"
       defaultChartType="bar-horizontal"

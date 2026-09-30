@@ -1,7 +1,5 @@
 "use client";
 
-import { CalendarDays } from "lucide-react";
-
 import { StackedBarCard } from "@ui/components/ui/stacked-bar-card";
 
 import type { UsersDashboardData } from "@repo/services/backoffice";
@@ -19,7 +17,6 @@ export function CalendarConnectionCard({
 
   return (
     <StackedBarCard
-      icon={CalendarDays}
       title="Google Calendar"
       description="Users with a connected calendar"
       className={className}

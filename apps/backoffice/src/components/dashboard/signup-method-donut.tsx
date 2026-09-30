@@ -1,7 +1,5 @@
 "use client";
 
-import { UserPlus } from "lucide-react";
-
 import { DonutChartCard } from "@ui/components/ui/donut-chart-card";
 
 import type { UsersDashboardData } from "@repo/services/backoffice";
@@ -18,7 +16,6 @@ export function SignupMethodDonut({
 
   return (
     <DonutChartCard
-      icon={UserPlus}
       title="Signups"
       description="Accounts by signup method"
       centerLabel="users"

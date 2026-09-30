@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo } from "react";
-import { MessagesSquare } from "lucide-react";
 
 import { DistributionChartCard } from "@ui/components/ui/distribution-chart-card";
 
@@ -36,7 +35,6 @@ export function ChatRoleChart({
 
   return (
     <DistributionChartCard
-      icon={MessagesSquare}
       title="Messages"
       description="User vs assistant messages"
       defaultChartType="bar-horizontal"

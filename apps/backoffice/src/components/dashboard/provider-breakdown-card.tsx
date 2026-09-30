@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo } from "react";
-import { Boxes } from "lucide-react";
 
 import { ChartCard } from "@ui/components/ui/chart-card";
 
@@ -36,7 +35,6 @@ export function ProviderBreakdownCard({
 
   return (
     <ChartCard
-      icon={Boxes}
       title="LLM Providers"
       description="Configurations grouped by provider"
       className={className}
@@ -65,7 +63,7 @@ export function ProviderBreakdownCard({
                 </span>
                 <div className="h-2 min-w-0 flex-1 overflow-hidden rounded-full bg-muted">
                   <div
-                    className="h-full rounded-full transition-[width] duration-500"
+                    className="h-full rounded-full transition-[width] duration-500 motion-reduce:transition-none"
                     style={{ width: `${percent}%`, backgroundColor: color }}
                   />
                 </div>

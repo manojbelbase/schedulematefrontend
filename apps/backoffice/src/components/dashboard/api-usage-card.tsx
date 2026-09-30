@@ -1,6 +1,5 @@
 "use client";
 
-import { Gauge } from "lucide-react";
 import { PolarAngleAxis, RadialBar, RadialBarChart } from "recharts";
 
 import { Badge, type TBadgeVariantProps } from "@ui/components/ui/badge";
@@ -57,7 +56,6 @@ export function ApiUsageCard({
 
   return (
     <ChartCard
-      icon={Gauge}
       title="API Requests"
       description="Share of the API request limit consumed"
       className={className}
